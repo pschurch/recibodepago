@@ -1,44 +1,40 @@
 class ProfilesController < ApplicationController
-  # GET /profiles
-  # GET /profiles.xml
   def index
     @profiles = Profile.all
-
+    @titulo = "Listado de Perfiles"
+    @perfil_name = "Administrador"
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @profiles }
     end
   end
 
-  # GET /profiles/1
-  # GET /profiles/1.xml
   def show
     @profile = Profile.find(params[:id])
-
+    @titulo = "Ver Perfil"
+    @perfil_name = "Administrador"
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @profile }
     end
   end
 
-  # GET /profiles/new
-  # GET /profiles/new.xml
   def new
     @profile = Profile.new
-
+    @titulo = "Crear Perfil"
+    @perfil_name = "Administrador"
     respond_to do |format|
       format.html # new.html.erb
       format.xml  { render :xml => @profile }
     end
   end
 
-  # GET /profiles/1/edit
   def edit
     @profile = Profile.find(params[:id])
+    @titulo = "Editar Perfil"
+    @perfil_name = "Administrador"
   end
 
-  # POST /profiles
-  # POST /profiles.xml
   def create
     @profile = Profile.new(params[:profile])
 
@@ -53,8 +49,6 @@ class ProfilesController < ApplicationController
     end
   end
 
-  # PUT /profiles/1
-  # PUT /profiles/1.xml
   def update
     @profile = Profile.find(params[:id])
 
@@ -69,8 +63,6 @@ class ProfilesController < ApplicationController
     end
   end
 
-  # DELETE /profiles/1
-  # DELETE /profiles/1.xml
   def destroy
     @profile = Profile.find(params[:id])
     @profile.destroy

@@ -1,0 +1,167 @@
+/* reset.css */
+html {margin:0;padding:0;border:0;}
+body, div, h1, h2, h3, h4, img, ol, ul, li, form, label, table, tr, th, td, botones, header, seccion, titulos {margin:0;padding:0;border:0;font-weight:inherit;font-style:inherit;font-size:100%;font-family:inherit;vertical-align:baseline;}
+botones, header, titulos, seccion {display:block;  margin-left: 10px; margin-right: 10px;}
+
+/* typography.css */
+html {font-size:100.01%;}
+body {font-size:75%;color:#222;font-family:"Helvetica Neue", Arial, Helvetica, sans-serif;}
+h1, h2, h3, h4, {font-weight:normal;color:#111;}
+h1 {font-size:3em;line-height:1;margin-bottom:0.5em;}
+h2 {font-size:2em;margin-bottom:0.75em;}
+h3 {font-size:1.5em;line-height:1;margin-bottom:1em;}
+h4 {font-size:1.2em;line-height:1.25;margin-bottom:1.25em;}
+
+/* marco externo */
+.ext {
+  width: 800px;			
+  background: #CCC2B5;
+  border: 2px solid #D4C9BD;
+  padding: 2px;
+  padding-top: 0;
+  border-top: 0;
+  margin:0 auto;
+}
+.med {
+  background: #E7E4E0;
+  border: 2px solid #C5BCB0;
+  padding: 1px;	
+  padding-top: 0;
+  border-top: 0;
+}
+.int {
+  background: white;
+  border: 1px solid #F2F0EF;	
+  border-top: 0;
+  padding-bottom: 20px;
+}
+
+body {
+  background: #D9CEC1;		
+}
+
+header {
+  padding: 1em;
+}
+header img {
+  float: right; 
+}
+titulos {
+  margin-top: 10px;
+  padding: 10px; 
+  background: #8C7D69;
+  font-size:22px;
+  color: white; 
+}
+seccion {
+  margin-top: 5px;
+  padding: 20px;
+  background: #FFDC9E;  
+  font-size:13px; 
+  overflow: auto ;  
+}
+botones {
+  margin-top: 5px;
+  padding: 15px;
+  background: #FFDC9E; 
+  text-align: center; 
+}
+botones a {
+  margin: 7px;  			
+  padding: 4px 8px;
+  text-decoration: none;		
+  color: #222;
+  font-size: 13px;
+  border: 1px outset #CCC;	        
+  background: rgb(255,199,100);	
+}
+botones a:hover { background: rgb(229,179,90); text-decoration: none;}
+botones a:active { border: 1px inset #000;}
+
+ul {
+  list-style-type: square;	
+  margin-left: 60px;
+  font-size: 15px;  
+}
+
+a {
+  color: #AC0000;			
+  font-weight: bold; 
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;	color: rgb(172,0,0);
+}
+
+p {
+  margin: 0;
+  padding: 0;
+}
+
+/* Tablas de contenido */
+table {
+  margin:0 auto;
+  border-collapse: collapse;
+  border: 1px solid rgb(229,179,90);
+  font-size: 13px;		
+}
+th, td { border: 1px solid rgb(229,179,90); padding: 3px;}
+th { background: rgb(255, 199, 100);}
+td { background: white; }
+table a { font-weight: normal; }
+
+/* Notificaciones */
+#notice {
+  margin-bottom: 10px;
+  font-size: 14px;
+  color: rgb(172,0,0);
+}
+
+/* Formularios */
+td.formulario {
+  padding: 12px;
+  padding-bottom: 5px;
+  vertical-align: top;
+  background: #FFDC9E;  
+  font-size: 13px;
+}
+input[type=text], input[type=password], input.text, input.title, textarea, select, input.checkbox, input.radio {margin:2px 0; font-size: 13px; }
+
+div.field{
+  margin-bottom: 4px;
+}
+div.field-r{
+  margin-bottom: 4px;
+  float: right;
+  width: 175px;   
+}
+div.field-l{
+  margin-bottom: 4px;
+  float: left;
+  width: 175px; 
+}
+div.field_txt{
+  margin:2px 0;
+  margin-bottom: 6px; 
+  padding: 5px;
+  border: 1px solid #AAA;	
+  background: white;
+  width: 350px;  		
+}
+div.field-r div.field_txt {width: 160px;}
+div.field-l div.field_txt {width: 160px;}
+
+div.actions {
+  text-align: center;
+}
+div.actions input {
+  margin: 7px;  			
+  padding: 4px 8px;
+  text-decoration: none;
+  font-weight: bold;		
+  color: #222;
+  font-size: 12px;
+  border: 1px outset #CCC;	        
+  background: rgb(255,199,100);		
+}
+
