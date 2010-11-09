@@ -1,0 +1,33 @@
+<seccion>
+<table><tr><td class="formulario">
+  <% if not notice.nil? %><p id="notice"><%= notice %></p><% end %>
+  <div class="field">
+    Nombre:
+  </div>
+  <div class="field_txt">
+    <%= @payment_form.name %>
+  </div>
+
+  <div class="field">
+    Descripción:
+  </div>
+  <div class="field_txt">
+    <%= @payment_form.description %>
+  </div>
+
+  <div class="field">
+    Estado:
+  </div>
+  <div class="field_txt">
+    <% if @payment_form.state %>Activo<% else %>Inactivo<% end %>
+  </div>
+
+</td></tr></table>
+</seccion>
+
+<botones>
+  <%= link_to 'Editar', edit_payment_form_path(@payment_form) %> 
+  <%= link_to 'Listado de Formas de Pago', payment_forms_path %>
+  <%= link_to 'Página Principal', '#' %>
+</botones>
+

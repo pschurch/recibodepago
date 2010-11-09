@@ -1,0 +1,30 @@
+<table><tr><td class="formulario">
+<%= form_for(@payment_form) do |f| %>
+  <% if @payment_form.errors.any? %>
+      <h2>Error: No es posible crear la Forma de Pago. Corregir lo siguiente:</h2>
+      <ul>
+      <% @payment_form.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+  <% end %>
+  
+  <div class="field">
+   Nombre:<br>
+   <%= f.text_field :name, :size => "40" %>
+  </div>
+  <div class="field">
+   Descripción: <br>
+   <%= f.text_area :description, :size => "40x2" %>
+  </div>
+  <div class="field">
+   Estado: <br>
+   <%= f.check_box :state %> Activo
+  </div>
+  <div class="actions">
+    <%= f.submit "Grabar"%>
+  </div>
+
+<% end %>
+</td></tr></table>
+
