@@ -1,3 +1,4 @@
+<table><tr><td class="formulario">
 <%= form_for(@profile) do |f| %>
   <% if @profile.errors.any? %>
       <h2>Error: No es posible crear el Perfil. Corregir lo siguiente:</h2>
@@ -7,16 +8,23 @@
       <% end %>
       </ul>
   <% end %>
-
+  
+  <div class="field">
    Nombre:<br>
-   <%= f.text_field :name, :size => "35" %>
-   <p>
+   <%= f.text_field :name, :size => "40" %>
+  </div>
+  <div class="field">
    Descripción: <br>
    <%= f.text_area :description, :size => "40x2" %>
-   <p>
+  </div>
+  <div class="field">
    Estado: <br>
    <%= f.check_box :state %> Activo
-   <p>
-   <%= f.submit "Grabar"%>
+  </div>
+  <div class="actions">
+    <%= f.submit "Grabar"%>
+  </div>
+
 <% end %>
+</td></tr></table>
 

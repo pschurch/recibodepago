@@ -1,20 +1,31 @@
-<p id="notice"><%= notice %></p>
+<seccion>
+<table><tr><td class="formulario">
+  <% if not notice.nil? %><p id="notice"><%= notice %></p><% end %>
+  <div class="field">
+    Nombre:
+  </div>
+  <div class="field_txt">
+    <%= @profile.name %>
+  </div>
 
-<p>
-  <b>Name:</b>
-  <%= @profile.name %>
-</p>
+  <div class="field">
+    Descripción:
+  </div>
+  <div class="field_txt">
+    <%= @profile.description %>
+  </div>
 
-<p>
-  <b>Description:</b>
-  <%= @profile.description %>
-</p>
+  <div class="field">
+    Estado:
+  </div>
+  <div class="field_txt">
+    <% if @profile.state %>Activo<% else %>Inactivo<% end %>
+  </div>
 
-<p>
-  <b>State:</b>
-  <%= @profile.state %>
-</p>
+</td></tr></table>
+</seccion>
 
-
-<%= link_to 'Edit', edit_profile_path(@profile) %> |
-<%= link_to 'Back', profiles_path %>
+<botones>
+  <%= link_to 'Editar', edit_profile_path(@profile) %> 
+  <%= link_to 'Listado de Perfiles', profiles_path %>
+</botones>
