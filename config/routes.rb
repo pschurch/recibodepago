@@ -1,4 +1,6 @@
 Recibodepago::Application.routes.draw do
+  resources :products
+
   resources :profiles
 
   # The priority is based upon order of creation:
