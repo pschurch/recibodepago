@@ -1,29 +1,30 @@
+<table><tr><td class="formulario">
 <%= form_for(@product) do |f| %>
   <% if @product.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@product.errors.count, "error") %> prohibited this product from being saved:</h2>
-
+      <h2>Error: No es posible crear el Producto. Corregir lo siguiente:</h2>
       <ul>
       <% @product.errors.full_messages.each do |msg| %>
         <li><%= msg %></li>
       <% end %>
       </ul>
-    </div>
   <% end %>
-
+  
   <div class="field">
-    <%= f.label :name %><br />
-    <%= f.text_field :name %>
+   Nombre:<br>
+   <%= f.text_field :name, :size => "40" %>
   </div>
   <div class="field">
-    <%= f.label :description %><br />
-    <%= f.text_area :description %>
+   Descripción: <br>
+   <%= f.text_area :description, :size => "40x2" %>
   </div>
   <div class="field">
-    <%= f.label :state %><br />
-    <%= f.check_box :state %>
+   Estado: <br>
+   <%= f.check_box :state %> Activo
   </div>
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit "Grabar"%>
   </div>
+
 <% end %>
+</td></tr></table>
+
