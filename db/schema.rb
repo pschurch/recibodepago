@@ -10,7 +10,15 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101109211813) do
+ActiveRecord::Schema.define(:version => 20101110000720) do
+
+  create_table "payment_agreements", :force => true do |t|
+    t.string   "name"
+    t.text     "description"
+    t.boolean  "state",       :default => true
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "payment_forms", :force => true do |t|
     t.string   "name"

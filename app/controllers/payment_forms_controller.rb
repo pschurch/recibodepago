@@ -37,7 +37,8 @@ class PaymentFormsController < ApplicationController
 
   def create
     @payment_form = PaymentForm.new(params[:payment_form])
-
+    @titulo = "Crear Forma de Pago"
+    @perfil_name = "Administrador"
     respond_to do |format|
       if @payment_form.save
         format.html { redirect_to(@payment_form, :notice => 'La Forma de Pago se ha creado exitosamente.') }

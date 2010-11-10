@@ -37,7 +37,8 @@ class ProductsController < ApplicationController
 
   def create
     @product = Product.new(params[:product])
-
+    @titulo = "Crear Producto"
+    @perfil_name = "Administrador"
     respond_to do |format|
       if @product.save
         format.html { redirect_to(@product, :notice => 'El Producto se ha creado exitosamente.') }

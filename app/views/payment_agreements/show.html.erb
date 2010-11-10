@@ -1,0 +1,32 @@
+<seccion>
+<table><tr><td class="formulario">
+  <% if not notice.nil? %><p id="notice"><%= notice %></p><% end %>
+  <div class="field">
+    Nombre:
+  </div>
+  <div class="field_txt">
+    <%= @payment_agreement.name %>
+  </div>
+
+  <div class="field">
+    Descripción:
+  </div>
+  <div class="field_txt">
+    <%= @payment_agreement.description %>
+  </div>
+
+  <div class="field">
+    Estado:
+  </div>
+  <div class="field_txt">
+    <% if @payment_agreement.state %>Activo<% else %>Inactivo<% end %>
+  </div>
+
+</td></tr></table>
+</seccion>
+
+<botones>
+  <%= link_to 'Editar', edit_payment_agreement_path(@payment_agreement) %> 
+  <%= link_to 'Listado de Acuerdos de Pago', payment_agreements_path %>
+  <%= link_to 'Página Principal', '#' %>
+</botones>

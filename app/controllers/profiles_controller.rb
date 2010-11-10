@@ -37,7 +37,8 @@ class ProfilesController < ApplicationController
 
   def create
     @profile = Profile.new(params[:profile])
-
+    @titulo = "Crear Perfil"
+    @perfil_name = "Administrador"
     respond_to do |format|
       if @profile.save
         format.html { redirect_to(@profile, :notice => 'El Perfil se ha creado exitosamente.') }

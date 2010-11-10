@@ -1,4 +1,6 @@
 Recibodepago::Application.routes.draw do
+  resources :payment_agreements
+
   resources :payment_forms
 
   resources :products
