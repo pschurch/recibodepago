@@ -52,6 +52,8 @@ class PaymentAgreementsController < ApplicationController
 
   def update
     @payment_agreement = PaymentAgreement.find(params[:id])
+    @titulo = "Editar Acuerdo de Pago"
+    @perfil_name = "Administrador"
     respond_to do |format|
       if @payment_agreement.update_attributes(params[:payment_agreement])
         format.html { redirect_to(@payment_agreement, :notice => 'El Acuerdo de Pago se ha actualizado exitosamente.') }

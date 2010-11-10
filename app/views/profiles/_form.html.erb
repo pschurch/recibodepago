@@ -1,12 +1,14 @@
 <table><tr><td class="formulario">
 <%= form_for(@profile) do |f| %>
   <% if @profile.errors.any? %>
-      <h2>Error: No es posible crear el Perfil. Corregir lo siguiente:</h2>
+   <div id="error">
+      <h2>Error: No es posible crear el Perfil. <br>Corregir lo siguiente:</h2>
       <ul>
       <% @profile.errors.full_messages.each do |msg| %>
         <li><%= msg %></li>
       <% end %>
       </ul>
+   </div>
   <% end %>
   
   <div class="field">

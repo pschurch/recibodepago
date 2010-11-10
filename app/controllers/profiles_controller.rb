@@ -52,7 +52,8 @@ class ProfilesController < ApplicationController
 
   def update
     @profile = Profile.find(params[:id])
-
+    @titulo = "Editar Perfil"
+    @perfil_name = "Administrador"
     respond_to do |format|
       if @profile.update_attributes(params[:profile])
         format.html { redirect_to(@profile, :notice => 'El Perfil se ha actualizado exitosamente.') }

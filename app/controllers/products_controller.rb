@@ -52,7 +52,8 @@ class ProductsController < ApplicationController
 
   def update
     @product = Product.find(params[:id])
-
+    @titulo = "Editar Producto"
+    @perfil_name = "Administrador"
     respond_to do |format|
       if @product.update_attributes(params[:product])
         format.html { redirect_to(@product, :notice => 'El Producto se ha actualizado exitosamente.') }

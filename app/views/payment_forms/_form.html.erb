@@ -1,14 +1,16 @@
 <table><tr><td class="formulario">
 <%= form_for(@payment_form) do |f| %>
   <% if @payment_form.errors.any? %>
-      <h2>Error: No es posible crear la Forma de Pago. Corregir lo siguiente:</h2>
+   <div id="error">
+      <h2>Error: No es posible crear la Forma de Pago.<br>Corregir lo siguiente:</h2>
       <ul>
       <% @payment_form.errors.full_messages.each do |msg| %>
         <li><%= msg %></li>
       <% end %>
       </ul>
+   </div>
   <% end %>
-  
+
   <div class="field">
    Nombre:<br>
    <%= f.text_field :name, :size => "40" %>

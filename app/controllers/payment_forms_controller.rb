@@ -52,7 +52,8 @@ class PaymentFormsController < ApplicationController
 
   def update
     @payment_form = PaymentForm.find(params[:id])
-
+    @titulo = "Editar Forma de Pago"
+    @perfil_name = "Administrador"
     respond_to do |format|
       if @payment_form.update_attributes(params[:payment_form])
         format.html { redirect_to(@payment_form, :notice => 'La Forma de Pago se ha actualizado exitosamente.') }

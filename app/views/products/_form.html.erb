@@ -1,12 +1,14 @@
 <table><tr><td class="formulario">
 <%= form_for(@product) do |f| %>
   <% if @product.errors.any? %>
-      <h2>Error: No es posible crear el Producto. Corregir lo siguiente:</h2>
+   <div id="error">
+      <h2>Error: No es posible crear el Producto. <br>Corregir lo siguiente:</h2>
       <ul>
       <% @product.errors.full_messages.each do |msg| %>
         <li><%= msg %></li>
       <% end %>
       </ul>
+   </div>
   <% end %>
   
   <div class="field">
