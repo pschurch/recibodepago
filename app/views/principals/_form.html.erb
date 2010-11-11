@@ -1,0 +1,38 @@
+<table><tr><td class="formulario">
+<%= form_for(@principal) do |f| %>
+  <%= render "shared/error_messages", :target => @principal, :text => "el Mandante" %>
+  
+  <div class="field">
+   Nombre:<br>
+   <%= f.text_field :name, :size => "40" %>
+  </div>
+  <div class="field">
+   Razón Social: <br>
+   <%= f.text_field :social_reason, :size => "40" %>
+  </div>
+  <div class="field">
+    Rut:<br />
+    <%= f.text_field :rut, :size => "10" %> - <%= f.text_field :digit, :size => "1" %>
+  </div>
+  <div class="field">
+    Contacto:<br />
+    <%= f.text_field :contact, :size => "40" %>
+  </div>
+  <div class="field">
+    Teléfono:<br />
+    <%= f.text_field :telephone, :size => "40" %>
+  </div>
+  <div class="field">
+    Email:<br />
+    <%= f.text_field :email, :size => "40" %>
+  </div>
+  <div class="field">
+   Estado: <br>
+   <%= f.check_box :state %> Activo
+  </div>
+  <div class="actions">
+    <%= f.submit "Grabar"%>
+  </div>
+<% end %>
+</td></tr></table>
+

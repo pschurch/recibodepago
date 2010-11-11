@@ -1,4 +1,6 @@
 Recibodepago::Application.routes.draw do
+  resources :principals
+
   resources :collection_types
 
   resources :payment_agreements

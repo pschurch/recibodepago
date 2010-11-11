@@ -1,0 +1,34 @@
+<seccion>
+  <table>
+  <tr>
+    <th>Id</th>
+    <th>Nombre</th>
+    <th>Raz&oacute;n Social</th>
+    <th>Rut</th>
+    <th>Contacto</th>
+    <th>Tel&eacute;fono</th>
+    <th>Email</th>
+    <th>Estado</th>
+    <th></th>
+  </tr>
+  <% @principals.each do |principal| %>
+  <tr>
+    <td><%= principal.id %></td>
+    <td><%= principal.name %></td>
+    <td><%= principal.social_reason %></td>
+    <td><%= principal.rut %>-<%= principal.digit %></td>
+    <td><%= principal.contact %></td>
+    <td><%= principal.telephone %></td>
+    <td><%= principal.email %></td>
+    <td><% if principal.state %>Activo<% else %>Inactivo<% end %></td>
+    <td><%= link_to 'Ver', principal %></td>
+  </tr>
+  <% end %>
+  </table>
+</seccion>
+
+<botones>
+  <%= link_to 'Crear Mandante', new_principal_path %>
+  <%= link_to 'Página Principal', '#' %>
+</botones>
+
