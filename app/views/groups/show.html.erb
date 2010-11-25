@@ -1,0 +1,33 @@
+<seccion>
+<table><tr><td class="formulario">
+  <% if not notice.nil? %><p id="notice"><%= notice %></p><% end %>
+  <div class="field">
+    Nombre:
+  </div>
+  <div class="field_txt">
+    <%= @group.name %>
+  </div>
+
+  <div class="field">
+    Descripción:
+  </div>
+  <div class="field_txt">
+    <%= @group.description %>
+  </div>
+
+  <div class="field">
+    Estado:
+  </div>
+  <div class="field_txt">
+    <% if @group.state %>Activo<% else %>Inactivo<% end %>
+  </div>
+
+</td></tr></table>
+</seccion>
+
+<botones>
+  <%= link_to 'Editar', edit_group_path(@group) %> 
+  <%= link_to 'Listado de Grupos', groups_path %>
+  <%= link_to 'Página Principal', '#' %>
+</botones>
+

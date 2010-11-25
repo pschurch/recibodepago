@@ -10,9 +10,17 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101110211158) do
+ActiveRecord::Schema.define(:version => 20101125171156) do
 
   create_table "collection_types", :force => true do |t|
+    t.string   "name"
+    t.text     "description"
+    t.boolean  "state",       :default => true
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "groups", :force => true do |t|
     t.string   "name"
     t.text     "description"
     t.boolean  "state",       :default => true
@@ -61,6 +69,13 @@ ActiveRecord::Schema.define(:version => 20101110211158) do
     t.string   "name"
     t.text     "description"
     t.boolean  "state",       :default => true
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "users", :force => true do |t|
+    t.string   "name"
+    t.string   "email"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

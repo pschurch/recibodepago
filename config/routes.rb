@@ -1,4 +1,6 @@
 Recibodepago::Application.routes.draw do
+  resources :groups
+
   resources :principals
 
   resources :collection_types

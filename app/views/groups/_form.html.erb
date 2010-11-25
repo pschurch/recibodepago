@@ -1,0 +1,8 @@
+<table><tr><td class="formulario">
+<%= form_for(@group) do |f| %>
+  <%= render "shared/error_messages", :target => @group, :text => "el Grupo" %>  
+  
+  <%= render "shared/name_descr_state", :f => f %>
+<% end %>
+</td></tr></table>
+
