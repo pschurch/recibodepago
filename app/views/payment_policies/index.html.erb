@@ -1,0 +1,25 @@
+<seccion>
+  <table>
+  <tr>
+    <th>Mandante</th>
+    <th>Producto</th>
+    <th>Tipo de Cobranza</th>
+    <th>Estado</th>
+    <th></th>
+  </tr>
+  <% @payment_policies.each do |payment_policy| %>
+  <tr>
+    <td><%= payment_policy.principal.name %></td>
+    <td><%= payment_policy.product.name %></td>
+    <td><%= payment_policy.collection_type.name %></td>
+    <td><% if payment_policy.state %>Activo<% else %>Inactivo<% end %></td>
+  </tr>
+  <% end %>
+  </table>
+</seccion>
+
+<botones>
+  <%= link_to 'Crear Politica de Pago', new_payment_policy_path %>
+  <%= link_to 'Página Principal', '#' %>
+</botones>
+

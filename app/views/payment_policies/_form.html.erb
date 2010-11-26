@@ -1,0 +1,51 @@
+<table><tr><td class="formulario">
+<%= form_for(@payment_policy) do |f| %>
+  <%= render "shared/error_messages", :target => @payment_policy, :text => "la Politica de Pago" %>  
+
+  <div class="field">
+   Mandante:<br>
+   <%= f.collection_select :principal_id, Principal.find(:all, :conditions => {:state => true}, :order => 'name'), :id, :name %>
+  </div>
+  <div class="field">
+   Producto:<br>
+   <%= f.collection_select :product_id, Product.find(:all, :conditions => {:state => true}, :order => 'name'), :id, :name %>
+  </div>
+  <div class="field">
+   Tipo de Cobranza:<br>
+   <%= f.collection_select :collection_type_id, CollectionType.find(:all, :conditions => {:state => true}, :order => 'name'), :id, :name %>
+  </div>
+  <div class="field">
+    Interés Mora:<br>
+    <%= f.text_field :arrear_interest %>
+  </div>
+  <div class="field">
+    Interés Plazo:<br>
+    <%= f.text_field :term_interest %>
+  </div>
+  <div class="field">
+    Honorarios:<br>
+    <%= f.text_field :fee %>
+  </div>
+  <div class="field">
+    Requiere gastos judiciales:<br>
+    <%= f.check_box :legal_costs %>
+  </div>
+  <div class="field">
+    Permite pago en cuotas:<br>
+    <%= f.check_box :installment %>
+  </div>
+  <div class="field">
+   Descripción: <br>
+   <%= f.text_area :description, :size => "40x2" %>
+  </div>
+  <div class="field">
+   Estado: <br>
+   <%= f.check_box :state %> Activo
+  </div>
+  <div class="actions">
+    <%= f.submit "Grabar"%>
+  </div>  
+<% end %>
+</td></tr></table>
+
+

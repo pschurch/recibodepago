@@ -1,0 +1,73 @@
+<seccion>
+<table><tr><td class="formulario">
+  <% if not notice.nil? %><p id="notice"><%= notice %></p><% end %>
+
+  <div class="field">
+    Mandante:
+  </div>
+  <div class="field_txt">
+    <%= @payment_policy.principal.name %>
+  </div>
+  <div class="field">
+    Producto:
+  </div>
+  <div class="field_txt">
+    <%= @payment_policy.product.name %>
+  </div>
+  <div class="field">
+    Tipo de Cobranza:
+  </div>
+  <div class="field_txt">
+    <%= @payment_policy.collection_type.name %>
+  </div>
+  <div class="field">
+    Interés Mora:
+  </div>
+  <div class="field_txt">
+    <%= @payment_policy.arrear_interest %>
+  </div>
+  <div class="field">
+    Interés Plazo:
+  </div>
+  <div class="field_txt">
+    <%= @payment_policy.term_interest %>
+  </div>
+  <div class="field">
+    Honorarios:
+  </div>
+  <div class="field_txt">
+    <%= @payment_policy.fee %>
+  </div>
+  <div class="field">
+    Requiere gastos judiciales:
+  </div>
+  <div class="field_txt">
+    <% if @payment_policy.legal_costs %>Sí<% else %>No<% end %>
+  </div>
+  <div class="field">
+    Permite pago en cuotas:
+  </div>
+  <div class="field_txt">
+    <% if @payment_policy.installment %>Sí<% else %>No<% end %>
+  </div>
+  <div class="field">
+    Descripción:
+  </div>
+  <div class="field_txt">
+    <%= @payment_policy.description %>
+  </div>
+  <div class="field">
+    Estado:
+  </div>
+  <div class="field_txt">
+    <% if @payment_policy.state %>Activo<% else %>Inactivo<% end %>
+  </div>
+</td></tr></table>
+</seccion>
+
+<botones>
+  <%= link_to 'Editar', edit_payment_policy_path(@payment_policy) %> 
+  <%= link_to 'Listado de Politicas de Pago', payment_policies_path %>
+  <%= link_to 'Página Principal', '#' %>
+</botones>
+

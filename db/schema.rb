@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101125185012) do
+ActiveRecord::Schema.define(:version => 20101126165732) do
 
   create_table "collection_types", :force => true do |t|
     t.string   "name"
@@ -40,6 +40,21 @@ ActiveRecord::Schema.define(:version => 20101125185012) do
     t.string   "name"
     t.text     "description"
     t.boolean  "state",       :default => true
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "payment_policies", :force => true do |t|
+    t.integer  "principal_id"
+    t.integer  "product_id"
+    t.integer  "collection_type_id"
+    t.integer  "arrear_interest"
+    t.integer  "term_interest"
+    t.integer  "fee"
+    t.text     "description"
+    t.boolean  "state",              :default => true
+    t.boolean  "legal_costs",        :default => false
+    t.boolean  "installment",        :default => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
