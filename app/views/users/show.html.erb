@@ -1,0 +1,68 @@
+<seccion>
+<table><tr><td class="formulario">
+  <% if not notice.nil? %><p id="notice"><%= notice %></p><% end %>
+  <div class="field">
+    Usuario:
+  </div>
+  <div class="field_txt">
+    <%= @user.name %>
+  </div>
+
+  <div class="field">
+    Perfil:
+  </div>
+  <div class="field_txt">
+    <%= @user.profile.name %>
+  </div>
+
+  <div class="field">
+    Grupo:
+  </div>
+  <div class="field_txt">
+    <%= @user.group.name %>
+  </div>
+
+  <div class="field">
+    Nombre:
+  </div>
+  <div class="field_txt">
+    <%= @user.name %>
+  </div>
+
+  <div class="field">
+    Teléfono:
+  </div>
+  <div class="field_txt">
+    <%= @user.telephone %>
+  </div>
+
+  <div class="field">
+    Email:
+  </div>
+  <div class="field_txt">
+    <%= @user.email %>
+  </div>
+
+  <div class="field">
+    Descripción:
+  </div>
+  <div class="field_txt">
+    <%= @user.description %>
+  </div>
+
+  <div class="field">
+    Estado:
+  </div>
+  <div class="field_txt">
+    <% if @user.state %>Activo<% else %>Inactivo<% end %>
+  </div>
+
+</td></tr></table>
+</seccion>
+
+<botones>
+  <%= link_to 'Editar', edit_user_path(@user) %> 
+  <%= link_to 'Listado de Usuarios', users_path %>
+  <%= link_to 'Página Principal', '#' %>
+</botones>
+

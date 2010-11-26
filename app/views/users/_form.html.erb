@@ -1,0 +1,43 @@
+<table><tr><td class="formulario">
+<%= form_for(@user) do |f| %>
+  <%= render "shared/error_messages", :target => @user, :text => "el Usuario" %>  
+
+  <div class="field">
+   Usuario:<br>
+   <%= f.text_field :user, :size => "40" %>
+  </div>
+  <div class="field">
+   Perfil:<br>
+   <%= f.collection_select :profile_id, Profile.all, :id, :name %>
+  </div>
+  <div class="field">
+   Grupo:<br>
+   <%= f.collection_select :group_id, Group.all, :id, :name %>
+  </div>
+  <div class="field">
+   Nombre:<br>
+   <%= f.text_field :name, :size => "40" %>
+  </div>
+  <div class="field">
+   Teléfono:<br>
+    <%= f.text_field :telephone, :size => "40" %>
+  </div>
+  <div class="field">
+   Email:<br>
+   <%= f.text_field :email, :size => "40" %>
+  </div>
+  <div class="field">
+   Descripción: <br>
+   <%= f.text_area :description, :size => "40x2" %>
+  </div>
+  <div class="field">
+   Estado: <br>
+   <%= f.check_box :state %> Activo
+  </div>
+  <div class="actions">
+    <%= f.submit "Grabar"%>
+  </div>  
+  
+<% end %>
+</td></tr></table>
+

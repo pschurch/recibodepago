@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101125171156) do
+ActiveRecord::Schema.define(:version => 20101125185012) do
 
   create_table "collection_types", :force => true do |t|
     t.string   "name"
@@ -74,8 +74,16 @@ ActiveRecord::Schema.define(:version => 20101125171156) do
   end
 
   create_table "users", :force => true do |t|
+    t.string   "user"
     t.string   "name"
+    t.string   "telephone"
     t.string   "email"
+    t.text     "description"
+    t.integer  "profile_id"
+    t.integer  "group_id"
+    t.boolean  "state",              :default => true
+    t.string   "encrypted_password"
+    t.string   "salt"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

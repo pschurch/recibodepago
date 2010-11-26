@@ -1,0 +1,32 @@
+<seccion>
+  <table>
+  <tr>
+    <th>Usuario</th>
+    <th>Grupo</th>
+    <th>Perfil</th>
+    <th>Nombre</th>
+    <th>Teléfono</th>
+    <th>Email</th>
+    <th>Estado</th>
+    <th></th>
+  </tr>
+  <% @users.each do |user| %>
+  <tr>
+    <td><%= user.user %></td>
+    <td><%= user.group.name %></td>
+    <td><%= user.profile.name %></td>
+    <td><%= user.name %></td>
+    <td><%= user.telephone %></td>
+    <td><%= user.email %></td>
+    <td><% if user.state %>Activo<% else %>Inactivo<% end %></td>
+    <td><%= link_to 'Ver', user %></td>
+  </tr>
+  <% end %>
+  </table>
+</seccion>
+
+<botones>
+  <%= link_to 'Crear Usuario', new_user_path %>
+  <%= link_to 'Página Principal', '#' %>
+</botones>
+
