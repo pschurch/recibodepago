@@ -23,6 +23,7 @@ class User < ActiveRecord::Base
   belongs_to :group
 
   validates_presence_of :user, :message => "(Usuario) : debe ingresar un valor en este campo."
+  validates_uniqueness_of :user, :case_sensitive => false, :message => "(Usuario) : el usuario ya existe."
   validates_presence_of :profile_id, :message => "(Perfil) : debe seleccionar un valor para este campo."
   validates_presence_of :group_id, :message => "(Grupo) : debe seleccionar un valor para este campo."
   validates_presence_of :name, :message => "(Nombre) : debe ingresar un valor en este campo."

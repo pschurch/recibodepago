@@ -8,11 +8,11 @@
   </div>
   <div class="field">
    Perfil:<br>
-   <%= f.collection_select :profile_id, Profile.all, :id, :name %>
+   <%= f.collection_select :profile_id, Profile.find(:all, :conditions => {:state => true}, :order => 'name'), :id, :name %>
   </div>
   <div class="field">
    Grupo:<br>
-   <%= f.collection_select :group_id, Group.all, :id, :name %>
+   <%= f.collection_select :group_id, Group.find(:all, :conditions => {:state => true}, :order => 'name'), :id, :name %>
   </div>
   <div class="field">
    Nombre:<br>

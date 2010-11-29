@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101126165732) do
+ActiveRecord::Schema.define(:version => 20101127012735) do
 
   create_table "collection_types", :force => true do |t|
     t.string   "name"
@@ -102,5 +102,7 @@ ActiveRecord::Schema.define(:version => 20101126165732) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "users", ["user"], :name => "index_users_on_user", :unique => true
 
 end
