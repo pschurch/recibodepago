@@ -39,6 +39,11 @@ class User < ActiveRecord::Base
   def has_password?(submitted_password)
     encrypted_password == encrypt(submitted_password)
   end
+  def self.authenticate(user, submitted_password)
+    user = find_by_user(user)
+    return nil  if user.nil?
+    return user if user.has_password?(submitted_password)
+  end
 
   private
     def encrypt_password

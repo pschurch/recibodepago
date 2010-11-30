@@ -4,11 +4,16 @@ class SessionsController < ApplicationController
   end
 
   def create
-    @nombre = params[:session][:usuario]
-    @pass = params[:session][:password]
-    flash[:notice] = "Error al ingresar Usuario/Password" + @nombre
-      @titulo_unico = "Nulo Ingreso a la Aplicacion " + @nombre
-
-    render 'new'
+    @titulo_unico = "Ingreso a la Aplicacion"
+    @nombre = params[:session][:user]
+    user = User.authenticate(params[:session][:user],
+                             params[:session][:password])
+    if user.nil?
+      flash[:notice] = "Error al ingresar Usuario/Password"
+      render 'new'
+    else
+      flash[:notice] = "Bienvenido " + @nombre
+      render 'new'
+    end
   end
 end

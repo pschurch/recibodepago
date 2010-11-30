@@ -5,8 +5,8 @@
 
 <%= form_for(:session, :url => sessions_path) do |f| %>
   <div class="field">
-    <%= f.label :usuario %>:<br />
-    <%= f.text_field :usuario %>
+    <%= f.label :user, "Usuario:" %><br />
+    <%= f.text_field :user %>
   </div>
   <div class="field">
     <%= f.label :password  %>:<br />
