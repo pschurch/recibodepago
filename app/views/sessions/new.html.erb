@@ -1,0 +1,21 @@
+<seccion>
+<% if not notice.nil? %><p id="notice"><%= notice %></p><% end %>
+
+<table><tr><td class="formulario">
+
+<%= form_for(:session, :url => sessions_path) do |f| %>
+  <div class="field">
+    <%= f.label :usuario %>:<br />
+    <%= f.text_field :usuario %>
+  </div>
+  <div class="field">
+    <%= f.label :password  %>:<br />
+    <%= f.password_field :password  %>
+  </div>
+  <div class="actions">
+    <%= f.submit "Ingresar" %>
+  </div>
+<% end %>
+</td></tr></table>
+</seccion>
+

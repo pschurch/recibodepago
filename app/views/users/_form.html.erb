@@ -7,6 +7,14 @@
    <%= f.text_field :user, :size => "40" %>
   </div>
   <div class="field">
+    Password:<br>
+    <%= f.password_field :password, :size => "40" %>
+  </div>
+  <div class="field">
+    Confirmación de Password:<br>
+    <%= f.password_field :password_confirmation, :size => "40" %>
+  </div>
+  <div class="field">
    Perfil:<br>
    <%= f.collection_select :profile_id, Profile.find(:all, :conditions => {:state => true}, :order => 'name'), :id, :name %>
   </div>
