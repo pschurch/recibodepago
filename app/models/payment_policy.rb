@@ -1,3 +1,23 @@
+# == Schema Information
+# Schema version: 20101127012735
+#
+# Table name: payment_policies
+#
+#  id                 :integer(4)      not null, primary key
+#  principal_id       :integer(4)
+#  product_id         :integer(4)
+#  collection_type_id :integer(4)
+#  arrear_interest    :integer(4)
+#  term_interest      :integer(4)
+#  fee                :integer(4)
+#  description        :text
+#  state              :boolean(1)      default(TRUE)
+#  legal_costs        :boolean(1)
+#  installment        :boolean(1)
+#  created_at         :datetime
+#  updated_at         :datetime
+#
+
 class PaymentPolicy < ActiveRecord::Base
   belongs_to :principal
   belongs_to :product
