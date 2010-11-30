@@ -53,6 +53,15 @@ titulos {
   font-size:22px;
   color: white; 
 }
+titulos a {
+  margin-top: 4px;
+  font-size:17px;
+  float: right; 
+  color: white; 
+}
+titulos a:hover {
+  text-decoration: underline;	color: white;
+}
 seccion {
   margin-top: 5px;
   padding: 20px;

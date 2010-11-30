@@ -1,6 +1,7 @@
 Recibodepago::Application.routes.draw do
   #get "sessions/new"
   resources :sessions, :only => [:new, :create, :destroy]
+  match '/salir', :to => 'sessions#destroy'
 
   resources :payment_policies
   resources :users

@@ -14,6 +14,9 @@
    </header>   
    <titulos>
      <%= titulo_principal %> 
+     <% if signed_in? %>
+        <%= link_to "Salir", salir_path, :method => :delete %>
+     <% end %>
    </titulos>
 
    <%= yield %>
