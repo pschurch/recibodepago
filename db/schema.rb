@@ -10,7 +10,25 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101127012735) do
+ActiveRecord::Schema.define(:version => 20101130220950) do
+
+  create_table "assignments", :force => true do |t|
+    t.string   "state"
+    t.string   "cas_id"
+    t.integer  "principal_id"
+    t.integer  "collection_type_id"
+    t.integer  "product_id"
+    t.string   "name"
+    t.string   "rut"
+    t.date     "alloc_date"
+    t.integer  "capital"
+    t.string   "number"
+    t.string   "emitter"
+    t.string   "ctacte"
+    t.date     "expir_date"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "collection_types", :force => true do |t|
     t.string   "name"
