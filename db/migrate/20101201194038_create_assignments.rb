@@ -8,6 +8,7 @@ class CreateAssignments < ActiveRecord::Migration
       t.integer :product_id
       t.string :name
       t.string :rut
+      t.string :digit
       t.date :alloc_date
       t.integer :capital
       t.string :number
