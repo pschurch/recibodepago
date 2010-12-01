@@ -1,4 +1,6 @@
 class ProductsController < ApplicationController
+  before_filter :authenticate
+
   def index
     @products = Product.all
     @titulo = "Listado de Productos"

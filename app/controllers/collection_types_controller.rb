@@ -1,4 +1,6 @@
 class CollectionTypesController < ApplicationController
+  before_filter :authenticate 
+
   def index
     @collection_types = CollectionType.all
     @titulo = "Listado de Tipos de Cobranza"

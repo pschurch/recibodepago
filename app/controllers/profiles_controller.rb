@@ -1,4 +1,6 @@
 class ProfilesController < ApplicationController
+  before_filter :authenticate 
+
   def index
     @profiles = Profile.all
     @titulo = "Listado de Perfiles"

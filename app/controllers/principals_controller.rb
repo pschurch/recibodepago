@@ -1,4 +1,6 @@
 class PrincipalsController < ApplicationController
+  before_filter :authenticate
+
   def index
     @principals = Principal.all
     @titulo = "Listado de Mandantes"

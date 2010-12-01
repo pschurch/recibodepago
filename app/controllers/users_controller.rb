@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+  before_filter :authenticate 
+
   def index
     @users = User.all
     @titulo = "Listado de Usuarios"
@@ -73,4 +75,5 @@ class UsersController < ApplicationController
       format.xml  { head :ok }
     end
   end
+
 end

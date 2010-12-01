@@ -1,4 +1,6 @@
 class PaymentAgreementsController < ApplicationController
+  before_filter :authenticate
+
   def index
     @payment_agreements = PaymentAgreement.all
     @titulo = "Listado de Acuerdos de Pago"

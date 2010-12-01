@@ -1,4 +1,6 @@
 class PaymentFormsController < ApplicationController
+  before_filter :authenticate
+  
   def index
     @payment_forms = PaymentForm.all
     @titulo = "Listado de Formas de Pago"

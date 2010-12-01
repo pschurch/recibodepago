@@ -1,4 +1,6 @@
 class PaymentPoliciesController < ApplicationController
+  before_filter :authenticate
+
   def index
     @payment_policies = PaymentPolicy.all
     @titulo = "Listado de Politicas de Pago"
