@@ -31,10 +31,10 @@
     Mandante:
   </div>
   <div class="field_txt-l">
-    <%= @ticket.principal_name %>&nbsp;
+    <%= @ticket.principal.name %>&nbsp;
   </div>
   <div class="field_txt-r">
-    <%= @ticket.collection_type_name %>&nbsp;
+    <%= @ticket.collection_type.name %>&nbsp;
   </div>
   <div class="fieldt-r">
     Tipo de Cobranza: 
@@ -56,7 +56,7 @@
     <%= @ticket.capital %>&nbsp;
   </div>
   <div class="field_txt-r">
-    <%= @ticket.product %>&nbsp;
+    <%= @ticket.product.name %>&nbsp;
   </div>
   <div class="fieldt-r">
     Producto: 

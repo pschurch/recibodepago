@@ -20,11 +20,11 @@
 
   <div class="field-l">
     Mandante:
-    <%= f.text_field :principal_name, :size => "10" %>
+    <%= f.collection_select :principal_id, Principal.find(:all, :conditions => {:state => true}, :order => 'name'), :id, :name %>
   </div>
   <div class="field-r">
     Tipo de Cobranza:
-    <%= f.text_field :collection_type_name, :size => "10" %>
+    <%= f.collection_select :collection_type_id, CollectionType.find(:all, :conditions => {:state => true}, :order => 'name'), :id, :name %>
   </div>
   <br clear="all">
 
@@ -39,8 +39,8 @@
     <%= f.text_field :capital, :size => "10" %>
   </div>
   <div class="field-r">
-    Producto: 
-    <%= f.text_field :product, :size => "10" %>
+    Producto:
+    <%= f.collection_select :product_id, Product.find(:all, :conditions => {:state => true}, :order => 'name'), :id, :name %>
   </div>
   <br clear="all">
 
