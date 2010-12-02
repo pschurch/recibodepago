@@ -1,0 +1,32 @@
+<seccion>
+  <table>
+  <tr>
+    <th>Rut</th>
+    <th>Nombre Deudor</th>
+    <th>Identificador</th>
+    <th>Mandante</th>
+    <th>Producto</th>
+    <th>Capital</th>
+    <th>Fecha Asignación</th>
+    <th></th>
+  </tr>
+  <% @resp.each do |a| %>
+  <tr>
+    <td><%= a.rut %></td>
+    <td><%= a.name %></td>
+    <td><%= a.cas_id %></td>
+    <td><%= a.principal_id %></td>
+    <td><%= a.product_id %></td>
+    <td><%= number_to_currency(a.capital, :precision => 0, :delimiter => ".") %></td>
+    <td><%= a.alloc_date %></td>
+    <td>Crear Ticket</td>
+  </tr>
+  <% end %>
+  </table>
+</seccion>
+
+<botones>
+  <%= link_to 'Crear Ticket en blanco', new_ticket_path %>
+  <%= link_to 'Página Principal', :controller => "sessions", :action => "ejc" %>
+</botones>
+

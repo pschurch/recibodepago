@@ -1,0 +1,36 @@
+<seccion>
+  <table>
+  <tr>
+    <th>Ejecutivo Cobranza</th>
+    <th>Nro Ticket</th>
+    <th>Rut</th>
+    <th>Nombre Deudor</th>
+    <th>Identificador</th>
+    <th>Mandante</th>
+    <th>Producto</th>
+    <th>Capital</th>
+    <th>Fecha Asig.</th>
+    <th>Estado</th>
+    <th></th>
+  </tr>
+  <% @tickets.each do |a| %>
+  <tr>
+    <td><%= a.prepared_by %></td>
+    <td><%= a.id %></td>
+    <td><%= a.rut %></td>
+    <td><%= a.name %></td>
+    <td><%= a.cas_id %></td>
+    <td><%= a.principal_id %></td>
+    <td><%= a.product_id %></td>
+    <td><%= number_to_currency(a.capital, :precision => 0, :delimiter => ".") %></td>
+    <td><%= a.alloc_date %></td>
+    <td><%= a.state %></td>
+    <td>Ver</td>
+  </tr>
+  <% end %>
+  </table>
+</seccion>
+<botones>
+  <%= link_to 'Página Principal', :controller => "sessions", :action => "ejc" %>
+</botones>
+

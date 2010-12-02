@@ -1,4 +1,8 @@
 Recibodepago::Application.routes.draw do
+  resources :tickets
+  match '/search', :to => 'tickets#search'
+  match '/list', :to => 'tickets#list'
+
   #get "sessions/new"
   resources :sessions, :only => [:new, :create, :destroy]
   match '/salir', :to => 'sessions#destroy'

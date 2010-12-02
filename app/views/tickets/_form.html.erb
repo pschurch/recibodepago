@@ -1,0 +1,135 @@
+<table><tr><td class="formulario">
+<%= form_for(@ticket) do |f| %>
+  <%= render "shared/error_messages", :target => @ticket, :text => "el Ticket" %>  
+
+  <div class="field-l">
+    Rut:
+    <%= f.text_field :rut, :size => "10" %> - <%= f.text_field :digit, :size => "1" %>
+  </div>
+  <div class="field-r">
+    Identificador: 
+    <%= f.text_field :cas_id, :size => "10" %>
+  </div>
+  <br clear="all">
+
+  <div class="field-l">
+    Nombre:
+    <%= f.text_field :name, :size => "30" %>
+  </div>
+  <br clear="all">
+
+  <div class="field-l">
+    Mandante:
+    <%= f.text_field :principal_name, :size => "10" %>
+  </div>
+  <div class="field-r">
+    Tipo de Cobranza:
+    <%= f.text_field :collection_type_name, :size => "10" %>
+  </div>
+  <br clear="all">
+
+  <div class="field-l">
+    Descripción del Pago:<br>
+    <%= f.text_area :payment_description, :size => "50x2" %>
+  </div>
+  <br clear="all">
+
+  <div class="field-l">
+    Capital: &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+    <%= f.text_field :capital, :size => "10" %>
+  </div>
+  <div class="field-r">
+    Producto: 
+    <%= f.text_field :product, :size => "10" %>
+  </div>
+  <br clear="all">
+
+  <div class="field-l">
+    Interés Mora: &nbsp; &nbsp; &nbsp;  &nbsp;
+    <%= f.text_field :arrear_interest, :size => "10" %>
+  </div>
+  <div class="field-r">
+    Número:
+    <%= f.text_field :number, :size => "10" %>
+  </div>
+  <br clear="all">
+
+  <div class="field-l">
+    Interés Plazo:&nbsp; &nbsp;  &nbsp; &nbsp;
+    <%= f.text_field :term_interest, :size => "10" %>
+  </div>
+  <div class="field-r">
+    Emisor:
+    <%= f.text_field :emitter, :size => "10" %>
+  </div>
+  <br clear="all">
+
+  <div class="field-l">
+    Honorarios: &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+    <%= f.text_field :fee, :size => "10" %>
+  </div>
+  <div class="field-r">
+    Cuenta Corriente:
+    <%= f.text_field :ctacte, :size => "10" %>
+  </div>
+  <br clear="all">
+
+  <div class="field-l">
+    Gastos Envío: &nbsp;&nbsp;&nbsp; &nbsp;
+    <%= f.text_field :shipping_costs, :size => "10" %>
+  </div>
+  <div class="field-r">
+    Vencimiento:
+    <%= f.text_field :expir_date, :size => "10" %>
+  </div>
+  <br clear="all">
+
+  <div class="field-l">
+    Gastos Judiciales:
+    <%= f.text_field :legal_costs, :size => "10" %>
+  </div>
+  <div class="field-r">
+    Boleta nro:
+    <%= f.text_field :ballot, :size => "10" %>
+  </div>
+  <br clear="all">
+
+  <div class="field-l">
+    Total a Pagar: &nbsp; &nbsp; &nbsp; 
+    <%= f.text_field :total_pay, :size => "10" %>
+  </div>
+  <div class="field-r">
+    Cuota:
+    <%= f.text_field :quota_num, :size => "1" %>
+    de:
+    <%= f.text_field :total_q, :size => "2" %>
+  </div>
+  <p clear="all"><br></p>
+
+  <div class="field-l">
+    Preparado por:
+    <%= f.text_field :prepared_by, :size => "30" %>
+  </div>
+  <br clear="all">
+  <div class="field">
+    Entrega documento a deudor:
+    <%= f.check_box :doc_delivery%> Sí
+  </div>
+  <br clear="all">
+
+  <div class="field">
+    Solicita modificación a Supervisor:
+    <%= f.check_box :adjust_sup %> Sí
+  </div>
+  <div class="field">
+    Descripción modificación solicitada:<br>
+    <%= f.text_area :adjust_sup_des, :size => "50x2" %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit "Grabar"%>
+  </div>  
+  
+<% end %>
+</td></tr></table>
+
