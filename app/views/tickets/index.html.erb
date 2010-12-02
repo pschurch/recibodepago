@@ -1,15 +1,15 @@
 <seccion>
   <table>
   <tr>
-    <th>Ejecutivo Cobranza</th>
-    <th>Nro Ticket</th>
-    <th>Rut</th>
-    <th>Nombre Deudor</th>
-    <th>Identificador</th>
-    <th>Mandante</th>
-    <th>Producto</th>
-    <th>Capital</th>
-    <th>Estado</th>
+    <th><%= link_to "Ejecutivo Cobranza", :sort => "prepared_by" %></th>
+    <th><%= link_to "N° Ticket", :sort => "id" %></th>
+    <th><%= link_to "Rut", :sort => "rut" %></th>
+    <th><%= link_to "Nombre Deudor", :sort => "name" %></th>
+    <th><%= link_to "Identificador", :sort => "cas_id" %></th>
+    <th><%= link_to "Mandante", :sort => "principal_id" %></th>
+    <th><%= link_to "Producto", :sort => "product_id" %></th>
+    <th><%= link_to "Capital", :sort => "capital" %></th>
+    <th><%= link_to "Estado", :sort => "state" %></th>
     <th></th>
   </tr>
   <% @tickets.each do |a| %>

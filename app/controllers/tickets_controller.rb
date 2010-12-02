@@ -2,7 +2,7 @@ class TicketsController < ApplicationController
   def index
     @titulo = "Listado de Tickets"
     @perfil_name = "Ejecutivo de Cobranza"
-    @tickets = Ticket.all
+    @tickets = Ticket.order(params[:sort])
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @tickets }
