@@ -39,8 +39,6 @@ class ProfilesController < ApplicationController
 
   def create
     @profile = Profile.new(params[:profile])
-    @titulo = "Crear Perfil"
-    @perfil_name = "Administrador"
     respond_to do |format|
       if @profile.save
         format.html { redirect_to(@profile, :notice => 'El Perfil se ha creado exitosamente.') }
@@ -68,13 +66,5 @@ class ProfilesController < ApplicationController
   end
 
   def destroy
-    @profile = Profile.find(params[:id])
-    @profile.destroy
-
-    respond_to do |format|
-#      format.html { redirect_to :back }
-      format.html { redirect_to(profiles_url) }
-      format.xml  { head :ok }
-    end
   end
 end
