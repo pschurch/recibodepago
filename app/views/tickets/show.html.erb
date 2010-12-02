@@ -1,215 +1,176 @@
-<p id="notice"><%= notice %></p>
+<seccion>
+<table><tr><td class="formulario">
+<% if notice == '1' %>
+  <p id="notice">El Ticket N° <%= @ticket.id %> se ha creado exitosamente.</p>
+<% else %>
+  <% if not notice.nil? %><p id="notice"><%= notice %></p><% end %>
 
-<p>
-  <b>Principal:</b>
-  <%= @ticket.principal_id %>
-</p>
+  <div class="fieldt-l">
+    Rut:
+  </div>
+  <div class="field_txt-l">
+    <%= @ticket.rut %> - <%= @ticket.digit %>
+  </div>
+  <div class="field_txt-r">
+    <%= @ticket.cas_id %>
+  </div>
+  <div class="fieldt-r">
+    Identificador: 
+  </div>
+  <br clear="all">
 
-<p>
-  <b>Collection type:</b>
-  <%= @ticket.collection_type_id %>
-</p>
+  <div class="fieldt-l">
+    Nombre:
+  </div>
+  <div class="fieldg_txt-l">
+    <%= @ticket.name %>
+  </div>
+  <br clear="all">
 
-<p>
-  <b>Product:</b>
-  <%= @ticket.product_id %>
-</p>
+  <div class="fieldt-l">
+    Mandante:
+  </div>
+  <div class="field_txt-l">
+    <%= @ticket.principal_name %>&nbsp;
+  </div>
+  <div class="field_txt-r">
+    <%= @ticket.collection_type_name %>&nbsp;
+  </div>
+  <div class="fieldt-r">
+    Tipo de Cobranza: 
+  </div>
+  <br clear="all">
 
-<p>
-  <b>User:</b>
-  <%= @ticket.user_id %>
-</p>
+  <div class="field">
+    Descripción del Pago:
+  </div>
+  <div class="field_area">
+    <%= @ticket.payment_description %>&nbsp;
+  </div>
+  <br clear="all">
 
-<p>
-  <b>Receipt:</b>
-  <%= @ticket.receipt_id %>
-</p>
+  <div class="fieldt-l">
+    Capital: &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+  </div>
+  <div class="field_txt-l">
+    <%= @ticket.capital %>&nbsp;
+  </div>
+  <div class="field_txt-r">
+    <%= @ticket.product %>&nbsp;
+  </div>
+  <div class="fieldt-r">
+    Producto: 
+  </div>
+  <br clear="all">
 
-<p>
-  <b>State:</b>
-  <%= @ticket.state %>
-</p>
+  <div class="fieldt-l">
+    Interés Mora: &nbsp; &nbsp; &nbsp;  &nbsp;
+  </div>
+  <div class="field_txt-l">
+    <%= @ticket.arrear_interest %>&nbsp;
+  </div>
+  <div class="field_txt-r">
+    <%= @ticket.number %>&nbsp;
+  </div>
+  <div class="fieldt-r">
+    Número: 
+  </div>
+  <br clear="all">
 
-<p>
-  <b>State fees:</b>
-  <%= @ticket.state_fees %>
-</p>
+  <div class="fieldt-l">
+    Interés Plazo:&nbsp; &nbsp;  &nbsp; &nbsp;
+  </div>
+  <div class="field_txt-l">
+    <%= @ticket.term_interest %>&nbsp;
+  </div>
+  <div class="field_txt-r">
+    <%= @ticket.emitter %>&nbsp;
+  </div>
+  <div class="fieldt-r">
+    Emisor: 
+  </div>
+  <br clear="all">
 
-<p>
-  <b>Group:</b>
-  <%= @ticket.group %>
-</p>
+  <div class="fieldt-l">
+    Honorarios: &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+  </div>
+  <div class="field_txt-l">
+    <%= @ticket.fee %>&nbsp;
+  </div>
+  <div class="field_txt-r">
+    <%= @ticket.ctacte %>&nbsp;
+  </div>
+  <div class="fieldt-r">
+    Cuenta Corriente: 
+  </div>
+  <br clear="all">
 
-<p>
-  <b>Rut:</b>
-  <%= @ticket.rut %>
-</p>
+  <div class="fieldt-l">
+    Gastos de Envío: &nbsp;
+  </div>
+  <div class="field_txt-l">
+    <%= @ticket.shipping_costs %>&nbsp;
+  </div>
+  <div class="field_txt-r">
+    <%= @ticket.expir_date %>&nbsp;
+  </div>
+  <div class="fieldt-r">
+    Vencimiento: 
+  </div>
+  <br clear="all">
 
-<p>
-  <b>Digit:</b>
-  <%= @ticket.digit %>
-</p>
+  <div class="fieldt-l">
+    Gastos Judiciales:
+  </div>
+  <div class="field_txt-l">
+    <%= @ticket.legal_costs %>&nbsp;
+  </div>
+  <div class="field_txt-r">
+    <%= @ticket.ballot %>&nbsp;
+  </div>
+  <div class="fieldt-r">
+    Boleta N°: 
+  </div>
+  <br clear="all">
 
-<p>
-  <b>Name:</b>
-  <%= @ticket.name %>
-</p>
+  <div class="fieldt-l">
+    Total a Pagar: &nbsp; &nbsp; &nbsp; 
+  </div>
+  <div class="field_txt-l">
+    <%= @ticket.total_pay %>&nbsp;
+  </div>
+  <div class="field_txt-r">
+    <%= @ticket.quota_num %> de <%= @ticket.total_q %>
+  </div>
+  <div class="fieldt-r">
+    Cuota: 
+  </div>
+  <br clear="all">
 
-<p>
-  <b>Cas:</b>
-  <%= @ticket.cas_id %>
-</p>
+  <div class="fieldt-l">
+    Preparado por:
+  </div>
+  <div class="fieldg_txt-l">
+    <%= @ticket.prepared_by %>&nbsp;
+  </div>
+  <br clear="all">
 
-<p>
-  <b>Principal name:</b>
-  <%= @ticket.principal_name %>
-</p>
+  <div class="fieldt-l">
+    Entrega documento a deudor:  
+  </div>
+  <div class="fields_txt-l">
+    <% if @ticket.doc_delivery %>Sí<% else %>No<% end %>
+  </div>
 
-<p>
-  <b>Collection type name:</b>
-  <%= @ticket.collection_type_name %>
-</p>
+<% end %>
+</td></tr></table>
+</seccion>
 
-<p>
-  <b>Payment description:</b>
-  <%= @ticket.payment_description %>
-</p>
+<botones>
+<% if not notice == '1' %>
+  <%= link_to 'Editar', edit_ticket_path(@ticket) %> 
+  <%= link_to 'Listado de Tickets', tickets_path %>
+<% end %>
+  <%= link_to 'Página Principal', :controller => "sessions", :action => "ejc" %>
+</botones>
 
-<p>
-  <b>Capital:</b>
-  <%= @ticket.capital %>
-</p>
-
-<p>
-  <b>Arrear interest:</b>
-  <%= @ticket.arrear_interest %>
-</p>
-
-<p>
-  <b>Term interest:</b>
-  <%= @ticket.term_interest %>
-</p>
-
-<p>
-  <b>Fee:</b>
-  <%= @ticket.fee %>
-</p>
-
-<p>
-  <b>Shipping costs:</b>
-  <%= @ticket.shipping_costs %>
-</p>
-
-<p>
-  <b>Legal costs:</b>
-  <%= @ticket.legal_costs %>
-</p>
-
-<p>
-  <b>Total pay:</b>
-  <%= @ticket.total_pay %>
-</p>
-
-<p>
-  <b>Product:</b>
-  <%= @ticket.product %>
-</p>
-
-<p>
-  <b>Number:</b>
-  <%= @ticket.number %>
-</p>
-
-<p>
-  <b>Emitter:</b>
-  <%= @ticket.emitter %>
-</p>
-
-<p>
-  <b>Ctacte:</b>
-  <%= @ticket.ctacte %>
-</p>
-
-<p>
-  <b>Expir date:</b>
-  <%= @ticket.expir_date %>
-</p>
-
-<p>
-  <b>Ballot:</b>
-  <%= @ticket.ballot %>
-</p>
-
-<p>
-  <b>Quota num:</b>
-  <%= @ticket.quota_num %>
-</p>
-
-<p>
-  <b>Total q:</b>
-  <%= @ticket.total_q %>
-</p>
-
-<p>
-  <b>Prepared by:</b>
-  <%= @ticket.prepared_by %>
-</p>
-
-<p>
-  <b>Doc delivery:</b>
-  <%= @ticket.doc_delivery %>
-</p>
-
-<p>
-  <b>Adjust sup:</b>
-  <%= @ticket.adjust_sup %>
-</p>
-
-<p>
-  <b>Adjust sup des:</b>
-  <%= @ticket.adjust_sup_des %>
-</p>
-
-<p>
-  <b>Adjust sup date:</b>
-  <%= @ticket.adjust_sup_date %>
-</p>
-
-<p>
-  <b>Adjust sup tm:</b>
-  <%= @ticket.adjust_sup_tm %>
-</p>
-
-<p>
-  <b>Adjust mgt:</b>
-  <%= @ticket.adjust_mgt %>
-</p>
-
-<p>
-  <b>Adjust mgt des:</b>
-  <%= @ticket.adjust_mgt_des %>
-</p>
-
-<p>
-  <b>Adjust mgt date:</b>
-  <%= @ticket.adjust_mgt_date %>
-</p>
-
-<p>
-  <b>Adjust mgt tm:</b>
-  <%= @ticket.adjust_mgt_tm %>
-</p>
-
-<p>
-  <b>Canceled by:</b>
-  <%= @ticket.canceled_by %>
-</p>
-
-<p>
-  <b>Canceled date:</b>
-  <%= @ticket.canceled_date %>
-</p>
-
-
-<%= link_to 'Edit', edit_ticket_path(@ticket) %> |
-<%= link_to 'Back', tickets_path %>

@@ -1,6 +1,8 @@
-<h1>Editing ticket</h1>
+<seccion>
+  <%= render 'form' %>
+</seccion>
 
-<%= render 'form' %>
+<botones>
+  <%= link_to 'Cancelar', :controller => "sessions", :action => "ejc" %> 
+</botones>
 
-<%= link_to 'Show', @ticket %> |
-<%= link_to 'Back', tickets_path %>

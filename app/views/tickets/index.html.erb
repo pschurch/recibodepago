@@ -9,7 +9,6 @@
     <th>Mandante</th>
     <th>Producto</th>
     <th>Capital</th>
-    <th>Fecha Asig.</th>
     <th>Estado</th>
     <th></th>
   </tr>
@@ -23,9 +22,8 @@
     <td><%= a.principal_id %></td>
     <td><%= a.product_id %></td>
     <td><%= number_to_currency(a.capital, :precision => 0, :delimiter => ".") %></td>
-    <td><%= a.alloc_date %></td>
     <td><%= a.state %></td>
-    <td>Ver</td>
+    <td><%= link_to 'Ver', a %></td>
   </tr>
   <% end %>
   </table>

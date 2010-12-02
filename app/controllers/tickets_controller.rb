@@ -37,27 +37,19 @@ class TicketsController < ApplicationController
 
   def create
     @ticket = Ticket.new(params[:ticket])
-    respond_to do |format|
-      if @ticket.save
-        format.html { redirect_to(@ticket, :notice => 'Ticket was successfully created.') }
-        format.xml  { render :xml => @ticket, :status => :created, :location => @ticket }
-      else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @ticket.errors, :status => :unprocessable_entity }
-      end
+    if @ticket.save
+      redirect_to(@ticket, :notice => '1')
+    else
+      render :action => "new" 
     end
   end
 
   def update
     @ticket = Ticket.find(params[:id])
-    respond_to do |format|
-      if @ticket.update_attributes(params[:ticket])
-        format.html { redirect_to(@ticket, :notice => 'Ticket was successfully updated.') }
-        format.xml  { head :ok }
-      else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @ticket.errors, :status => :unprocessable_entity }
-      end
+    if @ticket.update_attributes(params[:ticket])
+      redirect_to(@ticket, :notice => 'El Ticket se ha actualizado exitosamente.') 
+    else
+      render :action => "edit" 
     end
   end
 

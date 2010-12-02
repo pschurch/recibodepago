@@ -159,26 +159,41 @@ td.formulario {
 }
 input[type=text], input[type=password], input.text, input.title, textarea, select, input.checkbox, input.radio {margin:2px 0; font-size: 13px; }
 
-div.field{
+div.field, div.field-r, div.field-l{
   margin-bottom: 4px;
 }
-div.field-r{
-  margin-bottom: 4px;
+div.field-r, div.fieldt-r, div.field_txt-r{
   float: right;
-  width: 175px;   
 }
-div.field-l{
-  margin-bottom: 4px;
+div.field-l, div.fieldt-l, div.field_txt-l, div.fieldg_txt-l, div.fields_txt-l{
   float: left;
-  width: 175px; 
 }
-div.field_txt{
+div.fieldt-l, div.fieldt-r{
+  margin-top: 5px;
+  margin-right: 3px;
+}
+div.field_txt, div.field_txt-l, div.fieldg_txt-l, div.fields_txt-l, div.field_txt-r, div.field_area{
   margin:2px 0;
   margin-bottom: 6px; 
   padding: 5px;
   border: 1px solid #AAA;	
   background: white;
   width: 350px;  		
+}
+div.field_area{
+  width: 450px;
+}
+div.field_txt-l{
+  width: 100px;  		
+}
+div.field_txt-r{
+  width: 100px;  		
+}
+div.fieldg_txt-l{
+  width: 300px;  		
+}
+div.fields_txt-l{
+  width: 20px;  		
 }
 div.field-r div.field_txt {width: 160px;}
 div.field-l div.field_txt {width: 160px;}

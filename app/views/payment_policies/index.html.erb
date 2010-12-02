@@ -13,6 +13,7 @@
     <td><%= payment_policy.product.name %></td>
     <td><%= payment_policy.collection_type.name %></td>
     <td><% if payment_policy.state %>Activo<% else %>Inactivo<% end %></td>
+    <td><%= link_to 'Ver', payment_policy %></td>
   </tr>
   <% end %>
   </table>
