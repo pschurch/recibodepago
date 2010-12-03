@@ -12,6 +12,8 @@
 #
 
 class Profile < ActiveRecord::Base
-  validates_presence_of :name, :message => "(Nombre) : debe ingresar un valor en este campo."
+  attr_accessible :description
   has_many :users
+
+  validates_presence_of :name, :message => "(Nombre) : debe ingresar un valor en este campo."
 end

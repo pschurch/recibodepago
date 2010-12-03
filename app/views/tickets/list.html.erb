@@ -15,8 +15,8 @@
     <td><%= a.rut %></td>
     <td><%= a.name %></td>
     <td><%= a.cas_id %></td>
-    <td><%= a.principal_id %></td>
-    <td><%= a.product_id %></td>
+    <td><%= a.principal.name %></td>
+    <td><%= a.product.name %></td>
     <td><%= number_to_currency(a.capital, :precision => 0, :delimiter => ".") %></td>
     <td><%= a.alloc_date %></td>
     <td>Crear Ticket</td>

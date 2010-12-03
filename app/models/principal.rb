@@ -19,6 +19,7 @@
 class Principal < ActiveRecord::Base
   has_many :payment_policies
   has_many :tickets
+  has_many :assignments
 
   validates_presence_of :name, :message => "(Nombre) : debe ingresar un valor en este campo."
   validates_presence_of :social_reason, :message => "(Razon Social) : debe ingresar un valor en este campo."
