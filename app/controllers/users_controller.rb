@@ -1,79 +1,55 @@
 class UsersController < ApplicationController
+  before_filter :perfil_name
   before_filter :authenticate 
 
   def index
     @users = User.all
     @titulo = "Listado de Usuarios"
-    @perfil_name = "Administrador"
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @users }
-    end
   end
 
   def show
     @user = User.find(params[:id])
     @titulo = "Ver Usuario"
-    @perfil_name = "Administrador"
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @user }
-    end
   end
 
   def new
     @user = User.new
     @titulo = "Crear Usuario"
-    @perfil_name = "Administrador"
-    respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @user }
-    end
   end
 
   def edit
     @user = User.find(params[:id])
     @titulo = "Editar Usuario"
-    @perfil_name = "Administrador"
   end
 
   def create
     @user = User.new(params[:user])
     @titulo = "Crear Usuario"
-    @perfil_name = "Administrador"
-    respond_to do |format|
-      if @user.save
-        format.html { redirect_to(@user, :notice => 'El Usuario se ha creado exitosamente.') }
-        format.xml  { render :xml => @user, :status => :created, :location => @user }
-      else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @user.errors, :status => :unprocessable_entity }
-      end
+    if @user.save
+      redirect_to(@user, :notice => 'El Usuario se ha creado exitosamente.') 
+    else
+      render :action => "new" 
     end
   end
 
   def update
     @user = User.find(params[:id])
     @titulo = "Editar Usuario"
-    @perfil_name = "Administrador"
-    respond_to do |format|
-      if @user.update_attributes(params[:user])
-        format.html { redirect_to(@user, :notice => 'El Usuario se ha actualizado exitosamente.') }
-        format.xml  { head :ok }
-      else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @user.errors, :status => :unprocessable_entity }
-      end
+    if @user.update_attributes(params[:user])
+      redirect_to(@user, :notice => 'El Usuario se ha actualizado exitosamente.') 
+    else
+      render :action => "edit" 
     end
   end
 
   def destroy
     @user = User.find(params[:id])
     @user.destroy
-    respond_to do |format|
-      format.html { redirect_to(users_url) }
-      format.xml  { head :ok }
-    end
+    redirect_to(users_url) 
   end
 
+  private
+    def perfil_name
+      @perfil_name = "Administrador"
+    end
 end
