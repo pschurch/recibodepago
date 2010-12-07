@@ -4,19 +4,11 @@ class TicketsController < ApplicationController
   def index
     @titulo = "Listado de Tickets"
     @tickets = Ticket.order(params[:sort])
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @tickets }
-    end
   end
 
   def show
     @titulo = "Ver Ticket"
     @ticket = Ticket.find(params[:id])
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @ticket }
-    end
   end
 
   def new
@@ -24,10 +16,6 @@ class TicketsController < ApplicationController
     @user_perfil = current_user.profile_id
     @titulo = "Crear Ticket"
     @ticket = Ticket.new
-    respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @ticket }
-    end
   end
 
   def edit
@@ -61,8 +49,12 @@ class TicketsController < ApplicationController
   end
 
   def list
-    @titulo = "Listado de Casos"
-    @resp = Assignment.search(params[:search])
+    @titulo = "Listado de Casos" 
+    if params[:search] == ""
+      @resp = nil
+    else
+      @resp = Assignment.search(params[:search])
+    end
   end
 
   private
