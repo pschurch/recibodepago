@@ -7,6 +7,9 @@ class SessionsController < ApplicationController
     user = User.authenticate(params[:session][:user],
                              params[:session][:password])
     if user.nil?
+      if signed_in?
+        sign_out
+      end
       @titulo_unico = "Ingreso a la Aplicacion"
       flash[:notice] = "Error al ingresar Usuario/Password"
       render 'new'
@@ -41,9 +44,6 @@ class SessionsController < ApplicationController
         render 'new'
       end   
     end
-  end
-  def adm
-    @perfil_name = "Administrador"
   end
 
   def destroy

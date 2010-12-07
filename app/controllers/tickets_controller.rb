@@ -1,7 +1,8 @@
 class TicketsController < ApplicationController
+  before_filter :perfil_name
+
   def index
     @titulo = "Listado de Tickets"
-    @perfil_name = "Ejecutivo de Cobranza"
     @tickets = Ticket.order(params[:sort])
     respond_to do |format|
       format.html # index.html.erb
@@ -11,7 +12,6 @@ class TicketsController < ApplicationController
 
   def show
     @titulo = "Ver Ticket"
-    @perfil_name = "Ejecutivo de Cobranza"
     @ticket = Ticket.find(params[:id])
     respond_to do |format|
       format.html # show.html.erb
@@ -20,8 +20,9 @@ class TicketsController < ApplicationController
   end
 
   def new
+    @user_id = current_user.id 
+    @user_perfil = current_user.profile_id
     @titulo = "Crear Ticket"
-    @perfil_name = "Ejecutivo de Cobranza"
     @ticket = Ticket.new
     respond_to do |format|
       format.html # new.html.erb
@@ -31,7 +32,6 @@ class TicketsController < ApplicationController
 
   def edit
     @titulo = "Editar Ticket"
-    @perfil_name = "Ejecutivo de Cobranza"
     @ticket = Ticket.find(params[:id])
   end
 
@@ -58,13 +58,15 @@ class TicketsController < ApplicationController
 
   def search
     @titulo = "Busqueda de RUT"
-    @perfil_name = "Ejecutivo de Cobranza"
   end
 
   def list
     @titulo = "Listado de Casos"
-    @perfil_name = "Ejecutivo de Cobranza"
     @resp = Assignment.search(params[:search])
   end
 
+  private
+    def perfil_name
+      @perfil_name = "Ejecutivo de Cobranza"
+    end
 end

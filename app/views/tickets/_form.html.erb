@@ -107,13 +107,14 @@
   <p clear="all"><br></p>
 
   <div class="field-l">
-    Preparado por:
-    <%= f.text_field :prepared_by, :size => "30" %>
+    Preparado por:   
+    <%= f.select(:user_id, User.find(:all, :conditions => {:state => true, :profile_id => @user_perfil}, :order => 'name').collect {|u| [u.name, u.id]}, {:selected => @user_id}) %>
   </div>
   <br clear="all">
+
   <div class="field">
     Entrega documento a deudor:
-    <%= f.check_box :doc_delivery%> Sí
+    <%= f.check_box :doc_delivery %> Sí
   </div>
   <br clear="all">
 
