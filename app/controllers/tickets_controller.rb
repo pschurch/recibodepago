@@ -49,11 +49,14 @@ class TicketsController < ApplicationController
   end
 
   def list
-    @titulo = "Listado de Casos" 
+    @titulo = "Listado de Casos"  
     if params[:search] == ""
       @resp = nil
     else
       @resp = Assignment.search(params[:search])
+      if @resp.empty?
+        @resp = nil
+      end
     end
   end
 
