@@ -46,6 +46,28 @@ class SessionsController < ApplicationController
     end
   end
 
+  def ejc
+    @perfil_name = "Ejecutivo de Cobranza"
+  end
+  def sup
+    @perfil_name = "Supervisor"
+  end
+  def jtr
+    @perfil_name = "Jefe de Terreno"
+  end
+  def tsr
+    @perfil_name = "Tesoreria"
+  end
+  def opr
+    @perfil_name = "Operaciones"
+  end
+  def ger
+    @perfil_name = "Gerencia"
+  end
+  def adm
+    @perfil_name = "Administrador"
+  end
+
   def destroy
     sign_out
     redirect_to root_path
