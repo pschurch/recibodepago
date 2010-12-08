@@ -1,5 +1,5 @@
 class PaymentFormsController < ApplicationController
-  before_filter :authenticate
+  before_filter :authenticate_adm
   
   def index
     @payment_forms = PaymentForm.all

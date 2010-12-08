@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_filter :perfil_name
-  before_filter :authenticate 
+  before_filter :authenticate_adm
 
   def index
     @users = User.all

@@ -1,5 +1,6 @@
 class TicketsController < ApplicationController
   before_filter :perfil_name
+  before_filter :authenticate_ejc
 
   def index
     @titulo = "Listado de Tickets"

@@ -1,5 +1,5 @@
 class GroupsController < ApplicationController
-  before_filter :authenticate 
+  before_filter :authenticate_adm 
 
   def index
     @groups = Group.all

@@ -1,7 +1,7 @@
 class ProductsController < ApplicationController
   before_filter :perfil_name
-  before_filter :authenticate
-
+  before_filter :authenticate_adm
+ 
   def index
     @products = Product.all
     @titulo = "Listado de Productos"

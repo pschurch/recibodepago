@@ -1,5 +1,5 @@
 class PaymentPoliciesController < ApplicationController
-  before_filter :authenticate
+  before_filter :authenticate_adm
 
   def index
     @payment_policies = PaymentPolicy.all

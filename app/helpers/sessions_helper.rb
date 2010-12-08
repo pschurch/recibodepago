@@ -24,6 +24,9 @@ module SessionsHelper
 
   def deny_access
     store_location
+    if signed_in?
+      sign_out
+    end
     redirect_to root_path, :notice => "Ingrese Usuario/Password para acceder a la Aplicacion."
   end
 
@@ -34,6 +37,27 @@ module SessionsHelper
 
   def authenticate
     deny_access unless signed_in?
+  end
+  def authenticate_ejc
+    deny_access unless (signed_in? && current_user.profile_id == 1)
+  end
+  def authenticate_sup
+    deny_access unless (signed_in? && current_user.profile_id == 2)
+  end
+  def authenticate_jtr
+    deny_access unless (signed_in? && current_user.profile_id == 3)
+  end
+  def authenticate_tsr
+    deny_access unless (signed_in? && current_user.profile_id == 4)
+  end
+  def authenticate_opr
+    deny_access unless (signed_in? && current_user.profile_id == 5)
+  end
+  def authenticate_ger
+    deny_access unless (signed_in? && current_user.profile_id == 6)
+  end
+  def authenticate_adm
+    deny_access unless (signed_in? && current_user.profile_id == 7)
   end
 
   private

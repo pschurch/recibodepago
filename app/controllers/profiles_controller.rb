@@ -1,6 +1,6 @@
 class ProfilesController < ApplicationController
   before_filter :perfil_name
-  before_filter :authenticate 
+  before_filter :authenticate_adm 
 
   def index
     @profiles = Profile.all

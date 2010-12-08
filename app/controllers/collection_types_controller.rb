@@ -1,5 +1,5 @@
 class CollectionTypesController < ApplicationController
-  before_filter :authenticate 
+  before_filter :authenticate_adm 
 
   def index
     @collection_types = CollectionType.all
