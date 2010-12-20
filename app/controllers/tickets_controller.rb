@@ -25,6 +25,9 @@ class TicketsController < ApplicationController
   end
 
   def create
+    @user_id = current_user.id 
+    @user_perfil = current_user.profile_id
+    @titulo = "Crear Ticket"
     @ticket = Ticket.new(params[:ticket])
     if @ticket.save
       redirect_to(@ticket, :notice => '1')
