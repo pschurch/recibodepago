@@ -53,7 +53,7 @@
     Capital: &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
   </div>
   <div class="field_txt-l">
-    <%= @ticket.capital %>&nbsp;
+    <%= number_to_currency(@ticket.capital, :precision => 0, :delimiter => ".") %>&nbsp;
   </div>
   <div class="field_txt-r">
     <%= @ticket.product.name %>&nbsp;
@@ -67,7 +67,7 @@
     Interés Mora: &nbsp; &nbsp; &nbsp;  &nbsp;
   </div>
   <div class="field_txt-l">
-    <%= @ticket.arrear_interest %>&nbsp;
+    <%= number_to_currency(@ticket.arrear_interest, :precision => 0, :delimiter => ".") %>&nbsp;
   </div>
   <div class="field_txt-r">
     <%= @ticket.number %>&nbsp;
@@ -81,7 +81,7 @@
     Interés Plazo:&nbsp; &nbsp;  &nbsp; &nbsp;
   </div>
   <div class="field_txt-l">
-    <%= @ticket.term_interest %>&nbsp;
+    <%= number_to_currency(@ticket.term_interest, :precision => 0, :delimiter => ".") %>&nbsp;
   </div>
   <div class="field_txt-r">
     <%= @ticket.emitter %>&nbsp;
@@ -95,7 +95,7 @@
     Honorarios: &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
   </div>
   <div class="field_txt-l">
-    <%= @ticket.fee %>&nbsp;
+    <%= number_to_currency(@ticket.fee, :precision => 0, :delimiter => ".") %>&nbsp;
   </div>
   <div class="field_txt-r">
     <%= @ticket.ctacte %>&nbsp;
@@ -109,7 +109,7 @@
     Gastos de Envío: &nbsp;
   </div>
   <div class="field_txt-l">
-    <%= @ticket.shipping_costs %>&nbsp;
+    <%= number_to_currency(@ticket.shipping_costs, :precision => 0, :delimiter => ".") %>&nbsp;
   </div>
   <div class="field_txt-r">
     <%= @ticket.expir_date %>&nbsp;
@@ -123,7 +123,7 @@
     Gastos Judiciales:
   </div>
   <div class="field_txt-l">
-    <%= @ticket.legal_costs %>&nbsp;
+    <%= number_to_currency(@ticket.legal_costs, :precision => 0, :delimiter => ".") %>&nbsp;
   </div>
   <div class="field_txt-r">
     <%= @ticket.ballot %>&nbsp;
