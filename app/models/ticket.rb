@@ -38,7 +38,7 @@ class Ticket < ActiveRecord::Base
         else
           digito = res.to_s
         end
-        if digit!=digito
+        if digit.upcase!=digito
           errors.add(:rut, " : el valor ingresado no es valido.")
         end
       end

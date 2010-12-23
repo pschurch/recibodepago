@@ -24,19 +24,19 @@
     Interés Mora:
   </div>
   <div class="field_txt">
-    <%= @payment_policy.arrear_interest %>
+    <%= @payment_policy.arrear_interest %>&nbsp;
   </div>
   <div class="field">
     Interés Plazo:
   </div>
   <div class="field_txt">
-    <%= @payment_policy.term_interest %>
+    <%= @payment_policy.term_interest %>&nbsp;
   </div>
   <div class="field">
     Honorarios:
   </div>
   <div class="field_txt">
-    <%= @payment_policy.fee %>
+    <%= @payment_policy.fee %>&nbsp;
   </div>
   <div class="field">
     Requiere gastos judiciales:
@@ -54,7 +54,7 @@
     Descripción:
   </div>
   <div class="field_txt">
-    <%= @payment_policy.description %>
+    <%= @payment_policy.description %>&nbsp;
   </div>
   <div class="field">
     Estado:
@@ -62,6 +62,18 @@
   <div class="field_txt">
     <% if @payment_policy.state %>Activo<% else %>Inactivo<% end %>
   </div>
+
+  <div class="field">
+    Formas de Pago:   
+  </div>
+  <div class="field_txt">
+    <% @payment_policy.payment_form_ids.each do |p| %>
+      <% @payment_form_list.each do |f| %>
+        <% if p == f.id %><%= f.name %><br><% end %>
+      <% end %>
+    <% end %>
+  </div>
+
 </td></tr></table>
 </seccion>
 

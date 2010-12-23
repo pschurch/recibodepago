@@ -19,6 +19,7 @@
 #
 
 class PaymentPolicy < ActiveRecord::Base
+  has_and_belongs_to_many :payment_forms
   belongs_to :principal
   belongs_to :product
   belongs_to :collection_type

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101202131809) do
+ActiveRecord::Schema.define(:version => 20101223064002) do
 
   create_table "assignments", :force => true do |t|
     t.string   "state"
@@ -59,6 +59,13 @@ ActiveRecord::Schema.define(:version => 20101202131809) do
     t.string   "name"
     t.text     "description"
     t.boolean  "state",       :default => true
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "payment_forms_payment_policies", :id => false, :force => true do |t|
+    t.integer  "payment_form_id"
+    t.integer  "payment_policy_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

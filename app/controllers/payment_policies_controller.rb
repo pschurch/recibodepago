@@ -12,6 +12,7 @@ class PaymentPoliciesController < ApplicationController
   end
 
   def show
+    @payment_form_list = PaymentForm.find(:all)
     @payment_policy = PaymentPolicy.find(params[:id])
     @titulo = "Ver Politica de Pago"
     @perfil_name = "Administrador"
@@ -53,6 +54,7 @@ class PaymentPoliciesController < ApplicationController
   end
 
   def update
+    params[:payment_policy][:payment_form_ids] ||= []
     @payment_policy = PaymentPolicy.find(params[:id])
     @titulo = "Editar Politica de Pago"
     @perfil_name = "Administrador"

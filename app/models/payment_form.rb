@@ -12,5 +12,7 @@
 #
 
 class PaymentForm < ActiveRecord::Base
+  has_and_belongs_to_many :payment_policies
+
   validates_presence_of :name, :message => "(Nombre) : debe ingresar un valor en este campo."
 end

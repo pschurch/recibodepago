@@ -28,11 +28,11 @@
   </div>
   <div class="field">
     Requiere gastos judiciales:<br>
-    <%= f.check_box :legal_costs %>
+    <%= f.check_box :legal_costs %> Sí
   </div>
   <div class="field">
     Permite pago en cuotas:<br>
-    <%= f.check_box :installment %>
+    <%= f.check_box :installment %> Sí
   </div>
   <div class="field">
    Descripción: <br>
@@ -42,6 +42,17 @@
    Estado: <br>
    <%= f.check_box :state %> Activo
   </div>
+
+  <div class="field">
+   Formas de Pago:   
+  </div>
+  <% for payment_form in PaymentForm.find(:all, :conditions => 'state = true') %>
+    <div>
+      <%= check_box_tag "payment_policy[payment_form_ids][]", payment_form.id, @payment_policy.payment_forms.include?(payment_form) %>
+      <%= payment_form.name %>
+    </div>
+  <% end %>
+
   <div class="actions">
     <%= f.submit "Grabar"%>
   </div>  
