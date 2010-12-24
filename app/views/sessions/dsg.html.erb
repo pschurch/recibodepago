@@ -1,0 +1,17 @@
+<seccion>
+  <ul>
+    <li><%= link_to "Listado de Casos", :controller => "tickets", :action => "list" %></li>
+    <li><%= link_to "Listado de Tickets", tickets_path %></li>
+    <li><%= link_to "Listado de Recibos de Pago", tickets_path %></li>
+
+    <li><%= link_to "Perfiles", profiles_path %></li>
+    <li><%= link_to "Grupos", groups_path %></li>
+    <li><%= link_to "Mandantes", principals_path %></li>
+    <li><%= link_to "Usuarios", users_path %>
+    <li><%= link_to "Productos", products_path %>
+    <li><%= link_to "Tipos de Cobranza", collection_types_path %>
+    <li><%= link_to "Formas de Pago", payment_forms_path %>
+    <li><%= link_to "Políticas de Pago", payment_policies_path %>
+    <li><%= link_to "Acuerdos de Pago", payment_agreements_path %>
+  </ul>
+</seccion>

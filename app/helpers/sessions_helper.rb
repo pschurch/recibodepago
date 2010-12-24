@@ -39,7 +39,7 @@ module SessionsHelper
     deny_access unless signed_in?
   end
   def authenticate_ejc
-    deny_access unless (signed_in? && current_user.profile_id == 1)
+    deny_access unless (signed_in? && (current_user.profile_id == 1 or current_user.profile_id == 8) )
   end
   def authenticate_sup
     deny_access unless (signed_in? && current_user.profile_id == 2)
@@ -57,7 +57,7 @@ module SessionsHelper
     deny_access unless (signed_in? && current_user.profile_id == 6)
   end
   def authenticate_adm
-    deny_access unless (signed_in? && current_user.profile_id == 7)
+    deny_access unless (signed_in? && (current_user.profile_id == 7 or current_user.profile_id == 8) )
   end
 
   private

@@ -1,0 +1,6 @@
+  <% if current_user.profile_id==1 %>
+    <% pag = "ejc" %>
+  <% elsif current_user.profile_id==8 %>
+    <% pag = "dsg" %>  
+  <% end %>  
+  <%= link_to 'Página Principal', :controller => "sessions", :action => pag %>

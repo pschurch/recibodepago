@@ -53,6 +53,7 @@ class TicketsController < ApplicationController
   def destroy
   end
 
+
   def search
     @titulo = "Busqueda de RUT"
   end
@@ -71,6 +72,10 @@ class TicketsController < ApplicationController
 
   private
     def perfil_name
-      @perfil_name = "Ejecutivo de Cobranza"
+     if current_user.profile_id==1 
+        @perfil_name = "Ejecutivo de Cobranza"
+      elsif current_user.profile_id==8
+        @perfil_name = "Designer"
+      end 
     end
 end
