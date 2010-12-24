@@ -13,6 +13,11 @@ class TicketsController < ApplicationController
   end
 
   def new
+    if params[:f].nil?
+      @case = nil
+    else
+      @case = Assignment.find(params[:f])
+    end
     @user_id = current_user.id 
     @user_perfil = current_user.profile_id
     @titulo = "Crear Ticket"
