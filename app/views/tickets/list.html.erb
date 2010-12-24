@@ -24,7 +24,7 @@
       <td><%= a.product.name %></td>
       <td><%= number_to_currency(a.capital, :precision => 0, :delimiter => ".") %></td>
       <td><%= a.alloc_date %></td>
-      <td>Crear Ticket</td>
+      <td><%= link_to 'Crear Ticket', :controller => "tickets", :action => "new", :f => a.id %></td>
     </tr>
     <% end %>
   <% end %>

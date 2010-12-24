@@ -1,5 +1,9 @@
 <seccion>
-  <%= render 'form' %>
+  <% if @case.nil? %> 
+    <%= render 'form' %>
+  <% else %>
+    <%= render 'form_case' %>
+  <% end %>
 </seccion>
 
 <botones>
