@@ -56,12 +56,6 @@
   <div class="field_txt">
     <%= @payment_policy.description %>&nbsp;
   </div>
-  <div class="field">
-    Estado:
-  </div>
-  <div class="field_txt">
-    <% if @payment_policy.state %>Activo<% else %>Inactivo<% end %>
-  </div>
 
   <div class="field">
     Formas de Pago:   
@@ -72,6 +66,13 @@
         <% if p == f.id %><%= f.name %><br><% end %>
       <% end %>
     <% end %>
+  </div>
+
+  <div class="field">
+    Estado:
+  </div>
+  <div class="field_txt">
+    <% if @payment_policy.state %>Activo<% else %>Inactivo<% end %>
   </div>
 
 </td></tr></table>
