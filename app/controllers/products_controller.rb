@@ -50,6 +50,10 @@ class ProductsController < ApplicationController
 
   private
     def perfil_name
-      @perfil_name = "Administrador"
+      if current_user.profile_id==7 
+        @perfil_name = "Administrador"
+      elsif current_user.profile_id==8
+        @perfil_name = "Designer"
+      end
     end
 end

@@ -28,6 +28,6 @@
 <botones>
   <%= link_to 'Editar', edit_collection_type_path(@collection_type) %> 
   <%= link_to 'Listado de Tipos de Cobranza', collection_types_path %>
-  <%= link_to 'Página Principal', :controller => "sessions", :action => "adm" %>
+  <%= render 'shared/pp_adm_dsg' %>
 </botones>
 

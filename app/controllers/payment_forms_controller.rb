@@ -1,79 +1,59 @@
 class PaymentFormsController < ApplicationController
-  before_filter :authenticate_adm
+  before_filter :perfil_name
+  before_filter :authenticate_adm 
   
   def index
     @payment_forms = PaymentForm.all
     @titulo = "Listado de Formas de Pago"
-    @perfil_name = "Administrador"
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @payment_forms }
-    end
   end
 
   def show
     @payment_form = PaymentForm.find(params[:id])
     @titulo = "Ver Forma de Pago"
-    @perfil_name = "Administrador"
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @payment_form }
-    end
   end
 
   def new
     @payment_form = PaymentForm.new
     @titulo = "Crear Forma de Pago"
-    @perfil_name = "Administrador"
-    respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @payment_form }
-    end
   end
 
   def edit
     @payment_form = PaymentForm.find(params[:id])
     @titulo = "Editar Forma de Pago"
-    @perfil_name = "Administrador"
   end
 
   def create
     @payment_form = PaymentForm.new(params[:payment_form])
     @titulo = "Crear Forma de Pago"
-    @perfil_name = "Administrador"
-    respond_to do |format|
-      if @payment_form.save
-        format.html { redirect_to(@payment_form, :notice => 'La Forma de Pago se ha creado exitosamente.') }
-        format.xml  { render :xml => @payment_form, :status => :created, :location => @payment_form }
-      else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @payment_form.errors, :status => :unprocessable_entity }
-      end
+    if @payment_form.save
+      redirect_to(@payment_form, :notice => 'La Forma de Pago se ha creado exitosamente.') 
+    else
+      render :action => "new" 
     end
   end
 
   def update
     @payment_form = PaymentForm.find(params[:id])
     @titulo = "Editar Forma de Pago"
-    @perfil_name = "Administrador"
-    respond_to do |format|
-      if @payment_form.update_attributes(params[:payment_form])
-        format.html { redirect_to(@payment_form, :notice => 'La Forma de Pago se ha actualizado exitosamente.') }
-        format.xml  { head :ok }
-      else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @payment_form.errors, :status => :unprocessable_entity }
-      end
+    if @payment_form.update_attributes(params[:payment_form])
+      redirect_to(@payment_form, :notice => 'La Forma de Pago se ha actualizado exitosamente.') 
+    else
+      render :action => "edit" 
     end
   end
 
   def destroy
     @payment_form = PaymentForm.find(params[:id])
     @payment_form.destroy
-
-    respond_to do |format|
-      format.html { redirect_to(payment_forms_url) }
-      format.xml  { head :ok }
-    end
+    redirect_to(payment_forms_url) 
   end
+
+  private
+    def perfil_name
+      if current_user.profile_id==7 
+        @perfil_name = "Administrador"
+      elsif current_user.profile_id==8
+        @perfil_name = "Designer"
+      end
+    end
 end

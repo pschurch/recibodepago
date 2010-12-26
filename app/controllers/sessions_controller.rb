@@ -67,6 +67,9 @@ class SessionsController < ApplicationController
   def adm
     @perfil_name = "Administrador"
   end
+  def dsg
+    @perfil_name = "Designer"
+  end
 
   def destroy
     sign_out

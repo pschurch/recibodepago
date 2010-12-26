@@ -81,6 +81,6 @@
 <botones>
   <%= link_to 'Editar', edit_payment_policy_path(@payment_policy) %> 
   <%= link_to 'Listado de Políticas de Pago', payment_policies_path %>
-  <%= link_to 'Página Principal', :controller => "sessions", :action => "adm" %>
+  <%= render 'shared/pp_adm_dsg' %>
 </botones>
 

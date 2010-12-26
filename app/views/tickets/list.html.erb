@@ -32,7 +32,9 @@
 </seccion>
 
 <botones>
-  <%= link_to 'Crear Ticket en blanco', new_ticket_path %>
-  <%= link_to 'Página Principal', :controller => "sessions", :action => "ejc" %>
+  <% if current_user.profile_id==1 %>
+    <%= link_to 'Crear Ticket en blanco', new_ticket_path %>
+  <% end %>
+  <%= render 'shared/pp_ejc_dsg' %>
 </botones>
 

@@ -28,6 +28,6 @@
 <botones>
   <%= link_to 'Editar', edit_group_path(@group) %> 
   <%= link_to 'Listado de Grupos', groups_path %>
-  <%= link_to 'Página Principal', :controller => "sessions", :action => "adm" %>
+  <%= render 'shared/pp_adm_dsg' %>
 </botones>
 
