@@ -4,9 +4,10 @@ class Assignment < ActiveRecord::Base
 
  def self.search(search)
   if search
-    find(:all, :conditions => ['rut LIKE ?', "%#{search}%"])
+    where('rut LIKE ?', "%#{search}%").where("state = 'cargado'")
+
   else
-    find(:all)
+    where("state = 'cargado'")
   end
  end
 end

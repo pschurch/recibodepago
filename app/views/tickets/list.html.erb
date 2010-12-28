@@ -10,12 +10,12 @@
     <th>Fecha Asignación</th>
     <th></th>
   </tr>
-  <% if @resp.nil? %>
+  <% if @case.nil? %>
     <tr>
       <td colspan= 8>No se han encontrado Casos que coincidan con el Rut ingresado.</td>
     </tr>  
   <% else %>
-    <% @resp.each do |a| %>
+    <% @case.each do |a| %>
     <tr>
       <td><%= a.rut %></td>
       <td><%= a.name %></td>
