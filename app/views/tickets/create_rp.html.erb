@@ -1,0 +1,34 @@
+<seccion>
+  <table>
+  <tr>
+    <th><%= link_to "N° Ticket", :sort => "id" %></th>
+    <th><%= link_to "Rut", :sort => "rut" %></th>
+    <th><%= link_to "Nombre Deudor", :sort => "name" %></th>
+    <th><%= link_to "Mandante", :sort => "principal_id" %></th>
+    <th><%= link_to "Producto", :sort => "product_id" %></th>
+    <th><%= link_to "Identificador", :sort => "cas_id" %></th>
+    <th><%= link_to "Capital", :sort => "capital" %></th>
+    <th><%= link_to "Ejecutivo Cobranza", :sort => "prepared_by" %></th>
+    <th>Selec</th>
+    <th colspan=2></th>
+  </tr>
+  <% @tickets.each do |a| %>
+  <tr>
+    <td><%= a.id %></td>
+    <td><%= a.rut %>-<%= a.digit %></td>
+    <td><%= a.name %></td>
+    <td><%= a.principal.name %></td>
+    <td><%= a.product.name %></td>
+    <td><%= a.cas_id %></td>
+    <td><%= number_to_currency(a.capital, :precision => 0, :delimiter => ".") %></td>
+    <td><%= a.prepared_by %></td>
+    <td></td>
+    <td><%= link_to 'Ver', a %></td>
+    <td>Editar</td>
+  </tr>
+  <% end %>
+  </table>
+</seccion>
+<botones>
+  <%= render 'shared/pp_ejc_dsg' %>
+</botones>

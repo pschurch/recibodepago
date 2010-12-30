@@ -1,6 +1,6 @@
 <seccion>
 <table><tr><td class="formulario">
-<% form_tag({:controller => :tickets, :action => :list}, :method => :get) do %>
+<% form_tag({:controller => :tickets, :action => :cases}, :method => :get) do %>
   <div class="field">
    Rut: <br>
    <%= text_field_tag :search, params[:search], :size => "10"  %>

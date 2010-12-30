@@ -58,7 +58,7 @@ class TicketsController < ApplicationController
     @titulo = "Busqueda de RUT"
   end
 
-  def list
+  def cases
     @titulo = "Listado de Casos"  
     if params[:search] == ""
       @case = nil
@@ -68,6 +68,11 @@ class TicketsController < ApplicationController
         @case = nil
       end
     end
+  end
+
+  def create_rp
+    @titulo = "Crear Recibo de Pago"
+    @tickets = Ticket.order(params[:sort])
   end
 
   private
