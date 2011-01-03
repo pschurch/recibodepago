@@ -1,0 +1,41 @@
+<h1>Listing receipts</h1>
+
+<table>
+  <tr>
+    <th>State</th>
+    <th>Payment agreement</th>
+    <th>User</th>
+    <th>Contact</th>
+    <th>Payment agreement</th>
+    <th>Date r</th>
+    <th>Total pay</th>
+    <th>Total paid</th>
+    <th>User name</th>
+    <th>Telephone user</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @receipts.each do |receipt| %>
+  <tr>
+    <td><%= receipt.state %></td>
+    <td><%= receipt.payment_agreement_id %></td>
+    <td><%= receipt.user_id %></td>
+    <td><%= receipt.contact_id %></td>
+    <td><%= receipt.payment_agreement %></td>
+    <td><%= receipt.date_r %></td>
+    <td><%= receipt.total_pay %></td>
+    <td><%= receipt.total_paid %></td>
+    <td><%= receipt.user_name %></td>
+    <td><%= receipt.telephone_user %></td>
+    <td><%= link_to 'Show', receipt %></td>
+    <td><%= link_to 'Edit', edit_receipt_path(receipt) %></td>
+    <td><%= link_to 'Destroy', receipt, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Receipt', new_receipt_path %>

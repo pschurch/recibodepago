@@ -1,0 +1,55 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>State:</b>
+  <%= @receipt.state %>
+</p>
+
+<p>
+  <b>Payment agreement:</b>
+  <%= @receipt.payment_agreement_id %>
+</p>
+
+<p>
+  <b>User:</b>
+  <%= @receipt.user_id %>
+</p>
+
+<p>
+  <b>Contact:</b>
+  <%= @receipt.contact_id %>
+</p>
+
+<p>
+  <b>Payment agreement:</b>
+  <%= @receipt.payment_agreement %>
+</p>
+
+<p>
+  <b>Date r:</b>
+  <%= @receipt.date_r %>
+</p>
+
+<p>
+  <b>Total pay:</b>
+  <%= @receipt.total_pay %>
+</p>
+
+<p>
+  <b>Total paid:</b>
+  <%= @receipt.total_paid %>
+</p>
+
+<p>
+  <b>User name:</b>
+  <%= @receipt.user_name %>
+</p>
+
+<p>
+  <b>Telephone user:</b>
+  <%= @receipt.telephone_user %>
+</p>
+
+
+<%= link_to 'Edit', edit_receipt_path(@receipt) %> |
+<%= link_to 'Back', receipts_path %>

@@ -1,0 +1,57 @@
+<%= form_for(@receipt) do |f| %>
+  <% if @receipt.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@receipt.errors.count, "error") %> prohibited this receipt from being saved:</h2>
+
+      <ul>
+      <% @receipt.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :state %><br />
+    <%= f.text_field :state %>
+  </div>
+  <div class="field">
+    <%= f.label :payment_agreement_id %><br />
+    <%= f.text_field :payment_agreement_id %>
+  </div>
+  <div class="field">
+    <%= f.label :user_id %><br />
+    <%= f.text_field :user_id %>
+  </div>
+  <div class="field">
+    <%= f.label :contact_id %><br />
+    <%= f.text_field :contact_id %>
+  </div>
+  <div class="field">
+    <%= f.label :payment_agreement %><br />
+    <%= f.text_field :payment_agreement %>
+  </div>
+  <div class="field">
+    <%= f.label :date_r %><br />
+    <%= f.date_select :date_r %>
+  </div>
+  <div class="field">
+    <%= f.label :total_pay %><br />
+    <%= f.text_field :total_pay %>
+  </div>
+  <div class="field">
+    <%= f.label :total_paid %><br />
+    <%= f.text_field :total_paid %>
+  </div>
+  <div class="field">
+    <%= f.label :user_name %><br />
+    <%= f.text_field :user_name %>
+  </div>
+  <div class="field">
+    <%= f.label :telephone_user %><br />
+    <%= f.text_field :telephone_user %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
