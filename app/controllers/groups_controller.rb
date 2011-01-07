@@ -8,6 +8,7 @@ class GroupsController < ApplicationController
   end
 
   def show
+    @cartera_list = Cartera.all
     @group = Group.find(params[:id])
     @titulo = "Ver Grupo"
   end
@@ -33,6 +34,7 @@ class GroupsController < ApplicationController
   end
 
   def update
+    params[:group][:cartera_ids] ||= []
     @group = Group.find(params[:id])
     @titulo = "Editar Grupo"
     if @group.update_attributes(params[:group])

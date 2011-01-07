@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110107173624) do
+ActiveRecord::Schema.define(:version => 20110107180108) do
 
   create_table "assignments", :force => true do |t|
     t.string   "state"
@@ -30,6 +30,16 @@ ActiveRecord::Schema.define(:version => 20110107173624) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "cargrups", :force => true do |t|
+    t.integer  "group_id"
+    t.integer  "cartera_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "cargrups", ["cartera_id"], :name => "index_cargrups_on_cartera_id"
+  add_index "cargrups", ["group_id"], :name => "index_cargrups_on_group_id"
 
   create_table "carteras", :force => true do |t|
     t.integer  "principal_id"

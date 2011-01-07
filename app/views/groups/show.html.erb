@@ -16,6 +16,19 @@
   </div>
 
   <div class="field">
+    Carteras:
+  </div>
+  <div class="field_txt">
+    <% @group.cartera_ids.each do |a| %>
+      <% @cartera_list.each do |cartera| %>
+        <% if a == cartera.id %>
+          <%= cartera.principal.name %> - <%= cartera.product.name %><br>
+        <% end %>
+      <% end %>
+    <% end %>
+  </div>
+
+  <div class="field">
     Estado:
   </div>
   <div class="field_txt">
