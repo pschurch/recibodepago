@@ -8,6 +8,7 @@ class PrincipalsController < ApplicationController
   end
 
   def show
+    @product_list = Product.all
     @principal = Principal.find(params[:id])
     @titulo = "Ver Mandante"
   end
@@ -33,6 +34,7 @@ class PrincipalsController < ApplicationController
   end
 
   def update
+    params[:principal][:product_ids] ||= []
     @principal = Principal.find(params[:id])
     @titulo = "Editar Mandante"
     if @principal.update_attributes(params[:principal])

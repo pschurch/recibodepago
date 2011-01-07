@@ -27,6 +27,13 @@
     <%= f.text_field :email, :size => "40" %>
   </div>
   <div class="field">
+    Productos:<br>   
+    <% for product in Product.find(:all, :conditions => 'state = true') %>
+      <%= check_box_tag "principal[product_ids][]", product.id, @principal.products.include?(product) %>
+      <%= product.name %><br>
+    <% end %>
+  </div>
+  <div class="field">
    Estado: <br>
    <%= f.check_box :state %> Activo
   </div>

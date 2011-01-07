@@ -33,6 +33,7 @@ class ProductsController < ApplicationController
   end
 
   def update
+ 
     @product = Product.find(params[:id])
     @titulo = "Editar Producto"
     if @product.update_attributes(params[:product])

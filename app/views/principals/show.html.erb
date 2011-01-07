@@ -44,6 +44,17 @@
   </div>
 
   <div class="field">
+  Productos:
+  </div>
+  <div class="field_txt">
+    <% @principal.product_ids.each do |p| %>
+      <% @product_list.each do |f| %>
+        <% if p == f.id %><%= f.name %><br><% end %>
+      <% end %>
+    <% end %>
+  </div>
+
+  <div class="field">
     Estado:
   </div>
   <div class="field_txt">
