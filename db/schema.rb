@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110107180108) do
+ActiveRecord::Schema.define(:version => 20110107192749) do
 
   create_table "assignments", :force => true do |t|
     t.string   "state"
@@ -46,6 +46,7 @@ ActiveRecord::Schema.define(:version => 20110107180108) do
     t.integer  "product_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "state",        :default => true
   end
 
   add_index "carteras", ["principal_id"], :name => "index_carteras_on_principal_id"

@@ -33,10 +33,20 @@ class ProductsController < ApplicationController
   end
 
   def update
- 
     @product = Product.find(params[:id])
     @titulo = "Editar Producto"
     if @product.update_attributes(params[:product])
+      if !@product.state   #El estado del Producto es inactivo
+        @cartera = Cartera.where("product_id =?", params[:id])
+        @cartera.each do |c|
+          idc = c.id.to_s
+          @cargrups = Cargrup.where("cartera_id=?", idc)
+          @cargrups.each do |cg|
+            cg.destroy
+          end
+          c.destroy
+        end   
+      end 
       redirect_to(@product, :notice => 'El Producto se ha actualizado exitosamente.') 
     else
       render :action => "edit" 

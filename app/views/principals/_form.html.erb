@@ -28,7 +28,7 @@
   </div>
   <div class="field">
     Productos:<br>   
-    <% for product in Product.find(:all, :conditions => 'state = true') %>
+    <% for product in Product.where('state = true').order('name ASC') %>
       <%= check_box_tag "principal[product_ids][]", product.id, @principal.products.include?(product) %>
       <%= product.name %><br>
     <% end %>

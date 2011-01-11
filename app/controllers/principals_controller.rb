@@ -8,7 +8,7 @@ class PrincipalsController < ApplicationController
   end
 
   def show
-    @product_list = Product.all
+    @product_list = Product.where("state=true")
     @principal = Principal.find(params[:id])
     @titulo = "Ver Mandante"
   end
@@ -38,6 +38,18 @@ class PrincipalsController < ApplicationController
     @principal = Principal.find(params[:id])
     @titulo = "Editar Mandante"
     if @principal.update_attributes(params[:principal])
+      @carteras = Cartera.where("principal_id =?", params[:id])
+      if @principal.state
+        @carteras.each do |c|
+          c.update_attribute 'state', true
+        end   
+      else
+        @carteras.each do |c|
+          c.update_attribute 'state', false
+        end   
+      end
+      # var = "id mandante: " + params[:id].to_s        # id del Mandante
+      # var1 = " - products_ids: " + params[:principal][:product_ids].to_s 
       redirect_to(@principal, :notice => 'El Mandante se ha actualizado exitosamente.') 
     else
       render :action => "edit" 

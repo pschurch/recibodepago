@@ -3,6 +3,7 @@ class CreateCarteras < ActiveRecord::Migration
     create_table :carteras do |t|
       t.integer :principal_id
       t.integer :product_id
+      t.boolean :state, :default => true
       t.timestamps
     end
     add_index :carteras, :principal_id
