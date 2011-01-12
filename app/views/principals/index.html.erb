@@ -9,7 +9,11 @@
     <th>Tel&eacute;fono</th>
     <th>Email</th>
     <th>Estado</th>
-    <th></th>
+    <% if current_user.profile_id==7 %> 
+      <th></th>
+    <% elsif current_user.profile_id==8 %>
+      <th colspan=2></th>
+    <% end %>
   </tr>
   <% @principals.each do |principal| %>
   <tr>
@@ -22,6 +26,10 @@
     <td><%= principal.email %></td>
     <td><% if principal.state %>Activo<% else %>Inactivo<% end %></td>
     <td><%= link_to 'Ver', principal %></td>
+      <td><%= link_to 'Eliminar', principal, :confirm => 'Are you sure?', :method => :delete %></td>
+
+    <% if current_user.profile_id==8 %> 
+    <% end %>
   </tr>
   <% end %>
   </table>

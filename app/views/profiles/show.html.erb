@@ -26,6 +26,10 @@
 </seccion>
 
 <botones>
+  <% if current_user.profile_id==8 %> 
+    <%= link_to 'Editar', edit_profile_path(@profile) %>
+  <% end %>
   <%= link_to 'Listado de Perfiles', profiles_path %>
   <%= link_to 'Página Principal', :controller => "sessions", :action => "adm" %>
 </botones>
+

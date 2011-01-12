@@ -1,6 +1,5 @@
 class ProfilesController < ApplicationController
   before_filter :perfil_name
-  before_filter :authenticate_adm 
 
   def index
     @profiles = Profile.all
@@ -44,7 +43,6 @@ class ProfilesController < ApplicationController
   def destroy
   end
 
-
   private
     def perfil_name
       if current_user.profile_id==7 
@@ -54,3 +52,4 @@ class ProfilesController < ApplicationController
       end
     end
 end
+

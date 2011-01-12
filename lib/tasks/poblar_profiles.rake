@@ -1,11 +1,9 @@
 require 'faker'
 
 namespace :db do
-  desc "Resetea la BD y carga los datos iniciales."
-  task :start => :environment do
-    Rake::Task['db:reset'].invoke
+  desc "Carga los datos de Perfiles."
+  task :profiles => :environment do
     perfiles
-    grupos
   end
 end
 
@@ -28,7 +26,4 @@ def perfiles
                   :description => "Administra los Perfiles")
 end
 
-def grupos
-  Group.create!(:name => "SinGrupo",
-                :description => "No tiene asociado ningun Grupo en particular")
-end
+

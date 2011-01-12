@@ -8,7 +8,7 @@ class CreateTickets < ActiveRecord::Migration
       t.integer :receipt_id
       t.string :state, :default => "creado"
       t.string :state_fees, :default => "sin_facturar"
-      t.integer :group
+      t.integer :group_id
       t.string :rut
       t.string :digit
       t.string :name

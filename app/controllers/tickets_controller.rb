@@ -4,7 +4,8 @@ class TicketsController < ApplicationController
 
   def index
     @titulo = "Listado de Tickets"
-    @tickets = Ticket.order(params[:sort])
+    grupo = current_user.group_id
+    @tickets = Ticket.where("state='creado' OR state='pms' OR state='pmg' OR state='modificado'").where("group_id=?", grupo).order(params[:sort])
   end
 
   def show
@@ -20,8 +21,12 @@ class TicketsController < ApplicationController
     end
     @user_id = current_user.id 
     @user_perfil = current_user.profile_id
-    @titulo = "Crear Ticket"
+    @titulo = "Crear Ticket" 
     @ticket = Ticket.new
+    grupo = current_user.group_id
+    nombre = current_user.name
+    @ticket.update_attribute 'group_id', grupo
+    @ticket.update_attribute 'prepared_by', nombre
   end
 
   def edit

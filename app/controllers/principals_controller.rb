@@ -59,7 +59,7 @@ class PrincipalsController < ApplicationController
   def destroy
     @principal = Principal.find(params[:id])
     @principal.destroy
-    redirect_to(principals_url) 
+    redirect_to(principals_path) 
   end
 
 

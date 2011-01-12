@@ -10,7 +10,7 @@
     <th><%= link_to "Producto", :sort => "product_id" %></th>
     <th><%= link_to "Capital", :sort => "capital" %></th>
     <th><%= link_to "Estado", :sort => "state" %></th>
-    <th></th>
+    <th colspan=2></th>
   </tr>
   <% @tickets.each do |a| %>
   <tr>
@@ -22,9 +22,20 @@
     <td><%= a.principal.name %></td>
     <td><%= a.product.name %></td>
     <td><%= number_to_currency(a.capital, :precision => 0, :delimiter => ".") %></td>
-    <td><%= a.state %></td>
+    <td><%= case a.state 
+          when "pms"
+            "por modificar supervisor"
+          when "pmg"
+            "por modificar gerencia"
+          else
+            a.state
+        end %>
+    </td>
     <td><%= link_to 'Ver', a %></td>
-
+    <td><%= if (a.state == "creado" or a.state == "modificado")
+          link_to 'Editar', edit_ticket_path(a) 
+         end %>
+    </td>
   </tr>
   <% end %>
   </table>

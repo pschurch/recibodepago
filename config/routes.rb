@@ -1,4 +1,6 @@
 Recibodepago::Application.routes.draw do
+  resources :profiles
+
   #get "receipts/tickets"
   resources :receipts
 
@@ -27,8 +29,6 @@ Recibodepago::Application.routes.draw do
   resources :payment_agreements
   resources :payment_forms
   resources :products
-  resources :profiles
-
   root :to => "sessions#new"
  
 end

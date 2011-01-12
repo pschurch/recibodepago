@@ -1,9 +1,7 @@
 <table><tr><td class="formulario">
 <%= form_for(@profile) do |f| %>
-  <%= render "shared/error_messages", :target => @profile, :text => "el Perfil" %>  
-  
-  <%= render "shared/name_descr_state", :f => f %>  
-
+  <%= render "shared/error_messages", :target => @profile, :text => "el Perfil" %>
+  <%= render "shared/name_descr_state", :f => f %>
 <% end %>
 </td></tr></table>
 

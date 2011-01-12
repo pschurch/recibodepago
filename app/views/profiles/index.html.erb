@@ -7,7 +7,6 @@
     <th>Estado</th>
     <th></th>
   </tr>
-  
   <% @profiles.each do |profile| %>
   <tr>
     <td><%= profile.id %></td>
@@ -21,5 +20,9 @@
 </seccion>
 
 <botones>
+  <% if current_user.profile_id==8 %> 
+    <%= link_to 'Crear Perfil', new_profile_path %>
+  <% end %>
   <%= render 'shared/pp_adm_dsg' %>
 </botones>
+
