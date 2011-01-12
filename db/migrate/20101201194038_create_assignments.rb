@@ -6,6 +6,7 @@ class CreateAssignments < ActiveRecord::Migration
       t.integer :principal_id
       t.integer :collection_type_id
       t.integer :product_id
+      t.integer :group_id
       t.string :name
       t.string :rut
       t.string :digit
@@ -15,7 +16,6 @@ class CreateAssignments < ActiveRecord::Migration
       t.string :emitter
       t.string :ctacte
       t.date :expir_date
-
       t.timestamps
     end
   end

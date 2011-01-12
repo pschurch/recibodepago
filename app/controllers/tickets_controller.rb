@@ -58,7 +58,6 @@ class TicketsController < ApplicationController
   def destroy
   end
 
-
   def search
     @titulo = "Busqueda de RUT"
   end
@@ -66,11 +65,11 @@ class TicketsController < ApplicationController
   def cases
     @titulo = "Listado de Casos"  
     if params[:search] == ""
-      @case = nil
+      @resp = nil
     else
-      @case = Assignment.search(params[:search])
-      if @case.empty?
-        @case = nil
+      @resp = Assignment.search(params[:search])
+      if @resp.empty?
+        @resp = nil
       end
     end
   end

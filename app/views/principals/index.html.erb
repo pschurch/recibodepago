@@ -26,9 +26,8 @@
     <td><%= principal.email %></td>
     <td><% if principal.state %>Activo<% else %>Inactivo<% end %></td>
     <td><%= link_to 'Ver', principal %></td>
-      <td><%= link_to 'Eliminar', principal, :confirm => 'Are you sure?', :method => :delete %></td>
-
     <% if current_user.profile_id==8 %> 
+      <td><%= link_to 'Editar', edit_principal_path(principal) %></td>
     <% end %>
   </tr>
   <% end %>

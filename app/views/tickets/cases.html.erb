@@ -10,12 +10,12 @@
     <th>Fecha Asignación</th>
     <th></th>
   </tr>
-  <% if @case.nil? %>
+  <% if @resp.nil? %>
     <tr>
       <td colspan= 8>No se han encontrado Casos que coincidan con el Rut ingresado.</td>
     </tr>  
   <% else %>
-    <% @case.each do |a| %>
+    <% @resp.each do |a| %>
     <tr>
       <td><%= a.rut %></td>
       <td><%= a.name %></td>
@@ -24,7 +24,11 @@
       <td><%= a.product.name %></td>
       <td><%= number_to_currency(a.capital, :precision => 0, :delimiter => ".") %></td>
       <td><%= a.alloc_date %></td>
-      <td><%= link_to 'Crear Ticket', :controller => "tickets", :action => "new", :f => a.id %></td>
+      <td>
+        <% if current_user.group_id==a.group_id %> 
+          <%= link_to 'Crear Ticket', :controller => "tickets", :action => "new", :f => a.id %>
+        <% end %>
+      </td>
     </tr>
     <% end %>
   <% end %>
