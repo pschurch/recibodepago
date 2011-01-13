@@ -17,7 +17,7 @@
   <% else %>
     <% @resp.each do |a| %>
     <tr>
-      <td><%= a.rut %></td>
+      <td><%= a.rut %>-<%= a.digit %></td>
       <td><%= a.name %></td>
       <td><%= a.cas_id %></td>
       <td><%= a.principal.name %></td>

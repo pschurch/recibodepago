@@ -19,31 +19,29 @@ class TicketsController < ApplicationController
     else
       @case = Assignment.find(params[:f])
     end
+    @ticket = Ticket.new
+    @titulo = "Crear Ticket" 
     @user_id = current_user.id 
     @user_perfil = current_user.profile_id
-    @titulo = "Crear Ticket" 
-    @ticket = Ticket.new
-    grupo = current_user.group_id
-    nombre = current_user.name
-    @ticket.update_attribute 'group_id', grupo
-    @ticket.update_attribute 'prepared_by', nombre
-  end
-
-  def edit
-    @titulo = "Editar Ticket"
-    @ticket = Ticket.find(params[:id])
+    # new.html.erb
   end
 
   def create
     @user_id = current_user.id 
     @user_perfil = current_user.profile_id
-    @titulo = "Crear Ticket"
     @ticket = Ticket.new(params[:ticket])
     if @ticket.save
+      @ticket.update_attribute 'group_id', current_user.group_id
+      @ticket.update_attribute 'prepared_by', current_user.name
       redirect_to(@ticket, :notice => '1')
     else
       render :action => "new" 
     end
+  end
+
+  def edit
+    @titulo = "Editar Ticket"
+    @ticket = Ticket.find(params[:id])
   end
 
   def update

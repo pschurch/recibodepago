@@ -2,13 +2,15 @@
 <%= form_for(@ticket) do |f| %>
   <%= render "shared/error_messages", :target => @ticket, :text => "el Ticket" %>  
 
+  <%= f.hidden_field :principal_id, :value => @case.principal_id  %>
+  <%= f.hidden_field :product_id, :value => @case.product_id  %>
+
   <div class="field-l">
     Rut:
-    <%= f.text_field :rut, :size => "10", :value => @case.rut %> - <%= f.text_field :digit, :size => "1", :value => @case.digit %>
-  </div>
+    <%= f.text_field :rut, :size => "10", :value => @case.rut, :readonly => true %> - <%= f.text_field :digit, :size => "1", :value => @case.digit, :readonly => true %>
   <div class="field-r">
     Identificador: 
-    <%= f.text_field :cas_id, :size => "10", :value => @case.cas_id %>
+    <%= f.text_field :cas_id, :size => "10", :value => @case.cas_id, :readonly => true %>
   </div>
   <br clear="all">
 
@@ -20,7 +22,7 @@
 
   <div class="field-l">
     Mandante:
-    <%= f.collection_select :principal_id, Principal.find(:all, :conditions => {:state => true}, :order => 'name'), :id, :name, :selected => @case.principal_id %>
+    <%= f.text_field :principal_name, :size => "10", :value => @case.principal.name, :readonly => true %>    
   </div>
   <div class="field-r">
     Tipo de Cobranza:
@@ -40,7 +42,7 @@
   </div>
   <div class="field-r">
     Producto:
-    <%= f.collection_select :product_id, Product.find(:all, :conditions => {:state => true}, :order => 'name'), :id, :name, :selected => @case.product_id %>
+    <%= f.text_field :product_name, :size => "10", :value => @case.product.name, :readonly => true %>
   </div>
   <br clear="all">
 

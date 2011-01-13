@@ -23,7 +23,7 @@ class CreateTickets < ActiveRecord::Migration
       t.integer :shipping_costs
       t.integer :legal_costs
       t.integer :total_pay
-      t.string :product
+      t.string :product_name
       t.string :number
       t.string :emitter
       t.string :ctacte
