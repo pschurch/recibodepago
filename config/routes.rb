@@ -7,6 +7,7 @@ Recibodepago::Application.routes.draw do
   match '/search', :to => 'tickets#search'
   match '/list', :to => 'tickets#cases'
   match '/listk', :to => 'tickets#create_rp'
+  match '/changsp', :to => 'tickets#mod_sup'
   resources :tickets
 
   #get "sessions/new"

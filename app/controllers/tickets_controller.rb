@@ -1,6 +1,6 @@
 class TicketsController < ApplicationController
   before_filter :perfil_name
-  before_filter :authenticate_ejc
+  before_filter :authenticate_ejc_sup
 
   def index
     @titulo = "Listado de Tickets"
@@ -83,10 +83,19 @@ class TicketsController < ApplicationController
     @tickets = Ticket.order(params[:sort])
   end
 
+  def mod_sup
+    @titulo = "Tickets por Modificar"
+    grupo = current_user.group_id
+    @tickets = Ticket.where("state='pms'").where("group_id=?", grupo)
+    #@tickets = Ticket.where("state='state='").where("group_id=?", grupo)
+  end
+
   private
     def perfil_name
      if current_user.profile_id==1 
         @perfil_name = "Ejecutivo de Cobranza"
+      elsif current_user.profile_id==2
+        @perfil_name = "Supervisor"
       elsif current_user.profile_id==8
         @perfil_name = "Designer"
       end 

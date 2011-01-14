@@ -1,0 +1,32 @@
+<seccion>
+  <table>
+  <tr>
+    <th><%= link_to "Preparado por", :sort => "prepared_by" %></th>
+    <th><%= link_to "N° Ticket", :sort => "id" %></th>
+    <th><%= link_to "Rut", :sort => "rut" %></th>
+    <th><%= link_to "Nombre Deudor", :sort => "name" %></th>
+    <th><%= link_to "Identificador", :sort => "cas_id" %></th>
+    <th><%= link_to "Mandante", :sort => "principal_id" %></th>
+    <th><%= link_to "Producto", :sort => "product_id" %></th>
+    <th><%= link_to "Capital", :sort => "capital" %></th>
+    <th></th>
+  </tr>
+  <% @tickets.each do |a| %>
+  <tr>
+    <td><%= a.prepared_by %></td>
+    <td><%= a.id %></td>
+    <td><%= a.rut %>-<%= a.digit %></td>
+    <td><%= a.name %></td>
+    <td><%= a.cas_id %></td>
+    <td><%= a.principal_name %></td>
+    <td><%= a.product_name %></td>
+    <td><%= number_to_currency(a.capital, :precision => 0, :delimiter => ".") %></td>
+    <td><%= link_to 'Editar', edit_ticket_path(a) %></td>
+  </tr>
+  <% end %>
+  </table>
+</seccion>
+<botones>
+  <%= link_to 'Página Principal', :controller => "sessions", :action => 'sup' %>
+</botones>
+
