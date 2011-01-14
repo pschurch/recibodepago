@@ -16,7 +16,13 @@ class Ticket < ActiveRecord::Base
   validates_numericality_of :fee, :only_integer => true, :message => "(Honorarios) : el valor debe ser numerico.", :allow_blank => true
   validates_numericality_of :shipping_costs, :only_integer => true, :message => "(Gastos Envio) : el valor debe ser numerico.", :allow_blank => true
   validates_numericality_of :legal_costs, :only_integer => true, :message => "(Gastos Judiciales) : el valor debe ser numerico.", :allow_blank => true
+  validate :valida_mod_sup
 
+  def valida_mod_sup
+    if (adjust_sup? and adjust_sup_des.empty?)
+      errors.add(:adjust_sup_des, "(Descripcion modificacion) : debe ingresar la descripcion de la modificacion solicitada.")
+    end
+  end
 
   def valida_rut
     if rut.blank?

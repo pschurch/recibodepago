@@ -34,6 +34,11 @@ class TicketsController < ApplicationController
     if @ticket.save
       @ticket.update_attribute 'group_id', current_user.group_id
       @ticket.update_attribute 'prepared_by', current_user.name
+      if @ticket.adjust_sup?
+        @ticket.update_attribute 'state', "pms"
+        @ticket.update_attribute 'adjust_sup_date', Time.now
+        #@ticket.update_attribute 'adjust_sup_tm', Time.now
+      end
       redirect_to(@ticket, :notice => '1')
     else
       render :action => "new" 

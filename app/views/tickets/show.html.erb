@@ -42,7 +42,7 @@
     <%= @ticket.principal_name %>&nbsp;
   </div>
   <div class="field_txt-r">
-    <%= @ticket.collection_type.name %>
+    <%= @ticket.collection_type_name %>
   </div>
   <div class="fieldt-r">
     Tipo de Cobranza: 
@@ -177,7 +177,9 @@
 
 <botones>
 <% if not notice == '1' %>
-  <%= link_to 'Editar', edit_ticket_path(@ticket) %> 
+  <% if not @ticket.adjust_sup? %>
+    <%= link_to 'Editar', edit_ticket_path(@ticket) %> 
+  <% end %>
   <%= link_to 'Listado de Tickets', tickets_path %>
 <% end %>
   <%= link_to 'Página Principal', :controller => "sessions", :action => "ejc" %>
