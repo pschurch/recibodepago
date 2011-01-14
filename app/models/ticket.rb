@@ -6,10 +6,17 @@ class Ticket < ActiveRecord::Base
 
   validates_presence_of :name, :message => "(Nombre Deudor) : debe ingresar un valor en este campo."
   validates_presence_of :cas_id, :message => "(Identificador) : debe ingresar un valor en este campo."
-
   validate :valida_rut
   validates_format_of :rut, :with => /\A[+-]?\d+\Z/, :message => " : debe ingresar solamente digitos y sin puntos ni guiones.", :allow_blank => true
   validates_inclusion_of :digit, :in => %w(0 1 2 3 4 5 6 7 8 9 k K),  :message => "(Digito verificador) no es un valor valido.", :allow_blank => true
+  validates_presence_of :capital, :message => " : debe ingresar un valor en este campo."
+  validates_numericality_of :capital, :only_integer => true, :message => " : el valor debe ser numerico.", :allow_blank => true
+  validates_numericality_of :arrear_interest, :only_integer => true, :message => "(Interes Mora) : el valor debe ser numerico.", :allow_blank => true
+  validates_numericality_of :term_interest, :only_integer => true, :message => "(Interes Plazo) : el valor debe ser numerico.", :allow_blank => true
+  validates_numericality_of :fee, :only_integer => true, :message => "(Honorarios) : el valor debe ser numerico.", :allow_blank => true
+  validates_numericality_of :shipping_costs, :only_integer => true, :message => "(Gastos Envio) : el valor debe ser numerico.", :allow_blank => true
+  validates_numericality_of :legal_costs, :only_integer => true, :message => "(Gastos Judiciales) : el valor debe ser numerico.", :allow_blank => true
+
 
   def valida_rut
     if rut.blank?

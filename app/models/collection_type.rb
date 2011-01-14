@@ -14,5 +14,6 @@
 class CollectionType < ActiveRecord::Base
   validates_presence_of :name, :message => "(Nombre) : debe ingresar un valor en este campo."
   has_many :payment_policies
+  has_many :assignments
 end
 
