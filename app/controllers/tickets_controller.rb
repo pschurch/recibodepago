@@ -14,10 +14,10 @@ class TicketsController < ApplicationController
   end
 
   def new
-    if params[:f].nil?
+    if params[:t].nil?
       @case = nil
     else
-      @case = Assignment.find(params[:f])
+      @case = Assignment.find(params[:t])
     end
     @ticket = Ticket.new
     @titulo = "Crear Ticket" 
