@@ -6,6 +6,14 @@
   <% if not notice.nil? %><p id="notice"><%= notice %></p><% end %>
 
   <div class="fieldt-l">
+    Ticket N°:
+  </div>
+  <div class="field_txt-l">
+    <%= @ticket.id %>
+  </div>
+  <br clear="all">
+
+  <div class="fieldt-l">
     Rut:
   </div>
   <div class="field_txt-l">
@@ -140,7 +148,8 @@
     <%= @ticket.total_pay %>&nbsp;
   </div>
   <div class="field_txt-r">
-    <%= @ticket.quota_num %> de <%= @ticket.total_q %>
+    <%= @ticket.quota_num %>
+    <% if not @ticket.total_q.empty? %> de <%= @ticket.total_q %><% end %>&nbsp;
   </div>
   <div class="fieldt-r">
     Cuota: 

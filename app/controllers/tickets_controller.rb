@@ -14,19 +14,20 @@ class TicketsController < ApplicationController
   end
 
   def new
+    @titulo = "Crear Ticket" 
     if params[:t].nil?
-      @case = nil
+      @caso = nil
     else
-      @case = Assignment.find(params[:t])
+      @caso = Assignment.find(params[:t])
     end
     @ticket = Ticket.new
-    @titulo = "Crear Ticket" 
     @user_id = current_user.id 
     @user_perfil = current_user.profile_id
     # new.html.erb
   end
 
   def create
+    @titulo = "Crear Ticket" 
     @user_id = current_user.id 
     @user_perfil = current_user.profile_id
     @ticket = Ticket.new(params[:ticket])
