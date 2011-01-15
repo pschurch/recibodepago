@@ -78,11 +78,6 @@ class TicketsController < ApplicationController
     end
   end
 
-  def create_rp
-    @titulo = "Crear Recibo de Pago"
-    @tickets = Ticket.order(params[:sort])
-  end
-
   def mod_sup
     @titulo = "Tickets por Modificar"
     grupo = current_user.group_id

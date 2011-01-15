@@ -1,12 +1,11 @@
 Recibodepago::Application.routes.draw do
   resources :profiles
 
-  #get "receipts/tickets"
+  match '/listk', :to => 'receipts#create_rp'
   resources :receipts
 
   match '/search', :to => 'tickets#search'
   match '/list', :to => 'tickets#cases'
-  match '/listk', :to => 'tickets#create_rp'
   match '/changsp', :to => 'tickets#mod_sup'
   resources :tickets
 
