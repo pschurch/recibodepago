@@ -12,9 +12,12 @@
 #
 
 class Group < ActiveRecord::Base
-  validates_presence_of :name, :message => "(Nombre) : debe ingresar un valor en este campo."
+  attr_accessible :description, :name
+ 
   has_many :users
   has_many :cargrups
   has_many :carteras, :through => :cargrups
+
+  validates_presence_of :name, :message => "(Nombre) : debe ingresar un valor en este campo."
 
 end
