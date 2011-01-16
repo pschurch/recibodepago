@@ -2,51 +2,149 @@
 <%= form_for(@receipt) do |f| %>
   <%= render "shared/error_messages", :target => @receipt, :text => "el Recibo de Pago" %>
 
+  <% @tickets.each do |a| %>
+    <div class="field-l"><b>Ticket N°: <%= a.id %></b></div>
+    <div class="field-r">Identificador: <%= a.cas_id %></div>
+    <br clear="all">
 
-  <div class="field">
-    <%= f.label :state %><br />
-    <%= f.text_field :state %>
-  </div>
-  <div class="field">
-    <%= f.label :payment_agreement_id %><br />
-    <%= f.text_field :payment_agreement_id %>
-  </div>
-  <div class="field">
-    <%= f.label :user_id %><br />
-    <%= f.text_field :user_id %>
-  </div>
-  <div class="field">
-    <%= f.label :contact_id %><br />
-    <%= f.text_field :contact_id %>
-  </div>
-  <div class="field">
-    <%= f.label :payment_agreement %><br />
-    <%= f.text_field :payment_agreement %>
-  </div>
-  <div class="field">
-    <%= f.label :date_r %><br />
-    <%= f.date_select :date_r %>
-  </div>
-  <div class="field">
-    <%= f.label :total_pay %><br />
-    <%= f.text_field :total_pay %>
-  </div>
-  <div class="field">
-    <%= f.label :total_paid %><br />
-    <%= f.text_field :total_paid %>
-  </div>
-  <div class="field">
-    <%= f.label :user_name %><br />
-    <%= f.text_field :user_name %>
-  </div>
-  <div class="field">
-    <%= f.label :telephone_user %><br />
-    <%= f.text_field :telephone_user %>
-  </div>
+    <div class="field-l">Nombre: <%= a.name %></div>
+    <div class="field-r">Rut: <%= a.rut %> - <%= a.digit %></div>
+    <br clear="all">
+
+    <div class="field-l">Mandante: <%= a.principal_name %></div>
+    <div class="field-r">Tipo de Cobranza: <%= a.collection_type_name %></div>
+    <br clear="all">
+
+    <div class="field-l">Descripción del Pago: <%= a.payment_description %></div>
+    <br clear="all">
+
+    <div class="field-l">Capital:  <%= a.capital %></div>
+    <div class="field-r">Producto: <%= a.product_name %></div>
+    <br clear="all">
+
+    <div class="field-l">Interés Mora:  <%= a.arrear_interest %></div>
+    <div class="field-r">Número:  <%= a.number %></div>
+    <br clear="all">
+
+    <div class="field-l">Interés Plazo: <%= a.term_interest %></div>
+    <div class="field-r">Emisor: <%= a.emitter %>
+    </div>
+    <br clear="all">
+    <div class="field-l">Honorarios: <%= a.fee %></div>
+    <div class="field-r">Cuenta Corriente: <%= a.ctacte %>
+    </div>
+    <br clear="all">
+    <div class="field-l">Gastos Envío: <%= a.shipping_costs %></div>
+    <div class="field-r">Vencimiento: <%= a.expir_date %>
+    </div>
+    <br clear="all">
+    <div class="field-l">Gastos Judiciales: <%= a.legal_costs %></div>
+    <div class="field-r">Boleta nro: <%= a.ballot %></div>
+    <br clear="all">
+
+    <div class="field-l">Total a Pagar: <%= a.total_pay %></div>
+    <div class="field-r">Cuota: <%= a.quota_num %> de: <%= a.total_q %></div>
+    <br clear="all">
+
+    <div class="field-l">Preparado por: <%= a.prepared_by %></div>
+    <br clear="all">
+
+    <div class="field">Entrega documento a deudor: <% if a.doc_delivery %>Sí<% else %>No<% end %></div>
+    <br clear="all">
+
+    <hr>
+  <% end %>
+
+    <div class="fieldt-l">
+      Total a Pagar: <%= f.text_field :total_pay, :size => "10" %>
+    </div>
+    <br clear="all">
+    <div class="field-l">
+      Fecha: <%= f.date_select :date_r %>
+    </div>
+    <div class="field-r">
+      Acuerdo de Pago: <%= f.text_field :payment_agreement_name, :size => "10" %>
+    </div>
+    <br clear="all">
+    <div class="field-l">
+      Preparado por: <%= f.text_field :user_name, :size => "30", :value => current_user.name, :readonly => true %>&nbsp;
+    </div>
+    <div class="field-r">
+      Teléfono: <%= f.text_field :telephone_user, :size => "10" , :value => current_user.telephone, :readonly => true %>
+    </div>
+    <br clear="all">
+
+    <div class="subtit">
+      Datos de Contacto:
+    </div>
+    <div class="field-l">
+      Nombre: 
+    </div>
+    <div class="field-r">
+      Rut: 
+    </div>
+    <br clear="all">
+    <div class="field-l">
+      Calle: 
+    </div>
+    <div class="field-r">
+      N°: Depto.: 
+    </div>
+    <br clear="all">
+    <div class="field-l">
+      Referencia: 
+    </div>
+    <div class="field-r">
+      Comuna: 
+    </div>
+    <br clear="all">
+    <div class="field-l">
+      Teléfono 1: 
+    </div>
+    <div class="field-r">
+      Teléfono 2: 
+    </div>
+    <br clear="all">
+    <div class="field-l">
+      Teléfono 3: 
+    </div>
+    <div class="field-r">
+      Horario: 
+    </div>
+    <p><br clear="all"></p>
+
+    <div class="subtit">
+      Detalle del Pago:
+    </div>
+    <table>
+    <tr>
+      <th>Forma de Pago</th>
+      <th>Emisor</th>
+      <th>N° Documento</th>
+      <th>Monto</th>
+    </tr>
+    <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td colspan=3>Total Pagado:</td>
+      <td><%= f.text_field :total_paid, :size => "10" %></td>
+    </tr>
+    </table>
+
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit "Grabar" %>
   </div>
 
+  <p><hr></p>
+    state: <%= f.text_field :state, :size => "10", :readonly => true %><br>
+    payment_agreement_id: <%= f.text_field :payment_agreement_id, :size => "10" , :readonly => true %><br>
+    user_id:  <%= f.text_field :user_id, :size => "10" , :readonly => true %><br>
+    contact_id: <%= f.text_field :contact_id, :size => "10", :readonly => true %><br>
+  </div>
 
 <% end %>
 </td></tr></table>

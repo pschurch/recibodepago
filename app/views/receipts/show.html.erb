@@ -1,55 +1,35 @@
-<p id="notice"><%= notice %></p>
+<seccion>
+<table><tr><td class="formulario">
+  <p id="notice"><%= notice %></p>
 
-<p>
-  <b>State:</b>
-  <%= @receipt.state %>
-</p>
+  <div class="fieldt-l">
+    Total a Pagar:
+  </div>
+  <div class="field_txt-l">
+    <%= @receipt.total_pay %>
+  </div>
+  <br clear="all">
 
-<p>
-  <b>Payment agreement:</b>
-  <%= @receipt.payment_agreement_id %>
-</p>
+  <div class="fieldt-l">
+    Fecha:
+  </div>
+  <div class="field_txt-l">
+    <%= @receipt.date_r %>
+  </div>
+  <div class="field_txt-r">
+    <%= @receipt.payment_agreement_name %>
+  </div>
+  <div class="fieldt-r">
+    Acuerdo de Pago: 
+  </div>
+  <br clear="all">
 
-<p>
-  <b>User:</b>
-  <%= @receipt.user_id %>
-</p>
+</td></tr></table>
+</seccion>
 
-<p>
-  <b>Contact:</b>
-  <%= @receipt.contact_id %>
-</p>
+<botones>
+  <%= link_to 'Editar', edit_receipt_path(@receipt) %> 
+  <%= link_to 'Back', receipts_path %>
+  <%= link_to 'Página Principal', :controller => "sessions", :action => "ejc" %>
+</botones>
 
-<p>
-  <b>Payment agreement:</b>
-  <%= @receipt.payment_agreement %>
-</p>
-
-<p>
-  <b>Date r:</b>
-  <%= @receipt.date_r %>
-</p>
-
-<p>
-  <b>Total pay:</b>
-  <%= @receipt.total_pay %>
-</p>
-
-<p>
-  <b>Total paid:</b>
-  <%= @receipt.total_paid %>
-</p>
-
-<p>
-  <b>User name:</b>
-  <%= @receipt.user_name %>
-</p>
-
-<p>
-  <b>Telephone user:</b>
-  <%= @receipt.telephone_user %>
-</p>
-
-
-<%= link_to 'Edit', edit_receipt_path(@receipt) %> |
-<%= link_to 'Back', receipts_path %>

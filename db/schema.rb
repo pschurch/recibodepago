@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110113002150) do
+ActiveRecord::Schema.define(:version => 20110115200303) do
 
   create_table "assignments", :force => true do |t|
     t.string   "state"
@@ -137,11 +137,11 @@ ActiveRecord::Schema.define(:version => 20110113002150) do
   end
 
   create_table "receipts", :force => true do |t|
-    t.string   "state",                :default => "abierto"
+    t.string   "state",                  :default => "abierto"
     t.integer  "payment_agreement_id"
     t.integer  "user_id"
     t.integer  "contact_id"
-    t.string   "payment_agreement"
+    t.string   "payment_agreement_name"
     t.date     "date_r"
     t.integer  "total_pay"
     t.integer  "total_paid"

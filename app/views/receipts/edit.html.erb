@@ -1,6 +1,8 @@
-<h1>Editing receipt</h1>
+<seccion>
+  <%= render 'form' %>
+</seccion>
 
-<%= render 'form' %>
+<botones>
+  <%= link_to "Cancelar, :controller => "sessions", :action => "ejc" %> 
+</botones> 
 
-<%= link_to 'Show', @receipt %> |
-<%= link_to 'Back', receipts_path %>

@@ -157,6 +157,16 @@ td.formulario {
   background: #FFDC9E;  
   font-size: 13px;
 }
+
+hr {background:rgb(229,179,90);color:rgb(229,179,90);width:100%;height:2px;margin-top:2px;margin-bottom:10px;padding:0;border:none;}
+
+div.subtit {
+  margin-top:6px; 
+  margin-bottom: 6px; 
+  font-size: 14px;
+  font-weight: bold;
+}
+
 input[type=text], input[type=password], input.text, input.title, textarea, select, input.checkbox, input.radio {margin:2px 0; font-size: 13px; }
 
 div.field, div.field-r, div.field-l{

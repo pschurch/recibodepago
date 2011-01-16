@@ -7,31 +7,34 @@ class ReceiptsController < ApplicationController
 
   end
 
-  # GET /receipts
+  # GET /receipts - index.html.erb
   def index
+    @titulo = "Listado de Recibos de Pago"
     @receipts = Receipt.all
-    # index.html.erb
   end
 
-  # GET /receipts/1
+  # GET /receipts/1 - show.html.erb
   def show
+    @titulo = "Ver Recibo de Pago"
     @receipt = Receipt.find(params[:id])
-    # show.html.erb
   end
 
+  # new.html.erb
   def new
+    @titulo = "Crear Recibo de Pago"
     @receipt = Receipt.new
-    @titulo = "Crear rp" + params[:r].to_s
-    # new.html.erb
+    @tickets = Ticket.where("id=?", params[:r])
   end
 
   # GET /receipts/1/edit
   def edit
+    @titulo = "Editar Recibo de Pago"
     @receipt = Receipt.find(params[:id])
   end
 
   # POST /receipts
   def create
+    @titulo = "Crear Recibo de Pago"
     @receipt = Receipt.new(params[:receipt])
     if @receipt.save
       redirect_to(@receipt, :notice => 'Receipt was successfully created.') 
@@ -44,7 +47,7 @@ class ReceiptsController < ApplicationController
   def update
     @receipt = Receipt.find(params[:id])
     if @receipt.update_attributes(params[:receipt])
-      redirect_to(@receipt, :notice => 'Receipt was successfully updated.') 
+      redirect_to(@receipt, :notice => 'El Recibo de Pago se ha actualizado exitosamente.') 
     else
       render :action => "edit" 
     end

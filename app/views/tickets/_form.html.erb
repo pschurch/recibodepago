@@ -19,22 +19,22 @@
       Rut: <%= f.text_field :rut, :size => "10", :value => @caso.rut, :readonly => true %> - <%= f.text_field :digit, :size => "1", :value => @caso.digit, :readonly => true %>
     </div>
     <div class="field-r">
-      Identificador: <%= f.text_field :cas_id, :size => "10", :value => @caso.cas_id, :readonly => true %>
+      Identificador: <%= f.text_field :cas_id, :size => "15", :value => @caso.cas_id, :readonly => true %>
     </div>
     <br clear="all">
     <div class="field-l">
-      Nombre: <%= f.text_field :name, :size => "30", :value => @caso.name %>
+      Nombre: <%= f.text_field :name, :size => "52", :value => @caso.name %>
     </div>
     <br clear="all">
     <div class="field-l">
-      Mandante: <%= f.text_field :principal_name, :size => "10", :value => @caso.principal.name, :readonly => true %>    
+      Mandante: <%= f.text_field :principal_name, :size => "15", :value => @caso.principal.name, :readonly => true %>    
     </div>
     <div class="field-r">
-      Tipo de Cobranza: <%= f.text_field :collection_type_name, :size => "10", :value => @caso.collection_type.name, :readonly => true %>    
+      Tipo de Cobranza: <%= f.text_field :collection_type_name, :size => "15", :value => @caso.collection_type.name, :readonly => true %>    
     </div>
     <br clear="all">
     <div class="field-l">
-      Descripción del Pago:<br><%= f.text_area :payment_description, :size => "50x2" %>
+      Descripción del Pago:<br><%= f.text_area :payment_description, :size => "60x2" %>
     </div>
     <br clear="all">
     <div class="field-l">
@@ -42,7 +42,7 @@
       <%= f.text_field :capital, :size => "8", :value => @caso.capital %>
     </div>
     <div class="field-r">
-      Producto: <%= f.text_field :product_name, :size => "10", :value => @caso.product.name, :readonly => true %>
+      Producto: <%= f.text_field :product_name, :size => "15", :value => @caso.product.name, :readonly => true %>
     </div>
     <br clear="all">
     <div class="field-l">
@@ -50,7 +50,7 @@
       <%= f.text_field :arrear_interest, :size => "8" %>
     </div>
     <div class="field-r">
-      Número: <%= f.text_field :number, :size => "10", :value => @caso.number %>
+      Número: <%= f.text_field :number, :size => "15", :value => @caso.number %>
     </div>
     <br clear="all">
     <div class="field-l">
@@ -58,7 +58,7 @@
       <%= f.text_field :term_interest, :size => "8" %>
     </div>
     <div class="field-r">
-      Emisor: <%= f.text_field :emitter, :size => "10", :value => @caso.emitter %>
+      Emisor: <%= f.text_field :emitter, :size => "15", :value => @caso.emitter %>
     </div>
     <br clear="all">
     <div class="field-l">
@@ -66,7 +66,7 @@
       <%= f.text_field :fee, :size => "8" %>
     </div>
     <div class="field-r">
-      Cuenta Corriente: <%= f.text_field :ctacte, :size => "10", :value => @caso.ctacte %>
+      Cuenta Corriente: <%= f.text_field :ctacte, :size => "15", :value => @caso.ctacte %>
     </div>
     <br clear="all">
     <div class="field-l">
@@ -74,14 +74,14 @@
       <%= f.text_field :shipping_costs, :size => "8" %>
     </div>
     <div class="field-r">
-      Vencimiento: <%= f.text_field :expir_date, :size => "10", :value => @caso.expir_date %>
+      Vencimiento: <%= f.text_field :expir_date, :size => "15", :value => @caso.expir_date %>
     </div>
     <br clear="all">
     <div class="field-l">
       Gastos Judiciales:  <%= f.text_field :legal_costs, :size => "8" %>
     </div>
     <div class="field-r">
-      Boleta nro: <%= f.text_field :ballot, :size => "10" %>
+      Boleta nro: <%= f.text_field :ballot, :size => "15" %>
     </div>
     <br clear="all">
     <div class="field-l">
@@ -89,12 +89,12 @@
       <%= f.text_field :total_pay, :size => "8" %>
     </div>
     <div class="field-r">
-      Cuota: <%= f.text_field :quota_num, :size => "1" %>
-      de: <%= f.text_field :total_q, :size => "2" %>
+      Cuota: <%= f.text_field :quota_num, :size => "2" %>
+      de <%= f.text_field :total_q, :size => "3" %>
     </div>
     <p clear="all"><br></p>
     <div class="field-l">
-      Preparado por: <%= f.select(:user_id, User.find(:all, :conditions => {:state => true, :profile_id => @user_perfil}, :order => 'name').collect {|u| [u.name, u.id]}, {:selected => @user_id}) %>
+      Preparado por: <%= f.select(:user_id, User.find(:all, :conditions => {:state => true, :profile_id => current_user.profile_id}, :order => 'name').collect {|u| [u.name, u.id]}, {:selected => @user_id}) %>
     </div>
     <br clear="all">
     <div class="field">
@@ -106,7 +106,7 @@
     </div>
     <div class="field">
       Descripción modificación solicitada:<br>
-      <%= f.text_area :adjust_sup_des, :size => "50x2" %>
+      <%= f.text_area :adjust_sup_des, :size => "60x2" %>
     </div>
 
   <% else %>
@@ -115,11 +115,11 @@
       Rut: <%= f.text_field :rut, :size => "10" %> - <%= f.text_field :digit, :size => "1" %>
     </div>
     <div class="field-r">
-      Identificador: <%= f.text_field :cas_id, :size => "10" %>
+      Identificador: <%= f.text_field :cas_id, :size => "15" %>
     </div>
     <br clear="all">
     <div class="field-l">
-      Nombre: <%= f.text_field :name, :size => "30" %>
+      Nombre: <%= f.text_field :name, :size => "52" %>
     </div>
     <br clear="all">
     <div class="field-l">
@@ -131,7 +131,7 @@
     <br clear="all">
     <div class="field-l">
       Descripción del Pago:<br>
-      <%= f.text_area :payment_description, :size => "50x2" %>
+      <%= f.text_area :payment_description, :size => "60x2" %>
     </div>
     <br clear="all">
     <div class="field-l">
@@ -148,7 +148,7 @@
       <%= f.text_field :arrear_interest, :size => "8" %>
     </div>
     <div class="field-r">
-      Número: <%= f.text_field :number, :size => "10" %>
+      Número: <%= f.text_field :number, :size => "15" %>
     </div>
     <br clear="all">
     <div class="field-l">
@@ -156,7 +156,7 @@
       <%= f.text_field :term_interest, :size => "8" %>
     </div>
     <div class="field-r">
-      Emisor: <%= f.text_field :emitter, :size => "10" %>
+      Emisor: <%= f.text_field :emitter, :size => "15" %>
     </div>
     <br clear="all"> 
     <div class="field-l">
@@ -164,7 +164,7 @@
       <%= f.text_field :fee, :size => "8" %>
     </div>
     <div class="field-r">
-      Cuenta Corriente: <%= f.text_field :ctacte, :size => "10" %>
+      Cuenta Corriente: <%= f.text_field :ctacte, :size => "15" %>
     </div>
     <br clear="all">
     <div class="field-l">
@@ -172,14 +172,14 @@
       <%= f.text_field :shipping_costs, :size => "8" %>
     </div>
     <div class="field-r">
-      Vencimiento: <%= f.text_field :expir_date, :size => "10" %> 
+      Vencimiento: <%= f.text_field :expir_date, :size => "15" %> 
     </div>
     <br clear="all">
     <div class="field-l">
       Gastos Judiciales: <%= f.text_field :legal_costs, :size => "8" %>
     </div>
     <div class="field-r">
-      Boleta nro: <%= f.text_field :ballot, :size => "10" %>
+      Boleta nro: <%= f.text_field :ballot, :size => "15" %>
     </div>
     <br clear="all">
     <div class="field-l">
@@ -187,12 +187,12 @@
       <%= f.text_field :total_pay, :size => "8" %>
     </div>
     <div class="field-r">
-      Cuota: <%= f.text_field :quota_num, :size => "1" %>
-      de: <%= f.text_field :total_q, :size => "2" %>
+      Cuota: <%= f.text_field :quota_num, :size => "2" %>
+      de: <%= f.text_field :total_q, :size => "3" %>
     </div>
     <p clear="all"><br></p>
     <div class="field-l">
-      Preparado por: <%= f.select(:user_id, User.find(:all, :conditions => {:state => true, :profile_id => @user_perfil}, :order => 'name').collect {|u| [u.name, u.id]}, {:selected => @user_id}) %>
+      Preparado por: <%= f.select(:user_id, User.find(:all, :conditions => {:state => true, :profile_id => current_user.profile_id}, :order => 'name').collect {|u| [u.name, u.id]}, {:selected => current_user.id}) %>
     </div>
     <br clear="all">
     <div class="field">
@@ -204,7 +204,7 @@
     </div>
     <div class="field">
       Descripción modificación solicitada:<br>
-      <%= f.text_area :adjust_sup_des, :size => "50x2" %>
+      <%= f.text_area :adjust_sup_des, :size => "60x2" %>
     </div>
   <% end %>
 

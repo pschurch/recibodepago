@@ -21,15 +21,11 @@ class TicketsController < ApplicationController
       @caso = Assignment.find(params[:t])
     end
     @ticket = Ticket.new
-    @user_id = current_user.id 
-    @user_perfil = current_user.profile_id
     # new.html.erb
   end
 
   def create
     @titulo = "Crear Ticket" 
-    @user_id = current_user.id 
-    @user_perfil = current_user.profile_id
     @ticket = Ticket.new(params[:ticket])
     if @ticket.save
       @ticket.update_attribute 'group_id', current_user.group_id

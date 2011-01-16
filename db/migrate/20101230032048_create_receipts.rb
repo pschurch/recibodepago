@@ -5,7 +5,7 @@ class CreateReceipts < ActiveRecord::Migration
       t.integer :payment_agreement_id
       t.integer :user_id
       t.integer :contact_id
-      t.string :payment_agreement
+      t.string :payment_agreement_name
       t.date :date_r
       t.integer :total_pay
       t.integer :total_paid
