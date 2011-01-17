@@ -29,9 +29,9 @@ def asignacion
     ot = "ot-#{n+1}"
     pp = (rand 3) + 1
     dd = (rand 2) + 1
-    n = (rand 9) + 1
+    num = (rand 9) + 1
     g = (pp / 3) + 2
-    r = n.to_s
+    r = num.to_s
     rut = r+r+r+r+r+r+r+r
     capital = 10000 + (rand 10000)
     number = "00-#{n.to_s}"

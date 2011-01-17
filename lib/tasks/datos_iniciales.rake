@@ -2,7 +2,7 @@ require 'faker'
 
 namespace :db do
   desc "Carga datos iniciales."
-  task :start => :environment do
+  task :inicio => :environment do
     grupos
   end
 end
