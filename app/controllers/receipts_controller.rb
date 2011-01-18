@@ -28,6 +28,10 @@ class ReceiptsController < ApplicationController
     @titulo = "Crear Recibo de Pago"
     @receipt = Receipt.new
     @tickets = Ticket.where("id=?", params[:r])
+    @total_rp = 0
+    @tickets.each do |a|
+      @total_rp = @total_rp + a.total_pay
+    end
   end
 
   # GET /receipts/1/edit

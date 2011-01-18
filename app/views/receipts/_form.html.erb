@@ -25,15 +25,15 @@
     <th>Producto:</th><td><div><%= a.product_name %></div></td>
   </tr>
   <tr>
-    <th>Interés Mora:</th><td><div class="sh"><%= a.arrear_interest %>&nbsp;</div></td>
+    <th>Interés Mora:</th><td><div class="sh"><%= number_to_currency(a.arrear_interest, :precision => 0, :delimiter => ".") %>&nbsp;</div></td>
     <th>Número:</th><td><div><%= a.number %></div></td>
   </tr>
   <tr>
-    <th>Interés Plazo:</th><td><div class="sh"><%= a.term_interest %>&nbsp;</div></td>
+    <th>Interés Plazo:</th><td><div class="sh"><%= number_to_currency(a.term_interest, :precision => 0, :delimiter => ".") %>&nbsp;</div></td>
     <th>Emisor:</th><td><div><%= a.emitter %></div></td>
   </tr>
   <tr>
-    <th>Honorarios:</th><td><div class="sh"><%= a.fee %>&nbsp;</div></td>
+    <th>Honorarios:</th><td><div class="sh"><%= number_to_currency(a.fee, :precision => 0, :delimiter => ".") %>&nbsp;</div></td>
     <th>Cuenta Corriente:</th><td><div><%= a.ctacte %></div></td>
   </tr>
   <tr>
@@ -45,8 +45,8 @@
     <th>Boleta nro: </th><td><div><%= a.ballot %>&nbsp;</div></td>
   </tr>
   <tr>
-    <th>Total a Pagar:</th><td><div class="sh"><%= a.total_pay %>&nbsp;</div></td>
-    <th>Cuota:</th><td><div class="sh"><%= a.quota_num %> de <%= a.total_q %>&nbsp;</div></td>
+    <th>Total a Pagar:</th><td><div class="sh"><%= number_to_currency(a.total_pay, :precision => 0, :delimiter => ".") %>&nbsp;</div></td>
+    <th>Cuota:</th><td><div class="sh"><%= a.quota_num %><% if not a.total_q.empty? %> de <%= a.total_q %><% end %>&nbsp;</div></td>
   </tr>
   <tr>
     <th>Preparado por:</th><td colspan=4><div class="lg"><%= a.prepared_by %></div></td>
@@ -59,17 +59,16 @@
   <% end %>
   <table class="formulario">
   <tr>
-    <td>Total a Pagar: </td><td><%= f.text_field :total_pay, :size => "10", :readonly => true %></td>
-    <th rowspan=20 width=16></th>
-    <td></td><td></td>
-  </tr>
-  <tr>
     <td>Fecha:</td><td><%= f.date_select :date_r %></td>
-    <td>Acuerdo de Pago:</td><td><%= f.text_field :payment_agreement_name, :size => "10" %></td>
+    <th rowspan=20 width=16></th>
+    <td>Total a Pagar: &nbsp;</td><td><%= f.text_field :total_pay, :size => "10", :value=> @total_rp, :readonly => true %></td>
   </tr>
   <tr>
-    <th>Preparado por:</th><td><%= f.text_field :user_name, :size => "30", :value => current_user.name, :readonly => true %>&nbsp;</td>
-    <th>Teléfono: </th><td><%= f.text_field :telephone_user, :size => "10" , :value => current_user.telephone, :readonly => true %></td>
+    <td>Acuerdo de Pago: &nbsp;</td><td><%= f.collection_select :payment_agreement_id, PaymentAgreement.find(:all, :conditions => {:state => true}, :order => 'name'), :id, :name %></td>
+  </tr>
+  <tr>
+    <td>Preparado por:</td><td><%= f.text_field :user_name, :size => "30", :value => current_user.name, :readonly => true %>&nbsp;</td>
+    <td>Teléfono: </td><td><%= f.text_field :telephone_user, :size => "10" , :value => current_user.telephone, :readonly => true %></td>
   </tr>
   </table>
   <div class="subtit">
@@ -113,30 +112,30 @@
       <td><%= f.text_field :telephone_user, :size => "10" %></td>
       <td><%= f.text_field :telephone_user, :size => "30" %></td>
       <td><%= f.text_field :telephone_user, :size => "10" %></td>
-      <td><%= f.text_field :telephone_user, :size => "10" %></td>
+      <td><%= f.text_field :telephone_user, :size => "8" %></td>
     </tr>
     <tr>
       <td><%= f.text_field :telephone_user, :size => "10" %></td>
       <td><%= f.text_field :telephone_user, :size => "30" %></td>
       <td><%= f.text_field :telephone_user, :size => "10" %></td>
-      <td><%= f.text_field :telephone_user, :size => "10" %></td>
+      <td><%= f.text_field :telephone_user, :size => "8" %></td>
     </tr>
     <tr>
       <td><%= f.text_field :telephone_user, :size => "10" %></td>
       <td><%= f.text_field :telephone_user, :size => "30" %></td>
       <td><%= f.text_field :telephone_user, :size => "10" %></td>
-      <td><%= f.text_field :telephone_user, :size => "10" %></td>
+      <td><%= f.text_field :telephone_user, :size => "8" %></td>
     </tr>
     <tr>
       <td><%= f.text_field :telephone_user, :size => "10" %></td>
       <td><%= f.text_field :telephone_user, :size => "30" %></td>
       <td><%= f.text_field :telephone_user, :size => "10" %></td>
-      <td><%= f.text_field :telephone_user, :size => "10" %></td>
+      <td><%= f.text_field :telephone_user, :size => "8" %></td>
     </tr>
     <tr>
       <td colspan=2></td>
       <td>Total Pagado:</td>
-      <td><%= f.text_field :total_paid, :size => "10" %></td>
+      <td><%= f.text_field :total_paid, :size => "8" %></td>
     </tr>
     </table>
 
