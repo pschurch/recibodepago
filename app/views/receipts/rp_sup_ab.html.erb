@@ -1,0 +1,31 @@
+<seccion>
+<table>
+  <tr>
+    <th>Preparado Por</th>
+    <th>N° RP</th>
+    <th>Rut</th>
+    <th>Identificador</th>
+    <th>Mandante</th>
+    <th>Producto</th>
+    <th></th>
+    <th></th>
+  </tr>
+<% @receipts.each do |receipt| %>
+  <tr>
+    <td><%= receipt.user_name %></td>
+    <td><%= receipt.id %></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td><%= link_to 'Ver', receipt %></td>
+    <td><%= link_to 'Editar', edit_receipt_path(receipt) %></td>
+  </tr>
+<% end %>
+</table>
+</seccion>
+
+<botones>
+  <%= render 'shared/pp_ejc_dsg' %>
+</botones>
+

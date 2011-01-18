@@ -1,10 +1,14 @@
 class ReceiptsController < ApplicationController
   before_filter :perfil_name
 
+  def rp_sup_ab
+    @titulo = "Recibos de Pago Abiertos"
+    @receipts = Receipt.where("state='abierto'").where("group_id=?", current_user.group_id)
+  end
+
   def create_rp
     @titulo = "Crear Recibo de Pago"
     @tickets = Ticket.order(params[:sort])
-
   end
 
   # GET /receipts - index.html.erb

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110115200303) do
+ActiveRecord::Schema.define(:version => 20110117225829) do
 
   create_table "assignments", :force => true do |t|
     t.string   "state"
@@ -149,6 +149,22 @@ ActiveRecord::Schema.define(:version => 20110115200303) do
     t.string   "telephone_user"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "group_id"
+    t.string   "et_name"
+    t.string   "horario"
+    t.boolean  "rc"
+    t.string   "user_print"
+    t.date     "date_print"
+    t.integer  "num_print"
+    t.string   "canc_by"
+    t.date     "canc_date"
+    t.string   "rech_by"
+    t.string   "rech_mtvo"
+    t.date     "rech_date"
+    t.string   "pdf_by"
+    t.date     "pdf_date"
+    t.string   "frs_mtvo"
+    t.date     "date_tsrc"
   end
 
   create_table "tickets", :force => true do |t|
