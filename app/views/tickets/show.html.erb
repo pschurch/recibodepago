@@ -145,7 +145,7 @@
     Total a Pagar: &nbsp; &nbsp; &nbsp; 
   </div>
   <div class="field_txt-l">
-    <%= @ticket.total_pay %>&nbsp;
+    <%= number_to_currency(@ticket.total_pay, :precision => 0, :delimiter => ".") %>&nbsp;
   </div>
   <div class="field_txt-r">
     <%= @ticket.quota_num %>
@@ -173,6 +173,12 @@
 
 <% end %>
 </td></tr></table>
+  <p><hr></p>
+  <div>
+  state: <%= @ticket.state %>
+  </div>
+
+
 </seccion>
 
 <botones>

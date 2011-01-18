@@ -33,9 +33,6 @@
 
 </seccion>
 <botones>
-  <%= link_to 'Crear Recibo de Pago', new_receipt_path, :r => 2 %>
-
   <%= link_to 'Crear Recibo de Pago', :controller => "receipts", :action => "new", :r => "90" %>
-
   <%= render 'shared/pp_ejc_dsg' %>
 </botones>

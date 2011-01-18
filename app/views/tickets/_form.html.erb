@@ -47,7 +47,7 @@
     <br clear="all">
     <div class="field-l">
       Interés Mora: &nbsp; &nbsp; &nbsp;  &nbsp;
-      <%= f.text_field :arrear_interest, :size => "8" %>
+      <%= f.text_field :arrear_interest, :size => "8", :value => @arr, :readonly => true %>
     </div>
     <div class="field-r">
       Número: <%= f.text_field :number, :size => "15", :value => @caso.number %>
@@ -55,7 +55,7 @@
     <br clear="all">
     <div class="field-l">
       Interés Plazo:&nbsp; &nbsp;  &nbsp; &nbsp;
-      <%= f.text_field :term_interest, :size => "8" %>
+      <%= f.text_field :term_interest, :size => "8", :value => @term, :readonly => true %>
     </div>
     <div class="field-r">
       Emisor: <%= f.text_field :emitter, :size => "15", :value => @caso.emitter %>
@@ -63,7 +63,7 @@
     <br clear="all">
     <div class="field-l">
       Honorarios: &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-      <%= f.text_field :fee, :size => "8" %>
+      <%= f.text_field :fee, :size => "8", :value => @fee, :readonly => true %>
     </div>
     <div class="field-r">
       Cuenta Corriente: <%= f.text_field :ctacte, :size => "15", :value => @caso.ctacte %>
@@ -86,7 +86,7 @@
     <br clear="all">
     <div class="field-l">
       Total a Pagar: &nbsp; &nbsp; &nbsp; 
-      <%= f.text_field :total_pay, :size => "8" %>
+      <%= f.text_field :total_pay, :size => "8", :value => @total %>
     </div>
     <div class="field-r">
       Cuota: <%= f.text_field :quota_num, :size => "2" %>
@@ -212,6 +212,8 @@
     <%= f.submit "Grabar"%>
   </div>  
   
+  <p><hr></p>
+  state: <%= @ticket.state %>
 <% end %>
 </td></tr></table>
 

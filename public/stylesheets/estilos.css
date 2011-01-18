@@ -119,6 +119,17 @@ th { background: rgb(255, 199, 100);}
 td { background: white; }
 table a { font-weight: normal; }
 
+/* Tablas para formularios */
+table.display, table.formulario { border: 0px; margin:0}
+table.display th { background: #FFDC9E; text-align: left; border: 3px solid #FFDC9E;}
+table.display td { background: #FFDC9E; border: 1px solid #FFDC9E;}
+table.display div { width: 200px; border: 1px solid #AAA; background: white; padding: 2px; }
+table.display div.sn {width: 30px;} 
+table.display div.sh {width: 100px;} 
+table.display div.lg {width: 459px;} 
+table.formulario th { background: #FFDC9E; border: 3px solid #FFDC9E; padding: 0}
+table.formulario td { background: #FFDC9E; border: 1px solid #FFDC9E; padding: 0 } 
+  
 /* Notificaciones */
 #notice {
   margin-bottom: 10px;

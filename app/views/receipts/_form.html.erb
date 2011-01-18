@@ -3,120 +3,106 @@
   <%= render "shared/error_messages", :target => @receipt, :text => "el Recibo de Pago" %>
 
   <% @tickets.each do |a| %>
-    <div class="field-l"><b>Ticket N°: <%= a.id %></b></div>
-    <div class="field-r">Identificador: <%= a.cas_id %></div>
-    <br clear="all">
-
-    <div class="field-l">Nombre: <%= a.name %></div>
-    <div class="field-r">Rut: <%= a.rut %> - <%= a.digit %></div>
-    <br clear="all">
-
-    <div class="field-l">Mandante: <%= a.principal_name %></div>
-    <div class="field-r">Tipo de Cobranza: <%= a.collection_type_name %></div>
-    <br clear="all">
-
-    <div class="field-l">Descripción del Pago: <%= a.payment_description %></div>
-    <br clear="all">
-
-    <div class="field-l">Capital:  <%= a.capital %></div>
-    <div class="field-r">Producto: <%= a.product_name %></div>
-    <br clear="all">
-
-    <div class="field-l">Interés Mora:  <%= a.arrear_interest %></div>
-    <div class="field-r">Número:  <%= a.number %></div>
-    <br clear="all">
-
-    <div class="field-l">Interés Plazo: <%= a.term_interest %></div>
-    <div class="field-r">Emisor: <%= a.emitter %>
-    </div>
-    <br clear="all">
-    <div class="field-l">Honorarios: <%= a.fee %></div>
-    <div class="field-r">Cuenta Corriente: <%= a.ctacte %>
-    </div>
-    <br clear="all">
-    <div class="field-l">Gastos Envío: <%= a.shipping_costs %></div>
-    <div class="field-r">Vencimiento: <%= a.expir_date %>
-    </div>
-    <br clear="all">
-    <div class="field-l">Gastos Judiciales: <%= a.legal_costs %></div>
-    <div class="field-r">Boleta nro: <%= a.ballot %></div>
-    <br clear="all">
-
-    <div class="field-l">Total a Pagar: <%= a.total_pay %></div>
-    <div class="field-r">Cuota: <%= a.quota_num %> de: <%= a.total_q %></div>
-    <br clear="all">
-
-    <div class="field-l">Preparado por: <%= a.prepared_by %></div>
-    <br clear="all">
-
-    <div class="field">Entrega documento a deudor: <% if a.doc_delivery %>Sí<% else %>No<% end %></div>
-    <br clear="all">
-
-    <hr>
+  <table class="display">
+  <tr>
+    <th>Ticket N°:</th><td><div class="sh"><%= a.id %></div></td>
+    <th rowspan=20 width=16></th>
+    <th>Mandante:</th><td><div><%= a.principal_name %></div></td>
+  </tr>
+  <tr>
+    <th>Identificador:</th><td><div class="sh"><%= a.cas_id %></div></td>
+    <th>Tipo de Cobranza:</th><td> <div><%= a.collection_type_name %></div></td>
+  </tr>
+  <tr>
+    <th>Rut:</th><td><div class="sh"><%= a.rut %> - <%= a.digit %></div></td>
+    <th>Nombre:</th><td><div><%= a.name %></div></td>
+  </tr>
+  <tr>
+    <th>Descripción del Pago:</th><td colspan="4"><div class="lg"><%= a.payment_description %>&nbsp;</div></td>
+  </tr>
+  <tr>
+    <th>Capital:</th><td><div class="sh"><%= number_to_currency(a.capital, :precision => 0, :delimiter => ".") %></div></td>
+    <th>Producto:</th><td><div><%= a.product_name %></div></td>
+  </tr>
+  <tr>
+    <th>Interés Mora:</th><td><div class="sh"><%= a.arrear_interest %>&nbsp;</div></td>
+    <th>Número:</th><td><div><%= a.number %></div></td>
+  </tr>
+  <tr>
+    <th>Interés Plazo:</th><td><div class="sh"><%= a.term_interest %>&nbsp;</div></td>
+    <th>Emisor:</th><td><div><%= a.emitter %></div></td>
+  </tr>
+  <tr>
+    <th>Honorarios:</th><td><div class="sh"><%= a.fee %>&nbsp;</div></td>
+    <th>Cuenta Corriente:</th><td><div><%= a.ctacte %></div></td>
+  </tr>
+  <tr>
+    <th>Gastos Envío:</th><td><div class="sh"><%= a.shipping_costs %>&nbsp;</div></td>
+    <th>Vencimiento:</th><td><div><%= a.expir_date %></div></td>
+  </tr>
+  <tr>
+    <th>Gastos Judiciales:</th><td><div class="sh"><%= a.legal_costs %>&nbsp;</div></td>
+    <th>Boleta nro: </th><td><div><%= a.ballot %>&nbsp;</div></td>
+  </tr>
+  <tr>
+    <th>Total a Pagar:</th><td><div class="sh"><%= a.total_pay %>&nbsp;</div></td>
+    <th>Cuota:</th><td><div class="sh"><%= a.quota_num %> de <%= a.total_q %>&nbsp;</div></td>
+  </tr>
+  <tr>
+    <th>Preparado por:</th><td colspan=4><div class="lg"><%= a.prepared_by %></div></td>
+  </tr>
+  <tr>
+    <th colspan=2>Entrega documento a deudor:</th><td><div class="sn"><% if a.doc_delivery %>Sí<% else %>No<% end %></div></td>
+  </tr>
+  </table>
+  <hr>
   <% end %>
+  <table class="formulario">
+  <tr>
+    <td>Total a Pagar: </td><td><%= f.text_field :total_pay, :size => "10", :readonly => true %></td>
+    <th rowspan=20 width=16></th>
+    <td></td><td></td>
+  </tr>
+  <tr>
+    <td>Fecha:</td><td><%= f.date_select :date_r %></td>
+    <td>Acuerdo de Pago:</td><td><%= f.text_field :payment_agreement_name, :size => "10" %></td>
+  </tr>
+  <tr>
+    <th>Preparado por:</th><td><%= f.text_field :user_name, :size => "30", :value => current_user.name, :readonly => true %>&nbsp;</td>
+    <th>Teléfono: </th><td><%= f.text_field :telephone_user, :size => "10" , :value => current_user.telephone, :readonly => true %></td>
+  </tr>
+  </table>
+  <div class="subtit">
+    Datos de Contacto:
+  </div>
+  <table class="formulario">
+  <tr>
+    <td>Nombre: </td><td><%= f.text_field :telephone_user, :size => "40" %></td>
+    <th rowspan=20 width=16></th>
+    <td>Rut:</td><td><%= f.text_field :telephone_user, :size => "7" %>-<%= f.text_field :telephone_user, :size => "1" %></td>
+  </tr>
+  <tr>
+    <td>Calle:</td><td><%= f.text_field :telephone_user, :size => "40" %></td>
+    <td>N° Depto.:</td><td><%= f.text_field :telephone_user, :size => "11" %></td>
+  </tr>
+  <tr>
+    <td>Referencia:</td><td><%= f.text_field :telephone_user, :size => "40" %></td>
+    <td>Comuna: </td><td><%= f.text_field :telephone_user, :size => "11" %></td>
+  </tr>
+  <tr>
+    <td>Horario: </td><td><%= f.text_field :telephone_user, :size => "40" %></td>
+    <td>Teléfono 1: </td><td><%= f.text_field :telephone_user, :size => "11" %></td>
+  </tr>
+  <tr>
+    <td>Teléfono 2: </td><td><%= f.text_field :telephone_user, :size => "11" %></td>
+    <td>Teléfono 3: </td><td><%= f.text_field :telephone_user, :size => "11" %></td>
+  </tr>
+  </table>
 
-    <div class="fieldt-l">
-      Total a Pagar: <%= f.text_field :total_pay, :size => "10", :readonly => true %>
-    </div>
-    <br clear="all">
-    <div class="field-l">
-      Fecha: <%= f.date_select :date_r %>
-    </div>
-    <div class="field-r">
-      Acuerdo de Pago: <%= f.text_field :payment_agreement_name, :size => "10" %>
-    </div>
-    <br clear="all">
-    <div class="field-l">
-      Preparado por: <%= f.text_field :user_name, :size => "30", :value => current_user.name, :readonly => true %>&nbsp;
-    </div>
-    <div class="field-r">
-      Teléfono: <%= f.text_field :telephone_user, :size => "10" , :value => current_user.telephone, :readonly => true %>
-    </div>
-    <br clear="all">
-
-    <div class="subtit">
-      Datos de Contacto:
-    </div>
-    <div class="field-l">
-      Nombre: 
-    </div>
-    <div class="field-r">
-      Rut: 
-    </div>
-    <br clear="all">
-    <div class="field-l">
-      Calle: 
-    </div>
-    <div class="field-r">
-      N°: Depto.: 
-    </div>
-    <br clear="all">
-    <div class="field-l">
-      Referencia: 
-    </div>
-    <div class="field-r">
-      Comuna: 
-    </div>
-    <br clear="all">
-    <div class="field-l">
-      Teléfono 1: 
-    </div>
-    <div class="field-r">
-      Teléfono 2: 
-    </div>
-    <br clear="all">
-    <div class="field-l">
-      Teléfono 3: 
-    </div>
-    <div class="field-r">
-      Horario: 
-    </div>
-    <p><br clear="all"></p>
-
-    <div class="subtit">
-      Detalle del Pago:
-    </div>
-    <table>
+  <div class="subtit">
+    Detalle del Pago:
+  </div>
+    <table class="formulario">
     <tr>
       <th>Forma de Pago</th>
       <th>Emisor</th>
@@ -124,13 +110,32 @@
       <th>Monto</th>
     </tr>
     <tr>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
+      <td><%= f.text_field :telephone_user, :size => "10" %></td>
+      <td><%= f.text_field :telephone_user, :size => "30" %></td>
+      <td><%= f.text_field :telephone_user, :size => "10" %></td>
+      <td><%= f.text_field :telephone_user, :size => "10" %></td>
     </tr>
     <tr>
-      <td colspan=3>Total Pagado:</td>
+      <td><%= f.text_field :telephone_user, :size => "10" %></td>
+      <td><%= f.text_field :telephone_user, :size => "30" %></td>
+      <td><%= f.text_field :telephone_user, :size => "10" %></td>
+      <td><%= f.text_field :telephone_user, :size => "10" %></td>
+    </tr>
+    <tr>
+      <td><%= f.text_field :telephone_user, :size => "10" %></td>
+      <td><%= f.text_field :telephone_user, :size => "30" %></td>
+      <td><%= f.text_field :telephone_user, :size => "10" %></td>
+      <td><%= f.text_field :telephone_user, :size => "10" %></td>
+    </tr>
+    <tr>
+      <td><%= f.text_field :telephone_user, :size => "10" %></td>
+      <td><%= f.text_field :telephone_user, :size => "30" %></td>
+      <td><%= f.text_field :telephone_user, :size => "10" %></td>
+      <td><%= f.text_field :telephone_user, :size => "10" %></td>
+    </tr>
+    <tr>
+      <td colspan=2></td>
+      <td>Total Pagado:</td>
       <td><%= f.text_field :total_paid, :size => "10" %></td>
     </tr>
     </table>
@@ -140,10 +145,10 @@
   </div>
 
   <p><hr></p>
-    state: <%= f.text_field :state, :size => "10", :readonly => true %><br>
-    payment_agreement_id: <%= f.text_field :payment_agreement_id, :size => "10" , :readonly => true %><br>
-    user_id:  <%= f.text_field :user_id, :size => "10" , :readonly => true %><br>
-    contact_id: <%= f.text_field :contact_id, :size => "10", :readonly => true %><br>
+    state: <%= @receipt.state %><br>
+    payment_agreement_id:  <%= @receipt.payment_agreement_id %><br>
+    user_id:   <%= @receipt.user_id %><br>
+    contact_id:  <%= @receipt.contact_id %><br>
   </div>
 
 <% end %>
