@@ -113,28 +113,40 @@
       <th>Monto</th>
     </tr>
     <tr>
-      <td><div><%= @receipt.telephone_user %>&nbsp;</div></td>
-      <td><div><%= @receipt.telephone_user %>&nbsp;</div></td>
-      <td><div class="sh"><%= @receipt.telephone_user %>&nbsp;</div></td>
-      <td><div class="sh"><%= @receipt.telephone_user %>&nbsp;</div></td>
+      <td><div><%= @receipt.formapago1 %>&nbsp;</div></td>
+      <td><div><%= @receipt.emisor1 %>&nbsp;</div></td>
+      <td><div class="sh"><%= @receipt.docnum1 %>&nbsp;</div></td>
+      <td><div class="sh"><%= @receipt.monto1 %>&nbsp;</div></td>
     </tr>
     <tr>
-      <td><div><%= @receipt.telephone_user %>&nbsp;</div></td>
-      <td><div><%= @receipt.telephone_user %>&nbsp;</div></td>
-      <td><div class="sh"><%= @receipt.telephone_user %>&nbsp;</div></td>
-      <td><div class="sh"><%= @receipt.telephone_user %>&nbsp;</div></td>
+      <td><div><%= @receipt.formapago2 %>&nbsp;</div></td>
+      <td><div><%= @receipt.emisor2 %>&nbsp;</div></td>
+      <td><div class="sh"><%= @receipt.docnum2 %>&nbsp;</div></td>
+      <td><div class="sh"><%= @receipt.monto2 %>&nbsp;</div></td>
     </tr>
     <tr>
-      <td><div><%= @receipt.telephone_user %>&nbsp;</div></td>
-      <td><div><%= @receipt.telephone_user %>&nbsp;</div></td>
-      <td><div class="sh"><%= @receipt.telephone_user %>&nbsp;</div></td>
-      <td><div class="sh"><%= @receipt.telephone_user %>&nbsp;</div></td>
+      <td><div><%= @receipt.formapago3 %>&nbsp;</div></td>
+      <td><div><%= @receipt.emisor3 %>&nbsp;</div></td>
+      <td><div class="sh"><%= @receipt.docnum3 %>&nbsp;</div></td>
+      <td><div class="sh"><%= @receipt.monto3 %>&nbsp;</div></td>
     </tr>
     <tr>
-      <td><div><%= @receipt.telephone_user %>&nbsp;</div></td>
-      <td><div><%= @receipt.telephone_user %>&nbsp;</div></td>
-      <td><div class="sh"><%= @receipt.telephone_user %>&nbsp;</div></td>
-      <td><div class="sh"><%= @receipt.telephone_user %>&nbsp;</div></td>
+      <td><div><%= @receipt.formapago4 %>&nbsp;</div></td>
+      <td><div><%= @receipt.emisor4 %>&nbsp;</div></td>
+      <td><div class="sh"><%= @receipt.docnum4 %>&nbsp;</div></td>
+      <td><div class="sh"><%= @receipt.monto4 %>&nbsp;</div></td>
+    </tr>
+    <tr>
+      <td><div><%= @receipt.formapago5 %>&nbsp;</div></td>
+      <td><div><%= @receipt.emisor5 %>&nbsp;</div></td>
+      <td><div class="sh"><%= @receipt.docnum5 %>&nbsp;</div></td>
+      <td><div class="sh"><%= @receipt.monto5 %>&nbsp;</div></td>
+    </tr>
+    <tr>
+      <td><div><%= @receipt.formapago6 %>&nbsp;</div></td>
+      <td><div><%= @receipt.emisor6 %>&nbsp;</div></td>
+      <td><div class="sh"><%= @receipt.docnum6 %>&nbsp;</div></td>
+      <td><div class="sh"><%= @receipt.monto6 %>&nbsp;</div></td>
     </tr>
     <tr>
       <td colspan=2></td>
@@ -148,7 +160,9 @@
 </seccion>
 
 <botones>
+<% if not notice == '1' %>
   <%= link_to 'Editar', edit_receipt_path(@receipt) %> 
+<% end %>
   <%= link_to 'Página Principal', :controller => "sessions", :action => "ejc" %>
 </botones>
 

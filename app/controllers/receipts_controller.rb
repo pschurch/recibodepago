@@ -13,7 +13,7 @@ class ReceiptsController < ApplicationController
 
   # GET /receipts - index.html.erb
   def index
-    @titulo = "Listado de Recibos de Pago"
+    @titulo = "Listado de Todos los Recibos de Pago"
     @receipts = Receipt.all
   end
 

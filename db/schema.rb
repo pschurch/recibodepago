@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110118213032) do
+ActiveRecord::Schema.define(:version => 20110119154844) do
 
   create_table "assignments", :force => true do |t|
     t.string   "state"
@@ -184,6 +184,30 @@ ActiveRecord::Schema.define(:version => 20110118213032) do
     t.string   "cont_telf2"
     t.string   "cont_telf3"
     t.string   "cont_hr"
+    t.string   "formapago1"
+    t.string   "formapago2"
+    t.string   "formapago3"
+    t.string   "formapago4"
+    t.string   "formapago5"
+    t.string   "formapago6"
+    t.string   "emisor1"
+    t.string   "emisor2"
+    t.string   "emisor3"
+    t.string   "emisor4"
+    t.string   "emisor5"
+    t.string   "emisor6"
+    t.string   "docnum1"
+    t.string   "docnum2"
+    t.string   "docnum3"
+    t.string   "docnum4"
+    t.string   "docnum5"
+    t.string   "docnum6"
+    t.integer  "monto1"
+    t.integer  "monto2"
+    t.integer  "monto3"
+    t.integer  "monto4"
+    t.integer  "monto5"
+    t.integer  "monto6"
   end
 
   create_table "tickets", :force => true do |t|
