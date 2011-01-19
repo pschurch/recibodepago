@@ -1,7 +1,7 @@
 <seccion>
 <table><tr><td class="formulario">
 <% if notice == '1' %>
-  <p id="notice">El Recibo de Pago N° <%= @receipt.id %> se ha creado exitosamente.</p>
+  <p id="notice">El Recibo de Pago N° <%= @receipt.id %> se ha cerrado exitosamente y esta listo para ser rendido.</p>
 <% else %>
   <% if not notice.nil? %><p id="notice"><%= notice %></p><% end %>
 
@@ -148,6 +148,7 @@
 </seccion>
 
 <botones>
+  <%= link_to 'Editar', edit_receipt_path(@receipt) %> 
   <%= link_to 'Página Principal', :controller => "sessions", :action => "ejc" %>
 </botones>
 

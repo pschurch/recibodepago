@@ -2,13 +2,21 @@
 <%= form_for(@receipt) do |f| %>
   <%= render "shared/error_messages", :target => @receipt, :text => "el Recibo de Pago" %>
 
-  <table class="display">
-  <tr>
-    <td width="127">Recibo de Pago N°:</td><td><div class="sh"><%= @receipt.id %></div></td>
-    <th rowspan=20 width=16></th>
-  </tr>
-  </table>
-  <hr>
+  <% if current_user.profile_id==8 %> 
+  <% end %>
+    state: <%= @receipt.state %><br>
+    payment_agreement_id:  <%= @receipt.payment_agreement_id %><br>
+    user_id:   <%= @receipt.user_id %><br>
+
+  <% if not @receipt.id.nil? %> 
+    <table class="display">
+    <tr>
+      <td width="127">Recibo de Pago N°:</td><td><div class="sh"><%= @receipt.id %></div></td>
+      <th rowspan=20 width=16></th>
+    </tr>
+    </table>
+    <hr>
+  <% end %>
   <% @tickets.each do |a| %>
   <table class="display">
   <tr>
@@ -71,7 +79,7 @@
     <td>Total a Pagar: &nbsp;</td><td><%= f.text_field :total_pay, :size => "10", :value=> @total_rp, :readonly => true %></td>
   </tr>
   <tr>
-    <td>Acuerdo de Pago: &nbsp;</td><td><%= f.collection_select :payment_agreement_id, PaymentAgreement.find(:all, :conditions => {:state => true}, :order => 'name'), :id, :name %></td>
+    <td>Acuerdo de Pago: &nbsp;</td><td><%= f.collection_select :payment_agreement_id, PaymentAgreement.where('state = true').order('name ASC'), :id, :name %></td>
   </tr>
   <tr>
     <td>Preparado por:</td><td><%= f.text_field :user_name, :size => "30", :value => current_user.name, :readonly => true %>&nbsp;</td>
@@ -92,7 +100,7 @@
     <td>N° </td><td><%= f.text_field :cont_num, :size => "11" %></td>
   </tr>
   <tr>
-    <td>Comuna: </td><td><%= f.collection_select :comuna_id, Comuna.find(:all, :conditions => {:state => true}, :order => 'name'), :id, :name %></td>
+    <td>Comuna: </td><td><%= f.collection_select :comuna_id, Comuna.where('state = true').order('name ASC'), :id, :name %></td>
     <td>N° Depto.:</td><td><%= f.text_field :cont_depto, :size => "11" %></td>
   </tr>
   <tr>
@@ -119,13 +127,13 @@
       <th>Monto</th>
     </tr>
     <tr>
-      <td><%= f.text_field :telephone_user, :size => "13" %></td>
+      <td><%= f.collection_select :cont_telf1, PaymentForm.where('state = true').order('name ASC'), :name, :name %></td>
       <td><%= f.text_field :telephone_user, :size => "30" %></td>
       <td><%= f.text_field :telephone_user, :size => "10" %></td>
       <td><%= f.text_field :telephone_user, :size => "8" %></td>
     </tr>
     <tr>
-      <td><%= f.text_field :telephone_user, :size => "13" %></td>
+      <td><%= f.collection_select :cont_telf2, PaymentForm.where('state = true').order('name ASC'), :name, :name %></td>
       <td><%= f.text_field :telephone_user, :size => "30" %></td>
       <td><%= f.text_field :telephone_user, :size => "10" %></td>
       <td><%= f.text_field :telephone_user, :size => "8" %></td>
@@ -150,13 +158,7 @@
     </table>
 
   <div class="actions">
-    <%= f.submit "Grabar" %>
-  </div>
-
-  <p><hr></p>
-    state: <%= @receipt.state %><br>
-    payment_agreement_id:  <%= @receipt.payment_agreement_id %><br>
-    user_id:   <%= @receipt.user_id %><br>
+    <%= f.submit "Cerra Recibo de Pago" %>
   </div>
 
 <% end %>

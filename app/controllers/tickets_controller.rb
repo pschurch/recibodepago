@@ -95,7 +95,7 @@ class TicketsController < ApplicationController
 
   private
     def perfil_name
-     if current_user.profile_id==1 
+      if current_user.profile_id==1 
         @perfil_name = "Ejecutivo de Cobranza"
       elsif current_user.profile_id==2
         @perfil_name = "Supervisor"
