@@ -38,6 +38,7 @@ class ReceiptsController < ApplicationController
   def edit
     @titulo = "Editar Recibo de Pago"
     @receipt = Receipt.find(params[:id])
+    @tickets = Ticket.where("id=?", 99)
   end
 
   # POST /receipts
@@ -45,7 +46,8 @@ class ReceiptsController < ApplicationController
     @titulo = "Crear Recibo de Pago"
     @receipt = Receipt.new(params[:receipt])
     if @receipt.save
-      redirect_to(@receipt, :notice => 'Receipt was successfully created.') 
+      @receipt.update_attribute 'group_id', current_user.group_id
+      redirect_to(@receipt, :notice => '1') 
     else
       render :action => "new" 
     end

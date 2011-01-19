@@ -1,35 +1,153 @@
 <seccion>
 <table><tr><td class="formulario">
-  <p id="notice"><%= notice %></p>
+<% if notice == '1' %>
+  <p id="notice">El Recibo de Pago N° <%= @receipt.id %> se ha creado exitosamente.</p>
+<% else %>
+  <% if not notice.nil? %><p id="notice"><%= notice %></p><% end %>
 
-  <div class="fieldt-l">
-    Total a Pagar:
+  <table class="display">
+  <tr>
+    <td>Ticket N°:</td><td><div class="sh">&nbsp;</div></td>
+    <td rowspan=20 width=16></td>
+    <td>Mandante:</td><td><div>&nbsp;</div></td>
+  </tr>
+  <tr>
+    <td>Identificador:</td><td><div class="sh">&nbsp;  </div></td>
+    <td>Tipo de Cobranza:</td><td><div>&nbsp;  </div></td>
+  </tr>
+  <tr>
+    <td>Rut:</td><td><div class="sh">&nbsp; </div></td>
+    <td>Nombre:</td><td><div>&nbsp;  </div></td>
+  </tr>
+  <tr>
+    <td>Descripción del Pago:</td><td colspan="4"><div class="lg">&nbsp;</div></td>
+  </tr>
+  <tr>
+    <td>Capital:</td><td><div class="sh">&nbsp;</div></td>
+    <td>Producto:</td><td><div>&nbsp;</div></td>
+  </tr>
+  <tr>
+    <td>Interés Mora:</td><td><div class="sh">&nbsp;</div></td>
+    <td>Número:</td><td><div>&nbsp;</div></td>
+  </tr>
+  <tr>
+    <td>Interés Plazo:</td><td><div class="sh">&nbsp;</div></td>
+    <td>Emisor:</td><td><div>&nbsp;</div></td>
+  </tr>
+  <tr>
+    <td>Honorarios:</td><td><div class="sh">&nbsp;</div></td>
+    <td>Cuenta Corriente:</td><td><div>&nbsp;</div></td>
+  </tr>
+  <tr>
+    <td>Gastos Envío:</td><td><div class="sh">&nbsp;</div></td>
+    <td>Vencimiento:</td><td><div>&nbsp;</div></td>
+  </tr>
+  <tr>
+    <td>Gastos Judiciales:</td><td><div class="sh">&nbsp;</div></td>
+    <td>Boleta nro: </td><td><div>&nbsp;</div></td>
+  </tr>
+  <tr>
+    <td>Total a Pagar:</td><td><div class="sh">&nbsp;</div></td>
+    <td>Cuota:</td><td><div class="sh">&nbsp;</div></td>
+  </tr>
+  <tr>
+    <td>Preparado por:</td><td colspan=4><div class="lg">&nbsp;</div></td>
+  </tr>
+  <tr>
+    <td colspan=2>Entrega documento a deudor:</td><td><div class="sn">&nbsp;</div></td>
+  </tr>
+  </table>
+  <hr>
+  <table class="display">
+  <tr>
+    <td>Fecha:</td><td><div class="sh"><%= @receipt.date_r %></div></td>
+    <th rowspan=20 width=55></th>
+    <td>Total a Pagar: &nbsp;</td><td><div class="sh"><%= @receipt.total_pay %></div></td>
+  </tr>
+  <tr>
+    <td>Acuerdo de Pago: &nbsp;</td><td><div><%= @receipt.payment_agreement_id %></div></td>
+  </tr>
+  <tr>
+    <td>Preparado por:</td><td><div><%= @receipt.user_name %></div></td>
+    <td>Teléfono: </td><td><div class="sh"><%= @receipt.telephone_user %>&nbsp;</div></td>
+  </tr>
+  </table>
+  <div class="subtit">
+    Datos de Contacto:
   </div>
-  <div class="field_txt-l">
-    <%= @receipt.total_pay %>
-  </div>
-  <br clear="all">
+  <table class="display">
+  <tr>
+    <td>Nombre: </td><td><div class="sl"><%= @receipt.cont_name %></div></td>
+    <th rowspan=20 width=25></th>
+    <td>Rut:</td><td><div class="sh"><%= @receipt.cont_rut %></div></td>
+  </tr>
+  <tr>
+    <td>Calle:</td><td><div class="sl"><%= @receipt.cont_calle %></div></td>
+    <td>N° </td><td><div class="sh"><%= @receipt.cont_num %></div></td>
+  </tr>
+  <tr>
+    <td>Comuna: </td><td><div class="sl"><%= @receipt.comuna_id %></div></td>
+    <td>N° Depto.:</td><td><div class="sh"><%= @receipt.cont_depto %></div></td>
+  </tr>
+  <tr>
+    <td>Referencias:</td><td colspan=4><div class="lg"><%= @receipt.cont_ref %></div></td>
+  </tr>
+  <tr>
+    <td>Horario: </td><td><div class="sl"><%= @receipt.cont_hr %></div></td>
+    <td>Teléfono 1: </td><td><div class="sh"><%= @receipt.cont_telf1 %></div></td>
+  </tr>
+  <tr>
+    <td>Teléfono 2: </td><td><div class="sh"><%= @receipt.cont_telf2 %></div></td>
+    <td>Teléfono 3: </td><td><div class="sh"><%= @receipt.cont_telf3 %></div></td>
+  </tr>
+  </table>
 
-  <div class="fieldt-l">
-    Fecha:
+  <div class="subtit">
+    Detalle del Pago:
   </div>
-  <div class="field_txt-l">
-    <%= @receipt.date_r %>
-  </div>
-  <div class="field_txt-r">
-    <%= @receipt.payment_agreement_name %>
-  </div>
-  <div class="fieldt-r">
-    Acuerdo de Pago: 
-  </div>
-  <br clear="all">
+    <table class="display">
+    <tr>
+      <th>Forma de Pago</th>
+      <th>Emisor</th>
+      <th>N° Documento</th>
+      <th>Monto</th>
+    </tr>
+    <tr>
+      <td><div><%= @receipt.telephone_user %>&nbsp;</div></td>
+      <td><div><%= @receipt.telephone_user %>&nbsp;</div></td>
+      <td><div class="sh"><%= @receipt.telephone_user %>&nbsp;</div></td>
+      <td><div class="sh"><%= @receipt.telephone_user %>&nbsp;</div></td>
+    </tr>
+    <tr>
+      <td><div><%= @receipt.telephone_user %>&nbsp;</div></td>
+      <td><div><%= @receipt.telephone_user %>&nbsp;</div></td>
+      <td><div class="sh"><%= @receipt.telephone_user %>&nbsp;</div></td>
+      <td><div class="sh"><%= @receipt.telephone_user %>&nbsp;</div></td>
+    </tr>
+    <tr>
+      <td><div><%= @receipt.telephone_user %>&nbsp;</div></td>
+      <td><div><%= @receipt.telephone_user %>&nbsp;</div></td>
+      <td><div class="sh"><%= @receipt.telephone_user %>&nbsp;</div></td>
+      <td><div class="sh"><%= @receipt.telephone_user %>&nbsp;</div></td>
+    </tr>
+    <tr>
+      <td><div><%= @receipt.telephone_user %>&nbsp;</div></td>
+      <td><div><%= @receipt.telephone_user %>&nbsp;</div></td>
+      <td><div class="sh"><%= @receipt.telephone_user %>&nbsp;</div></td>
+      <td><div class="sh"><%= @receipt.telephone_user %>&nbsp;</div></td>
+    </tr>
+    <tr>
+      <td colspan=2></td>
+      <th>Total Pagado:</th>
+      <td><div class="sh"><%= @receipt.total_paid %>&nbsp;</div></td>
+    </tr>
+    </table>
 
+<% end %>
 </td></tr></table>
 </seccion>
 
 <botones>
-  <%= link_to 'Editar', edit_receipt_path(@receipt) %> 
-  <%= link_to 'Back', receipts_path %>
   <%= link_to 'Página Principal', :controller => "sessions", :action => "ejc" %>
 </botones>
 

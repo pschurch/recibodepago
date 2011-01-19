@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110117225829) do
+ActiveRecord::Schema.define(:version => 20110118213032) do
 
   create_table "assignments", :force => true do |t|
     t.string   "state"
@@ -57,6 +57,13 @@ ActiveRecord::Schema.define(:version => 20110117225829) do
     t.string   "name"
     t.text     "description"
     t.boolean  "state",       :default => true
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "comunas", :force => true do |t|
+    t.string   "name"
+    t.boolean  "state",      :default => true
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -140,7 +147,7 @@ ActiveRecord::Schema.define(:version => 20110117225829) do
     t.string   "state",                  :default => "abierto"
     t.integer  "payment_agreement_id"
     t.integer  "user_id"
-    t.integer  "contact_id"
+    t.integer  "comuna_id"
     t.string   "payment_agreement_name"
     t.date     "date_r"
     t.integer  "total_pay"
@@ -165,6 +172,18 @@ ActiveRecord::Schema.define(:version => 20110117225829) do
     t.date     "pdf_date"
     t.string   "frs_mtvo"
     t.date     "date_tsrc"
+    t.string   "cont_name"
+    t.string   "cont_rut"
+    t.string   "cont_digit"
+    t.string   "cont_calle"
+    t.string   "cont_num"
+    t.string   "cont_depto"
+    t.string   "cont_comuna"
+    t.string   "cont_ref"
+    t.string   "cont_telf1"
+    t.string   "cont_telf2"
+    t.string   "cont_telf3"
+    t.string   "cont_hr"
   end
 
   create_table "tickets", :force => true do |t|

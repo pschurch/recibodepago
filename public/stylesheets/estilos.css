@@ -87,49 +87,11 @@ botones a {
 botones a:hover { background: rgb(229,179,90); text-decoration: none;}
 botones a:active { border: 1px inset #000;}
 
-ul {
-  list-style-type: square;	
-  margin-left: 60px;
-  font-size: 15px;  
-}
+ul { list-style-type: square; margin-left: 60px; font-size: 15px;  }
+a { color: #AC0000; font-weight: bold; text-decoration: none;}
+a:hover {  text-decoration: underline;	color: rgb(172,0,0);}
+p {  margin: 0;  padding: 0;}
 
-a {
-  color: #AC0000;			
-  font-weight: bold; 
-  text-decoration: none;
-}
-a:hover {
-  text-decoration: underline;	color: rgb(172,0,0);
-}
-
-p {
-  margin: 0;
-  padding: 0;
-}
-
-/* Tablas de contenido */
-table {
-  margin:0 auto;
-  border-collapse: collapse;
-  border: 1px solid rgb(229,179,90);
-  font-size: 13px;		
-}
-th, td { border: 1px solid rgb(229,179,90); padding: 3px;}
-th { background: rgb(255, 199, 100);}
-td { background: white; }
-table a { font-weight: normal; }
-
-/* Tablas para formularios */
-table.display, table.formulario { border: 0px; margin:0}
-table.display th { background: #FFDC9E; text-align: left; border: 3px solid #FFDC9E;}
-table.display td { background: #FFDC9E; border: 1px solid #FFDC9E;}
-table.display div { width: 200px; border: 1px solid #AAA; background: white; padding: 2px; }
-table.display div.sn {width: 30px;} 
-table.display div.sh {width: 100px;} 
-table.display div.lg {width: 459px;} 
-table.formulario th { background: #FFDC9E; border: 3px solid #FFDC9E; padding: 0}
-table.formulario td { background: #FFDC9E; border: 1px solid #FFDC9E; padding: 0 } 
-  
 /* Notificaciones */
 #notice {
   margin-bottom: 10px;
@@ -149,25 +111,35 @@ table.formulario td { background: #FFDC9E; border: 1px solid #FFDC9E; padding: 0
   background-color: #c00;	color: #fff;
   margin-top: 0px;		margin-bottom: 0px;
 }
-#error ul li {
+#error ul li { font-size: 13px;	margin: 5px;  margin-left: 0px;}
+
+.field_with_errors {  padding: 1px; display: table;  background-color: rgb(172,0,0);}
+
+/* Tablas de contenido */
+table {
+  margin:0 auto;
+  border-collapse: collapse;
+  border: 1px solid rgb(229,179,90);
   font-size: 13px;		
-  margin: 5px;
-  margin-left: 0px;
 }
+th, td { border: 1px solid rgb(229,179,90); padding: 3px;}
+th { background: rgb(255, 199, 100);}
+td { background: white; }
+table a { font-weight: normal; }
 
-.field_with_errors {
-  padding: 1px;			display: table;
-  background-color: rgb(172,0,0);
-}
+/* Tablas para formularios */
+table.display, table.datos { border: 0px; margin:0; }
+table.display th { background: #FFDC9E; border: 3px solid #FFDC9E;}
+table.display td { background: #FFDC9E; border: 1px solid #FFDC9E;}
+table.display div { width: 200px; border: 1px solid #AAA; background: white; padding: 2px; }
+table.display div.sn {width: 30px;} 
+table.display div.sh {width: 100px;}
+table.display div.sl {width: 290px;} 
+table.display div.lg {width: 455px;} 
 
-/* Formularios */
-td.formulario {
-  padding: 12px;
-  padding-bottom: 5px;
-  vertical-align: top;
-  background: #FFDC9E;  
-  font-size: 13px;
-}
+table.datos th { background: #FFDC9E; border: 3px solid #FFDC9E; padding: 0}
+table.datos td { background: #FFDC9E; border: 1px solid #FFDC9E; padding: 0 } 
+td.formulario { padding: 12px; padding-bottom: 5px; vertical-align: top; background: #FFDC9E; font-size: 13px; }
 
 hr {background:rgb(229,179,90);color:rgb(229,179,90);width:100%;height:2px;margin-top:2px;margin-bottom:10px;padding:0;border:none;}
 
@@ -180,19 +152,10 @@ div.subtit {
 
 input[type=text], input[type=password], input.text, input.title, textarea, select, input.checkbox, input.radio {margin:2px 0; font-size: 13px; }
 
-div.field, div.field-r, div.field-l{
-  margin-bottom: 4px;
-}
-div.field-r, div.fieldt-r, div.field_txt-r{
-  float: right;
-}
-div.field-l, div.fieldt-l, div.field_txt-l, div.fieldg_txt-l, div.fields_txt-l{
-  float: left;
-}
-div.fieldt-l, div.fieldt-r{
-  margin-top: 5px;
-  margin-right: 3px;
-}
+div.field, div.field-r, div.field-l { margin-bottom: 4px;}
+div.field-r, div.fieldt-r, div.field_txt-r { float: right;}
+div.field-l, div.fieldt-l, div.field_txt-l, div.fieldg_txt-l, div.fields_txt-l { float: left;}
+div.fieldt-l, div.fieldt-r { margin-top: 5px; margin-right: 3px;}
 div.field_txt, div.field_txt-l, div.fieldg_txt-l, div.fields_txt-l, div.field_txt-r, div.field_area{
   margin:2px 0;
   margin-bottom: 6px; 
@@ -201,27 +164,14 @@ div.field_txt, div.field_txt-l, div.fieldg_txt-l, div.fields_txt-l, div.field_tx
   background: white;
   width: 350px;  		
 }
-div.field_area{
-  width: 450px;
-}
-div.field_txt-l{
-  width: 100px;  		
-}
-div.field_txt-r{
-  width: 100px;  		
-}
-div.fieldg_txt-l{
-  width: 300px;  		
-}
-div.fields_txt-l{
-  width: 20px;  		
-}
+div.field_area { width: 450px;}
+div.field_txt-l { width: 100px;}
+div.field_txt-r { width: 100px; }
+div.fieldg_txt-l { width: 300px; }
+div.fields_txt-l { width: 20px; }
 div.field-r div.field_txt {width: 160px;}
 div.field-l div.field_txt {width: 160px;}
-
-div.actions {
-  text-align: center;
-}
+div.actions { text-align: center;}
 div.actions input {
   margin: 7px;  			
   padding: 4px 8px;
