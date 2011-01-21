@@ -6,7 +6,7 @@ class Ticket < ActiveRecord::Base
 
   validates_presence_of :name, :message => "(Nombre Deudor) : debe ingresar un valor en este campo."
   validates_presence_of :cas_id, :message => "(Identificador) : debe ingresar un valor en este campo."
-  validate :valida_rut
+  #validate :valida_rut
   validates_format_of :rut, :with => /\A[+-]?\d+\Z/, :message => " : debe ingresar solamente digitos y sin puntos ni guiones.", :allow_blank => true
   validates_inclusion_of :digit, :in => %w(0 1 2 3 4 5 6 7 8 9 k K),  :message => "(Digito verificador) no es un valor valido.", :allow_blank => true
   validates_presence_of :capital, :message => " : debe ingresar un valor en este campo."
