@@ -1,6 +1,8 @@
 class ReceiptsController < ApplicationController
   before_filter :perfil_name
 
+
+
   def rp_sup_ab
     @titulo = "Recibos de Pago Abiertos"
     @receipts = Receipt.where("state='abierto'").where("group_id=?", current_user.group_id)
