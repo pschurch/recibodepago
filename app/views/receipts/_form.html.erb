@@ -2,11 +2,15 @@
 <%= form_for(@receipt) do |f| %>
   <%= render "shared/error_messages", :target => @receipt, :text => "el Recibo de Pago" %>
 
-  <% if current_user.profile_id==8 %> 
+  <% if Rails.env.development? %>
+    <p><hr></p>
+    <div>
+      state: <%= @receipt.state %><br>
+      payment_agreement_id:  <%= @receipt.payment_agreement_id %><br>
+      user_id:   <%= @receipt.user_id %><br>
+    </div>
+    <p><hr></p>
   <% end %>
-    state: <%= @receipt.state %><br>
-    payment_agreement_id:  <%= @receipt.payment_agreement_id %><br>
-    user_id:   <%= @receipt.user_id %><br>
 
   <% if not @receipt.id.nil? %> 
     <table class="display">

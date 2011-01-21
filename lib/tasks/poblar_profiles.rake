@@ -2,7 +2,7 @@ require 'faker'
 
 namespace :db do
   desc "Carga los datos de Perfiles."
-  task :profiles => :environment do
+  task :perfiles => :environment do
     perfiles
   end
 end

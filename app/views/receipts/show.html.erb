@@ -5,6 +5,16 @@
 <% else %>
   <% if not notice.nil? %><p id="notice"><%= notice %></p><% end %>
 
+  <% if Rails.env.development? %>
+    <p><hr></p>
+    <div>
+      state: <%= @receipt.state %><br>
+      payment_agreement_id:  <%= @receipt.payment_agreement_id %><br>
+      user_id:   <%= @receipt.user_id %><br>
+    </div>
+    <p><hr></p>
+  <% end %>
+
   <table class="display">
   <tr>
     <td>Ticket N°:</td><td><div class="sh">&nbsp;</div></td>

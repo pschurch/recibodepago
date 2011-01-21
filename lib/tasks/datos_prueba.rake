@@ -30,11 +30,11 @@ def productos
 end
 
 def mandantes
-  Principal.create!(:name => "Banmedica", :social_reason => "Banmedica S.A.", :rut: => "99999999", :digit => "9", :contact => "Rodrigo Rodriguez", :telephone => "7654321", :email => "rr@test.com", :state => "1" )
-  Principal.create!(:name => "Vida Tres", :social_reason => "Vida Tres S.A.", :rut: => "88888888", :digit => "8", :contact => "Gonzalo Gutierrez", :telephone => "9867545", :email => "gg@test.com", :state => "1" )
-  Principal.create!(:name => "Colmena", :social_reason => "Colmena S.A.", :rut: => "77777777", :digit => "7", :contact => "Ramón Rosas", :telephone => "4563222", :email => "ramonr@test.com", :state => "1" )
-  Principal.create!(:name => "Paris", :social_reason => "Cencosud S.A.", :rut: => "55555555", :digit => "5", :contact => "Rico McPato", :telephone => "4545333", :email => "ricomc@test.com", :state => "1" )
-  Principal.create!(:name => "Mandante No Activo", :social_reason => "Mandante no activo", :rut: => "", :digit => "", :contact => "", :telephone => "", :email => "", :state => "0" )
+  Principal.create!(:name => "Banmedica", :social_reason => "Banmedica S.A.", :rut => "99999999", :digit => "9", :contact => "Rodrigo Rodriguez", :telephone => "7654321", :email => "rr@test.com", :state => "1" )
+  Principal.create!(:name => "Vida Tres", :social_reason => "Vida Tres S.A.", :rut => "88888888", :digit => "8", :contact => "Gonzalo Gutierrez", :telephone => "9867545", :email => "gg@test.com", :state => "1" )
+  Principal.create!(:name => "Colmena", :social_reason => "Colmena S.A.", :rut => "77777777", :digit => "7", :contact => "Ramon Rosas", :telephone => "4563222", :email => "ramonr@test.com", :state => "1" )
+  Principal.create!(:name => "Paris", :social_reason => "Cencosud S.A.", :rut => "55555555", :digit => "5", :contact => "Rico McPato", :telephone => "4545333", :email => "ricomc@test.com", :state => "1" )
+  Principal.create!(:name => "Mandante No Activo", :social_reason => "Mandante no activo", :rut => "11111111", :digit => "1", :contact => "", :telephone => "", :email => "", :state => "0" )
 end
 
 def carteras
@@ -57,6 +57,12 @@ end
 
 def cargrups
   Cargrup.create!(:group_id => 2, :cartera_id => 1)
+  Cargrup.create!(:group_id => 2, :cartera_id => 2)
+  Cargrup.create!(:group_id => 2, :cartera_id => 3)
+  Cargrup.create!(:group_id => 2, :cartera_id => 4)
+  Cargrup.create!(:group_id => 3, :cartera_id => 5)
+  Cargrup.create!(:group_id => 3, :cartera_id => 6)
+  Cargrup.create!(:group_id => 3, :cartera_id => 8)
 end
 
 def usuarios
@@ -91,7 +97,14 @@ def formas_pago
 end
 
 def politicas_pago
-  PaymentPolicy.create!(:principal_id => 1, :product_id => 1, :collection_type => 1, :arrear_interest => 1000, :term_interes => 1000, :fee => 1000, :legal_cost => 1000, :installment => 1, :state => 1)
+  PaymentPolicy.create!(:principal_id => 1, :product_id => 1, :collection_type_id => 1, :arrear_interest => 1000, :term_interest => 1000, :fee => 1000, :legal_costs => 0, :installment => 1, :state => 1)
+  PaymentPolicy.create!(:principal_id => 1, :product_id => 2, :collection_type_id => 1, :arrear_interest => 500, :term_interest => 500, :fee => 1000, :legal_costs => 0, :installment => 1, :state => 1)
+  PaymentPolicy.create!(:principal_id => 2, :product_id => 2, :collection_type_id => 2, :arrear_interest => 1000, :term_interest => 1000, :fee => 1000, :legal_costs => 0, :installment => 0, :state => 1)
+  PaymentPolicy.create!(:principal_id => 2, :product_id => 4, :collection_type_id => 2, :arrear_interest => 1000, :term_interest => 1000, :fee => 1000, :legal_costs => 0, :installment => 0, :state => 1)
+  PaymentPolicy.create!(:principal_id => 3, :product_id => 3, :collection_type_id => 3, :arrear_interest => 1000, :term_interest => 1000, :fee => 1000, :legal_costs => 0, :installment => 1, :state => 1)
+  PaymentPolicy.create!(:principal_id => 3, :product_id => 6, :collection_type_id => 3, :arrear_interest => 1000, :term_interest => 1000, :fee => 1000, :legal_costs => 0, :installment => 1, :state => 1)
+  PaymentPolicy.create!(:principal_id => 4, :product_id => 4, :collection_type_id => 4, :arrear_interest => 1000, :term_interest => 1000, :fee => 1000, :legal_costs => 1, :installment => 0, :state => 1)
+  PaymentPolicy.create!(:principal_id => 4, :product_id => 8, :collection_type_id => 4, :arrear_interest => 1000, :term_interest => 1000, :fee => 1000, :legal_costs => 1, :installment => 0, :state => 1)
 end
 
 

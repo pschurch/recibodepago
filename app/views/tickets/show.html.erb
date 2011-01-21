@@ -5,6 +5,14 @@
 <% else %>
   <% if not notice.nil? %><p id="notice"><%= notice %></p><% end %>
 
+  <% if Rails.env.development? %>
+    <p><hr></p>
+    <div>
+      state: <%= @ticket.state %>
+    </div>
+    <p><hr></p>
+  <% end %>
+
   <div class="fieldt-l">
     Ticket N°:
   </div>
@@ -170,15 +178,8 @@
   <div class="fields_txt-l">
     <% if @ticket.doc_delivery %>Sí<% else %>No<% end %>
   </div>
-
 <% end %>
 </td></tr></table>
-  <p><hr></p>
-  <div>
-  state: <%= @ticket.state %>
-  </div>
-
-
 </seccion>
 
 <botones>

@@ -12,12 +12,14 @@
   </div>
 
   <div class="field">
-   Carteras:  <br> 
-   <% for cartera in Cartera.where("state = true").order("principal_id ASC") %>
-     <%= check_box_tag "group[cartera_ids][]", cartera.id, @group.carteras.include?(cartera) %>
-     <%= cartera.principal.name %> - <%= cartera.product.name %><br>
-   <% end %>
+   Carteras:   
   </div>
+  <% for cartera in Cartera.where("state = true").order("principal_id ASC") %>
+    <div>
+      <%= check_box_tag "group[cartera_ids][]", cartera.id, @group.carteras.include?(cartera) %>
+       <%= cartera.principal.name %> - <%= cartera.product.name %>
+    </div>
+  <% end %>
 
   <div class="field">
    Estado: <br>
@@ -28,5 +30,4 @@
   </div>
 <% end %>
 </td></tr></table>
-
 

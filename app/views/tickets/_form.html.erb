@@ -3,6 +3,14 @@
   <%= render "shared/error_messages", :target => @ticket, :text => "el Ticket" %>  
 
   <% if not @ticket.id.nil? %> 
+    <% if Rails.env.development? %>
+      <p><hr></p>
+      <div>
+        state: <%= @ticket.state %>
+      </div>
+      <p><hr></p>
+    <% end %>
+
     <div class="fieldt-l">
       Ticket N°:
     </div>
@@ -211,9 +219,7 @@
   <div class="actions">
     <%= f.submit "Grabar"%>
   </div>  
-  
-  <p><hr></p>
-  state: <%= @ticket.state %>
+
 <% end %>
 </td></tr></table>
 

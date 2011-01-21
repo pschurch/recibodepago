@@ -2,7 +2,7 @@ require 'faker'
 
 namespace :db do
   desc "Ingresa datos de prueba a la tabla de Asignacion."
-  task :test1 => :environment do
+  task :casos => :environment do
     asignacion
   end
 end
