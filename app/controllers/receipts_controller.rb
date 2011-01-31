@@ -1,6 +1,10 @@
 class ReceiptsController < ApplicationController
   before_filter :perfil_name
 
+  def rp_sup_rch
+    @titulo = "Recibos de Pago Rechazados"
+    @receipts = Receipt.where("state='rsac' OR state='acrs'").where("group_id=?", current_user.group_id)
+  end
 
 
   def rp_sup_ab

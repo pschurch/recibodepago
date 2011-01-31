@@ -1,6 +1,7 @@
 Recibodepago::Application.routes.draw do
   resources :profiles
 
+  match '/lisrsr', :to => 'receipts#rp_sup_rch'
   match '/lisrsa', :to => 'receipts#rp_sup_ab'
   match '/listk', :to => 'receipts#create_rp'
   resources :receipts
