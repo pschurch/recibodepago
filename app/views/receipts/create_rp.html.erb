@@ -1,4 +1,4 @@
-<seccion>
+<div class="seccion">
   <table>
   <tr>
     <th><%= link_to "N° Ticket", :sort => "id" %></th>
@@ -29,10 +29,9 @@
 
   <% end %>
   </table>
+</div>
 
-
-</seccion>
-<botones>
+<div class="botones">
   <%= link_to 'Crear Recibo de Pago', :controller => "receipts", :action => "new", :r => "99" %>
   <%= render 'shared/pp_ejc_dsg' %>
-</botones>
+</div>

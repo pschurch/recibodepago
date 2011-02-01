@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110119154844) do
+ActiveRecord::Schema.define(:version => 20110201160910) do
 
   create_table "assignments", :force => true do |t|
     t.string   "state"
@@ -255,6 +255,7 @@ ActiveRecord::Schema.define(:version => 20110119154844) do
     t.date     "canceled_date"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "assignment_id"
   end
 
   create_table "users", :force => true do |t|

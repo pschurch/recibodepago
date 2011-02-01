@@ -1,4 +1,4 @@
-<seccion>
+<div class="seccion">
 <table><tr><td class="formulario">
   <% if not notice.nil? %><p id="notice"><%= notice %></p><% end %>
 
@@ -76,11 +76,11 @@
   </div>
 
 </td></tr></table>
-</seccion>
+</div>
 
-<botones>
+<div class="botones">
   <%= link_to 'Editar', edit_payment_policy_path(@payment_policy) %> 
   <%= link_to 'Listado de Políticas de Pago', payment_policies_path %>
   <%= render 'shared/pp_adm_dsg' %>
-</botones>
+</div>
 

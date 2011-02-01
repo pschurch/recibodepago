@@ -1,4 +1,4 @@
-<seccion>
+<div class="seccion">
 <table><tr><td class="formulario">
   <% if not notice.nil? %><p id="notice"><%= notice %></p><% end %>
   <div class="field">
@@ -58,11 +58,11 @@
   </div>
 
 </td></tr></table>
-</seccion>
+</div>
 
-<botones>
+<div class="botones">
   <%= link_to 'Editar', edit_user_path(@user) %> 
   <%= link_to 'Listado de Usuarios', users_path %>
   <%= render 'shared/pp_adm_dsg' %>
-</botones>
+</div>
 

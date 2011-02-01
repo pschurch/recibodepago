@@ -1,4 +1,4 @@
-<seccion>
+<div class="seccion">
 <table><tr><td class="formulario">
   <% if not notice.nil? %><p id="notice"><%= notice %></p><% end %>
   <div class="field">
@@ -23,11 +23,11 @@
   </div>
 
 </td></tr></table>
-</seccion>
+</div>
 
-<botones>
+<div class="botones">
   <%= link_to 'Editar', edit_product_path(@product) %> 
   <%= link_to 'Listado de Productos', products_path %>
   <%= render 'shared/pp_adm_dsg' %>
-</botones>
+</div>
 

@@ -1,4 +1,4 @@
-<seccion>
+<div class="seccion">
 <table><tr><td class="formulario">
 <% form_tag({:controller => :tickets, :action => :cases}, :method => :get) do %>
   <div class="field">
@@ -11,9 +11,9 @@
   </div>  
 <% end %>
 </td></tr></table>
-</seccion>
+</div>
 
-<botones>
+<div class="botones">
   <%= link_to 'Página Principal', :controller => "sessions", :action => "ejc" %>
-</botones>
+</div>
 

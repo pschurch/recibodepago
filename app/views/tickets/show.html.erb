@@ -1,4 +1,4 @@
-<seccion>
+<div class="seccion">
 <table><tr><td class="formulario">
 <% if notice == '1' %>
   <p id="notice">El Ticket N° <%= @ticket.id %> se ha creado exitosamente.</p>
@@ -180,9 +180,9 @@
   </div>
 <% end %>
 </td></tr></table>
-</seccion>
+</div>
 
-<botones>
+<div class="botones">
 <% if not notice == '1' %>
   <% if not @ticket.adjust_sup? %>
     <%= link_to 'Editar', edit_ticket_path(@ticket) %> 
@@ -190,5 +190,5 @@
   <%= link_to 'Listado de Tickets', tickets_path %>
 <% end %>
   <%= link_to 'Página Principal', :controller => "sessions", :action => "ejc" %>
-</botones>
+</div>
 
