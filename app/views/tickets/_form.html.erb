@@ -22,7 +22,7 @@
     <td>Rut:</td><td class="ro"><%= f.text_field :rut, :size => "10", :value => @caso.rut, :readonly => true %> - <%= f.text_field :digit, :size => "1", :value => @caso.digit, :readonly => true %></td>
   </tr>
   <tr>
-    <td width="130">Identificador:</td><td class="ro" width="70"><%= f.text_field :cas_id, :size => "16", :value => @caso.cas_id, :readonly => true %></td>
+    <td width="130">Identificador:</td><td class="ro" width="70"><%= f.text_field :cas_id, :size => "12", :value => @caso.cas_id, :readonly => true %></td>
     <td width="110">Nombre:</td><td><%= f.text_field :name, :size => "30", :value => @caso.name %></td>
   </tr>
   <tr>
@@ -50,7 +50,7 @@
   </tr>
   <tr>
     <td>Gastos Envío:</td><td><%= f.text_field :shipping_costs, :size => "8" %></td>
-    <td>Vencimiento:</td><td><%= f.text_field :expir_date, :size => "30", :value => @caso.expir_date %></td>
+    <td>Vencimiento:</td><td><%= f.text_field :expir_date, :size => "30", :value => @caso.expir_date.strftime("%d-%b-%Y") %></td>
   </tr>
   <tr>
     <td>Gastos Judiciales:</td><td><%= f.text_field :legal_costs, :size => "8" %></td>
@@ -76,7 +76,7 @@
     <td>Rut:</td><td><%= f.text_field :rut, :size => "10"%> - <%= f.text_field :digit, :size => "1"%></td>
   </tr>
   <tr>
-    <td>Identificador:</td><td><%= f.text_field :cas_id, :size => "16"%></td>
+    <td>Identificador:</td><td><%= f.text_field :cas_id, :size => "12"%></td>
     <td>Nombre:</td><td><%= f.text_field :name, :size => "30"%></td>
   </tr>
   <tr>
@@ -104,7 +104,7 @@
   </tr>
   <tr>
     <td>Gastos Envío:</td><td><%= f.text_field :shipping_costs, :size => "8" %></td>
-    <td>Vencimiento:</td><td><%= f.text_field :expir_date, :size => "30"%></td>
+    <td>Vencimiento:</td><td><%= f.date_select :expir_date, :order => [:day, :month, :year]  %></td>
   </tr>
   <tr>
     <td>Gastos Judiciales:</td><td><%= f.text_field :legal_costs, :size => "8" %></td>
@@ -124,7 +124,7 @@
     <td colspan=2>Solicita modificación a Supervisor:</td><td><%= f.check_box :adjust_sup %> Sí</td>
   </tr>
   <tr>
-    <td>Descripción modificación solicitada:</td><td colspan="4"><%= f.text_area :adjust_sup_des, :size => "60x2" %></td>
+    <td>Descripción de la modificación solicitada:</td><td colspan="4"><%= f.text_area :adjust_sup_des, :size => "60x2" %></td>
   </tr>
   <% end %>
   </table>

@@ -57,10 +57,8 @@ class TicketsController < ApplicationController
       @ticket.update_attribute 'prepared_by', current_user.name
       if @ticket.adjust_sup?
         @ticket.update_attribute 'state', "pms"
-        @ticket.update_attribute 'adjust_sup_date', Time.now
-        #@ticket.update_attribute 'adjust_sup_tm', Time.now
+        @ticket.update_attribute 'adjust_sup_time', Time.now
       end
-
       session[:caso] = nil
       redirect_to(@ticket, :notice => '1')
     else

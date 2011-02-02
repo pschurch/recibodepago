@@ -84,7 +84,8 @@ table.display div { width: 200px; border: 1px solid #AAA; background: white; pad
 table.display div.sn {width: 30px;} 
 table.display div.sh {width: 100px;}
 table.display div.sl {width: 290px;} 
-table.display div.lg {width: 455px;} 
+table.display div.lg {width: 455px;}
+table.display div.lgh {width: 455px; height:40px} 
 
 table.display td.ro div {background: rgb(235, 235, 228); margin:3px 0; }
 table.datos td.ro input[type=text] {background: rgb(235, 235, 228); margin:3px 0; }
