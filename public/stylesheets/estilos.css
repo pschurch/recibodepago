@@ -54,7 +54,9 @@ p {  margin: 0;  padding: 0;}
   background-color: #c00; color: #fff; margin-top: 0px; margin-bottom: 0px;}
 #error ul li { font-size: 13px;	margin: 5px;  margin-left: 0px;}
 
-.field_with_errors {  padding: 1px; display: table;  background-color: rgb(172,0,0);}
+/*.field_with_errors { padding: 1px; display: table;  background-color: rgb(172,0,0);}*/
+
+input[type=text], input[type=password], input.text, input.title, textarea, select, input.checkbox, input.radio {margin:2px 0; font-size: 13px; }
 
 /* Tablas de contenido */
 table {
@@ -70,23 +72,31 @@ table a { font-weight: normal; }
 
 /* Tablas para formularios */
 table.display, table.datos { border: 0px; margin:0; }
-table.display th { background: #FFDC9E; border: 3px solid #FFDC9E;}
-table.display td { background: #FFDC9E; border: 1px solid #FFDC9E;}
+
+table.display th { background: #FFDC9E; border: 0px;}
+table.display td { background: #FFDC9E; border: 0px; vertical-align: middle;}
+table.display td.ro input[type=text] { background: rgb(235, 235, 228); margin:3px 0; }
+
+table.display td .field_with_errors  { background: #FFDC9E; border: 1px solid #FFDC9E;}
+table.display td .field_with_errors input[type=text]  {padding: 1px; border: 3px solid rgb(172,0,0)}
+
 table.display div { width: 200px; border: 1px solid #AAA; background: white; padding: 2px; }
 table.display div.sn {width: 30px;} 
 table.display div.sh {width: 100px;}
 table.display div.sl {width: 290px;} 
 table.display div.lg {width: 455px;} 
 
-table.datos th { background: #FFDC9E; border: 3px solid #FFDC9E; padding: 0}
-table.datos td { background: #FFDC9E; border: 1px solid #FFDC9E; padding: 0 } 
+table.display td.ro div {background: rgb(235, 235, 228); margin:3px 0; }
+table.datos td.ro input[type=text] {background: rgb(235, 235, 228); margin:3px 0; }
+
+table.datos th { background: #FFDC9E; border: 2px solid #FFDC9E; padding: 0}
+table.datos td { background: #FFDC9E; border: 2px solid #FFDC9E; padding: 0} 
+
 td.formulario { padding: 12px; padding-bottom: 5px; vertical-align: top; background: #FFDC9E; font-size: 13px; }
 
 hr {background:rgb(229,179,90);color:rgb(229,179,90);width:100%;height:2px;margin-top:2px;margin-bottom:10px;padding:0;border:none;}
 
 div.subtit {margin-top:6px; margin-bottom: 6px; font-size: 14px; font-weight: bold;}
-
-input[type=text], input[type=password], input.text, input.title, textarea, select, input.checkbox, input.radio {margin:2px 0; font-size: 13px; }
 
 div.field, div.field-r, div.field-l { margin-bottom: 4px;}
 div.field-r, div.fieldt-r, div.field_txt-r { float: right;}

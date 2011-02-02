@@ -44,7 +44,7 @@ class ReceiptsController < ApplicationController
   def edit
     @titulo = "Editar Recibo de Pago"
     @receipt = Receipt.find(params[:id])
-    @tickets = Ticket.where("id=?", 99)
+    @tickets = Ticket.where("id=?", 5)
   end
 
   # POST /receipts

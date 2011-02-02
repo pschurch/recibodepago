@@ -15,7 +15,7 @@
   <% if not @receipt.id.nil? %> 
     <table class="display">
     <tr>
-      <td width="127">Recibo de Pago N°:</td><td><div class="sh"><%= @receipt.id %></div></td>
+      <td width="130">Recibo de Pago N°:</td><td class="ro"><div class="sh"><%= @receipt.id %></div></td>
       <th rowspan=20 width=16></th>
     </tr>
     </table>
@@ -24,70 +24,71 @@
   <% @tickets.each do |a| %>
   <table class="display">
   <tr>
-    <td width="127">Ticket N°:</td><td><div class="sh"><%= a.id %></div></td>
+    <td>Ticket N°:</td><td class="ro"><div class="sh"><%= a.id %></div></td>
     <th rowspan=20 width=16></th>
-    <td>Mandante:</td><td><div><%= a.principal_name %></div></td>
+    <td>Rut:</td><td class="ro"><div class="sh"><%= a.rut %> - <%= a.digit %></div></td>
+  </tr>
+
+  <tr>
+    <td width="130">Identificador:</td><td width="70" class="ro"><div class="sh"><%= a.cas_id %></div></td>
+    <td width="110">Nombre:</td><td class="ro"><div><%= a.name %></div></td>
   </tr>
   <tr>
-    <td>Identificador:</td><td><div class="sh"><%= a.cas_id %></div></td>
-    <td>Tipo de Cobranza:</td><td> <div><%= a.collection_type_name %></div></td>
+    <td>Tipo de Cobranza:</td><td class="ro"><div class="sh"><%= a.collection_type_name %></div></td>
+    <td>Mandante:</td><td class="ro"><div><%= a.principal_name %></div></td>
   </tr>
   <tr>
-    <td>Rut:</td><td><div class="sh"><%= a.rut %> - <%= a.digit %></div></td>
-    <td>Nombre:</td><td><div><%= a.name %></div></td>
+    <td>Descripción del Pago:</td><td colspan="4" class="ro"><div class="lg"><%= a.payment_description %>&nbsp;</div></td>
   </tr>
   <tr>
-    <td>Descripción del Pago:</td><td colspan="4"><div class="lg"><%= a.payment_description %>&nbsp;</div></td>
+    <td>Capital:</td><td class="ro"><div class="sh"><%= number_to_currency(a.capital, :precision => 0, :delimiter => ".") %></div></td>
+    <td>Producto:</td><td class="ro"><div><%= a.product_name %></div></td>
   </tr>
   <tr>
-    <td>Capital:</td><td><div class="sh"><%= number_to_currency(a.capital, :precision => 0, :delimiter => ".") %></div></td>
-    <td>Producto:</td><td><div><%= a.product_name %></div></td>
+    <td>Interés Mora:</td><td class="ro"><div class="sh"><%= number_to_currency(a.arrear_interest, :precision => 0, :delimiter => ".") %>&nbsp;</div></td>
+    <td>Número:</td><td class="ro"><div><%= a.number %></div></td>
   </tr>
   <tr>
-    <td>Interés Mora:</td><td><div class="sh"><%= number_to_currency(a.arrear_interest, :precision => 0, :delimiter => ".") %>&nbsp;</div></td>
-    <td>Número:</td><td><div><%= a.number %></div></td>
+    <td>Interés Plazo:</td><td class="ro"><div class="sh"><%= number_to_currency(a.term_interest, :precision => 0, :delimiter => ".") %>&nbsp;</div></td>
+    <td>Emisor:</td><td class="ro"><div><%= a.emitter %></div></td>
   </tr>
   <tr>
-    <td>Interés Plazo:</td><td><div class="sh"><%= number_to_currency(a.term_interest, :precision => 0, :delimiter => ".") %>&nbsp;</div></td>
-    <td>Emisor:</td><td><div><%= a.emitter %></div></td>
+    <td>Honorarios:</td><td class="ro"><div class="sh"><%= number_to_currency(a.fee, :precision => 0, :delimiter => ".") %>&nbsp;</div></td>
+    <td>Cuenta Corriente:</td><td class="ro"><div><%= a.ctacte %></div></td>
   </tr>
   <tr>
-    <td>Honorarios:</td><td><div class="sh"><%= number_to_currency(a.fee, :precision => 0, :delimiter => ".") %>&nbsp;</div></td>
-    <td>Cuenta Corriente:</td><td><div><%= a.ctacte %></div></td>
+    <td>Gastos Envío:</td><td class="ro"><div class="sh"><%= number_to_currency(a.shipping_costs, :precision => 0, :delimiter => ".") %>&nbsp;</div></td>
+    <td>Vencimiento:</td><td class="ro"><div><%= a.expir_date %></div></td>
   </tr>
   <tr>
-    <td>Gastos Envío:</td><td><div class="sh"><%= a.shipping_costs %>&nbsp;</div></td>
-    <td>Vencimiento:</td><td><div><%= a.expir_date %></div></td>
+    <td>Gastos Judiciales:</td><td class="ro"><div class="sh"><%= number_to_currency(a.legal_costs, :precision => 0, :delimiter => ".") %>&nbsp;</div></td>
+    <td>Boleta N°: </td><td class="ro"><div><%= a.ballot %>&nbsp;</div></td>
   </tr>
   <tr>
-    <td>Gastos Judiciales:</td><td><div class="sh"><%= a.legal_costs %>&nbsp;</div></td>
-    <td>Boleta nro: </td><td><div><%= a.ballot %>&nbsp;</div></td>
+    <td>Total a Pagar:</td><td class="ro"><div class="sh"><%= number_to_currency(a.total_pay, :precision => 0, :delimiter => ".") %>&nbsp;</div></td>
+    <td>Cuota:</td><td class="ro"><div class="sh"><%= a.quota_num %><% if not a.total_q.empty? %> de <%= a.total_q %><% end %>&nbsp;</div></td>
   </tr>
   <tr>
-    <td>Total a Pagar:</td><td><div class="sh"><%= number_to_currency(a.total_pay, :precision => 0, :delimiter => ".") %>&nbsp;</div></td>
-    <td>Cuota:</td><td><div class="sh"><%= a.quota_num %><% if not a.total_q.empty? %> de <%= a.total_q %><% end %>&nbsp;</div></td>
+    <td>Preparado por:</td><td colspan=4 class="ro"><div class="lg"><%= a.prepared_by %></div></td>
   </tr>
   <tr>
-    <td>Preparado por:</td><td colspan=4><div class="lg"><%= a.prepared_by %></div></td>
-  </tr>
-  <tr>
-    <td colspan=2>Entrega documento a deudor:</td><td><div class="sn"><% if a.doc_delivery %>Sí<% else %>No<% end %></div></td>
+    <td colspan=2>Entrega documento a deudor:</td><td class="ro"><div class="sn"><% if a.doc_delivery %>Sí<% else %>No<% end %></div></td>
   </tr>
   </table>
   <hr>
   <% end %>
   <table class="datos">
   <tr>
-    <td>Fecha:</td><td><%= f.date_select :date_r %></td>
-    <th rowspan=20 width=16></th>
-    <td>Total a Pagar: &nbsp;</td><td><%= f.text_field :total_pay, :size => "10", :value=> @total_rp, :readonly => true %></td>
+    <td width="130">Fecha:</td><td><%= f.date_select :date_r %></td>
+    <th rowspan=20 width=30></th>
+    <td>Total a Pagar: &nbsp;</td><td class="ro"><%= f.text_field :total_pay, :size => "12", :value=> @total_rp, :readonly => true %></td>
   </tr>
   <tr>
     <td>Acuerdo de Pago: &nbsp;</td><td><%= f.collection_select :payment_agreement_id, PaymentAgreement.where('state = true').order('name ASC'), :id, :name %></td>
   </tr>
   <tr>
-    <td>Preparado por:</td><td><%= f.text_field :user_name, :size => "30", :value => current_user.name, :readonly => true %>&nbsp;</td>
-    <td>Teléfono: </td><td><%= f.text_field :telephone_user, :size => "10" , :value => current_user.telephone, :readonly => true %></td>
+    <td>Preparado por:</td><td class="ro"><%= f.text_field :user_name, :size => "30", :value => current_user.name, :readonly => true %>&nbsp;</td>
+    <td>Teléfono: </td><td class="ro"><%= f.text_field :telephone_user, :size => "12" , :value => current_user.telephone, :readonly => true %></td>
   </tr>
   </table>
   <div class="subtit">
@@ -95,28 +96,28 @@
   </div>
   <table class="datos">
   <tr>
-    <td>Nombre: </td><td><%= f.text_field :cont_name, :size => "37" %></td>
+    <td width="130">Nombre: </td><td><%= f.text_field :cont_name, :size => "37" %></td>
     <th rowspan=20 width=16></th>
-    <td>Rut:</td><td><%= f.text_field :cont_rut, :size => "7" %>-<%= f.text_field :cont_digit, :size => "1" %></td>
+    <td width="80">Rut:</td><td><%= f.text_field :cont_rut, :size => "7" %> - <%= f.text_field :cont_digit, :size => "1" %></td>
   </tr>
   <tr>
     <td>Calle:</td><td><%= f.text_field :cont_calle, :size => "37" %></td>
-    <td>N° </td><td><%= f.text_field :cont_num, :size => "11" %></td>
+    <td>N° </td><td><%= f.text_field :cont_num, :size => "12" %></td>
   </tr>
   <tr>
     <td>Comuna: </td><td><%= f.collection_select :comuna_id, Comuna.where('state = true').order('name ASC'), :id, :name %></td>
-    <td>N° Depto.:</td><td><%= f.text_field :cont_depto, :size => "11" %></td>
+    <td>N° Depto.:</td><td><%= f.text_field :cont_depto, :size => "12" %></td>
   </tr>
   <tr>
-    <td>Referencias:</td><td colspan=4><%= f.text_field :cont_ref, :size => "62" %></td>
+    <td>Referencias:</td><td colspan=4><%= f.text_field :cont_ref, :size => "70" %></td>
   </tr>
   <tr>
     <td>Horario: </td><td><%= f.text_field :cont_hr, :size => "37" %></td>
-    <td>Teléfono 1: </td><td><%= f.text_field :cont_telf1, :size => "11" %></td>
+    <td>Teléfono 1: </td><td><%= f.text_field :cont_telf1, :size => "12" %></td>
   </tr>
   <tr>
-    <td>Teléfono 2: </td><td><%= f.text_field :cont_telf2, :size => "11" %></td>
-    <td>Teléfono 3: </td><td><%= f.text_field :cont_telf3, :size => "11" %></td>
+    <td>Teléfono 2: </td><td><%= f.text_field :cont_telf2, :size => "12" %></td>
+    <td>Teléfono 3: </td><td><%= f.text_field :cont_telf3, :size => "12" %></td>
   </tr>
   </table>
 
@@ -125,45 +126,45 @@
   </div>
     <table class="datos">
     <tr>
-      <th>Forma de Pago</th>
-      <th>Emisor</th>
-      <th>N° Documento</th>
+      <th width="120">Forma de Pago</th>
+      <th width="245">Emisor</th>
+      <th width="118">N° Documento</th>
       <th>Monto</th>
     </tr>
     <tr>
       <td><%= f.collection_select :formapago1, PaymentForm.where('state = true').order('name ASC'), :name, :name, options ={:prompt => "- Seleccione -"} %></td>
-      <td><%= f.text_field :emisor1, :size => "30" %></td>
-      <td><%= f.text_field :docnum1, :size => "10" %></td>
+      <td><%= f.text_field :emisor1, :size => "40" %></td>
+      <td><%= f.text_field :docnum1, :size => "16" %></td>
       <td><%= f.text_field :monto1, :size => "8" %></td>
     </tr>
     <tr>
       <td><%= f.collection_select :formapago2, PaymentForm.where('state = true').order('name ASC'), :name, :name, options ={:prompt => "- Seleccione -"} %></td>
-      <td><%= f.text_field :emisor2, :size => "30" %></td>
-      <td><%= f.text_field :docnum2, :size => "10" %></td>
+      <td><%= f.text_field :emisor2, :size => "40" %></td>
+      <td><%= f.text_field :docnum2, :size => "16" %></td>
       <td><%= f.text_field :monto2, :size => "8" %></td>
     </tr>
     <tr>
       <td><%= f.collection_select :formapago3, PaymentForm.where('state = true').order('name ASC'), :name, :name, options ={:prompt => "- Seleccione -"} %></td>
-      <td><%= f.text_field :emisor3, :size => "30" %></td>
-      <td><%= f.text_field :docnum3, :size => "10" %></td>
+      <td><%= f.text_field :emisor3, :size => "40" %></td>
+      <td><%= f.text_field :docnum3, :size => "16" %></td>
       <td><%= f.text_field :monto3, :size => "8" %></td>
     </tr>
     <tr>
       <td><%= f.collection_select :formapago4, PaymentForm.where('state = true').order('name ASC'), :name, :name, options ={:prompt => "- Seleccione -"} %></td>
-      <td><%= f.text_field :emisor4, :size => "30" %></td>
-      <td><%= f.text_field :docnum4, :size => "10" %></td>
+      <td><%= f.text_field :emisor4, :size => "40" %></td>
+      <td><%= f.text_field :docnum4, :size => "16" %></td>
       <td><%= f.text_field :monto4, :size => "8" %></td>
     </tr>
     <tr>
       <td><%= f.collection_select :formapago5, PaymentForm.where('state = true').order('name ASC'), :name, :name, options ={:prompt => "- Seleccione -"} %></td>
-      <td><%= f.text_field :emisor5, :size => "30" %></td>
-      <td><%= f.text_field :docnum5, :size => "10" %></td>
+      <td><%= f.text_field :emisor5, :size => "40" %></td>
+      <td><%= f.text_field :docnum5, :size => "16" %></td>
       <td><%= f.text_field :monto5, :size => "8" %></td>
     </tr>
     <tr>
       <td><%= f.collection_select :formapago6, PaymentForm.where('state = true').order('name ASC'), :name, :name, options ={:prompt => "- Seleccione -"} %></td>
-      <td><%= f.text_field :emisor6, :size => "30" %></td>
-      <td><%= f.text_field :docnum6, :size => "10" %></td>
+      <td><%= f.text_field :emisor6, :size => "40" %></td>
+      <td><%= f.text_field :docnum6, :size => "16" %></td>
       <td><%= f.text_field :monto6, :size => "8" %></td>
     </tr>
     <tr>

@@ -5,179 +5,63 @@
 <% else %>
   <% if not notice.nil? %><p id="notice"><%= notice %></p><% end %>
 
-  <% if Rails.env.development? %>
-    <p><hr></p>
-    <div>
-      state: <%= @ticket.state %>
-    </div>
-    <p><hr></p>
-  <% end %>
-
-  <div class="fieldt-l">
-    Ticket N°:
-  </div>
-  <div class="field_txt-l">
-    <%= @ticket.id %>
-  </div>
-  <br clear="all">
-
-  <div class="fieldt-l">
-    Rut:
-  </div>
-  <div class="field_txt-l">
-    <%= @ticket.rut %> - <%= @ticket.digit %>
-  </div>
-  <div class="field_txt-r">
-    <%= @ticket.cas_id %>
-  </div>
-  <div class="fieldt-r">
-    Identificador: 
-  </div>
-  <br clear="all">
-
-  <div class="fieldt-l">
-    Nombre:
-  </div>
-  <div class="fieldg_txt-l">
-    <%= @ticket.name %>
-  </div>
-  <br clear="all">
-
-  <div class="fieldt-l">
-    Mandante:
-  </div>
-  <div class="field_txt-l">
-    <%= @ticket.principal_name %>&nbsp;
-  </div>
-  <div class="field_txt-r">
-    <%= @ticket.collection_type_name %>
-  </div>
-  <div class="fieldt-r">
-    Tipo de Cobranza: 
-  </div>
-  <br clear="all">
-
-  <div class="field">
-    Descripción del Pago:
-  </div>
-  <div class="field_area">
-    <%= @ticket.payment_description %>&nbsp;
-  </div>
-  <br clear="all">
-
-  <div class="fieldt-l">
-    Capital: &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-  </div>
-  <div class="field_txt-l">
-    <%= number_to_currency(@ticket.capital, :precision => 0, :delimiter => ".") %>&nbsp;
-  </div>
-  <div class="field_txt-r">
-    <%= @ticket.product_name %>&nbsp;
-  </div>
-  <div class="fieldt-r">
-    Producto: 
-  </div>
-  <br clear="all">
-
-  <div class="fieldt-l">
-    Interés Mora: &nbsp; &nbsp; &nbsp;  &nbsp;
-  </div>
-  <div class="field_txt-l">
-    <%= number_to_currency(@ticket.arrear_interest, :precision => 0, :delimiter => ".") %>&nbsp;
-  </div>
-  <div class="field_txt-r">
-    <%= @ticket.number %>&nbsp;
-  </div>
-  <div class="fieldt-r">
-    Número: 
-  </div>
-  <br clear="all">
-
-  <div class="fieldt-l">
-    Interés Plazo:&nbsp; &nbsp;  &nbsp; &nbsp;
-  </div>
-  <div class="field_txt-l">
-    <%= number_to_currency(@ticket.term_interest, :precision => 0, :delimiter => ".") %>&nbsp;
-  </div>
-  <div class="field_txt-r">
-    <%= @ticket.emitter %>&nbsp;
-  </div>
-  <div class="fieldt-r">
-    Emisor: 
-  </div>
-  <br clear="all">
-
-  <div class="fieldt-l">
-    Honorarios: &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-  </div>
-  <div class="field_txt-l">
-    <%= number_to_currency(@ticket.fee, :precision => 0, :delimiter => ".") %>&nbsp;
-  </div>
-  <div class="field_txt-r">
-    <%= @ticket.ctacte %>&nbsp;
-  </div>
-  <div class="fieldt-r">
-    Cuenta Corriente: 
-  </div>
-  <br clear="all">
-
-  <div class="fieldt-l">
-    Gastos de Envío: &nbsp;
-  </div>
-  <div class="field_txt-l">
-    <%= number_to_currency(@ticket.shipping_costs, :precision => 0, :delimiter => ".") %>&nbsp;
-  </div>
-  <div class="field_txt-r">
-    <%= @ticket.expir_date %>&nbsp;
-  </div>
-  <div class="fieldt-r">
-    Vencimiento: 
-  </div>
-  <br clear="all">
-
-  <div class="fieldt-l">
-    Gastos Judiciales:
-  </div>
-  <div class="field_txt-l">
-    <%= number_to_currency(@ticket.legal_costs, :precision => 0, :delimiter => ".") %>&nbsp;
-  </div>
-  <div class="field_txt-r">
-    <%= @ticket.ballot %>&nbsp;
-  </div>
-  <div class="fieldt-r">
-    Boleta N°: 
-  </div>
-  <br clear="all">
-
-  <div class="fieldt-l">
-    Total a Pagar: &nbsp; &nbsp; &nbsp; 
-  </div>
-  <div class="field_txt-l">
-    <%= number_to_currency(@ticket.total_pay, :precision => 0, :delimiter => ".") %>&nbsp;
-  </div>
-  <div class="field_txt-r">
-    <%= @ticket.quota_num %>
-    <% if not @ticket.total_q.empty? %> de <%= @ticket.total_q %><% end %>&nbsp;
-  </div>
-  <div class="fieldt-r">
-    Cuota: 
-  </div>
-  <br clear="all">
-
-  <div class="fieldt-l">
-    Preparado por:
-  </div>
-  <div class="fieldg_txt-l">
-    <%= @ticket.prepared_by%>&nbsp;
-  </div>
-  <br clear="all">
-
-  <div class="fieldt-l">
-    Entrega documento a deudor:  
-  </div>
-  <div class="fields_txt-l">
-    <% if @ticket.doc_delivery %>Sí<% else %>No<% end %>
-  </div>
+  <table class="display">
+    <% if Rails.env.development? %>
+      <tr><td colspan=5>
+        state: <%= @ticket.state %>
+      <td></tr>
+    <% end %>
+    <tr><td>Ticket N°:</td><td><div class="sh"><%= @ticket.id %></div></td>
+    <th rowspan=20 width=16></th>
+    <td>Rut:</td><td><div class="sh"><%= @ticket.rut %> - <%= @ticket.digit %></div></td>
+  </tr>
+  <tr>
+    <td width="130">Identificador:</td><td width="70"><div class="sh"><%= @ticket.cas_id %></div></td>
+    <td width="110">Nombre:</td><td><div><%= @ticket.name %></div></td>
+  </tr>
+  <tr>
+    <td>Tipo de Cobranza:</td><td><div class="sh"><%= @ticket.collection_type_name %>&nbsp;</div></td>
+    <td>Mandante:</td><td><div><%= @ticket.principal_name %>&nbsp;</div></td>
+  </tr>
+  <tr>
+    <td>Descripción del Pago:</td><td colspan="4"><div class="lg"><%= @ticket.payment_description %>&nbsp;</div></td>
+  </tr>
+  <tr>
+    <td>Capital:</td><td><div class="sh"><%= number_to_currency(@ticket.capital, :precision => 0, :delimiter => ".") %>&nbsp;</div></td>
+    <td>Producto:</td><td><div><%= @ticket.product_name %>&nbsp;</div></td>
+  </tr>
+  <tr>
+    <td>Interés Mora:</td><td><div class="sh"><%= number_to_currency(@ticket.arrear_interest, :precision => 0, :delimiter => ".") %>&nbsp;</div></td>
+    <td>Número:</td><td><div><%= @ticket.number %>&nbsp;</div></td>
+  </tr>
+  <tr>
+    <td>Interés Plazo:</td><td><div class="sh"><%= number_to_currency(@ticket.term_interest, :precision => 0, :delimiter => ".") %>&nbsp;</div></td>
+    <td>Emisor:</td><td><div><%= @ticket.emitter %>&nbsp;</div></td>
+  </tr>
+  <tr>
+    <td>Honorarios:</td><td><div class="sh"><%= number_to_currency(@ticket.fee, :precision => 0, :delimiter => ".") %>&nbsp;</div></td>
+    <td>Cuenta Corriente:</td><td><div><%= @ticket.ctacte %>&nbsp;</div></td>
+  </tr>
+  <tr>
+    <td>Gastos Envío:</td><td><div class="sh"><%= number_to_currency(@ticket.shipping_costs, :precision => 0, :delimiter => ".") %>&nbsp;</div></td>
+    <td>Vencimiento:</td><td><div><%= @ticket.expir_date %>&nbsp;</div></td>
+  </tr>
+  <tr>
+    <td>Gastos Judiciales:</td><td><div class="sh"><%= number_to_currency(@ticket.legal_costs, :precision => 0, :delimiter => ".") %>&nbsp;</div></td>
+    <td>Boleta N°: </td><td><div><%= @ticket.ballot %>&nbsp;</div></td>
+  </tr>
+  <tr>
+    <td>Total a Pagar:</td><td><div class="sh"><%= number_to_currency(@ticket.total_pay, :precision => 0, :delimiter => ".") %>&nbsp;</div></td>
+    <td>Cuota:</td><td><div class="sh"><%= @ticket.quota_num %>
+    <% if not @ticket.total_q.empty? %> de <%= @ticket.total_q %><% end %>&nbsp;</div></td>
+  </tr>
+  <tr>
+    <td>Preparado por:</td><td colspan=4><div class="lg"><%= @ticket.prepared_by%>&nbsp;</div></td>
+  </tr>
+  <tr>
+    <td colspan=2>Entrega documento a deudor:</td><td><div class="sn"><% if @ticket.doc_delivery %>Sí<% else %>No<% end %></div></td>
+  </tr>
+  </table>
 <% end %>
 </td></tr></table>
 </div>

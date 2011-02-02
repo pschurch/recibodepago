@@ -19,15 +19,15 @@
   <tr>
     <td>Ticket N°:</td><td><div class="sh">&nbsp;</div></td>
     <td rowspan=20 width=16></td>
-    <td>Mandante:</td><td><div>&nbsp;</div></td>
+    <td>Rut:</td><td><div class="sh">&nbsp; </div></td>
   </tr>
   <tr>
     <td>Identificador:</td><td><div class="sh">&nbsp;  </div></td>
-    <td>Tipo de Cobranza:</td><td><div>&nbsp;  </div></td>
+    <td>Nombre:</td><td><div>&nbsp;  </div></td>
   </tr>
   <tr>
-    <td>Rut:</td><td><div class="sh">&nbsp; </div></td>
-    <td>Nombre:</td><td><div>&nbsp;  </div></td>
+    <td>Tipo de Cobranza:</td><td><div class="sh">&nbsp;</div></td>
+    <td>Mandante:</td><td><div>&nbsp;</div></td>
   </tr>
   <tr>
     <td>Descripción del Pago:</td><td colspan="4"><div class="lg">&nbsp;</div></td>
@@ -54,7 +54,7 @@
   </tr>
   <tr>
     <td>Gastos Judiciales:</td><td><div class="sh">&nbsp;</div></td>
-    <td>Boleta nro: </td><td><div>&nbsp;</div></td>
+    <td>Boleta N°: </td><td><div>&nbsp;</div></td>
   </tr>
   <tr>
     <td>Total a Pagar:</td><td><div class="sh">&nbsp;</div></td>
@@ -87,28 +87,28 @@
   </div>
   <table class="display">
   <tr>
-    <td>Nombre: </td><td><div class="sl"><%= @receipt.cont_name %></div></td>
+    <td>Nombre: </td><td><div class="sl"><%= @receipt.cont_name %>&nbsp;</div></td>
     <th rowspan=20 width=25></th>
-    <td>Rut:</td><td><div class="sh"><%= @receipt.cont_rut %></div></td>
+    <td>Rut:</td><td><div class="sh"><%= @receipt.cont_rut %>&nbsp;</div></td>
   </tr>
   <tr>
-    <td>Calle:</td><td><div class="sl"><%= @receipt.cont_calle %></div></td>
-    <td>N° </td><td><div class="sh"><%= @receipt.cont_num %></div></td>
+    <td>Calle:</td><td><div class="sl"><%= @receipt.cont_calle %>&nbsp;</div></td>
+    <td>N° </td><td><div class="sh"><%= @receipt.cont_num %>&nbsp;</div></td>
   </tr>
   <tr>
-    <td>Comuna: </td><td><div class="sl"><%= @receipt.comuna_id %></div></td>
-    <td>N° Depto.:</td><td><div class="sh"><%= @receipt.cont_depto %></div></td>
+    <td>Comuna: </td><td><div class="sl"><%= @receipt.comuna_id %>&nbsp;</div></td>
+    <td>N° Depto.:</td><td><div class="sh"><%= @receipt.cont_depto %>&nbsp;</div></td>
   </tr>
   <tr>
-    <td>Referencias:</td><td colspan=4><div class="lg"><%= @receipt.cont_ref %></div></td>
+    <td>Referencias:</td><td colspan=4><div class="lg"><%= @receipt.cont_ref %>&nbsp;</div></td>
   </tr>
   <tr>
-    <td>Horario: </td><td><div class="sl"><%= @receipt.cont_hr %></div></td>
-    <td>Teléfono 1: </td><td><div class="sh"><%= @receipt.cont_telf1 %></div></td>
+    <td>Horario: </td><td><div class="sl"><%= @receipt.cont_hr %>&nbsp;</div></td>
+    <td>Teléfono 1: </td><td><div class="sh"><%= @receipt.cont_telf1 %>&nbsp;</div></td>
   </tr>
   <tr>
-    <td>Teléfono 2: </td><td><div class="sh"><%= @receipt.cont_telf2 %></div></td>
-    <td>Teléfono 3: </td><td><div class="sh"><%= @receipt.cont_telf3 %></div></td>
+    <td>Teléfono 2: </td><td><div class="sh"><%= @receipt.cont_telf2 %>&nbsp;</div></td>
+    <td>Teléfono 3: </td><td><div class="sh"><%= @receipt.cont_telf3 %>&nbsp;</div></td>
   </tr>
   </table>
 

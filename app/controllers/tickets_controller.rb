@@ -17,15 +17,21 @@ class TicketsController < ApplicationController
     @titulo = "Crear Ticket" 
     if params[:t].nil?
       @caso = nil
+      session[:caso] = nil
     else
-      @caso = Assignment.find(params[:t])
+      if session[:caso].nil?
+        session[:caso] = params[:t]
+      end
+      #--------------------------------------------------------
+      @caso = Assignment.find(session[:caso])
       @pay_p = PaymentPolicy.where("principal_id =?", @caso.principal_id).where("product_id =?", @caso.product_id).where("collection_type_id =?", @caso.collection_type_id)
       @pay_p.each do |a|
         @fee = a.fee  
         @arr = a.arrear_interest
         @term = a.term_interest
       end
-     @total = @caso.capital + @fee + @arr + @term 
+      @total = @caso.capital + @fee + @arr + @term 
+      #---------------------------------------------------------
     end
     @ticket = Ticket.new
     # new.html.erb
@@ -34,6 +40,18 @@ class TicketsController < ApplicationController
   def create
     @titulo = "Crear Ticket" 
     @ticket = Ticket.new(params[:ticket])
+    if not session[:caso].nil?
+      #--------------------------------------------------------
+      @caso = Assignment.find(session[:caso])
+      @pay_p = PaymentPolicy.where("principal_id =?", @caso.principal_id).where("product_id =?", @caso.product_id).where("collection_type_id =?", @caso.collection_type_id)
+      @pay_p.each do |a|
+        @fee = a.fee  
+        @arr = a.arrear_interest
+        @term = a.term_interest
+      end
+      @total = @caso.capital + @fee + @arr + @term 
+      #---------------------------------------------------------
+    end
     if @ticket.save
       @ticket.update_attribute 'group_id', current_user.group_id
       @ticket.update_attribute 'prepared_by', current_user.name
@@ -42,6 +60,8 @@ class TicketsController < ApplicationController
         @ticket.update_attribute 'adjust_sup_date', Time.now
         #@ticket.update_attribute 'adjust_sup_tm', Time.now
       end
+
+      session[:caso] = nil
       redirect_to(@ticket, :notice => '1')
     else
       render :action => "new" 
@@ -75,6 +95,7 @@ class TicketsController < ApplicationController
   end
 
   def cases
+    session[:caso] = nil
     @titulo = "Listado de Casos"  
     if params[:search] == ""
       @resp = nil
@@ -103,4 +124,5 @@ class TicketsController < ApplicationController
         @perfil_name = "Designer"
       end 
     end
+
 end
