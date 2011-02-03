@@ -83,12 +83,18 @@
 </div>
 
 <div class="botones">
-<% if not notice == '1' %>
-  <% if not @ticket.adjust_sup? %>
+<% if current_user.profile_id==1 %> <!-- Ejecutivo de Cobranza -->
+    <% if not notice == '1' %>
+      <% if not @ticket.adjust_sup? %>
+        <%= link_to 'Editar', edit_ticket_path(@ticket) %> 
+      <% end %>
+      <%= link_to 'Listado de Tickets', tickets_path %>
+    <% end %>
+    <%= link_to 'Página Principal', :controller => "sessions", :action => "ejc" %>
+<% elsif current_user.profile_id==8 %> <!-- Designer -->
     <%= link_to 'Editar', edit_ticket_path(@ticket) %> 
-  <% end %>
-  <%= link_to 'Listado de Tickets', tickets_path %>
-<% end %>
-  <%= link_to 'Página Principal', :controller => "sessions", :action => "ejc" %>
+    <%= link_to 'Listado de Tickets', :controller => "tickets", :action => "tdsg" %>
+    <%= link_to 'Página Principal', :controller => "sessions", :action => "dsg" %>
+<% end %> 
 </div>
 

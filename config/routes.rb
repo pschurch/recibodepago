@@ -1,4 +1,8 @@
 Recibodepago::Application.routes.draw do
+  get "manager/mtmod"
+  get "manager/mtlist"
+  get "manager/mrlist"
+
   match '/lisrsr', :to => 'receipts#rp_sup_rch'
   match '/lisrsa', :to => 'receipts#rp_sup_ab'
   match '/listk', :to => 'receipts#create_rp'

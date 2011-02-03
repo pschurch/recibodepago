@@ -1,0 +1,44 @@
+<div class="seccion">
+  <table>
+  <tr>
+    <th><%= link_to "N° Ticket", :sort => "id" %></th>
+    <th><%= link_to "N° RP", :sort => "receipt_id" %></th>
+    <th><%= link_to "Ejecutivo Cobranza", :sort => "prepared_by" %></th>
+    <th><%= link_to "Rut", :sort => "rut" %></th>
+    <th><%= link_to "Nombre Deudor", :sort => "name" %></th>
+    <th><%= link_to "Mandante", :sort => "principal_id" %></th>
+    <th><%= link_to "Producto", :sort => "product_id" %></th>
+    <th><%= link_to "Identificador", :sort => "cas_id" %></th>
+    <th><%= link_to "Capital", :sort => "capital" %></th>
+    <th><%= link_to "Estado", :sort => "state" %></th>
+    <th></th>
+  </tr>
+  <% @tickets.each do |a| %>
+  <tr>
+    <td><%= a.id %></td>
+    <td><%= a.receipt_id %></td>
+    <td><%= a.prepared_by %></td>
+    <td><%= a.rut %>-<%= a.digit %></td>
+    <td><%= a.name %></td>
+    <td><%= a.principal_name %></td>
+    <td><%= a.product_name %></td>
+    <td><%= a.cas_id %></td>
+    <td><%= number_to_currency(a.capital, :precision => 0, :delimiter => ".") %></td>
+    <td><%= case a.state 
+          when "pms"
+            "por modificar supervisor"
+          when "pmg"
+            "por modificar gerencia"
+          else
+            a.state
+        end %>
+    </td>
+    <td><%= link_to 'Ver', a %></td>
+  </tr>
+  <% end %>
+  </table>
+</div>
+<div class="botones">
+  <%= link_to 'Página Principal', :controller => "sessions", :action => "ger" %>
+</div>
+
