@@ -91,6 +91,14 @@
       <%= link_to 'Listado de Tickets', tickets_path %>
     <% end %>
     <%= link_to 'Página Principal', :controller => "sessions", :action => "ejc" %>
+<% elsif current_user.profile_id==2 %> <!-- Supervisor -->
+
+    <%= link_to 'Página Principal', :controller => "sessions", :action => "sup" %>
+<% elsif current_user.profile_id==4 %> <!-- Tesoreria -->
+
+    <%= link_to 'Página Principal', :controller => "sessions", :action => "tsr" %>
+<% elsif current_user.profile_id==6 %> <!-- Gerencia -->
+    <%= link_to 'Página Principal', :controller => "sessions", :action => "ger" %>
 <% elsif current_user.profile_id==8 %> <!-- Designer -->
     <%= link_to 'Editar', edit_ticket_path(@ticket) %> 
     <%= link_to 'Listado de Tickets', :controller => "tickets", :action => "tdsg" %>

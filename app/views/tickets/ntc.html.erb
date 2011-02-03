@@ -5,5 +5,11 @@
 </div>
 
 <div class="botones">
-  <%= link_to 'Página Principal', :controller => "sessions", :action => "ejc" %>
+<% if current_user.profile_id==1 %> <!-- Ejecutivo de Cobranza -->
+  <%= link_to 'Página Principal', :controller => "sessions", :action => "ejc" %> 
+<% elsif current_user.profile_id==2 %> <!-- Supervisor -->
+  <%= link_to 'Página Principal', :controller => "sessions", :action => "sup" %> 
+<% elsif current_user.profile_id==6 %> <!-- Gerencia -->
+  <%= link_to 'Página Principal', :controller => "sessions", :action => "ger" %> 
+<% end %> 
 </div>

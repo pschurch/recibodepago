@@ -1,6 +1,6 @@
 class TicketsController < ApplicationController
   before_filter :perfil_name
-  before_filter :authenticate_ejc_sup
+  before_filter :authenticate_tck
 
   def ntc
     @titulo = "Tickets"
@@ -27,6 +27,7 @@ class TicketsController < ApplicationController
   end
 
   def new
+    deny_access unless (current_user.profile_id == 1 or current_user.profile_id == 2)
     @titulo = "Crear Ticket" 
     if params[:t].nil?
       @caso = nil
@@ -80,6 +81,7 @@ class TicketsController < ApplicationController
   end
 
   def edit
+    deny_access unless (current_user.profile_id == 1 or current_user.profile_id == 2 or current_user.profile_id == 6)
     @titulo = "Editar Ticket"
     @ticket = Ticket.find(params[:id])
     @tid = params[:id]
@@ -102,10 +104,12 @@ class TicketsController < ApplicationController
   end
 
   def search
+    deny_access unless (current_user.profile_id == 1)
     @titulo = "Busqueda de RUT"
   end
 
   def cases
+    deny_access unless (current_user.profile_id == 1)
     session[:caso] = nil
     @titulo = "Listado de Casos"  
     if params[:search] == ""
@@ -119,6 +123,7 @@ class TicketsController < ApplicationController
   end
 
   def mod_sup
+    deny_access unless (current_user.profile_id == 2)
     @titulo = "Tickets por Modificar"
     grupo = current_user.group_id
     @tickets = Ticket.where("state='pms'").where("group_id=?", grupo)
@@ -130,6 +135,10 @@ class TicketsController < ApplicationController
         @perfil_name = "Ejecutivo de Cobranza"
       elsif current_user.profile_id==2
         @perfil_name = "Supervisor"
+      elsif current_user.profile_id==4
+        @perfil_name = "Tesoreria"
+      elsif current_user.profile_id==6
+        @perfil_name = "Gerencia"
       elsif current_user.profile_id==8
         @perfil_name = "Designer"
       end 

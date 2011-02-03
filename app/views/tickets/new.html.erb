@@ -3,6 +3,10 @@
 </div>
 
 <div class="botones">
+<% if current_user.profile_id==1 %> <!-- Ejecutivo de Cobranza -->
   <%= link_to 'Cancelar', :controller => "sessions", :action => "ejc" %> 
+<% elsif current_user.profile_id==2 %> <!-- Supervisor -->
+  <%= link_to 'Cancelar', :controller => "sessions", :action => "sup" %> 
+<% end %>
 </div>
 

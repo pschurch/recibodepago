@@ -6,6 +6,10 @@
   <%= link_to 'Anular el Ticket', :controller => "tickets", :action => "ntc", :acc => '1', :id => @tid %> 
 <% if current_user.profile_id==1 %> <!-- Ejecutivo de Cobranza -->
   <%= link_to 'Cancelar', :controller => "sessions", :action => "ejc" %> 
+<% elsif current_user.profile_id==2 %> <!-- Supervisor -->
+  <%= link_to 'Cancelar', :controller => "sessions", :action => "sup" %> 
+<% elsif current_user.profile_id==6 %> <!-- Gerencia -->
+  <%= link_to 'Cancelar', :controller => "sessions", :action => "ger" %> 
 <% elsif current_user.profile_id==8 %> <!-- Designer -->
   <%= link_to 'Cancelar', :controller => "sessions", :action => "dsg" %> 
 <% end %> 
