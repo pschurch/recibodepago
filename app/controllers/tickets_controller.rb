@@ -2,6 +2,19 @@ class TicketsController < ApplicationController
   before_filter :perfil_name
   before_filter :authenticate_ejc_sup
 
+  def ntc
+    @titulo = "Tickets"
+    if params[:acc] == '1'  # anular el Ticket
+      @ticket = Ticket.find(params[:id])
+      @ticket.update_attribute 'state', "anulado"
+    end
+  end
+
+  def tdsg
+    @titulo = "Listado de Todos los Tickets"
+    @tickets = Ticket.all
+  end
+
   def index
     @titulo = "Listado de Tickets"
     grupo = current_user.group_id
@@ -69,6 +82,7 @@ class TicketsController < ApplicationController
   def edit
     @titulo = "Editar Ticket"
     @ticket = Ticket.find(params[:id])
+    @tid = params[:id]
   end
 
   def update
@@ -76,8 +90,7 @@ class TicketsController < ApplicationController
     if @ticket.update_attributes(params[:ticket])
       if @ticket.adjust_sup?
         @ticket.update_attribute 'state', "pms"
-        @ticket.update_attribute 'adjust_sup_date', Time.now
-        #@ticket.update_attribute 'adjust_sup_tm', Time.now
+        @ticket.update_attribute 'adjust_sup_time', Time.now
       end
       redirect_to(@ticket, :notice => 'El Ticket se ha actualizado exitosamente.') 
     else
@@ -109,7 +122,6 @@ class TicketsController < ApplicationController
     @titulo = "Tickets por Modificar"
     grupo = current_user.group_id
     @tickets = Ticket.where("state='pms'").where("group_id=?", grupo)
-    #@tickets = Ticket.where("state='state='").where("group_id=?", grupo)
   end
 
   private
