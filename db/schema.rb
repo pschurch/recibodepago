@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110202144220) do
+ActiveRecord::Schema.define(:version => 20110204205506) do
 
   create_table "assignments", :force => true do |t|
     t.string   "state"
@@ -247,14 +247,18 @@ ActiveRecord::Schema.define(:version => 20110202144220) do
     t.text     "adjust_sup_des"
     t.boolean  "adjust_mgt"
     t.text     "adjust_mgt_des"
-    t.date     "adjust_mgt_date"
-    t.time     "adjust_mgt_tm"
     t.string   "canceled_by"
-    t.date     "canceled_date"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "assignment_id"
     t.datetime "adjust_sup_time"
+    t.datetime "adjust_mgt_time"
+    t.datetime "canceled_time"
+    t.integer  "adjust"
+    t.datetime "adjust_time"
+    t.string   "adjust_by"
+    t.text     "adjust_obs"
+    t.integer  "new_total_pay"
   end
 
   create_table "users", :force => true do |t|

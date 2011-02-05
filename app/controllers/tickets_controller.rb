@@ -2,15 +2,17 @@ class TicketsController < ApplicationController
   before_filter :perfil_name
   before_filter :authenticate_tck
 
-  def ntc
+  def ntc  # vista para notificaciones
     @titulo = "Tickets"
     if params[:acc] == '1'  # anular el Ticket
       @ticket = Ticket.find(params[:id])
       @ticket.update_attribute 'state', "anulado"
+      @ticket.update_attribute 'canceled_by', current_user.name
+      @ticket.update_attribute 'canceled_date', Time.now
     end
   end
 
-  def tdsg
+  def tdsg  # Para designer
     @titulo = "Listado de Todos los Tickets"
     @tickets = Ticket.all
   end
