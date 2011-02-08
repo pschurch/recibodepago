@@ -1,0 +1,21 @@
+<div class="seccion">
+  <table>
+  <tr>
+    <th><%= link_to "N° RP", :sort => "id" %></th>
+    <th><%= link_to "Estado", :sort => "state" %></th>
+    <th colspan=2></th>
+  </tr>
+  <% @receipts.each do |a| %>
+  <tr>
+    <td><%= a.id %></td>
+    <td><%= a.state %>
+    <td><%= link_to 'Ver', a %></td>
+    <td><%= link_to 'Editar', edit_receipt_path(a) %></td>
+  </tr>
+  <% end %>
+  </table>
+</div>
+<div class="botones">
+  <%= link_to 'Página Principal', :controller => "sessions", :action => "dsg" %>
+</div>
+

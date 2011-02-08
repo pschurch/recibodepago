@@ -12,11 +12,6 @@ class TicketsController < ApplicationController
     end
   end
 
-  def tdsg  # Para designer
-    @titulo = "Listado de Todos los Tickets"
-    @tickets = Ticket.all
-  end
-
   def index
     @titulo = "Listado de Tickets"
     grupo = current_user.group_id
@@ -122,13 +117,6 @@ class TicketsController < ApplicationController
         @resp = nil
       end
     end
-  end
-
-  def mod_sup
-    deny_access unless (current_user.profile_id == 2)
-    @titulo = "Tickets por Modificar"
-    grupo = current_user.group_id
-    @tickets = Ticket.where("state='pms'").where("group_id=?", grupo)
   end
 
   private

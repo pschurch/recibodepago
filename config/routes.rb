@@ -1,7 +1,20 @@
 Recibodepago::Application.routes.draw do
+  get "supervisor/stmod"
+  get "supervisor/stlist"
+  get "supervisor/srlist"
+
+  get "finance/ftlist"
+  get "finance/frlist"
+  get "finance/fhlist"
+  get "finance/frmlist"
+
   get "manager/mtmod"
   get "manager/mtlist"
   get "manager/mrlist"
+
+  get "designer/cdsg"
+  get "designer/tdsg"
+  get "designer/rdsg"
 
   match '/lisrsr', :to => 'receipts#rp_sup_rch'
   match '/lisrsa', :to => 'receipts#rp_sup_ab'
@@ -9,10 +22,8 @@ Recibodepago::Application.routes.draw do
   resources :receipts
 
   get "tickets/ntc"
-  get "tickets/tdsg"
   match '/search', :to => 'tickets#search'
   match '/list', :to => 'tickets#cases'
-  match '/changsp', :to => 'tickets#mod_sup'
   resources :tickets
 
   resources :profiles

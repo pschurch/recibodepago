@@ -38,8 +38,17 @@ module SessionsHelper
   def authenticate
     deny_access unless signed_in?
   end
+  def authenticate_sup
+    deny_access unless (signed_in? && (current_user.profile_id == 2 or current_user.profile_id == 8) )
+  end
+  def authenticate_tsr
+    deny_access unless (signed_in? && (current_user.profile_id == 4 or current_user.profile_id == 8) )
+  end
   def authenticate_adm
     deny_access unless (signed_in? && (current_user.profile_id == 7 or current_user.profile_id == 8) )
+  end
+  def authenticate_dsg
+    deny_access unless (signed_in? && current_user.profile_id == 8)
   end
   def authenticate_tck
     deny_access unless (signed_in? && (current_user.profile_id == 1 or current_user.profile_id == 2  or current_user.profile_id == 4  or current_user.profile_id == 6 or current_user.profile_id == 8) )
@@ -49,14 +58,8 @@ module SessionsHelper
   def authenticate_ejc
     deny_access unless (signed_in? && (current_user.profile_id == 1 or current_user.profile_id == 8) )
   end
-  def authenticate_sup
-    deny_access unless (signed_in? && current_user.profile_id == 2)
-  end
   def authenticate_jtr
     deny_access unless (signed_in? && current_user.profile_id == 3)
-  end
-  def authenticate_tsr
-    deny_access unless (signed_in? && current_user.profile_id == 4)
   end
   def authenticate_opr
     deny_access unless (signed_in? && current_user.profile_id == 5)

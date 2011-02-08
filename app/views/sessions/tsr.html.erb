@@ -4,8 +4,8 @@
     <li><%= link_to "Confirmar Recibos de Pago", '#' %></li>
     <li><%= link_to "Remesar", '#' %></li>
     <li><%= link_to "Listado de Remesas", '#' %></li>
-    <li><%= link_to "Listado de Todos los Tickets", '#' %></li>
-    <li><%= link_to "Listado de Todos los Recibos de Pago", '#' %></li>
+    <li><%= link_to "Listado de Todos los Tickets", :controller => "finance", :action => "ftlist" %></li>
+    <li><%= link_to "Listado de Todos los Recibos de Pago", :controller => "finance", :action => "frlist" %></li>
     <li><%= link_to "Listado de Honorarios TechMill por facturar", '#' %></li>
   </ul>
 </div>
