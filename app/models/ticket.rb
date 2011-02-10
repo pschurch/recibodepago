@@ -67,4 +67,13 @@ class Ticket < ActiveRecord::Base
     end
   end
 
+
+ def self.filtro(filtro)
+  if filtro
+    where('state LIKE ?', "%#{filtro}%")
+  else
+    Ticket.all
+  end
+ end
+
 end

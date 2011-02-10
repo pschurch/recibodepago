@@ -4,7 +4,8 @@ class FinanceController < ApplicationController
 
   def ftlist
     @titulo = "Listado de Todos los Tickets"
-    @tickets = Ticket.all
+    @tickets = Ticket.filtro(params[:filtro])
+    #@tickets = Ticket.order("rut").filtro(params[:filtro])
   end
 
   def frlist

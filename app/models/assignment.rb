@@ -6,7 +6,6 @@ class Assignment < ActiveRecord::Base
  def self.search(search)
   if search
     where('rut LIKE ?', "%#{search}%").where("state = 'cargado'")
-
   else
     where("state = 'cargado'")
   end

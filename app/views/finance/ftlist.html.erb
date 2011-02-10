@@ -1,7 +1,22 @@
 <div class="seccion">
+
+<table><tr><td class="formulario">
+<% form_tag({:controller => :finance, :action => :ftlist}, :method => :get) do %>
+  <table class="display">
+  <tr>
+    <td>Seleccionar Estado: <%= select_tag( 'filtro', options_for_select([['todos', ''], ['creado','creado'], ['por modificar supervisor', 'pms'], ['por modificar gerencia','pmg'], ['modificdo','modificado'], ['recibo creado','rc'], ['para remesar','pr'], ['remesado','remesado'], ['cerrado','cerrado'], ['anulado', 'anulado']]) )%>
+</td>
+    <td><div class="boton"><%= submit_tag "Filtrar", :state => 'nil' %></div></td>
+  </tr>
+  </table>
+<% end %>
+</td></tr></table>
+
+  <div class="nbsp"></div>
   <table>
   <tr>
-    <th><%= link_to "N° Ticket", :sort => "id" %></th>
+    <!--<th><%= link_to "N° Ticket", :sort => "id" %></th>
+    <th><%= link_to "N° RP", :sort => "id" %></th>
     <th><%= link_to "Preparado por", :sort => "prepared_by" %></th>
     <th><%= link_to "Rut", :sort => "rut" %></th>
     <th><%= link_to "Nombre Deudor", :sort => "name" %></th>
@@ -9,12 +24,23 @@
     <th><%= link_to "Producto", :sort => "product_id" %></th>
     <th><%= link_to "Identificador", :sort => "cas_id" %></th>
     <th><%= link_to "Capital", :sort => "capital" %></th>
-    <th><%= link_to "Estado", :sort => "state" %></th>
-    <th colspan="2"></th>
+    <th><%= link_to "Estado", :sort => "state" %></th>-->
+    <th>N° Ticket</th>
+    <th>N° RP</th>
+    <th>Preparado por</th>
+    <th>Rut</th>
+    <th>Nombre Deudor</th>
+    <th>Mandante</th>
+    <th>Producto</th>
+    <th>Identificador</th>
+    <th>Capital</th>
+    <th>Estado</th>
+    <th></th>
   </tr>
   <% @tickets.each do |a| %>
   <tr>
     <td><%= a.id %></td>
+    <td><%= a.receipt_id %></td>
     <td><%= a.prepared_by %></td>
     <td><%= a.rut %>-<%= a.digit %></td>
     <td><%= a.name %></td>
@@ -32,7 +58,6 @@
         end %>
     </td>
     <td><%= link_to 'Ver', a %></td>   
-    <td><%= link_to 'Editar', edit_ticket_path(a) %></td>
   </tr>
   <% end %>
   </table>

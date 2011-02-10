@@ -8,7 +8,7 @@ class TicketsController < ApplicationController
       @ticket = Ticket.find(params[:id])
       @ticket.update_attribute 'state', "anulado"
       @ticket.update_attribute 'canceled_by', current_user.name
-      @ticket.update_attribute 'canceled_date', Time.now
+      @ticket.update_attribute 'canceled_time', Time.now
     end
   end
 

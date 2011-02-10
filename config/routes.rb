@@ -15,6 +15,7 @@ Recibodepago::Application.routes.draw do
   get "designer/cdsg"
   get "designer/tdsg"
   get "designer/rdsg"
+  get "designer/destr"
 
   match '/lisrsr', :to => 'receipts#rp_sup_rch'
   match '/lisrsa', :to => 'receipts#rp_sup_ab'

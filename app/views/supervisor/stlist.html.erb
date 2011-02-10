@@ -1,20 +1,37 @@
 <div class="seccion">
+
+<table><tr><td class="formulario">
+<% form_tag({:controller => :supervisor, :action => :stlist}, :method => :get) do %>
+  <table class="display">
+  <tr>
+    <td>Mandante: <%= select_tag('f1', options_for_select([['Todos', 0]] + @principals.collect{|p| [p.name, p.id]})  )%></td>
+    <td>Estado: <%= select_tag('f2', options_for_select([['Todos', 't'], ['creado','creado'], ['por modificar supervisor', 'pms'], ['por modificar gerencia','pmg'], ['modificado','modificado'], ['recibo creado','rc'],  ['anulado', 'anulado']]))%>
+</td>
+    <td><div class="boton"><%= submit_tag "Filtrar", :state => 'nil' %></div></td>
+  </tr>
+  </table>
+<% end %>
+</td></tr></table>
+
+  <div class="nbsp"></div>
   <table>
   <tr>
-    <th><%= link_to "N° Ticket", :sort => "id" %></th>
-    <th><%= link_to "Preparado por", :sort => "prepared_by" %></th>
-    <th><%= link_to "Rut", :sort => "rut" %></th>
-    <th><%= link_to "Nombre Deudor", :sort => "name" %></th>
-    <th><%= link_to "Mandante", :sort => "principal_id" %></th>
-    <th><%= link_to "Producto", :sort => "product_id" %></th>
-    <th><%= link_to "Identificador", :sort => "cas_id" %></th>
-    <th><%= link_to "Capital", :sort => "capital" %></th>
-    <th><%= link_to "Estado", :sort => "state" %></th>
+    <th>N° Ticket</th>
+    <th>N° RP</th>
+    <th>Preparado por</th>
+    <th>Rut</th>
+    <th>Nombre Deudor</th>
+    <th>Mandante</th>
+    <th>Producto</th>
+    <th>Identificador</th>
+    <th>Capital</th>
+    <th>Estado</th>
     <th colspan="2"></th>
   </tr>
   <% @tickets.each do |a| %>
   <tr>
     <td><%= a.id %></td>
+    <td><%= a.receipt_id %></td>
     <td><%= a.prepared_by %></td>
     <td><%= a.rut %>-<%= a.digit %></td>
     <td><%= a.name %></td>
@@ -32,7 +49,10 @@
         end %>
     </td>
     <td><%= link_to 'Ver', a %></td>   
-    <td><%= link_to 'Editar', edit_ticket_path(a) %></td>
+    <td><%= if (a.state == "creado" or a.state == "modificado" or a.state == "pms")
+          link_to 'Editar', edit_ticket_path(a) 
+         end %>
+    </td>
   </tr>
   <% end %>
   </table>
