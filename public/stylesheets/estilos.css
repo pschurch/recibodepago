@@ -5,7 +5,7 @@ botones, header, titulos, seccion {display:block;  margin-left: 10px; margin-rig
 
 /* typography.css */
 html {font-size:100.01%;}
-body {font-size:75%;color:#222;font-family:"Helvetica Neue", Arial, Helvetica, sans-serif;}
+body {color:#222;font-family:"Arial", Helvetica, sans-serif; background: #D9CEC1;}
 h1, h2, h3, h4, {font-weight:normal;color:#111;}
 h1 {font-size:3em;line-height:1;margin-bottom:0.5em;}
 h2 {font-size:2em;margin-bottom:0.75em;}
@@ -18,13 +18,11 @@ h4 {font-size:1.2em;line-height:1.25;margin-bottom:1.25em;}
 .med {background: #E7E4E0; border: 2px solid #C5BCB0; padding: 1px; padding-top: 0; border-top: 0;}
 .int {background: white; border: 1px solid #F2F0EF; border-top: 0; padding-bottom: 20px;}
 
-body { background: #D9CEC1;}
-
 div.header {padding: 11px;}
 div.header img {float: right; }
 
-div.titulos {margin-top: 10px; padding: 10px; background: #8C7D69; font-size:22px; color: white; }
-div.titulos a {margin-top: 4px; font-size:17px; float: right;  color: white; }
+div.titulos {margin-top: 2px; padding: 10px; background: #8C7D69; font-size:1.6em; color: white; }
+div.titulos a {margin-top: 4px; font-size:0.8em; float: right;  color: white; font-weight: normal;}
 div.titulos a:hover {text-decoration: underline; color: white;}
 
 div.seccion {margin-top: 5px; padding: 20px; background: #FFDC9E; font-size:13px; overflow: auto ; }
@@ -49,18 +47,12 @@ p {  margin: 0;  padding: 0;}
 #error h2 { text-align: left; font-weight: bold; padding: 5px 5px 5px 15px; font-size: 14px;
   background-color: #c00; color: #fff; margin-top: 0px; margin-bottom: 0px;}
 #error ul li { font-size: 13px;	margin: 5px;  margin-left: 0px;}
-
-/*.field_with_errors { padding: 1px; display: table;  background-color: rgb(172,0,0);}*/
+/*.field_with_errors { padding: 1px; display: table;  background-color: rgb(172,0,0);} */
 
 input[type=text], input[type=password], input.text, input.title, textarea, select, input.checkbox, input.radio {margin:2px 0; font-size: 13px; }
 
 /* Tablas de contenido */
-table {
-  margin:0 auto;
-  border-collapse: collapse;
-  border: 1px solid rgb(229,179,90);
-  font-size: 13px;		
-}
+table { margin:0 auto; border-collapse: collapse; border: 1px solid rgb(229,179,90); font-size: 13px;}
 th, td { border: 1px solid rgb(229,179,90); padding: 3px;}
 th { background: rgb(255, 199, 100);}
 td { background: white; }
@@ -69,19 +61,23 @@ table a { font-weight: normal; }
 /* Tablas para formularios */
 table.display, table.datos { border: 0px; margin:0; }
 
-table.display th { background: #FFDC9E; border: 0px;}
-table.display td { background: #FFDC9E; border: 0px; vertical-align: middle;}
-table.display td.ro input[type=text] { background: rgb(235, 235, 228); margin:3px 0; }
+table.display th { background: #FFaaaa;/*background: #FFDC9E;*/ border: 0px; padding: 2px;}
+table.display td { background: #eeDCaa;/*background: #FFDC9E;*/ border: 0px; padding: 2px; vertical-align: middle; } 
+table.display td.ro input[type=text] { background: rgb(235, 235, 228); margin:3px 0; font-size: 13px;}
 
 table.display td .field_with_errors  { background: #FFDC9E; border: 1px solid #FFDC9E;}
-table.display td .field_with_errors input[type=text]  {padding: 1px; border: 3px solid rgb(172,0,0)}
+table.display td .field_with_errors input[type=text] {padding: 1px; border: 3px solid rgb(172,0,0)}
+table.display td .field_with_errors textarea  {padding: 1px; border: 3px solid rgb(172,0,0)}
 
-table.display div { width: 200px; border: 1px solid #AAA; background: white; padding: 2px; }
+table.display div { border: 1px solid #AAA; background: white; padding:2px;}
+table.display div.n { width: 240px; }
+table.display div.w {height:40px; width: 240px;}
 table.display div.sn {width: 30px;} 
-table.display div.sh {width: 100px;}
+table.display div.pp {width: 70px;}
+table.display div.sh {width: 104px;}
 table.display div.sl {width: 290px;} 
-table.display div.lg {width: 455px;}
-table.display div.lgh {width: 455px; height:40px} 
+table.display div.lg {width: 484px;}
+table.display div.lgh {width: 484px; height:40px} 
 table.display div.boton { width:100px; text-align: center; background: #FFDC9E; border: 0px;}
 table.display div.boton input {margin: 1px; padding: 4px 8px; text-decoration: none; font-weight: bold; 	color: #222; font-size: 12px; border: 1px outset #CCC;  background: rgb(255,199,100);} 
 table.display td.ro div {background: rgb(235, 235, 228); margin:3px 0; }

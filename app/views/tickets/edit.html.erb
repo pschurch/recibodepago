@@ -1,17 +1,18 @@
-<div class="seccion">
-  <%= render 'form' %>
-</div>
+<% if current_user.profile_id==1 %> <!-- Ejecutivo de Cobranza -->
+  <% var = "ejc" %>
+<% elsif current_user.profile_id==2 %> <!-- Supervisor -->
+  <% var = "sup" %>
+<% elsif current_user.profile_id==6 %> <!-- Gerencia -->
+  <% var = "ger" %>
+<% end %>  
+<% parc = "form_" + var %>
 
+<div class="seccion">
+  <%= render parc %>
+</div>
 <div class="botones">
   <%= link_to 'Anular el Ticket', :controller => "tickets", :action => "ntc", :acc => '1', :id => @tid %> 
-<% if current_user.profile_id==1 %> <!-- Ejecutivo de Cobranza -->
-  <%= link_to 'Cancelar', :controller => "sessions", :action => "ejc" %> 
-<% elsif current_user.profile_id==2 %> <!-- Supervisor -->
-  <%= link_to 'Cancelar', :controller => "sessions", :action => "sup" %> 
-<% elsif current_user.profile_id==6 %> <!-- Gerencia -->
-  <%= link_to 'Cancelar', :controller => "sessions", :action => "ger" %> 
-<% elsif current_user.profile_id==8 %> <!-- Designer -->
-  <%= link_to 'Cancelar', :controller => "sessions", :action => "dsg" %> 
-<% end %> 
+  <%= link_to 'Cancelar', :controller => "sessions", :action => var %> 
 </div>
 
+<%= render "hiddenvar" %>

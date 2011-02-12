@@ -49,7 +49,7 @@
         end %>
     </td>
     <td><%= link_to 'Ver', a %></td>   
-    <td><%= if (a.state == "creado" or a.state == "modificado" or a.state == "pms")
+    <td><%= if (a.state == "creado" or a.state == "pms")
           link_to 'Editar', edit_ticket_path(a) 
          end %>
     </td>
@@ -58,6 +58,7 @@
   </table>
 </div>
 <div class="botones">
+  <%= link_to 'Crear Ticket en blanco', new_ticket_path %>
   <%= link_to 'Página Principal', :controller => "sessions", :action => 'sup' %>
 </botones>
 

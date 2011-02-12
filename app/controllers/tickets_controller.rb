@@ -78,7 +78,7 @@ class TicketsController < ApplicationController
   end
 
   def edit
-    deny_access unless (current_user.profile_id == 1 or current_user.profile_id == 2 or current_user.profile_id == 6)
+    deny_access unless (current_user.profile_id == 1 or current_user.profile_id == 2 or current_user.profile_id == 6 or current_user.profile_id == 8)
     @titulo = "Editar Ticket"
     @ticket = Ticket.find(params[:id])
     @tid = params[:id]
@@ -87,15 +87,31 @@ class TicketsController < ApplicationController
   def update
     @ticket = Ticket.find(params[:id])
     if @ticket.update_attributes(params[:ticket])
-      if @ticket.adjust_sup?
+      #----- EjeCobr solicita modificacion de Supervisor ----
+      if current_user.profile_id==1 and @ticket.adjust_sup?
         @ticket.update_attribute 'state', "pms"
         @ticket.update_attribute 'adjust_sup_time', Time.now
+        redirect_to(@ticket, :notice => 'El Ticket esta en espera de ser modificado por el Supervisor.') 
+      #----- Supervisor modifica ----
+      elsif current_user.profile_id==2 and @ticket.state=='pms'
+        if @ticket.adjust_mgt?
+          @ticket.update_attribute 'state', "pmg"
+          @ticket.update_attribute 'adjust_mgt_time', Time.now
+          redirect_to(@ticket, :notice => 'El Ticket esta en espera de ser modificado por Gerencia.') 
+        else 
+          @ticket.update_attribute 'state', "modificado"
+          @ticket.update_attribute 'adjust_sup', false
+          @ticket.update_attribute 'adjust_sup_des', ''
+          @ticket.update_attribute 'adjust_sup_time', nil
+          redirect_to(@ticket, :notice => 'El Ticket se ha modificado exitosamente.') 
+        end
+      else
+        redirect_to(@ticket, :notice => 'El Ticket se ha actualizado exitosamente.') 
       end
-      redirect_to(@ticket, :notice => 'El Ticket se ha actualizado exitosamente.') 
     else
       render :action => "edit" 
     end
-  end
+ end
 
   def destroy
   end

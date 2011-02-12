@@ -16,21 +16,32 @@ class Ticket < ActiveRecord::Base
   validates_numericality_of :fee, :only_integer => true, :message => "(Honorarios) : el valor debe ser numerico.", :allow_blank => true
   validates_numericality_of :shipping_costs, :only_integer => true, :message => "(Gastos Envio) : el valor debe ser numerico.", :allow_blank => true
   validates_numericality_of :legal_costs, :only_integer => true, :message => "(Gastos Judiciales) : el valor debe ser numerico.", :allow_blank => true
+  validates_numericality_of :adjust, :only_integer => true, :message => "(Ajuste) : el valor debe ser numerico.", :allow_blank => true
   validate :valida_mod_sup
-#  validate :valida_ajuste_sup
+  validate :valida_mod_mgt
+  validate :valida_ajuste_sup
 
   def valida_mod_sup
     if (adjust_sup? and adjust_sup_des.empty?)
-      errors.add(:adjust_sup_des, "(Descripcion modificacion) : debe ingresar la descripcion de la modificacion solicitada.")
+      errors.add(:adjust_sup_des, "(Descripcion modificacion) : debe ingresar la descripcion de la modificacion solicitada a Supervisor.")
     end
   end
-
-  def valida_ajuste_sup
-   # if current_user.profile_id==2 
-      if (adjust>1000)
-        errors.add(:adjust, "(Ajuste) : el valor ingresado no debe ser mayor a 1000.")
+  def valida_mod_mgt
+    if (adjust_mgt? and adjust_mgt_des.empty?)
+      errors.add(:adjust_mgt_des, "(Descripcion modificacion) : debe ingresar la descripcion de la modificacion solicitada a Gerencia.")
+    end
+  end
+  def valida_ajuste_sup 
+    if (state=='pms' and not adjust_mgt?)
+      if (adjust.nil?)
+        errors.add(:adjust, "(Ajuste) : Debe ingresar un valor en este campo.")
+      elsif  (adjust > 1000) or (adjust < -1000)
+        errors.add(:adjust, "(Ajuste) : El valor ingresado debe estar entre -$1.000 y $1.000. Si requiere un valor distinto, solicite modificacion a Gerencia.")
       end
-   # end
+      if (adjust_obs.nil? or adjust_obs.empty?)
+        errors.add(:adjust_obs, "(Observacion ajuste) : debe ingresar un valor en este campo.")
+      end
+    end
   end
 
   def valida_rut
@@ -66,7 +77,6 @@ class Ticket < ActiveRecord::Base
       end
     end
   end
-
 
  def self.filtro(filtro)
   if filtro

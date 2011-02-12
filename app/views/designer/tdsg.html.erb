@@ -2,7 +2,6 @@
   <table>
   <tr>
     <th><%= link_to "N° Ticket", :sort => "id" %></th>
-    <th><%= link_to "Estado", :sort => "state" %></th>
     <th><%= link_to "Ejecutivo Cobranza", :sort => "prepared_by" %></th>
     <th><%= link_to "Rut", :sort => "rut" %></th>
     <th><%= link_to "Nombre Deudor", :sort => "name" %></th>
@@ -10,12 +9,12 @@
     <th><%= link_to "Mandante", :sort => "principal_id" %></th>
     <th><%= link_to "Producto", :sort => "product_id" %></th>
     <th><%= link_to "Capital", :sort => "capital" %></th>
-    <th colspan=3></th>
+    <th><%= link_to "Estado", :sort => "state" %></th>
+    <th colspan=2></th>
   </tr>
   <% @tickets.each do |a| %>
   <tr>
     <td><%= a.id %></td>
-    <td><%= a.state %>
     <td><%= a.prepared_by %></td>
     <td><%= a.rut %>-<%= a.digit %></td>
     <td><%= a.name %></td>
@@ -23,8 +22,8 @@
     <td><%= a.principal_name %></td>
     <td><%= a.product_name %></td>
     <td><%= number_to_currency(a.capital, :precision => 0, :delimiter => ".") %></td>
+    <td><%= a.state %>
     <td><%= link_to 'Ver', a %></td>
-    <td><%= link_to 'Editar', edit_ticket_path(a) %></td>
     <!--<td><%= link_to 'Eliminar', a, :confirm => 'Are you sure?', :method => :delete %>-->
     <td><%= link_to 'Eliminar', :controller => 'designer', :action => 'destr', :id => a%>
 </td>
