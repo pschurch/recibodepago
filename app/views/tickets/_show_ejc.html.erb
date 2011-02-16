@@ -1,8 +1,5 @@
 <div class="seccion">
 <table><tr><td class="formulario">
-<% if notice == '1' %>
-  <p id="notice">El Ticket N° <%= @ticket.id %> se ha creado exitosamente.</p>
-<% else %>
   <% if not notice.nil? %><p id="notice"><%= notice %></p><% end %>
 
   <table class="display">
@@ -93,17 +90,15 @@
     <tr>
   <% end %>
   </table>
-<% end %>
+
 </td></tr></table>
 </div>
 
 <div class="botones">
-  <% if not notice == '1' %>
-    <% if not @ticket.adjust_sup? %>
-      <%= link_to 'Editar', edit_ticket_path(@ticket) %> 
-    <% end %>
-    <%= link_to 'Listado de Tickets', tickets_path %>
+  <% if not @ticket.adjust_sup? %>
+    <%= link_to 'Editar', edit_ticket_path(@ticket) %> 
   <% end %>
+  <%= link_to 'Listado de Tickets', tickets_path %>
   <%= link_to 'Página Principal', :controller => "sessions", :action => "ejc" %>
 </div>
 

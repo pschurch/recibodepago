@@ -1,18 +1,28 @@
 <% if current_user.profile_id==1 %> <!-- Ejecutivo de Cobranza -->
-  <% var = "ejc" %>
+  <div class="seccion">
+    <%= render "form_ejc" %>
+  </div>
+  <div class="botones">
+    <%= link_to 'Anular el Ticket', :controller => "tickets", :action => "ntc", :acc => '1', :id => @tid %> 
+    <%= link_to 'Cancelar', tickets_path %> 
+  </div>
 <% elsif current_user.profile_id==2 %> <!-- Supervisor -->
-  <% var = "sup" %>
+  <div class="seccion">
+    <%= render "form_sup" %>
+  </div>
+  <div class="botones">
+    <%= link_to 'Anular el Ticket', :controller => "tickets", :action => "ntc", :acc => '1', :id => @tid %> 
+    <%= link_to 'Cancelar', :controller => "sessions", :action => "sup" %> 
+  </div>
 <% elsif current_user.profile_id==6 %> <!-- Gerencia -->
-  <% var = "ger" %>
+  <div class="seccion">
+    <%= render "form_ger" %>
+  </div>
+  <div class="botones">
+    <%= link_to 'Anular el Ticket', :controller => "tickets", :action => "ntc", :acc => '1', :id => @tid %> 
+    <%= link_to 'Cancelar', :controller => "manager", :action => "mtmod" %> 
+  </div>
 <% end %>  
-<% parc = "form_" + var %>
 
-<div class="seccion">
-  <%= render parc %>
-</div>
-<div class="botones">
-  <%= link_to 'Anular el Ticket', :controller => "tickets", :action => "ntc", :acc => '1', :id => @tid %> 
-  <%= link_to 'Cancelar', :controller => "sessions", :action => var %> 
-</div>
 
-<%= render "hiddenvar" %>
+

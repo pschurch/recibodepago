@@ -1,7 +1,30 @@
 <div class="seccion">
+
+<table><tr><td class="formulario">
+<% form_tag({:controller => :manager, :action => :mtlist}, :method => :get) do %>
+  <table class="display">
+  <tr>
+    <td>Seleccionar Estado: <%= select_tag( 'f1', options_for_select([['Todos', 't'], ['creado','creado'], ['por modificar supervisor', 'pms'], ['por modificar gerencia','pmg'], ['modificdo','modificado'], ['recibo creado','rc'], ['para remesar','pr'], ['remesado','remesado'], ['cerrado','cerrado'], ['anulado', 'anulado']]) )%></td>
+    <td><div class="boton"><%= submit_tag "Filtrar", :state => 'nil' %></div></td>
+  </tr>
+  </table>
+<% end %>
+</td></tr></table>
+
+  <div class="nbsp"></div>
   <table>
   <tr>
-    <th><%= link_to "N° Ticket", :sort => "id" %></th>
+    <th>N° Ticket</th>
+    <th>N° RP</th>
+    <th>Ejecutivo Cobranza</th>
+    <th>Rut</th>
+    <th>Nombre Deudor</th>
+    <th>Mandante</th>
+    <th>Producto</th>
+    <th>Identificador</th>
+    <th>Capital</th>
+    <th>Estado</th>
+<!--    <th><%= link_to "N° Ticket", :sort => "id" %></th>
     <th><%= link_to "N° RP", :sort => "receipt_id" %></th>
     <th><%= link_to "Ejecutivo Cobranza", :sort => "prepared_by" %></th>
     <th><%= link_to "Rut", :sort => "rut" %></th>
@@ -10,21 +33,26 @@
     <th><%= link_to "Producto", :sort => "product_id" %></th>
     <th><%= link_to "Identificador", :sort => "cas_id" %></th>
     <th><%= link_to "Capital", :sort => "capital" %></th>
-    <th><%= link_to "Estado", :sort => "state" %></th>
+    <th><%= link_to "Estado", :sort => "state" %></th>-->
     <th></th>
   </tr>
-  <% @tickets.each do |a| %>
+  <% if @tickets.empty? %>
   <tr>
-    <td><%= a.id %></td>
-    <td><%= a.receipt_id %></td>
-    <td><%= a.prepared_by %></td>
-    <td><%= a.rut %>-<%= a.digit %></td>
-    <td><%= a.name %></td>
-    <td><%= a.principal_name %></td>
-    <td><%= a.product_name %></td>
-    <td><%= a.cas_id %></td>
-    <td><%= number_to_currency(a.capital, :precision => 0, :delimiter => ".") %></td>
-    <td><%= case a.state 
+    <td colspan= 11>No se han encontrado Tickets con el estado "<%= @estado %>".</td>
+  </tr>  
+  <% else %>
+    <% @tickets.each do |a| %>
+    <tr>
+      <td><%= a.id %></td>
+      <td><%= a.receipt_id %></td>
+      <td><%= a.prepared_by %></td>
+      <td><%= a.rut %>-<%= a.digit %></td>
+      <td><%= a.name %></td>
+      <td><%= a.principal_name %></td>
+      <td><%= a.product_name %></td>
+      <td><%= a.cas_id %></td>
+      <td><%= number_to_currency(a.capital, :precision => 0, :delimiter => ".") %></td>
+      <td><%= case a.state 
           when "pms"
             "por modificar supervisor"
           when "pmg"
@@ -32,9 +60,10 @@
           else
             a.state
         end %>
-    </td>
-    <td><%= link_to 'Ver', a %></td>
-  </tr>
+      </td>
+      <td><%= link_to 'Ver', a %></td>
+    </tr>
+    <% end %>
   <% end %>
   </table>
 </div>

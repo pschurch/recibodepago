@@ -1,15 +1,21 @@
 <div class="seccion">
 <table><tr><td class="formulario">
-  <p id="notice">El Ticket N° <%= @ticket.id %> ha sido anulado.</p>
+  <p id="notice">El Ticket N° <%= @ticket.id %> <%= @msje %>.</p>
 </td></tr></table>  
 </div>
 
 <div class="botones">
 <% if current_user.profile_id==1 %> <!-- Ejecutivo de Cobranza -->
+  <% if @acc =='1' %><%= link_to 'Listado de Tickets', tickets_path %><% end %> 
   <%= link_to 'Página Principal', :controller => "sessions", :action => "ejc" %> 
 <% elsif current_user.profile_id==2 %> <!-- Supervisor -->
+  <% if @acc =='1' %><%= link_to 'Listado de Tickets', :controller => 'supervisor', :action=>'stlist' %><% end %> 
+  <% if @acc=='4' or @acc=='5' %>
+    <%= link_to 'Tickets por Modificar', :controller => "supervisor", :action => "stmod" %>
+  <% end %>
   <%= link_to 'Página Principal', :controller => "sessions", :action => "sup" %> 
 <% elsif current_user.profile_id==6 %> <!-- Gerencia -->
+  <%= link_to 'Tickets por Modificar', :controller => "manager", :action => "mtmod" %> 
   <%= link_to 'Página Principal', :controller => "sessions", :action => "ger" %> 
 <% end %> 
 </div>

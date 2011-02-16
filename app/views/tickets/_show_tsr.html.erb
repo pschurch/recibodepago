@@ -3,8 +3,20 @@
   <% if not notice.nil? %><p id="notice"><%= notice %></p><% end %>
 
   <table class="display">
-    <tr><td>Ticket N°:</td><td><div class="sh"><%= @ticket.id %></div></td>
-    <th rowspan=20 width=16></th>
+  <tr>
+    <td>Ticket N°:</td><td><div class="sh"><%= @ticket.id %></div></td>
+    <th rowspan=4 width=16></th>
+    <td>Estado:</td><td><div><%= case @ticket.state 
+          when "pms"
+            "por modificar supervisor"
+          when "pmg"
+            "por modificar gerencia"
+          else
+            @ticket.state
+        end %></div></td>
+  </tr>
+  <tr>
+    <td>Recibo Pago N°:</td><td><div class="sh"><%= @ticket.receipt_id %>&nbsp;</div></td>
     <td>Rut:</td><td><div class="sh"><%= @ticket.rut %> - <%= @ticket.digit %></div></td>
   </tr>
   <tr>
@@ -20,6 +32,7 @@
   </tr>
   <tr>
     <td>Capital:</td><td><div class="sh"><%= number_to_currency(@ticket.capital, :precision => 0, :delimiter => ".") %>&nbsp;</div></td>
+    <th rowspan=7 width=16></th>
     <td>Producto:</td><td><div><%= @ticket.product_name %>&nbsp;</div></td>
   </tr>
   <tr>
@@ -49,8 +62,9 @@
   </tr>
   <% if not @ticket.adjust.nil? %> <!-- Ajuste -->
     <tr>
-      <td>Ajuste:</td><td><div class="sh"><%= @ticket.adjust %>&nbsp;</div></td>
-      <td>Observación ajuste:</td><td><div><%= @ticket.adjust %>&nbsp;</div></td>
+      <td>Ajuste:</td><td><div class="sh"><%= number_to_currency(@ticket.adjust, :precision => 0, :delimiter => ".") %>&nbsp;</div></td>
+      <th rowspan=3 width=16></th>
+      <td rowspan="2">Observación ajuste:</td><td rowspan="2"><div class="w"><%= @ticket.adjust_obs %>&nbsp;</div></td>
     </tr>
     <tr>
       <td>Nuevo Total a Pagar:</td><td><div class="sh"><%= @ticket.new_total_pay %>&nbsp;</div></td>
@@ -66,12 +80,12 @@
     <td>Preparado por:</td><td colspan=4><div class="lg"><%= @ticket.prepared_by%>&nbsp;</div></td>
   </tr>
   <tr>
-    <td colspan=2>Entrega documento a deudor:</td><td><div class="sn"><% if @ticket.doc_delivery %>Sí<% else %>No<% end %></div></td>
+    <td colspan=3>Entrega documento a deudor:</td><td><div class="sn"><% if @ticket.doc_delivery %>Sí<% else %>No<% end %></div></td>
   </tr>
 
   <tr><td height="20"></td></tr>
   <tr>
-    <td colspan=2>Solicita modificación a Supervisor:</td><td><div class="sn"><% if @ticket.adjust_sup %>Sí<% else %>No<% end %></div></td>
+    <td colspan=3>Solicita modificación a Supervisor:</td><td><div class="sn"><% if @ticket.adjust_sup %>Sí<% else %>No<% end %></div></td>
   </tr>
   <% if @ticket.adjust_sup %>
     <tr>
@@ -79,12 +93,9 @@
     </tr>
     <tr>
       <td>Fecha solicitud:</td><td><div class="sh"><%= @ticket.adjust_sup_time.strftime("%d-%b-%Y") %></div></td>
+      <td></td>
       <td>Hora solicitud:</td><td><div class="sh"><%= @ticket.adjust_sup_time.strftime("%H:%M") %> hrs.</div></td>
     <tr>
-  <% else %>
-    <tr>
-      <td>Descripción de la modificación solicitada:</td><td colspan="4"><div class="lg"><%= @ticket.adjust_sup_des %>&nbsp;</div></td>
-    </tr>
   <% end %>
   <% if @ticket.adjust_mgt %>
     <tr>
@@ -99,12 +110,21 @@
       <td>Hora solicitud:</td><td><div class="sh"><%= @ticket.adjust_mgt_time.strftime("%H:%M") %> hrs.</div></td>
     <tr>
   <% end %>
+  <% if @ticket.state=='anulado' %>
+    <tr>
+      <td>Fecha anulación:</td><td><div class="sh"><%= @ticket.canceled_time.strftime("%d-%b-%Y") %> </div></td>
+      <td></td>
+      <td>Anulado por:</td><td><div><%= @ticket.canceled_by %></div></td>
+    <tr>
+  <% end %>
+
   </table>
 
 </td></tr></table>
 </div>
 
 <div class="botones">
+  <%= link_to 'Listado de Tickets', :controller => "finance", :action => "ftlist" %>
   <%= link_to 'Página Principal', :controller => "sessions", :action => "tsr" %>
 </div>
 

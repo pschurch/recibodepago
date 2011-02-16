@@ -4,7 +4,7 @@
 <% form_tag({:controller => :finance, :action => :ftlist}, :method => :get) do %>
   <table class="display">
   <tr>
-    <td>Seleccionar Estado: <%= select_tag( 'filtro', options_for_select([['todos', ''], ['creado','creado'], ['por modificar supervisor', 'pms'], ['por modificar gerencia','pmg'], ['modificdo','modificado'], ['recibo creado','rc'], ['para remesar','pr'], ['remesado','remesado'], ['cerrado','cerrado'], ['anulado', 'anulado']]) )%>
+    <td>Seleccionar Estado: <%= select_tag( 'filtro', options_for_select([['Todos', 't'], ['creado','creado'], ['por modificar supervisor', 'pms'], ['por modificar gerencia','pmg'], ['modificdo','modificado'], ['recibo creado','rc'], ['para remesar','pr'], ['remesado','remesado'], ['cerrado','cerrado'], ['anulado', 'anulado']]) )%>
 </td>
     <td><div class="boton"><%= submit_tag "Filtrar", :state => 'nil' %></div></td>
   </tr>
@@ -37,28 +37,34 @@
     <th>Estado</th>
     <th></th>
   </tr>
-  <% @tickets.each do |a| %>
+  <% if @tickets.empty? %>
   <tr>
-    <td><%= a.id %></td>
-    <td><%= a.receipt_id %></td>
-    <td><%= a.prepared_by %></td>
-    <td><%= a.rut %>-<%= a.digit %></td>
-    <td><%= a.name %></td>
-    <td><%= a.principal_name %></td>
-    <td><%= a.product_name %></td>
-    <td><%= a.cas_id %></td>
-    <td><%= number_to_currency(a.capital, :precision => 0, :delimiter => ".") %></td>
-    <td><%= case a.state 
-          when "pms"
-            "por modificar supervisor"
-          when "pmg"
-            "por modificar gerencia"
-          else
-            a.state
-        end %>
-    </td>
-    <td><%= link_to 'Ver', a %></td>   
-  </tr>
+    <td colspan= 11>No se han encontrado Tickets con el estado "<%= @estado %>".</td>
+  </tr>  
+  <% else %>
+    <% @tickets.each do |a| %>
+    <tr>
+      <td><%= a.id %></td>
+      <td><%= a.receipt_id %></td>
+      <td><%= a.prepared_by %></td>
+      <td><%= a.rut %>-<%= a.digit %></td>
+      <td><%= a.name %></td>
+      <td><%= a.principal_name %></td>
+      <td><%= a.product_name %></td>
+      <td><%= a.cas_id %></td>
+      <td><%= number_to_currency(a.capital, :precision => 0, :delimiter => ".") %></td>
+      <td><%= case a.state 
+           when "pms"
+             "por modificar supervisor"
+           when "pmg"
+             "por modificar gerencia"
+           else
+             a.state
+         end %>
+      </td>
+      <td><%= link_to 'Ver', a %></td>   
+    </tr>
+    <% end %>
   <% end %>
   </table>
 </div>

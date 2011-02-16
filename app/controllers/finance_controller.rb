@@ -4,8 +4,19 @@ class FinanceController < ApplicationController
 
   def ftlist
     @titulo = "Listado de Todos los Tickets"
-    @tickets = Ticket.filtro(params[:filtro])
-    #@tickets = Ticket.order("rut").filtro(params[:filtro])
+    if (params[:filtro]=='t' or params[:filtro].nil? )
+      @tickets = Ticket.all
+    else
+      @tickets = Ticket.where("state=?", params[:filtro])
+      case params[:filtro] 
+        when "pms"
+          @estado ="por modificar supervisor"
+        when "pmg"
+          @estado ="por modificar gerencia"
+        else
+          @estado = params[:filtro]
+      end
+    end
   end
 
   def frlist

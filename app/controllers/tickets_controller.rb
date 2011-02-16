@@ -4,11 +4,22 @@ class TicketsController < ApplicationController
 
   def ntc  # vista para notificaciones
     @titulo = "Tickets"
-    if params[:acc] == '1'  # anular el Ticket
-      @ticket = Ticket.find(params[:id])
-      @ticket.update_attribute 'state', "anulado"
-      @ticket.update_attribute 'canceled_by', current_user.name
-      @ticket.update_attribute 'canceled_time', Time.now
+    @ticket = Ticket.find(params[:id])
+    @acc = params[:acc]
+    case params[:acc] 
+      when '2'  # crear el Ticket
+        @msje = "se ha creado exitosamente"
+      when '3'  # por modificar Supervisor
+        @msje = "se encuentra en espera de ser modificado por el Supervisor"
+      when '4'  # por modificar Gerencia
+        @msje = "se encuentra en espera de ser modificado por Gerencia"
+      when '5'  # modifica Supervisor/Gerencia
+        @msje = "se ha modificado exitosamente"
+      when '1'  # anular el Ticket
+        @msje = "ha sido anulado"       
+        @ticket.update_attribute 'state', "anulado"
+        @ticket.update_attribute 'canceled_by', current_user.name
+        @ticket.update_attribute 'canceled_time', Time.now
     end
   end
 
@@ -71,7 +82,7 @@ class TicketsController < ApplicationController
         @ticket.update_attribute 'adjust_sup_time', Time.now
       end
       session[:caso] = nil
-      redirect_to(@ticket, :notice => '1')
+      redirect_to(:action => "ntc", :acc => '2', :id => @ticket.id ) 
     else
       render :action => "new" 
     end
@@ -85,26 +96,41 @@ class TicketsController < ApplicationController
   end
 
   def update
+    @titulo = "Editar Ticket"
     @ticket = Ticket.find(params[:id])
     if @ticket.update_attributes(params[:ticket])
       #----- EjeCobr solicita modificacion de Supervisor ----
       if current_user.profile_id==1 and @ticket.adjust_sup?
         @ticket.update_attribute 'state', "pms"
         @ticket.update_attribute 'adjust_sup_time', Time.now
-        redirect_to(@ticket, :notice => 'El Ticket esta en espera de ser modificado por el Supervisor.') 
+        redirect_to(:action => "ntc", :acc => '3', :id => @ticket.id ) #por modificar Supervisor  
       #----- Supervisor modifica ----
       elsif current_user.profile_id==2 and @ticket.state=='pms'
-        if @ticket.adjust_mgt?
+        if @ticket.adjust_mgt? 
           @ticket.update_attribute 'state', "pmg"
           @ticket.update_attribute 'adjust_mgt_time', Time.now
-          redirect_to(@ticket, :notice => 'El Ticket esta en espera de ser modificado por Gerencia.') 
-        else 
+          redirect_to(:action => "ntc", :acc => '4', :id => @ticket.id ) #por modificar Gerencia   
+        else
           @ticket.update_attribute 'state', "modificado"
           @ticket.update_attribute 'adjust_sup', false
           @ticket.update_attribute 'adjust_sup_des', ''
           @ticket.update_attribute 'adjust_sup_time', nil
-          redirect_to(@ticket, :notice => 'El Ticket se ha modificado exitosamente.') 
+          redirect_to(:action => "ntc", :acc => '5', :id => @ticket.id ) #modifica Supervisor   
         end
+      elsif current_user.profile_id==2 and @ticket.state=='creado' and @ticket.adjust_mgt? 
+          @ticket.update_attribute 'state', "pmg"
+          @ticket.update_attribute 'adjust_mgt_time', Time.now
+          redirect_to(:action => "ntc", :acc => '4', :id => @ticket.id ) #por modificar Gerencia   
+      #----- Gerencia modifica ----
+      elsif current_user.profile_id==6 and @ticket.state=='pmg'
+        @ticket.update_attribute 'state', "modificado"
+        @ticket.update_attribute 'adjust_sup', false
+        @ticket.update_attribute 'adjust_sup_des', ''
+        @ticket.update_attribute 'adjust_sup_time', nil
+        @ticket.update_attribute 'adjust_mgt', false
+        @ticket.update_attribute 'adjust_mgt_des', ''
+        @ticket.update_attribute 'adjust_mgt_time', nil
+        redirect_to(:action => "ntc", :acc => '5', :id => @ticket.id ) #modifica Gerencia   
       else
         redirect_to(@ticket, :notice => 'El Ticket se ha actualizado exitosamente.') 
       end

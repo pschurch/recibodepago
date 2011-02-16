@@ -20,6 +20,7 @@ class Ticket < ActiveRecord::Base
   validate :valida_mod_sup
   validate :valida_mod_mgt
   validate :valida_ajuste_sup
+  validate :valida_ajuste_mgt
 
   def valida_mod_sup
     if (adjust_sup? and adjust_sup_des.empty?)
@@ -37,6 +38,16 @@ class Ticket < ActiveRecord::Base
         errors.add(:adjust, "(Ajuste) : Debe ingresar un valor en este campo.")
       elsif  (adjust > 1000) or (adjust < -1000)
         errors.add(:adjust, "(Ajuste) : El valor ingresado debe estar entre -$1.000 y $1.000. Si requiere un valor distinto, solicite modificacion a Gerencia.")
+      end
+    end
+    if (not adjust.nil?) and (adjust_obs.nil? or adjust_obs.empty?)
+      errors.add(:adjust_obs, "(Observacion ajuste) : debe ingresar un valor en este campo.")
+    end
+  end
+  def valida_ajuste_mgt
+    if (state=='pmg')
+      if (adjust.nil?)
+        errors.add(:adjust, "(Ajuste) : Debe ingresar un valor en este campo.")
       end
       if (adjust_obs.nil? or adjust_obs.empty?)
         errors.add(:adjust_obs, "(Observacion ajuste) : debe ingresar un valor en este campo.")
@@ -77,13 +88,5 @@ class Ticket < ActiveRecord::Base
       end
     end
   end
-
- def self.filtro(filtro)
-  if filtro
-    where('state LIKE ?', "%#{filtro}%")
-  else
-    Ticket.all
-  end
- end
 
 end

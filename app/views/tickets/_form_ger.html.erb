@@ -51,7 +51,7 @@
   <tr>
     <td>Ajuste:</td><td><%= f.text_field :adjust , :size => "8"%></td>
     <th rowspan=3 width=16></th>
-    <td>Observación ajuste:</td><td rowspan="2"><%= f.text_area :adjust_obs , :size => "30x2"%></td>
+    <td rowspan="2">Observación ajuste:</td><td rowspan="2"><%= f.text_area :adjust_obs , :size => "30x2"%></td>
   </tr>
   <tr>
     <td>Nuevo Total a Pagar:</td><td><%= f.text_field :new_total_pay , :size => "8"%></td>
@@ -79,9 +79,9 @@
   </tr>
   <tr>
     <td>Fecha solicitud:</td>
-    <td class="ro"><div class="sh"><%= @ticket.adjust_sup_time.strftime("%d-%b-%Y") %></div></td><td></td>
+    <td class="ro"><div class="sh"><% if not @ticket.adjust_sup_time.nil? %><%= @ticket.adjust_sup_time.strftime("%d-%b-%Y") %><% end %>&nbsp;</div></td><td></td>
     <td>Hora solicitud:</td>
-    <td class="ro"><div class="sh"><%= @ticket.adjust_sup_time.strftime("%H:%M") %> hrs.</div></td>
+    <td class="ro"><div class="sh"><% if not @ticket.adjust_sup_time.nil? %><%= @ticket.adjust_sup_time.strftime("%H:%M") %> hrs.<% end %>&nbsp;</div></td>
   </tr>
   <tr>
     <td colspan=3>Solicita modificación a Gerencia:</td>
@@ -94,9 +94,9 @@
   <% if @ticket.adjust_mgt %>
     <tr>
       <td>Fecha solicitud:</td>
-      <td class="ro"><div class="sh"><%= @ticket.adjust_mgt_time.strftime("%d-%b-%Y") %></div></td><td></td>
+      <td class="ro"><div class="sh"><% if not @ticket.adjust_mgt_time.nil? %><%= @ticket.adjust_mgt_time.strftime("%d-%b-%Y") %><% end %>&nbsp;</div></td><td></td>
       <td>Hora solicitud:</td>
-      <td class="ro"><div class="sh"><%= @ticket.adjust_mgt_time.strftime("%H:%M") %> hrs.</div></td>
+      <td class="ro"><div class="sh"><% if not @ticket.adjust_mgt_time.nil? %><%= @ticket.adjust_mgt_time.strftime("%H:%M") %> hrs.<% end %>&nbsp;</div></td>
     </tr>
   <% end %>
   </table>

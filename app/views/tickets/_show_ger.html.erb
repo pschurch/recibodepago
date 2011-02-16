@@ -62,9 +62,9 @@
   </tr>
   <% if not @ticket.adjust.nil? %> <!-- Ajuste -->
     <tr>
-      <td>Ajuste:</td><td><div class="sh"><%= @ticket.adjust %>&nbsp;</div></td>
+      <td>Ajuste:</td><td><div class="sh"><%= number_to_currency(@ticket.adjust, :precision => 0, :delimiter => ".") %>&nbsp;</div></td>
       <th rowspan=3 width=16></th>
-      <td rowspan="2">Observación ajuste:</td><td rowspan="2"><div class="w"><%= @ticket.adjust %>&nbsp;</div></td>
+      <td rowspan="2">Observación ajuste:</td><td rowspan="2"><div class="w"><%= @ticket.adjust_obs %>&nbsp;</div></td>
     </tr>
     <tr>
       <td>Nuevo Total a Pagar:</td><td><div class="sh"><%= @ticket.new_total_pay %>&nbsp;</div></td>

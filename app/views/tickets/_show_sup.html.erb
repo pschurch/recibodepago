@@ -96,9 +96,9 @@
     </tr>
     <tr>
       <td>Fecha solicitud:</td>
-      <td><div class="sh"><%= @ticket.adjust_mgt_time.strftime("%d-%b-%Y") %></div></td><td></td>
+      <td><div class="sh"><% if not @ticket.adjust_mgt_time.nil? %><%= @ticket.adjust_mgt_time.strftime("%d-%b-%Y") %><% end %>&nbsp;</div></td><td></td>
       <td>Hora solicitud:</td>
-      <td><div class="sh"><%= @ticket.adjust_mgt_time.strftime("%H:%M") %> hrs.</div></td>
+      <td><div class="sh"><% if not @ticket.adjust_mgt_time.nil? %><%= @ticket.adjust_mgt_time.strftime("%H:%M") %> hrs.<% end %>&nbsp;</div></td>
     <tr>
   <% end %>
 

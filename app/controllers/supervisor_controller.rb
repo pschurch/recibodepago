@@ -1,11 +1,12 @@
 class SupervisorController < ApplicationController
   before_filter :perfil_name
   before_filter :authenticate_sup
+  helper_method :sort_column, :sort_direction  
 
   def stmod
     @titulo = "Tickets por Modificar"
     grupo = current_user.group_id
-    @tickets = Ticket.where("state='pms'").where("group_id=?", grupo)
+    @tickets = Ticket.where("state='pms'").where("group_id=?", grupo).order(sort_column + ' ' + sort_direction)  
   end
 
   def stlist
@@ -26,6 +27,13 @@ class SupervisorController < ApplicationController
     @titulo = "Listado de Todos los Recibos de Pago"
     @receipts = Receipt.all
   end
+
+  def sort_column  
+    params[:sort] || "id"  
+  end  
+  def sort_direction  
+    params[:direction] || "asc"  
+  end  
 
   private
     def perfil_name
