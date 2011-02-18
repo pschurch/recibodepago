@@ -1,4 +1,53 @@
 <div class="seccion">
+
+<table><tr><td class="formulario">
+<% form_tag({:controller => :supervisor, :action => :stlist}, :method => :get) do %>
+  <table class="display">
+  <tr>
+    <td>
+      Area:  <%= select_tag('f1', options_for_select([['Todas'], ['Cobranza'], ['Terreno'], ['Supervisor']]))%>
+    </td>
+    <td>
+      Estado: <%= select_tag('f2', 
+      options_for_select([['Todos'], 
+                          ['abierto'], 
+                          ['cerrado por cobranza'], 
+                          ['solicita gestion terreno'], 
+                          ['rinde cobranza a supervisor'], 
+                          ['acepta cobranza rechazo supervisor'], 
+
+                          ['envia a terreno'], 
+                          ['acepta supervisor rechazo terreno'], 
+                          ['recepciona supervisor a terreno'], 
+                          ['recepciona supervisor a cobranza'], 
+                          ['rechaza supervisor a cobranza'], 
+                          ['cerrado por supervisor'], 
+
+                          ['recepciona terreno'], 
+                          ['rechaza terreno'], 
+                          ['rinde terreno a supervisor'], 
+                          ['acepta terreno rechazo supervisor'] ]))%>
+    </td>
+    <td rowspan=2>
+      <div class="boton"><%= submit_tag "Filtrar", :state => 'nil' %></div>
+    </td>
+  </tr>  
+  <tr>
+    <td colspan=2>
+      Rango de Fechas: 
+       <%= text_field_tag :f3 %> - 
+       <%= text_field_tag :f4  %> 
+       <!-- <%= text_field_tag :f2, :size => "10", :value => Time.now.strftime("%d-%b-%Y")  %> -->
+      <br>
+      dd/mm/aaaa Ej.: <%= @t.strftime("%d") %>/<%= @t.strftime("%m") %>/<%= @t.strftime("%Y") %>
+    </td>
+  </tr>  
+  </table>
+<% end %>
+</td></tr></table>
+
+<div class="nbsp"></div>
+
 <table>
   <tr>
     <th>N° RP</th>

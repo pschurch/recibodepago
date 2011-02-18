@@ -33,6 +33,7 @@ class ReceiptsController < ApplicationController
     deny_access unless (current_user.profile_id == 1)
     @titulo = "Listado de Recibos de Pago"
     @receipts = Receipt.all
+    @t=Time.now
   end
 
   # GET /receipts/1 - show.html.erb
