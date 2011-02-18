@@ -66,17 +66,17 @@ def cargrups
 end
 
 def usuarios
-  User.create!(:user => "ejecobranza1", :profile_id => 1, :group_id => 2, :name => "Ejecutivo de Cobranza Grupo 1", :password => "pass", :password_confirmation => "pass")
-  User.create!(:user => "ejecobranza2", :profile_id => 1, :group_id => 3, :name => "Ejecutivo de Cobranza Grupo 2", :password => "pass", :password_confirmation => "pass")
-  User.create!(:user => "supervisor1", :profile_id => 2, :group_id => 2, :name => "Supervisor Grupo 1", :password => "pass", :password_confirmation => "pass")
-  User.create!(:user => "supervisor2", :profile_id => 2, :group_id => 3, :name => "Supervisor Grupo 2", :password => "pass", :password_confirmation => "pass")
-  User.create!(:user => "jefeterreno", :profile_id => 3, :group_id => 1, :name => "Jefe de Terreno", :password => "pass", :password_confirmation => "pass")
-  User.create!(:user => "tesoreria", :profile_id => 4, :group_id => 1, :name => "Tesoreria", :password => "pass", :password_confirmation => "pass")
-  User.create!(:user => "operador", :profile_id => 5, :group_id => 1, :name => "Operador", :password => "pass", :password_confirmation => "pass")
-  User.create!(:user => "gerencia", :profile_id => 6, :group_id => 1, :name => "Gerencia", :password => "pass", :password_confirmation => "pass")
-  User.create!(:user => "designer", :profile_id => 8, :group_id => 1, :name => "Designer", :password => "pass", :password_confirmation => "pass")
-  User.create!(:user => "ejecobranza-na1", :profile_id => 1, :group_id => 2, :name => "Ejecutivo de Cobranza Grupo 1 No Activo", :password => "pass", :password_confirmation => "pass", :state => 0)
-  User.create!(:user => "ejecobranza-na2", :profile_id => 1, :group_id => 3, :name => "Ejecutivo de Cobranza Grupo 2 No Activo", :password => "pass", :password_confirmation => "pass", :state => 0)
+  User.create!(:user => "ejecobranza1", :profile_id => 1, :group_id => 2, :name => "Ejecutivo de Cobranza Grupo 1", :password => "pass", :password_confirmation => "pass", :telephone => "3351122", :email => "ejecobranza1@tehcmill.cl")
+  User.create!(:user => "ejecobranza2", :profile_id => 1, :group_id => 3, :name => "Ejecutivo de Cobranza Grupo 2", :password => "pass", :password_confirmation => "pass", :telephone => "3352233", :email => "ejecobranza2@tehcmill.cl")
+  User.create!(:user => "supervisor1", :profile_id => 2, :group_id => 2, :name => "Supervisor Grupo 1", :password => "pass", :password_confirmation => "pass", :telephone => "3353344", :email => "supervisor1@techmill.cl")
+  User.create!(:user => "supervisor2", :profile_id => 2, :group_id => 3, :name => "Supervisor Grupo 2", :password => "pass", :password_confirmation => "pass", :telephone => "3354455", :email => "supervisor2@techmill.cl")
+  User.create!(:user => "jefeterreno", :profile_id => 3, :group_id => 1, :name => "Sr. Jefe de Terreno", :password => "pass", :password_confirmation => "pass", :telephone => "3355566", :email=> "jefeterreno@techmill.cl")
+  User.create!(:user => "tesoreria", :profile_id => 4, :group_id => 1, :name => "Sr. Tesoreria", :password => "pass", :password_confirmation => "pass", :telephone => "3356677", :email=> "tesoreria@techmill.c")
+  User.create!(:user => "operador", :profile_id => 5, :group_id => 1, :name => "Sr. Operador", :password => "pass", :password_confirmation => "pass", :telephone => "3357788", :email=> "operador@techmill.cl")
+  User.create!(:user => "gerencia", :profile_id => 6, :group_id => 1, :name => "Sr. Gerencia", :password => "pass", :password_confirmation => "pass", :telephone => "3358899", :email=> "gerencia@techmill.cl")
+  User.create!(:user => "designer", :profile_id => 8, :group_id => 1, :name => "Sr. Designer", :password => "pass", :password_confirmation => "pass", :telephone => "NA")
+  User.create!(:user => "ejecobranza-na1", :profile_id => 1, :group_id => 2, :name => "Ejecutivo de Cobranza Grupo 1 No Activo", :password => "pass", :password_confirmation => "pass", :state => 0, :telephone => "NA")
+  User.create!(:user => "ejecobranza-na2", :profile_id => 1, :group_id => 3, :name => "Ejecutivo de Cobranza Grupo 2 No Activo", :password => "pass", :password_confirmation => "pass", :state => 0, :telephone => "NA")
 end
 
 def tipos_cobranza

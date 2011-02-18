@@ -1,6 +1,8 @@
 <div class="seccion">
 <table><tr><td class="formulario">
-  <% if not notice.nil? %><p id="notice"><%= notice %></p><% end %>
+  <% if notice == '1' %>
+    <p id="notice">El Ticket N° <%= @ticket.id %> se ha creado exitosamente.</p>
+  <% elsif not notice.nil? %><p id="notice"><%= notice %></p><% end %>
 
   <table class="display">
     <tr><td>Ticket N°:</td><td><div class="sh"><%= @ticket.id %></div></td>
@@ -44,7 +46,7 @@
     <td>Boleta N°: </td><td><div class="n"><%= @ticket.ballot %>&nbsp;</div></td>
   </tr>
   <tr>
-    <td>Total a Pagar:</td><td><div class="sh"><%= number_to_currency(@ticket.total_pay, :precision => 0, :delimiter => ".") %>&nbsp;</div></td>
+    <td>Total a Pagar:</td><td><div class="sh"><%= number_to_currency(@ticket.total_pay, :precision => 0, :delimiter => ".") %></div></td>
     <td>Cuota:</td><td><div class="sh"><%= @ticket.quota_num %>
     <% if not @ticket.total_q.empty? %> de <%= @ticket.total_q %><% end %>&nbsp;</div></td>
   </tr>
@@ -55,7 +57,7 @@
       <td rowspan="2">Observación ajuste:</td><td rowspan="2"><div class="w"><%= @ticket.adjust_obs %>&nbsp;</div></td>
     </tr>
     <tr>
-      <td>Nuevo Total a Pagar:</td><td><div class="sh"><%= @ticket.new_total_pay %>&nbsp;</div></td>
+      <td>Nuevo Total a Pagar:</td><td><div class="sh"><%= number_to_currency(@ticket.new_total_pay, :precision => 0, :delimiter => ".") %></div></td>
       <td></td>
     </tr>
     <tr>

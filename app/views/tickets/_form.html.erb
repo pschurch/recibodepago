@@ -44,11 +44,11 @@
     <td>Cuenta Corriente:</td><td><%= f.text_field :ctacte, :size => "37", :value => @caso.ctacte %></td>
   </tr>
   <tr>
-    <td>Gastos Envío:</td><td><%= f.text_field :shipping_costs, :size => "8" %></td>
+    <td>Gastos Envío:</td><td><%= f.text_field :shipping_costs, :size => "8", :value => 0 %></td>
     <td>Vencimiento:</td><td><%= f.text_field :expir_date, :size => "37", :value => @caso.expir_date.strftime("%d-%b-%Y") %></td>
   </tr>
   <tr>
-    <td>Gastos Judiciales:</td><td><%= f.text_field :legal_costs, :size => "8" %></td>
+    <td>Gastos Judiciales:</td><td><%= f.text_field :legal_costs, :size => "8", :value => 0 %></td>
     <td>Boleta N°: </td><td><%= f.text_field :ballot, :size => "37" %></td>
   </tr>
   <tr>
@@ -117,11 +117,11 @@
   </tr>
   <% end %> 
   <tr>
-    <td>Gastos Envío:</td><td><%= f.text_field :shipping_costs, :size => "8" %></td>
+    <td>Gastos Envío:</td><td><%= f.text_field :shipping_costs, :size => "8", :value => 0 %></td>
     <td>Vencimiento:</td><td><%= f.date_select :expir_date, :order => [:day, :month, :year] %></td>
   </tr>
   <tr>
-    <td>Gastos Judiciales:</td><td><%= f.text_field :legal_costs, :size => "8" %></td>
+    <td>Gastos Judiciales:</td><td><%= f.text_field :legal_costs, :size => "8", :value => 0 %></td>
     <td>Boleta N°: </td><td><%= f.text_field :ballot, :size => "37" %></td>
   </tr>
   <tr>

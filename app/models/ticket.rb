@@ -35,13 +35,13 @@ class Ticket < ActiveRecord::Base
   def valida_ajuste_sup 
     if (state=='pms' and not adjust_mgt?)
       if (adjust.nil?)
-        errors.add(:adjust, "(Ajuste) : Debe ingresar un valor en este campo.")
+        errors.add(:adjust, "(Ajuste) : Debe ingresar un valor en este campo.xxxxxxxxx")
       elsif  (adjust > 1000) or (adjust < -1000)
-        errors.add(:adjust, "(Ajuste) : El valor ingresado debe estar entre -$1.000 y $1.000. Si requiere un valor distinto, solicite modificacion a Gerencia.")
+        errors.add(:adjust, "(Ajuste) : El valor ingresado debe estar entre -$1.000 y $1.000. Si requiere un valor distinto, solicite modificacion a Gerencia.yyyyyyyyyyy")
       end
     end
     if (not adjust.nil?) and (adjust_obs.nil? or adjust_obs.empty?)
-      errors.add(:adjust_obs, "(Observacion ajuste) : debe ingresar un valor en este campo.")
+      errors.add(:adjust_obs, "(Observacion ajuste) : debe ingresar un valor en este campo.zzzzzzzzz")
     end
   end
   def valida_ajuste_mgt

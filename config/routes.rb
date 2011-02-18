@@ -17,9 +17,10 @@ Recibodepago::Application.routes.draw do
   get "designer/rdsg"
   get "designer/destr"
 
-  match '/lisrsr', :to => 'receipts#rp_sup_rch'
-  match '/lisrsa', :to => 'receipts#rp_sup_ab'
   match '/listk', :to => 'receipts#create_rp'
+  match '/lisra', :to => 'receipts#rp_abtos'
+  match '/lisrr', :to => 'receipts#rp_rechz'
+  match '/rnsup', :to => 'receipts#rend_sup'
   resources :receipts
 
   get "tickets/ntc"

@@ -4,7 +4,7 @@
   </div>
   <div class="botones">
     <%= link_to 'Anular el Ticket', :controller => "tickets", :action => "ntc", :acc => '1', :id => @tid %> 
-    <%= link_to 'Cancelar', tickets_path %> 
+    <%= link_to 'Cancelar', :back %> 
   </div>
 <% elsif current_user.profile_id==2 %> <!-- Supervisor -->
   <div class="seccion">
@@ -12,7 +12,7 @@
   </div>
   <div class="botones">
     <%= link_to 'Anular el Ticket', :controller => "tickets", :action => "ntc", :acc => '1', :id => @tid %> 
-    <%= link_to 'Cancelar', :controller => "sessions", :action => "sup" %> 
+    <%= link_to 'Cancelar', :back %> 
   </div>
 <% elsif current_user.profile_id==6 %> <!-- Gerencia -->
   <div class="seccion">
@@ -20,7 +20,7 @@
   </div>
   <div class="botones">
     <%= link_to 'Anular el Ticket', :controller => "tickets", :action => "ntc", :acc => '1', :id => @tid %> 
-    <%= link_to 'Cancelar', :controller => "manager", :action => "mtmod" %> 
+    <%= link_to 'Cancelar', :back %> 
   </div>
 <% end %>  
 

@@ -28,6 +28,8 @@ class User < ActiveRecord::Base
   validates_presence_of :profile_id, :message => "(Perfil) : debe seleccionar un valor para este campo."
   validates_presence_of :group_id, :message => "(Grupo) : debe seleccionar un valor para este campo."
   validates_presence_of :name, :message => "(Nombre) : debe ingresar un valor en este campo."
+  validates_presence_of :telephone, :message => "(Telefono) : debe ingresar un valor en este campo. Si no tiene, ingrese NA."
+
   validates_format_of :email, :with => /^[-a-z0-9_+\.]+\@([-a-z0-9]+\.)+[a-z0-9]{2,4}$/i, :message => ": la direccion de correo no es valida.", :allow_blank => true 
   validates_presence_of :password, :message => " : debe ingresar un valor en este campo."
   # Creación automática del atributo virtual 'password_confirmation'.

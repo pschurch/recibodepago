@@ -19,9 +19,9 @@
     <td>Descripción del Pago:</td><td colspan="4"><div class="lg"><%= @ticket.payment_description %>&nbsp;</div></td>
   </tr>
   <tr>
-    <td>Capital:</td><td><div class="sh"><%= number_to_currency(@ticket.capital, :precision => 0, :delimiter => ".") %>&nbsp;</div></td>
+    <td>Capital:</td><td><div class="sh"><%= number_to_currency(@ticket.capital, :precision => 0, :delimiter => ".") %></div></td>
     <th rowspan=7 width=16></th>
-    <td>Producto:</td><td><div><%= @ticket.product_name %>&nbsp;</div></td>
+    <td>Producto:</td><td><div><%= @ticket.product_name %></div></td>
   </tr>
   <tr>
     <td>Interés Mora:</td><td><div class="sh"><%= number_to_currency(@ticket.arrear_interest, :precision => 0, :delimiter => ".") %>&nbsp;</div></td>
@@ -56,7 +56,7 @@
       <td rowspan="2">Observación ajuste:</td><td rowspan="2"><div class="w"><%= @ticket.adjust_obs %>&nbsp;</div></td>
     </tr>
     <tr>
-      <td>Nuevo Total a Pagar:</td><td><div class="sh"><%= @ticket.new_total_pay %>&nbsp;</div></td>
+      <td>Nuevo Total a Pagar:</td><td><div class="sh"><%= number_to_currency(@ticket.new_total_pay, :precision => 0, :delimiter => ".") %></div></td>
     </tr>
     <tr>
       <td>Fecha ajuste:</td><td><div class="sh"><% if not @ticket.adjust_time.nil? %><%= @ticket.adjust_time.strftime("%d-%b-%Y") %><% end %>&nbsp;</div></td>
@@ -66,7 +66,7 @@
 
   <tr><td height="20"></td></tr>
   <tr>
-    <td>Preparado por:</td><td colspan=4><div class="n"><%= @ticket.prepared_by%>&nbsp;</div></td>
+    <td>Preparado por:</td><td colspan=4><div class="n"><%= @ticket.prepared_by%></div></td>
   </tr>
   <tr>
     <td colspan=3>Entrega documento a deudor:</td><td><div class="sn"><% if @ticket.doc_delivery %>Sí<% else %>No<% end %></div></td>

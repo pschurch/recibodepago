@@ -1,6 +1,7 @@
 class TicketsController < ApplicationController
   before_filter :perfil_name
   before_filter :authenticate_tck
+  helper_method :sort_column, :sort_direction  
 
   def ntc  # vista para notificaciones
     @titulo = "Tickets"
@@ -26,7 +27,7 @@ class TicketsController < ApplicationController
   def index
     @titulo = "Listado de Tickets"
     grupo = current_user.group_id
-    @tickets = Ticket.where("state='creado' OR state='pms' OR state='pmg' OR state='modificado'").where("group_id=?", grupo).order(params[:sort])
+    @tickets = Ticket.where("state='creado' OR state='pms' OR state='pmg' OR state='modificado'").where("group_id=?", grupo).order(sort_column + ' ' + sort_direction)
   end
 
   def show
@@ -71,18 +72,20 @@ class TicketsController < ApplicationController
         @arr = a.arrear_interest
         @term = a.term_interest
       end
-      @total = @caso.capital + @fee + @arr + @term 
+        @total = @caso.capital + @fee + @arr + @term 
       #---------------------------------------------------------
     end
     if @ticket.save
       @ticket.update_attribute 'group_id', current_user.group_id
       @ticket.update_attribute 'prepared_by', current_user.name
+      @ticket.update_attribute 'total_pay', @ticket.capital + @ticket.fee + @ticket.arrear_interest + @ticket.term_interest + @ticket.shipping_costs + @ticket.legal_costs
       if @ticket.adjust_sup?
         @ticket.update_attribute 'state', "pms"
         @ticket.update_attribute 'adjust_sup_time', Time.now
       end
       session[:caso] = nil
-      redirect_to(:action => "ntc", :acc => '2', :id => @ticket.id ) 
+      #redirect_to(:action => "ntc", :acc => '2', :id => @ticket.id ) 
+      redirect_to(@ticket, :notice => '1')
     else
       render :action => "new" 
     end
@@ -99,6 +102,10 @@ class TicketsController < ApplicationController
     @titulo = "Editar Ticket"
     @ticket = Ticket.find(params[:id])
     if @ticket.update_attributes(params[:ticket])
+      @ticket.update_attribute 'total_pay', @ticket.capital + @ticket.fee + @ticket.arrear_interest + @ticket.term_interest + @ticket.shipping_costs + @ticket.legal_costs
+      if not @ticket.adjust.nil?
+        @ticket.update_attribute 'new_total_pay', @ticket.total_pay + @ticket.adjust
+      end
       #----- EjeCobr solicita modificacion de Supervisor ----
       if current_user.profile_id==1 and @ticket.adjust_sup?
         @ticket.update_attribute 'state', "pms"
@@ -160,6 +167,13 @@ class TicketsController < ApplicationController
       end
     end
   end
+
+  def sort_column  
+    params[:sort] || "id"  
+  end  
+  def sort_direction  
+    params[:direction] || "asc"  
+  end  
 
   private
     def perfil_name
