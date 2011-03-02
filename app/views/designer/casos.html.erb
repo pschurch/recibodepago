@@ -1,0 +1,37 @@
+<div class="seccion">
+  <table>
+  <tr>
+    <th><%= sortable "id", "N° Caso" %><br>id</th>
+    <th><%= sortable "state", "Estado" %><br>state</th>
+    <th><%= sortable "cas_id", "Identificador" %><br>cas_id</th>
+    <th><%= sortable "principal_id","Mandante" %><br>principal_id</th>
+    <th><%= sortable "collection_type_id","Tipo cobranza" %><br></th>
+    <th><%= sortable "product_id" %><br></th>
+    <th><%= sortable "rut" %></th>
+    <th><%= sortable "name" %><br></th>
+    <th><%= sortable "alloc_date","Fecha asignacion" %><br></th>
+    <th><%= sortable "expir_date","Vencimiento" %><br></th>
+    <th><%= sortable "capital" %></th>
+    <th></th>
+  </tr>
+  <% @assignments.each do |a| %>
+  <tr>
+    <td><%= a.id %></td>
+    <td><%= a.state %></td>
+    <td><%= a.cas_id %></td>
+    <td><%= a.principal_id %></td>
+    <td><%= a.collection_type_id %></td>
+    <td><%= a.product_id %></td>
+    <td><%= a.rut %>-<%= a.digit %></td>
+    <td><%= a.name %></td>
+    <td><%= a.alloc_date %></td>
+    <td><%= a.expir_date %></td>
+    <td><%= a.capital %></td>
+    <td><%= link_to 'Eliminar', :controller => 'designer', :action => 'del_reg', :id => a, :reg => 'caso' %>
+  </tr>
+  <% end %>
+  </table>
+</div>
+<div class="botones">
+  <%= link_to 'Página Principal', :controller => "sessions", :action => "dsg" %>
+</div>

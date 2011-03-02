@@ -43,9 +43,6 @@ class PaymentFormsController < ApplicationController
   end
 
   def destroy
-    @payment_form = PaymentForm.find(params[:id])
-    @payment_form.destroy
-    redirect_to(payment_forms_url) 
   end
 
   private

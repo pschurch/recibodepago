@@ -57,11 +57,7 @@ class PrincipalsController < ApplicationController
   end
 
   def destroy
-    @principal = Principal.find(params[:id])
-    @principal.destroy
-    redirect_to(principals_path) 
   end
-
 
   private
     def perfil_name

@@ -33,6 +33,7 @@ class ReceiptsController < ApplicationController
     deny_access unless (current_user.profile_id == 1)
     @titulo = "Listado de Recibos de Pago"
     @receipts = Receipt.all
+
     @t=Time.now
   end
 
@@ -41,10 +42,8 @@ class ReceiptsController < ApplicationController
     @titulo = "Ver Recibo de Pago"
     @receipt = Receipt.find(params[:id])
     @tickets = Ticket.where("receipt_id", @receipt.id)
-
-@var="RP:" + @receipt.id.to_s + " T:"
     @tickets.each do |a|
-       @var = @var + a.id.to_s
+
     end
   end
 
@@ -127,11 +126,7 @@ class ReceiptsController < ApplicationController
     end
   end
 
-  # DELETE /receipts/1
   def destroy
-    @receipt = Receipt.find(params[:id])
-    @receipt.destroy
-    redirect_to(receipts_url) 
   end
 
   def sort_column  

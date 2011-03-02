@@ -61,8 +61,13 @@
 </div>
 
 <div class="botones">
+<% if current_user.profile_id==7 %>
   <%= link_to 'Editar', edit_user_path(@user) %> 
   <%= link_to 'Listado de Usuarios', users_path %>
   <%= render 'shared/pp_adm_dsg' %>
+<% elsif current_user.profile_id==8 %>
+  <%= link_to "Listado de Todos los Usuarios", dusers_path %>
+  <%= link_to 'Página Principal', :controller => "sessions", :action => "dsg" %>
+<% end %>
 </div>
 

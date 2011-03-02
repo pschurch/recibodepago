@@ -1,0 +1,10 @@
+<div class="seccion">
+  <table><tr><td class="formulario">
+    <p id="notice">El registro <%= @reg.capitalize %> N° <%= @id %> será eliminado permanentemente.</p>
+  </td></tr></table>  
+</div>
+
+<div class="botones">
+  <%= link_to 'Confirmar Eliminacion', :controller => "designer", :action=> "del_reg", :id=> @id, :reg=> @reg, :co=> true %>
+  <%= link_to 'Página Principal', :controller => "sessions", :action => "dsg" %>
+</div>

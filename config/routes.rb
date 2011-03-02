@@ -12,10 +12,19 @@ Recibodepago::Application.routes.draw do
   get "manager/mtlist"
   get "manager/mrlist"
 
-  get "designer/cdsg"
-  get "designer/tdsg"
-  get "designer/rdsg"
-  get "designer/destr"
+  match '/dcasos', :to => 'designer#casos'
+  match '/dtickets', :to => 'designer#tickets'
+  match '/dreceipts', :to => 'designer#receipts'
+  match '/dprofiles', :to => 'designer#profiles'
+  match '/dgroups', :to => 'designer#groups'
+  match '/dprincipals', :to => 'designer#principals'
+  match '/dusers', :to => 'designer#users'
+  match '/dproducts', :to => 'designer#products'
+  match '/dcollection_types', :to => 'designer#collection_types'
+  match '/dpayment_forms', :to => 'designer#payment_forms'
+  match '/dpayment_policies', :to => 'designer#payment_policies'
+  match '/dpayment_agreements', :to => 'designer#payment_agreements'
+  get "designer/del_reg"
 
   match '/listk', :to => 'receipts#create_rp'
   match '/lisra', :to => 'receipts#rp_abtos'

@@ -1,15 +1,15 @@
 <div class="seccion">
   <table>
   <tr>
-    <th><%= link_to "N° Ticket", :sort => "id" %></th>
-    <th><%= link_to "Ejecutivo Cobranza", :sort => "prepared_by" %></th>
-    <th><%= link_to "Rut", :sort => "rut" %></th>
-    <th><%= link_to "Nombre Deudor", :sort => "name" %></th>
-    <th><%= link_to "Identificador", :sort => "cas_id" %></th>
-    <th><%= link_to "Mandante", :sort => "principal_id" %></th>
-    <th><%= link_to "Producto", :sort => "product_id" %></th>
-    <th><%= link_to "Capital", :sort => "capital" %></th>
-    <th><%= link_to "Estado", :sort => "state" %></th>
+    <th><%= sortable "id", "N° Ticket" %></th>
+    <th><%= sortable "prepared_by", "Ejecutivo Cobranza" %></th>
+    <th><%= sortable "rut" %></th>
+    <th><%= sortable "name", "Nombre Deudor" %></th>
+    <th><%= sortable "cas_id", "Identificador" %></th>
+    <th><%= sortable "principal_id", "Mandante" %></th>
+    <th><%= sortable "product_id", "Producto" %></th>
+    <th><%= sortable "capital" %></th>
+    <th><%= sortable "state", "Estado" %></th>
     <th colspan=2></th>
   </tr>
   <% @tickets.each do |a| %>
@@ -25,7 +25,7 @@
     <td><%= a.state %>
     <td><%= link_to 'Ver', a %></td>
     <!--<td><%= link_to 'Eliminar', a, :confirm => 'Are you sure?', :method => :delete %>-->
-    <td><%= link_to 'Eliminar', :controller => 'designer', :action => 'destr', :id => a%>
+    <td><%= link_to 'Eliminar', :controller => 'designer', :action => 'del_reg', :id => a, :reg => 'ticket' %>
 </td>
   </tr>
   <% end %>

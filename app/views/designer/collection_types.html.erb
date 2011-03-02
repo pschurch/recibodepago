@@ -1,0 +1,23 @@
+<div class="seccion">
+  <table>
+  <tr>
+    <th><%= sortable "id" %></th>
+    <th><%= sortable "name", "Nombre" %></th>
+    <th><%= sortable "state", "Estado" %></th>
+    <th colspan=2></th>
+  </tr>
+  <% @collection_types.each do |a| %>
+  <tr>
+    <td><%= a.id %></td>
+    <td><%= a.name %></td>
+    <td><%= a.state %>
+    <td><%= link_to 'Ver', a %></td>
+    <td><%= link_to 'Eliminar', :controller => 'designer', :action => 'del_reg', :id => a, :reg => 'collection_type' %>
+
+  </tr>
+  <% end %>
+  </table>
+</div>
+<div class="botones">
+  <%= link_to 'Página Principal', :controller => "sessions", :action => "dsg" %>
+</div>

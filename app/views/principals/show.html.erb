@@ -65,9 +65,14 @@
 </div>
 
 <div class="botones">
+<% if current_user.profile_id==7 %>
   <%= link_to 'Editar', edit_principal_path(@principal) %> 
   <%= link_to 'Listado de Mandantes', principals_path %>
   <%= render 'shared/pp_adm_dsg' %>
+<% elsif current_user.profile_id==8 %>
+  <%= link_to "Listado de Todos los Mandantes", dprincipals_path %>
+  <%= link_to 'Página Principal', :controller => "sessions", :action => "dsg" %>
+<% end %>
 </div>
 
 

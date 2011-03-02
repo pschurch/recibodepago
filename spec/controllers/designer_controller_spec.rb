@@ -2,23 +2,9 @@ require 'spec_helper'
 
 describe DesignerController do
 
-  describe "GET 'cdsg'" do
+  describe "GET 'del_reg'" do
     it "should be successful" do
-      get 'cdsg'
-      response.should be_success
-    end
-  end
-
-  describe "GET 'tdsg'" do
-    it "should be successful" do
-      get 'tdsg'
-      response.should be_success
-    end
-  end
-
-  describe "GET 'rdsg'" do
-    it "should be successful" do
-      get 'rdsg'
+      get 'del_reg'
       response.should be_success
     end
   end

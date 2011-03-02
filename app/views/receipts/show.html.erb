@@ -5,8 +5,6 @@
 <% else %>
   <% if not notice.nil? %><p id="notice"><%= notice %></p><% end %>
 
-ID: <%= @var %>
-
   <% @tickets.each do |a| %>
   <table class="display">
   <tr>
@@ -179,20 +177,15 @@ ID: <%= @var %>
 </div>
 
 <div class="botones">
-<% if not notice == '1' %>
-  <%= link_to 'Editar', edit_receipt_path(@receipt) %> 
-<% end %>
-  <%= link_to 'Página Principal', :controller => "sessions", :action => "ejc" %>
-</div>
-
-  <% if Rails.env.development? %>
-    <p><hr></p>
-    <div>
-      state: <%= @receipt.state %><br>
-      payment_agreement_id:  <%= @receipt.payment_agreement_id %><br>
-      user_id:   <%= @receipt.user_id %><br>
-    </div>
-    <p><hr></p>
+<% if current_user.profile_id==1 %>
+  <% if not notice == '1' %>
+    <%= link_to 'Editar', edit_receipt_path(@receipt) %> 
   <% end %>
+  <%= link_to 'Página Principal', :controller => "sessions", :action => "ejc" %>
+<% elsif current_user.profile_id==8 %>
+  <%= link_to "Listado de Todos los Recibos de Pago", dreceipts_path %>
+  <%= link_to 'Página Principal', :controller => "sessions", :action => "dsg" %>
+<% end %>
+</div>
 
 

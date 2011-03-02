@@ -62,18 +62,23 @@
     <th></th>
   </tr>
 <% @receipts.each do |receipt| %>
-  <tr>
-    <td><%= receipt.id %></td>
-    <td><%= receipt.date_r %></td>
-    <td><%= receipt.state %></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td><%= link_to 'Ver', receipt %></td>
-  </tr>
+  <% cont=true %>
+  <%  for a in Ticket.where("receipt_id", receipt.id) %>
+    <tr>
+      <td><% if cont? %><%= receipt.id %><% end %></td>
+      <td><%= receipt.date_r %></td>
+      <td><%= receipt.state %></td>
+      <td><%= a.rut %> - <%= a.digit %></td>
+      <td><%= a.cas_id %></td>
+      <td><%= a.principal_id %></td>
+      <td><%= a.product_id %></td>
+      <td><%= a.capital %></td>
+      <td><%= number_to_currency(receipt.total_paid, :precision => 0, :delimiter => ".") %>
+      <td><%= link_to 'Ver', receipt %></td>
+    </tr>
+    <% cont=false %>
+  <% end %>
+
 <% end %>
 </table>
 </div>

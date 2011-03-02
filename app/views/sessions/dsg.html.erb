@@ -1,17 +1,16 @@
 <div class="seccion">
   <ul>
-    <li><%= link_to "Listado de Todos los Casos", :controller => "designer", :action => "cdsg" %></li>
-    <li><%= link_to "Listado de Todos los Tickets", :controller => "designer", :action => "tdsg" %></li>
-    <li><%= link_to "Listado de Todos los Recibos de Pago", :controller => "designer", :action => "rdsg" %></li>
-
-    <li><%= link_to "Perfiles", profiles_path %></li>
-    <li><%= link_to "Grupos", groups_path %></li>
-    <li><%= link_to "Mandantes", principals_path %></li>
-    <li><%= link_to "Usuarios", users_path %>
-    <li><%= link_to "Productos", products_path %>
-    <li><%= link_to "Tipos de Cobranza", collection_types_path %>
-    <li><%= link_to "Formas de Pago", payment_forms_path %>
-    <li><%= link_to "Políticas de Pago", payment_policies_path %>
-    <li><%= link_to "Acuerdos de Pago", payment_agreements_path %>
+    <li><%= link_to "Listado de Todos los Casos", dcasos_path %></li>
+    <li><%= link_to "Listado de Todos los Tickets", dtickets_path %></li>
+    <li><%= link_to "Listado de Todos los Recibos de Pago", dreceipts_path %></li>
+    <li><%= link_to "Listado de Todos los Perfiles", dprofiles_path %></li>
+    <li><%= link_to "Listado de Todos los Grupos", dgroups_path %></li>
+    <li><%= link_to "Listado de Todos los Mandantes", dprincipals_path %></li>
+    <li><%= link_to "Listado de Todos los Usuarios", dusers_path %>
+    <li><%= link_to "Listado de Todos los Productos", dproducts_path %>
+    <li><%= link_to "Listado de Todos los Tipos de Cobranza", dcollection_types_path %>
+    <li><%= link_to "Listado de Todos las Formas de Pago", dpayment_forms_path %>
+    <li><%= link_to "Listado de Todos las Políticas de Pago", dpayment_policies_path %>
+    <li><%= link_to "Listado de Todos los Acuerdos de Pago", dpayment_agreements_path %>
   </ul>
 </div>

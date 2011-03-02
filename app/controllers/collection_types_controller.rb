@@ -43,9 +43,6 @@ class CollectionTypesController < ApplicationController
   end
 
   def destroy
-    @collection_type = CollectionType.find(params[:id])
-    @collection_type.destroy
-    redirect_to(collection_types_url) 
   end
 
   private

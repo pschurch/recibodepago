@@ -1,16 +1,18 @@
 <div class="seccion">
   <table>
   <tr>
-    <th><%= link_to "N° RP", :sort => "id" %></th>
-    <th><%= link_to "Estado", :sort => "state" %></th>
+    <th><%= sortable "id", "N° RP" %></th>
+    <th><%= sortable "date_r", "Fecha" %></th>
+    <th><%= sortable "state", "Estado" %></th>
     <th colspan=2></th>
   </tr>
   <% @receipts.each do |a| %>
   <tr>
     <td><%= a.id %></td>
+    <td><%= a.date_r %></td>
     <td><%= a.state %>
     <td><%= link_to 'Ver', a %></td>
-    <td><%= link_to 'Editar', edit_receipt_path(a) %></td>
+    <td><%= link_to 'Eliminar', :controller => 'designer', :action => 'del_reg', :id => a, :reg => 'receipt' %>
   </tr>
   <% end %>
   </table>

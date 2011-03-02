@@ -45,9 +45,6 @@ class PaymentPoliciesController < ApplicationController
   end
 
   def destroy
-    @payment_policy = PaymentPolicy.find(params[:id])
-    @payment_policy.destroy
-    redirect_to(payment_policies_url)
   end
 
   private
