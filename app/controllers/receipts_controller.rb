@@ -20,7 +20,7 @@ class ReceiptsController < ApplicationController
   def rp_rechz
     deny_access unless (current_user.profile_id == 1)
     @titulo = "Recibos de Pago Rechazados"
-    @receipts = Receipt.where("state='rsac' OR state='acrs'").where("group_id=?", current_user.group_id)
+    @receipts = Receipt.where("state='rechaza supervisor a cobranza' OR state='acepta cobranza rechazo supervisor'").where("group_id=?", current_user.group_id)
   end
 
   def rend_sup
@@ -32,9 +32,17 @@ class ReceiptsController < ApplicationController
   def index
     deny_access unless (current_user.profile_id == 1)
     @titulo = "Listado de Recibos de Pago"
-    @receipts = Receipt.all
-
     @t=Time.now
+
+    params[:area].nil? ? @area = 'Todas' : @area = params[:area]
+    params[:estado].nil? ? @estado = 'Todos' : @estado = params[:estado]
+
+    if (params[:estado]=='Todos' or params[:estado].nil? )
+      @receipts = Receipt.all
+    else
+      @receipts = Receipt.where("state=?", params[:estado])
+    end
+
   end
 
   # GET /receipts/1 - show.html.erb
@@ -43,7 +51,6 @@ class ReceiptsController < ApplicationController
     @receipt = Receipt.find(params[:id])
     @tickets = Ticket.where("receipt_id", @receipt.id)
     @tickets.each do |a|
-
     end
   end
 
@@ -97,8 +104,6 @@ class ReceiptsController < ApplicationController
         @tickets.each do |a|
           a.update_attribute 'receipt_id', @receipt.id
         end
-
-
         session[:tickets] = nil
         redirect_to(@receipt, :notice => '1') 
       else

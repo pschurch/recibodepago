@@ -24,21 +24,23 @@
     <th>Identificador</th>
     <th>Capital</th>
     <th>Estado</th>
-<!--    <th><%= link_to "N° Ticket", :sort => "id" %></th>
-    <th><%= link_to "N° RP", :sort => "receipt_id" %></th>
-    <th><%= link_to "Ejecutivo Cobranza", :sort => "prepared_by" %></th>
-    <th><%= link_to "Rut", :sort => "rut" %></th>
-    <th><%= link_to "Nombre Deudor", :sort => "name" %></th>
-    <th><%= link_to "Mandante", :sort => "principal_id" %></th>
-    <th><%= link_to "Producto", :sort => "product_id" %></th>
-    <th><%= link_to "Identificador", :sort => "cas_id" %></th>
-    <th><%= link_to "Capital", :sort => "capital" %></th>
-    <th><%= link_to "Estado", :sort => "state" %></th>-->
     <th></th>
   </tr>
   <% if @tickets.empty? %>
   <tr>
-    <td colspan= 11>No se han encontrado Tickets con el estado "<%= @estado %>".</td>
+    <td colspan= 11>No se han encontrado Tickets con el estado 
+        "<%= case @estado 
+          when "pms"
+            "por modificar supervisor"
+          when "pmg"
+            "por modificar gerencia"
+          when "rc"
+            "por recibo creado"
+          when "pr"
+            "para remesar"
+          else
+            @estado
+        end %>".</td>
   </tr>  
   <% else %>
     <% @tickets.each do |a| %>
@@ -57,6 +59,10 @@
             "por modificar supervisor"
           when "pmg"
             "por modificar gerencia"
+          when "rc"
+            "por recibo creado"
+          when "pr"
+            "para remesar"
           else
             a.state
         end %>

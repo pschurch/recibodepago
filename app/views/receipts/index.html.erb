@@ -1,14 +1,14 @@
 <div class="seccion">
 
 <table><tr><td class="formulario">
-<% form_tag({:controller => :supervisor, :action => :stlist}, :method => :get) do %>
+<% form_tag({:controller => :receipts, :action => :index}, :method => :get) do %>
   <table class="display">
   <tr>
     <td>
-      Area:  <%= select_tag('f1', options_for_select([['Todas'], ['Cobranza'], ['Terreno'], ['Supervisor']]))%>
+      Area:  <%= select_tag('area', options_for_select([['Todas'], ['Cobranza'], ['Terreno'], ['Supervisor']], :selected => @area))%>
     </td>
     <td>
-      Estado: <%= select_tag('f2', 
+      Estado: <%= select_tag('estado', 
       options_for_select([['Todos'], 
                           ['abierto'], 
                           ['cerrado por cobranza'], 
@@ -26,7 +26,7 @@
                           ['recepciona terreno'], 
                           ['rechaza terreno'], 
                           ['rinde terreno a supervisor'], 
-                          ['acepta terreno rechazo supervisor'] ]))%>
+                          ['acepta terreno rechazo supervisor'] ], :selected => @estado))%>
     </td>
     <td rowspan=2>
       <div class="boton"><%= submit_tag "Filtrar", :state => 'nil' %></div>
@@ -39,6 +39,7 @@
        <%= text_field_tag :f4  %> 
        <!-- <%= text_field_tag :f2, :size => "10", :value => Time.now.strftime("%d-%b-%Y")  %> -->
       <br>
+      &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
       dd/mm/aaaa Ej.: <%= @t.strftime("%d") %>/<%= @t.strftime("%m") %>/<%= @t.strftime("%Y") %>
     </td>
   </tr>  
@@ -53,6 +54,7 @@
     <th>N° RP</th>
     <th>Fecha</th>
     <th>Estado</th>
+    <th>N° Ticket</th>
     <th>Rut</th>
     <th>Identificador</th>
     <th>Mandante</th>
@@ -61,25 +63,31 @@
     <th>T Pagado</th>
     <th></th>
   </tr>
-<% @receipts.each do |receipt| %>
-  <% cont=true %>
-  <%  for a in Ticket.where("receipt_id", receipt.id) %>
-    <tr>
-      <td><% if cont? %><%= receipt.id %><% end %></td>
-      <td><%= receipt.date_r %></td>
-      <td><%= receipt.state %></td>
-      <td><%= a.rut %> - <%= a.digit %></td>
-      <td><%= a.cas_id %></td>
-      <td><%= a.principal_id %></td>
-      <td><%= a.product_id %></td>
-      <td><%= a.capital %></td>
-      <td><%= number_to_currency(receipt.total_paid, :precision => 0, :delimiter => ".") %>
-      <td><%= link_to 'Ver', receipt %></td>
-    </tr>
-    <% cont=false %>
+  <% if @receipts.empty? %>
+  <tr>
+    <td colspan= 11>No se han encontrado Recibos de Pago con el filtro seleccionado.</td>
+  </tr>  
+  <% else %>
+    <% @receipts.each do |receipt| %>
+      <% cont=true %>
+      <%  for a in Ticket.where("receipt_id", receipt.id) %>
+        <tr>
+          <td><% if cont==true %><%= receipt.id %><% end %></td>
+          <td><% if cont==true %><%= receipt.date_r %><% end %></td>
+          <td><% if cont==true %><%= receipt.state %><% end %></td>
+          <td><%= a.id %></td>
+          <td><%= a.rut %> - <%= a.digit %></td>
+          <td><%= a.cas_id %></td>
+          <td><%= a.principal_id %></td>
+          <td><%= a.product_id %></td>
+          <td><%= a.capital %></td>
+          <td><%= number_to_currency(receipt.total_paid, :precision => 0, :delimiter => ".") %>
+          <td><% if cont==true %><%= link_to 'Ver', receipt %><% end %></td>
+        </tr>
+        <% cont=false %>
+      <% end %>
+    <% end %>
   <% end %>
-
-<% end %>
 </table>
 </div>
 
