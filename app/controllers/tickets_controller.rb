@@ -37,7 +37,9 @@ class TicketsController < ApplicationController
 
   def new
     deny_access unless (current_user.profile_id == 1 or current_user.profile_id == 2)
-    @titulo = "Crear Ticket" 
+    @titulo = "Crear Ticket-new" 
+    session[:ticket_step] = nil
+@var = ""
     if params[:t].nil?
       @caso = nil
       session[:caso] = nil
@@ -61,8 +63,10 @@ class TicketsController < ApplicationController
   end
 
   def create
-    @titulo = "Crear Ticket" 
+@var = ""
+    @titulo = "Crear Ticket-create" 
     @ticket = Ticket.new(params[:ticket])
+    @ticket.current_step = session[:ticket_step] 
     if not session[:caso].nil?
       #--------------------------------------------------------
       @caso = Assignment.find(session[:caso])
@@ -72,23 +76,37 @@ class TicketsController < ApplicationController
         @arr = a.arrear_interest
         @term = a.term_interest
       end
-        @total = @caso.capital + @fee + @arr + @term 
+      @total = @caso.capital + @fee + @arr + @term 
       #---------------------------------------------------------
     end
-    if @ticket.save
-      @ticket.update_attribute 'group_id', current_user.group_id
-      @ticket.update_attribute 'prepared_by', current_user.name
-      @ticket.update_attribute 'total_pay', @ticket.capital + @ticket.fee + @ticket.arrear_interest + @ticket.term_interest + @ticket.shipping_costs + @ticket.legal_costs
-      if @ticket.adjust_sup?
-        @ticket.update_attribute 'state', "pms"
-        @ticket.update_attribute 'adjust_sup_time', Time.now
-      end
-      session[:caso] = nil
-      #redirect_to(:action => "ntc", :acc => '2', :id => @ticket.id ) 
-      redirect_to(@ticket, :notice => '1')
-    else
-      render :action => "new" 
+
+
+    if @ticket.valid?
+@var="ticket valido - "
+      if params[:rec_button]  
+        @ticket.save #if @ticket.all_valid? 
+
+        @ticket.update_attribute 'group_id', current_user.group_id
+        @ticket.update_attribute 'prepared_by', current_user.name
+        @ticket.update_attribute 'total_pay', @ticket.capital + @ticket.fee + @ticket.arrear_interest + @ticket.term_interest + @ticket.shipping_costs + @ticket.legal_costs
+        if @ticket.adjust_sup?
+          @ticket.update_attribute 'state', "pms"
+          @ticket.update_attribute 'adjust_sup_time', Time.now
+        end
+        session[:caso] = nil
+      elsif params[:next_button]   
+        @ticket.next_step
+      end  
+      session[:ticket_step] = @ticket.current_step
     end
+    if @ticket.new_record?  
+@var = @var+ " - @ticket.new_record"
+      render :action => "new"  
+    else 
+@var = @var+ " - redirect_to"
+      session[:order_step] = nil
+      redirect_to(@ticket, :notice => '1')
+    end  
   end
 
   def edit

@@ -1,5 +1,22 @@
 <div class="seccion">
-  <%= render 'form' %>
+<table><tr><td class="formulario">
+
+<%= form_for(@ticket) do |f| %>
+  <%= render "shared/error_messages", :target => @ticket, :text => "el Ticket" %>  
+
+@ticket.current_step: <%= @ticket.current_step %> - var: <%= @var %>
+  <%= render "#{@ticket.current_step}", :f=> f %>
+
+ <% if @caso.nil? %> 
+  <div class="actions"><%= f.submit "Continuar", :name => "next_button" unless @ticket.last_step?%></div>  
+  <div class="actions"><%= f.submit "Grabar", :name => "rec2_button" unless @ticket.first_step?%></div>
+ <% else %>
+  <div class="actions"><%= f.submit "Grabar", :name => "rec_button"%></div>  
+ <% end %>
+
+<% end %>
+
+</td></tr></table>
 </div>
 
 <div class="botones">
