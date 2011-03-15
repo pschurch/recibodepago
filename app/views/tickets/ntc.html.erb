@@ -1,6 +1,10 @@
 <div class="seccion">
 <table><tr><td class="formulario">
-  <p id="notice">El Ticket N° <%= @ticket.id %> <%= @msje %>.</p>
+  <p id="notice">El Ticket
+    <% if not @ticket_id.nil? %> 
+      N° <%= @ticket_id %>
+    <% end %>
+  <%= @msje %>.</p>
 </td></tr></table>  
 </div>
 

@@ -5,10 +5,8 @@ class Ticket < ActiveRecord::Base
   belongs_to :collection_type
   attr_writer :current_step  
 
-validate :no_nulos
- # validates_presence_of :name, :message => "(Nombre Deudor) : debe ingresar un valor en este campo."
-#  validates_presence_of :cas_id, :message => "(Identificador) : debe ingresar un valor en este campo."
-  #validate :valida_rut
+  validate :no_nulos
+  #  validate :valida_rut
   validates_format_of :rut, :with => /\A[+-]?\d+\Z/, :message => " : debe ingresar solamente digitos y sin puntos ni guiones.", :allow_blank => true
   validates_inclusion_of :digit, :in => %w(0 1 2 3 4 5 6 7 8 9 k K),  :message => "(Digito verificador) no es un valor valido.", :allow_blank => true
   validates_numericality_of :capital, :only_integer => true, :message => " : el valor debe ser numerico.", :allow_blank => true
@@ -26,42 +24,23 @@ validate :no_nulos
   def current_step  
     @current_step || "ticket_1"  
   end  
-
   def next_step  
     self.current_step = "ticket_2"
   end 
   def first_step?  
     current_step == "ticket_1"  
   end 
-
   def last_step?  
     current_step == "ticket_2"  
   end 
- # def t1?  
- #   current_step == "ticket_1"  
- # end  
-     
- # def t2?
- #   current_step == "ticket_2"  
- # end  
 
-
-def no_nulos
- if cas_id.nil? #ticket en blanco
-       # errors.add(:name, "@caso es nil")
- else
-  if cas_id.empty? #Tickets con un caso asociado 
-   validates_presence_of :name, :message => "(Nombre Deudor) : debe ingresar un valor en este campo."  
-   validates_presence_of :cas_id, :message => "(Identificador) : debe ingresar un valor en este campo."
-   validates_presence_of :capital, :message => " : debe ingresar un valor en este campo."
-  else
-   #errors.add(:name, "@caso no es empty")
-   validates_presence_of :name, :message => "(Nombre Deudor) : debe ingresar un valor en este campo."
-   validates_presence_of :cas_id, :message => "(Identificador) : debe ingresar un valor en este campo."
-   validates_presence_of :capital, :message => " : debe ingresar un valor en este campo."
+  def no_nulos
+   if not cas_id.nil?
+     validates_presence_of :name, :message => "(Nombre Deudor) : debe ingresar un valor en este campo."  
+     validates_presence_of :cas_id, :message => "(Identificador) : debe ingresar un valor en este campo."
+     validates_presence_of :capital, :message => " : debe ingresar un valor en este campo."
+   end 
   end
- end 
-end
 
   def valida_mod_sup
     if (adjust_sup? and adjust_sup_des.empty?)

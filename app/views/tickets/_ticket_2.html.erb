@@ -22,11 +22,11 @@
   </tr>
   <% if current_user.profile_id==1 %> 
   <tr>
-    <td>Interés Mora:</td><td class="ro"><%= f.text_field :arrear_interest, :size => "8", :readonly => true %></td>
+    <td>Interés Mora:</td><td class="ro"><%= f.text_field :arrear_interest, :size => "8", :readonly => true, :value => @arr %></td>
     <td>Número:</td><td><%= f.text_field :number, :size => "37" %></td>
   </tr>
   <tr>
-    <td>Interés Plazo:</td><td class="ro"><%= f.text_field :term_interest, :size => "8", :readonly => true%></td>
+    <td>Interés Plazo:</td><td class="ro"><%= f.text_field :term_interest, :size => "8", :readonly => true, :value => @term %></td>
     <td>Emisor:</td><td><%= f.text_field :emitter, :size => "37" %></td>
   </tr>
   <tr>
@@ -56,7 +56,7 @@
     <td>Boleta N°: </td><td><%= f.text_field :ballot, :size => "37" %></td>
   </tr>
   <tr>
-    <td>Total a Pagar:</td><td><%= f.text_field :total_pay, :size => "8", :value => @total %></td>
+    <td></td><td></td>
     <td>Cuota:</td><td><%= f.text_field :quota_num, :size => "2" %> de <%= f.text_field :total_q, :size => "3" %></td>
   </tr>
   <% if current_user.profile_id==2 %> 
