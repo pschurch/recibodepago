@@ -8,10 +8,10 @@
   <%= render "#{@ticket.current_step}", :f=> f %>
 
  <% if @caso.nil? %> 
-  <div class="actions"><%= f.submit "Continuar", :name => "next_button" unless @ticket.last_step?%></div>  
-  <div class="actions"><%= f.submit "Grabar", :name => "rec2_button" unless @ticket.first_step?%></div>
+   <div class="actions"><%= f.submit "Continuar", :name => "next_button" unless @ticket.last_step?%></div>  
+   <div class="actions"><%= f.submit "Grabar", :name => "rec2_button" unless @ticket.first_step?%></div>
  <% else %>
-  <div class="actions"><%= f.submit "Grabar", :name => "rec_button"%></div>  
+   <div class="actions"><%= f.submit "Grabar", :name => "rec_button"%></div>  
  <% end %>
 
 <% end %>

@@ -30,7 +30,7 @@
     <td>Emisor:</td><td><%= f.text_field :emitter, :size => "37" %></td>
   </tr>
   <tr>
-    <td>Honorarios:</td><td class="ro"><%= f.text_field :fee, :size => "8", :readonly => true%></td>
+    <td>Honorarios:</td><td class="ro"><%= f.text_field :fee, :size => "8", :readonly => true, :value => @fee %></td>
     <td>Cuenta Corriente:</td><td><%= f.text_field :ctacte, :size => "37"%></td>
   </tr>
   <% elsif current_user.profile_id==2 %> 

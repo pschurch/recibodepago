@@ -67,7 +67,9 @@ class TicketsController < ApplicationController
     @titulo = "Crear Ticket-create" 
     @ticket = Ticket.new(params[:ticket])
     @ticket.current_step = session[:ticket_step] 
-    if not session[:caso].nil?
+    if session[:caso].nil?
+      @fee = "20"
+    else
       #--------------------------------------------------------
       @caso = Assignment.find(session[:caso])
       @pay_p = PaymentPolicy.where("principal_id =?", @caso.principal_id).where("product_id =?", @caso.product_id).where("collection_type_id =?", @caso.collection_type_id)
@@ -76,10 +78,9 @@ class TicketsController < ApplicationController
         @arr = a.arrear_interest
         @term = a.term_interest
       end
-      @total = @caso.capital + @fee + @arr + @term 
+      #  @total = @caso.capital + @fee + @arr + @term 
       #---------------------------------------------------------
     end
-
 
     if @ticket.valid?
 @var="ticket valido - "
