@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110204205506) do
+ActiveRecord::Schema.define(:version => 20110317010731) do
 
   create_table "assignments", :force => true do |t|
     t.string   "state"
@@ -154,8 +154,6 @@ ActiveRecord::Schema.define(:version => 20110204205506) do
     t.integer  "total_paid"
     t.string   "user_name"
     t.string   "telephone_user"
-    t.datetime "created_at"
-    t.datetime "updated_at"
     t.integer  "group_id"
     t.string   "et_name"
     t.string   "horario"
@@ -180,10 +178,10 @@ ActiveRecord::Schema.define(:version => 20110204205506) do
     t.string   "cont_depto"
     t.string   "cont_comuna"
     t.string   "cont_ref"
+    t.string   "cont_hr"
     t.string   "cont_telf1"
     t.string   "cont_telf2"
     t.string   "cont_telf3"
-    t.string   "cont_hr"
     t.string   "formapago1"
     t.string   "formapago2"
     t.string   "formapago3"
@@ -208,6 +206,8 @@ ActiveRecord::Schema.define(:version => 20110204205506) do
     t.integer  "monto4"
     t.integer  "monto5"
     t.integer  "monto6"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "tickets", :force => true do |t|
