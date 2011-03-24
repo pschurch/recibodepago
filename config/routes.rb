@@ -30,7 +30,12 @@ Recibodepago::Application.routes.draw do
   match '/lisra', :to => 'receipts#rp_abtos'
   match '/lisrr', :to => 'receipts#rp_rechz'
   match '/rnsup', :to => 'receipts#rend_sup'
-  resources :receipts
+  #resources :receipts
+  resources :receipts do
+    collection do
+      post 'new2'
+    end
+  end
 
   get "tickets/ntc"
   match '/search', :to => 'tickets#search'

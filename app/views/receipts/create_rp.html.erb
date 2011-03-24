@@ -1,4 +1,13 @@
 <div class="seccion">
+
+<% if not @msg.nil? %>
+<table><tr><td class="formulario">
+  <p id="notice"><%= @msg %></p>
+</td></tr></table>  
+<p>&nbsp;</p>
+<% end %>
+
+<% form_tag new2_receipts_path do %>
   <table>
   <tr>
     <th><%= sortable "id", "N° Ticket" %></th>
@@ -22,16 +31,18 @@
     <td><%= ticket.cas_id %></td>
     <td><%= number_to_currency(ticket.capital, :precision => 0, :delimiter => ".") %></td>
     <td><%= ticket.prepared_by %></td>
-    <td><%= check_box_tag "receipt[ticket_ids][]", ticket.id %></td>
+    <td><%= check_box_tag "ticket_ids[]", ticket.id %></td>
     <td><%= link_to 'Ver', ticket %></td>
     <td><%= link_to 'Editar', edit_ticket_path(ticket) %></td>
   </tr>
-  
   <% end %>
   </table>
+  <div class="actions">
+    <%= submit_tag "Crear Recibo de Pago" %>
+  </div>
+<% end %>
 </div>
 
 <div class="botones">
-  <%= link_to 'Crear Recibo de Pago', :controller => "receipts", :action => "new", :r => "105" %>
   <%= render 'shared/pp_ejc_dsg' %>
 </div>
