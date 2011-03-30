@@ -37,15 +37,15 @@
   </tr>
   <tr>
     <td>Interés Mora:</td><td class="ro"><div class="sh"><%= number_to_currency(a.arrear_interest, :precision => 0, :delimiter => ".") %>&nbsp;</div></td>
-    <td>Número:</td><td class="ro"><div class="n"><%= a.number %></div></td>
+    <td>Número:</td><td class="ro"><div class="n"><%= a.number %>&nbsp;</div></td>
   </tr>
   <tr>
     <td>Interés Plazo:</td><td class="ro"><div class="sh"><%= number_to_currency(a.term_interest, :precision => 0, :delimiter => ".") %>&nbsp;</div></td>
-    <td>Emisor:</td><td class="ro"><div class="n"><%= a.emitter %></div></td>
+    <td>Emisor:</td><td class="ro"><div class="n"><%= a.emitter %>&nbsp;</div></td>
   </tr>
   <tr>
     <td>Honorarios:</td><td class="ro"><div class="sh"><%= number_to_currency(a.fee, :precision => 0, :delimiter => ".") %>&nbsp;</div></td>
-    <td>Cuenta Corriente:</td><td class="ro"><div class="n"><%= a.ctacte %></div></td>
+    <td>Cuenta Corriente:</td><td class="ro"><div class="n"><%= a.ctacte %>&nbsp;</div></td>
   </tr>
   <tr>
     <td>Gastos Envío:</td><td class="ro"><div class="sh"><%= number_to_currency(a.shipping_costs, :precision => 0, :delimiter => ".") %>&nbsp;</div></td>
