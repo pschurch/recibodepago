@@ -1,28 +1,34 @@
+<div class="seccion">
+<table><tr><td class="formulario">
+<%= form_for(@ticket) do |f| %>
+  <%= render "shared/error_messages", :target => @ticket, :text => "el Ticket" %>  
+  <%= render "form", :f => f %>  
+  <% if current_user.profile_id==1 %> <!-- Ejecutivo de Cobranza -->
+    <%= render "form_ejc", :f => f %>  
+  <% elsif current_user.profile_id==2 %> <!-- Supervisor -->
+    <%= render "form_sup", :f => f %>   
+  <% elsif current_user.profile_id==6 %> <!-- Gerencia -->
+    <%= render "form_ger", :f => f %>  
+  <% end %>  
+<% end %>
+</td></tr></table>
+</div>
+
 <% if current_user.profile_id==1 %> <!-- Ejecutivo de Cobranza -->
-  <div class="seccion">
-    <%= render "form_ejc" %>
-  </div>
   <div class="botones">
     <%= link_to 'Anular el Ticket', :controller => "tickets", :action => "ntc", :acc => '1', :id => @tid %> 
     <%= link_to 'Cancelar', :back %> 
   </div>
 <% elsif current_user.profile_id==2 %> <!-- Supervisor -->
-  <div class="seccion">
-    <%= render "form_sup" %>
-  </div>
   <div class="botones">
     <%= link_to 'Anular el Ticket', :controller => "tickets", :action => "ntc", :acc => '1', :id => @tid %> 
     <%= link_to 'Cancelar', :back %> 
   </div>
 <% elsif current_user.profile_id==6 %> <!-- Gerencia -->
-  <div class="seccion">
-    <%= render "form_ger" %>
-  </div>
   <div class="botones">
     <%= link_to 'Anular el Ticket', :controller => "tickets", :action => "ntc", :acc => '1', :id => @tid %> 
     <%= link_to 'Cancelar', :back %> 
   </div>
 <% end %>  
-
 
 

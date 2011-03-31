@@ -1,2 +1,122 @@
+  <table class="display">
+  <tr>
+    <td>Ticket N°:</td><td class="ro"><div class="sh"><%= @ticket.id %></div></td>
+    <th rowspan=3 width=16></th>
+    <td>Rut:</td><td><%= f.text_field :rut, :size => "10"%> - <%= f.text_field :digit, :size => "1"%></td>
+  </tr>
+  <tr>
+    <td width="130">Identificador:</td><td><%= f.text_field :cas_id, :size => "14"%></td>
+    <td width="110">Nombre:</td><td><%= f.text_field :name, :size => "37"%></td>
+  </tr>
+  <tr>
+    <td>Tipo de Cobranza:</td><td class="ro"><div class="sh"><%= @ticket.collection_type_name %>&nbsp;</div></td>
+    <td>Mandante:</td><td class="ro"><div><%= @ticket.principal_name %>&nbsp;</div></td>
+  </tr>
+  <tr>
+    <td>Descripción del Pago:</td><td colspan="4"><%= f.text_area :payment_description, :size => "59x2" %></td>
+  </tr>
+  <tr>
+    <td>Capital:</td><td><%= f.text_field :capital, :size => "8" %></td>
+    <th rowspan=7 width=16></th>
+    <td>Producto:</td><td class="ro"><div><%= @ticket.product_name %>&nbsp;</div></td>
+  </tr>
+
+  <% if current_user.profile_id==1 %> <!-- Ejecutivo de Cobranza -->
+  <tr>
+    <td>Interés Mora:</td><td class="ro"><div class="pp"><%= @ticket.arrear_interest %></div></td>
+    <td>Número:</td><td><%= f.text_field :number, :size => "37" %></td>
+  </tr>
+  <tr>
+    <td>Interés Plazo:</td><td class="ro"><div class="pp"><%= @ticket.term_interest %></div></td>
+    <td>Emisor:</td><td><%= f.text_field :emitter, :size => "37" %></td>
+  </tr>
+  <tr>
+    <td>Honorarios:</td><td class="ro"><div class="pp"><%= @ticket.fee  %></div></td>
+    <td>Cuenta Corriente:</td><td><%= f.text_field :ctacte, :size => "37"%></td>
+  </tr>  
+  <% else %> <!-- Supervisor --><!-- Gerencia -->
+  <tr>
+    <td>Interés Mora:</td><td><%= f.text_field :arrear_interest, :size => "8"%></td>
+    <td>Número:</td><td><%= f.text_field :number, :size => "30" %></td>
+  </tr>
+  <tr>
+    <td>Interés Plazo:</td><td><%= f.text_field :term_interest, :size => "8"%></td>
+    <td>Emisor:</td><td><%= f.text_field :emitter, :size => "30" %></td>
+  </tr>
+  <tr>
+    <td>Honorarios:</td><td><%= f.text_field :fee, :size => "8"%></td>
+    <td>Cuenta Corriente:</td><td><%= f.text_field :ctacte, :size => "30"%></td>
+  </tr> 
+  <% end %>  
+
+  <tr>
+    <td>Gastos Envío:</td><td><%= f.text_field :shipping_costs, :size => "8" %></td>
+    <td>Vencimiento:</td><td><%= f.date_select :expir_date, :order => [:day, :month, :year] %></td>
+  </tr>
+  <tr>
+    <td>Gastos Judiciales:</td><td><%= f.text_field :legal_costs, :size => "8" %></td>
+    <td>Boleta N°: </td><td><%= f.text_field :ballot, :size => "37" %></td>
+  </tr>
+  <tr>
+    <td></td><td></td>
+    <td>Cuota:</td><td><%= f.text_field :quota_num, :size => "2" %> de <%= f.text_field :total_q, :size => "3" %></td>
+  </tr>
+ 
+  <% if current_user.profile_id==1 %> <!-- Ejecutivo de Cobranza -->
+   <% if not @ticket.adjust.nil? %> 
+   <tr>
+     <td>Ajuste:</td><td class="ro"><div class="pp"><%= @ticket.adjust%></div></td>
+     <th rowspan=3 width=16></th>
+     <td rowspan="2">Observación ajuste:</td><td class="ro" rowspan="2"><div class="w"><%= @ticket.adjust_obs %>&nbsp;</div></td>
+   </tr>
+   <tr>
+     <td></td><td></td><td></td>
+   </tr>
+   <tr>
+     <td>Fecha ajuste:</td><td class="ro"><div class="sh"><%= @ticket.adjust_time.strftime("%d-%b-%Y") %></div></td>
+     <td>Ajustado por:</td><td class="ro"><div><%= @ticket.adjust_by %></div></td>
+   </tr>
+   <% end %>  
+  <% else %> <!-- Supervisor --><!-- Gerencia -->
+  <tr>
+    <td>Ajuste:</td><td><%= f.text_field :adjust , :size => "8"%></td>
+    <th rowspan=3 width=16></th>
+    <td rowspan="2">Observación ajuste:</td><td rowspan="2"><%= f.text_area :adjust_obs , :size => "30x2"%></td>
+  </tr>
+  <tr>
+    <td></td><td></td><td></td>
+  </tr>
+  <tr>
+    <td>Fecha ajuste:</td><td class="ro"><%= f.text_field :adjust_time , :size => "13", :value => Time.now.strftime("%d-%b-%Y"), :readonly => "true" %></td>
+    <td>Ajustado por:</td><td class="ro"><%= f.text_field :adjust_by , :size => "30", :value => current_user.name, :readonly => "true" %></td>
+  </tr>  
+  <% end %>  
+
+  <tr><td height="20"></td></tr>
+  <tr>
+    <td>Preparado por:</td><td colspan=4 class="ro"><div class="n"><%= @ticket.prepared_by %></div></td>
+  </tr>
+  <tr>
+    <td colspan=3>Entrega documento a deudor:</td><td><%= f.check_box :doc_delivery %> Sí</td>
+  </tr>
+  <tr><td height="20"></td></tr>
+  <tr>
+    <td colspan=3>Solicita modificación a Supervisor:</td>
+ 
+  <% if current_user.profile_id==1 %> <!-- Ejecutivo de Cobranza -->
+    <td><%= f.check_box :adjust_sup %> Sí</td>
+  </tr>
+  <tr>
+    <td>Descripción de la modificación solicitada:</td>
+    <td colspan="4"><%= f.text_area :adjust_sup_des, :size => "59x2" %></td>
+  </tr> 
+  <% else %> <!-- Supervisor --><!-- Gerencia -->
+    <td class="ro"><div class="sn"><% if @ticket.adjust_sup %>Sí<% else %>No<% end %></div></td>
+  </tr>
+  <tr>
+    <td>Descripción de la modificación solicitada:</td>
+    <td class="ro" colspan="4"><div class="lgh"><%= @ticket.adjust_sup_des %></div></td>
+  </tr>  
+  <% end %>  
 
 

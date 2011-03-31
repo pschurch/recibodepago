@@ -9,8 +9,12 @@
     <td>Nombre:</td><td><%= f.text_field :name, :size => "37"%></td>
   </tr>
   <tr>
-    <td width="130">Tipo de Cobranza:</td><td width="70"><%= f.collection_select :collection_type_id, CollectionType.find(:all, :conditions => {:state => true}, :order => 'name'), :id, :name %></td>
-    <td width="110">Mandante:</td><td><%= f.collection_select :principal_id, Principal.find(:all, :conditions => {:state => true}, :order => 'name'), :id, :name %></td>
+    <td width="130">Tipo de Cobranza:</td><td class="ro">
+    <%= f.text_field :collection_type_name, :value=> @collection, :readonly => true, :size => "16" %>
+    <%= f.hidden_field :collection_type_id, :value=> @ticket.collection_type_id %></td>
+    <td width="110">Mandante:</td><td class="ro">
+    <%= f.text_field :principal_name, :value=> @principal, :readonly => true %>
+    <%= f.hidden_field :principal_id, :value=> @ticket.principal_id %></td>
   </tr>
   <tr>
     <td>Descripción del Pago:</td><td colspan="4"><%= f.text_area :payment_description, :size => "61x2" %></td>
@@ -18,7 +22,9 @@
   <tr>
     <td>Capital:</td><td><%= f.text_field :capital, :size => "8" %></td>
     <th rowspan=7 width=16></th>
-    <td>Producto:</td><td><%= f.collection_select :product_id, Product.find(:all, :conditions => {:state => true}, :order => 'name'), :id, :name %></td>
+    <td>Producto:</td><td class="ro">
+    <%= f.text_field :product_name, :value=> @product, :readonly => true %>
+    <%= f.hidden_field :product_id, :value=> @ticket.product_id %></td>
   </tr>
   <% if current_user.profile_id==1 %> 
   <tr>

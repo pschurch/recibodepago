@@ -74,11 +74,19 @@ class TicketsController < ApplicationController
     @ticket.current_step = session[:ticket_step] 
     if session[:caso].nil?
       @pay_p = PaymentPolicy.where("principal_id =?", @ticket.principal_id).where("product_id =?", @ticket.product_id).where("collection_type_id =?", @ticket.collection_type_id)
+      for a in Principal.where("id =?", @ticket.principal_id) 
+        @principal = a.name
+      end 
+      for a in Product.where("id =?", @ticket.product_id) 
+        @product = a.name
+      end 
+      for a in CollectionType.where("id =?", @ticket.collection_type_id) 
+        @collection = a.name
+      end 
     else
       @caso = Assignment.find(session[:caso])
       @pay_p = PaymentPolicy.where("principal_id =?", @caso.principal_id).where("product_id =?", @caso.product_id).where("collection_type_id =?", @caso.collection_type_id)
     end
-
     if @pay_p.empty?
       redirect_to(:action => "ntc", :acc => '6' ) #por modificar Supervisor  
     else 
