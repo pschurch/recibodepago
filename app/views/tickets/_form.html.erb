@@ -73,7 +73,7 @@
      <td></td><td></td><td></td>
    </tr>
    <tr>
-     <td>Fecha ajuste:</td><td class="ro"><div class="sh"><%= @ticket.adjust_time.strftime("%d-%b-%Y") %></div></td>
+     <td>Fecha ajuste:</td><td class="ro"><div class="sh"><%= @ticket.adjust_time.strftime("%d-%m-%Y") %></div></td>
      <td>Ajustado por:</td><td class="ro"><div><%= @ticket.adjust_by %></div></td>
    </tr>
    <% end %>  
@@ -87,7 +87,7 @@
     <td></td><td></td><td></td>
   </tr>
   <tr>
-    <td>Fecha ajuste:</td><td class="ro"><%= f.text_field :adjust_time , :size => "13", :value => Time.now.strftime("%d-%b-%Y"), :readonly => "true" %></td>
+    <td>Fecha ajuste:</td><td class="ro"><%= f.text_field :adjust_time , :size => "13", :value => Time.now.strftime("%d-%m-%Y"), :readonly => "true" %></td>
     <td>Ajustado por:</td><td class="ro"><%= f.text_field :adjust_by , :size => "30", :value => current_user.name, :readonly => "true" %></td>
   </tr>  
   <% end %>  

@@ -1,7 +1,7 @@
   <% if @ticket.adjust_sup_time %>
     <tr>
       <td>Fecha solicitud:</td>
-      <td class="ro"><div class="sh"><%= @ticket.adjust_sup_time.strftime("%d-%b-%Y") %></div></td><td></td>
+      <td class="ro"><div class="sh"><%= @ticket.adjust_sup_time.strftime("%d-%m-%Y") %></div></td><td></td>
       <td>Hora solicitud:</td>
       <td class="ro"><div class="sh"><%= @ticket.adjust_sup_time.strftime("%H:%M") %> hrs.</div></td>
     </tr>
@@ -17,7 +17,7 @@
   <% if @ticket.adjust_mgt_time %>
     <tr>
       <td>Fecha solicitud:</td>
-      <td class="ro"><div class="sh"><%= @ticket.adjust_mgt_time.strftime("%d-%b-%Y") %></div></td><td></td>
+      <td class="ro"><div class="sh"><%= @ticket.adjust_mgt_time.strftime("%d-%m-%Y") %></div></td><td></td>
       <td>Hora solicitud:</td>
       <td class="ro"><div class="sh"><%= @ticket.adjust_mgt_time.strftime("%H:%M") %> hrs.</div></td>
     </tr>

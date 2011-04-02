@@ -1,6 +1,6 @@
   <tr>
     <td>Fecha solicitud:</td>
-    <td class="ro"><div class="sh"><% if not @ticket.adjust_sup_time.nil? %><%= @ticket.adjust_sup_time.strftime("%d-%b-%Y") %><% end %>&nbsp;</div></td><td></td>
+    <td class="ro"><div class="sh"><% if not @ticket.adjust_sup_time.nil? %><%= @ticket.adjust_sup_time.strftime("%d-%m-%Y") %><% end %>&nbsp;</div></td><td></td>
     <td>Hora solicitud:</td>
     <td class="ro"><div class="sh"><% if not @ticket.adjust_sup_time.nil? %><%= @ticket.adjust_sup_time.strftime("%H:%M") %> hrs.<% end %>&nbsp;</div></td>
   </tr>
@@ -15,7 +15,7 @@
   <% if @ticket.adjust_mgt %>
     <tr>
       <td>Fecha solicitud:</td>
-      <td class="ro"><div class="sh"><% if not @ticket.adjust_mgt_time.nil? %><%= @ticket.adjust_mgt_time.strftime("%d-%b-%Y") %><% end %>&nbsp;</div></td><td></td>
+      <td class="ro"><div class="sh"><% if not @ticket.adjust_mgt_time.nil? %><%= @ticket.adjust_mgt_time.strftime("%d-%m-%Y") %><% end %>&nbsp;</div></td><td></td>
       <td>Hora solicitud:</td>
       <td class="ro"><div class="sh"><% if not @ticket.adjust_mgt_time.nil? %><%= @ticket.adjust_mgt_time.strftime("%H:%M") %> hrs.<% end %>&nbsp;</div></td>
     </tr>

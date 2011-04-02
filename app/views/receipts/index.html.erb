@@ -1,5 +1,4 @@
 <div class="seccion">
-
 <table><tr><td class="formulario">
 <% form_tag({:controller => :receipts, :action => :index}, :method => :get) do %>
   <table class="display">
@@ -37,7 +36,7 @@
       Rango de Fechas: 
        <%= text_field_tag :f3 %> - 
        <%= text_field_tag :f4  %> 
-       <!-- <%= text_field_tag :f2, :size => "10", :value => Time.now.strftime("%d-%b-%Y")  %> -->
+       <!-- <%= text_field_tag :f2, :size => "10", :value => Time.now.strftime("%d-%m-%Y")  %> -->
       <br>
       &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
       dd/mm/aaaa Ej.: <%= @t.strftime("%d") %>/<%= @t.strftime("%m") %>/<%= @t.strftime("%Y") %>
@@ -52,7 +51,7 @@
 <table>
   <tr>
     <th>N° RP</th>
-    <th>Fecha</th>
+    <th>Fecha de Pago</th>
     <th>Estado</th>
     <th>N° Ticket</th>
     <th>Rut</th>
@@ -60,7 +59,7 @@
     <th>Mandante</th>
     <th>Producto</th>
     <th>Capital</th>
-    <th>T Pagado</th>
+    <th>Total Pagado</th>
     <th></th>
   </tr>
   <% if @receipts.empty? %>
@@ -70,17 +69,17 @@
   <% else %>
     <% @receipts.each do |receipt| %>
       <% cont=true %>
-      <%  for a in Ticket.where("receipt_id", receipt.id) %>
+      <%  for a in Ticket.where("receipt_id=?", receipt.id) %>
         <tr>
           <td><% if cont==true %><%= receipt.id %><% end %></td>
-          <td><% if cont==true %><%= receipt.date_r %><% end %></td>
+          <td><% if cont==true %><%= receipt.date_r.strftime("%d-%m-%Y") %><% end %></td>
           <td><% if cont==true %><%= receipt.state %><% end %></td>
           <td><%= a.id %></td>
           <td><%= a.rut %> - <%= a.digit %></td>
           <td><%= a.cas_id %></td>
-          <td><%= a.principal_id %></td>
-          <td><%= a.product_id %></td>
-          <td><%= a.capital %></td>
+          <td><%= a.principal.name %></td>
+          <td><%= a.product.name %></td>
+          <td><%= number_to_currency(a.capital, :precision => 0, :delimiter => ".") %></td>
           <td><%= number_to_currency(receipt.total_paid, :precision => 0, :delimiter => ".") %>
           <td><% if cont==true %><%= link_to 'Ver', receipt %><% end %></td>
         </tr>

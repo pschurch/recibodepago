@@ -76,7 +76,7 @@
     <td></td>
   </tr>
   <tr>
-    <td>Fecha ajuste:</td><td class="ro"><%= f.text_field :adjust_time , :size => "13", :value => Time.now.strftime("%d-%b-%Y"), :readonly => "true" %></td>
+    <td>Fecha ajuste:</td><td class="ro"><%= f.text_field :adjust_time , :size => "13", :value => Time.now.strftime("%d-%m-%Y"), :readonly => "true" %></td>
     <td>Ajustado por:</td><td class="ro"><%= f.text_field :adjust_by , :size => "37", :value => current_user.name, :readonly => "true" %></td>
   </tr>
   <% end %>
@@ -103,7 +103,7 @@
   <% end %>
   <% if @ticket.adjust_sup_time %>
     <tr>
-      <td>Fecha solicitud:</td><td class="ro"><div class="sh"><%= @ticket.adjust_sup_time.strftime("%d-%b-%Y") %></div></td><td></td>
+      <td>Fecha solicitud:</td><td class="ro"><div class="sh"><%= @ticket.adjust_sup_time.strftime("%d-%m-%Y") %></div></td><td></td>
       <td>Hora solicitud:</td><td class="ro"><div class="sh"><%= @ticket.adjust_sup_time.strftime("%H:%M") %> hrs.</div></td>
     </tr>
   <% end %>
@@ -118,7 +118,7 @@
     </tr>
     <% if @ticket.adjust_mgt_time %>
       <tr>
-        <td>Fecha solicitud:</td><td class="ro"><div class="sh"><%= @ticket.adjust_mgt_time.strftime("%d-%b-%Y") %></div></td><td></td>
+        <td>Fecha solicitud:</td><td class="ro"><div class="sh"><%= @ticket.adjust_mgt_time.strftime("%d-%m-%Y") %></div></td><td></td>
         <td>Hora solicitud:</td><td class="ro"><div class="sh"><%= @ticket.adjust_mgt_time.strftime("%H:%M") %> hrs.</div></td>
       </tr>
     <% end %>

@@ -39,7 +39,7 @@
   </tr>
   <tr>
     <td>Gastos Envío:</td><td><div class="sh"><%= number_to_currency(@ticket.shipping_costs, :precision => 0, :delimiter => ".") %>&nbsp;</div></td>
-    <td>Vencimiento:</td><td><div class="n"><%= @ticket.expir_date.strftime("%d-%b-%Y") %>&nbsp;</div></td>
+    <td>Vencimiento:</td><td><div class="n"><%= @ticket.expir_date.strftime("%d-%m-%Y") %>&nbsp;</div></td>
   </tr>
   <tr>
     <td>Gastos Judiciales:</td><td><div class="sh"><%= number_to_currency(@ticket.legal_costs, :precision => 0, :delimiter => ".") %>&nbsp;</div></td>
@@ -61,7 +61,7 @@
       <td></td>
     </tr>
     <tr>
-      <td>Fecha ajuste:</td><td><div class="sh"><% if not @ticket.adjust_time.nil? %><%= @ticket.adjust_time.strftime("%d-%b-%Y") %><% end %>&nbsp;</div></td>
+      <td>Fecha ajuste:</td><td><div class="sh"><% if not @ticket.adjust_time.nil? %><%= @ticket.adjust_time.strftime("%d-%m-%Y") %><% end %>&nbsp;</div></td>
       <td>Ajustado por:</td><td><div class="n"><%= @ticket.adjust_by %>&nbsp;</div></td>
     </tr>
   <% end %>
@@ -86,7 +86,7 @@
       <td colspan="4"><div class="lgh"><%= @ticket.adjust_sup_des %></div></td>
     </tr>
     <tr>
-      <td>Fecha solicitud:</td><td><div class="sh"><%= @ticket.adjust_sup_time.strftime("%d-%b-%Y") %></div></td>
+      <td>Fecha solicitud:</td><td><div class="sh"><%= @ticket.adjust_sup_time.strftime("%d-%m-%Y") %></div></td>
       <td></td>
       <td>Hora solicitud:</td><td><div class="sh"><%= @ticket.adjust_sup_time.strftime("%H:%M") %> hrs.</div></td>
     <tr>

@@ -1,0 +1,68 @@
+  <% @tickets.each do |a| %>
+  <table class="display">
+  <tr>
+    <td>Ticket N°:</td><td class="ro"><div class="sh"><%= a.id %></div></td>
+    <th rowspan=3 width=16></th>
+    <td>Rut:</td><td class="ro"><div class="sh"><%= a.rut %> - <%= a.digit %></div></td>
+  </tr>
+  <tr>
+    <td width="130">Identificador:</td><td width="70" class="ro"><div class="sh"><%= a.cas_id %></div></td>
+    <td width="110">Nombre:</td><td class="ro"><div class="n"><%= a.name %></div></td>
+  </tr>
+  <tr>
+    <td>Tipo de Cobranza:</td><td class="ro"><div class="sh"><%= a.collection_type_name %></div></td>
+    <td>Mandante:</td><td class="ro"><div class="n"><%= a.principal_name %></div></td>
+  </tr>
+  <tr>
+    <td>Descripción del Pago:</td><td colspan="4" class="ro"><div class="lg"><%= a.payment_description %>&nbsp;</div></td>
+  </tr>
+  <tr>
+    <td>Capital:</td><td class="ro"><div class="sh"><%= number_to_currency(a.capital, :precision => 0, :delimiter => ".") %></div></td>
+    <th rowspan=7 width=16></th>
+    <td>Producto:</td><td class="ro"><div class="n"><%= a.product_name %></div></td>
+  </tr>
+  <tr>
+    <td>Interés Mora:</td><td class="ro"><div class="sh"><%= number_to_currency(a.arrear_interest, :precision => 0, :delimiter => ".") %>&nbsp;</div></td>
+    <td>Número:</td><td class="ro"><div class="n"><%= a.number %>&nbsp;</div></td>
+  </tr>
+  <tr>
+    <td>Interés Plazo:</td><td class="ro"><div class="sh"><%= number_to_currency(a.term_interest, :precision => 0, :delimiter => ".") %>&nbsp;</div></td>
+    <td>Emisor:</td><td class="ro"><div class="n"><%= a.emitter %>&nbsp;</div></td>
+  </tr>
+  <tr>
+    <td>Honorarios:</td><td class="ro"><div class="sh"><%= number_to_currency(a.fee, :precision => 0, :delimiter => ".") %>&nbsp;</div></td>
+    <td>Cuenta Corriente:</td><td class="ro"><div class="n"><%= a.ctacte %>&nbsp;</div></td>
+  </tr>
+  <tr>
+    <td>Gastos Envío:</td><td class="ro"><div class="sh"><%= number_to_currency(a.shipping_costs, :precision => 0, :delimiter => ".") %>&nbsp;</div></td>
+    <td>Vencimiento:</td><td class="ro"><div class="n"><% if not a.expir_date.nil? %><%= a.expir_date.strftime("%d-%m-%Y") %><% end %></div></td>
+  </tr>
+  <tr>
+    <td>Gastos Judiciales:</td><td class="ro"><div class="sh"><%= number_to_currency(a.legal_costs, :precision => 0, :delimiter => ".") %>&nbsp;</div></td>
+    <td>Boleta N°: </td><td class="ro"><div class="n"><%= a.ballot %>&nbsp;</div></td>
+  </tr>
+  <tr>
+    <td>Total a Pagar:</td><td class="ro"><div class="sh"><%= number_to_currency(a.total_pay, :precision => 0, :delimiter => ".") %></div></td>
+    <td>Cuota:</td><td class="ro"><div class="sh"><%= a.quota_num %><% if not a.total_q.empty? %> de <%= a.total_q %><% end %>&nbsp;</div></td>
+  </tr>
+  <% if not a.adjust.nil? %> 
+  <tr>
+    <td>Ajuste:</td><td class="ro"><div class="pp"><%= number_to_currency(a.adjust, :precision => 0, :delimiter => ".") %></div></td>
+    <th rowspan=3 width=16></th>
+    <td rowspan="2">Observación ajuste:</td><td class="ro" rowspan="2"><div class="w"><%= a.adjust_obs %>&nbsp;</div></td>
+  </tr>
+  <tr>
+    <td>Nuevo Total a Pagar:</td><td class="ro"><div class="pp"><%= number_to_currency(a.new_total_pay, :precision => 0, :delimiter => ".") %></div></td>
+    <td></td>
+  </tr>
+  <% end %>
+  <tr>
+    <td>Preparado por:</td><td colspan=4 class="ro"><div class="n"><%= a.prepared_by %></div></td>
+  </tr>
+  <tr>
+    <td colspan=3>Entrega documento a deudor:</td><td class="ro"><div class="sn"><% if a.doc_delivery %>Sí<% else %>No<% end %></div></td>
+  </tr>
+  </table> 
+  <hr>
+  <% end %>
+

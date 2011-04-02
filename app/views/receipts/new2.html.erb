@@ -1,5 +1,14 @@
 <div class="seccion">
-  <%= render 'form' %>
+<table><tr><td class="formulario">
+<%= form_for(@receipt) do |f| %>
+  <%= render "shared/error_messages", :target => @receipt, :text => "el Recibo de Pago" %>
+  <%= render "tickets" %>
+  <%= render "#{@receipt.current_step}_step", :f => f %>
+
+  <div class="actions"><%= f.submit "Continuar", :name => "next_button" unless @receipt.last_step?%></div>  
+  <div class="actions"><%= f.submit "Grabar", :name => "rec_button" unless @receipt.first_step?%></div>
+<% end %>
+</td></tr></table>
 </div>
 
 <div class="botones">

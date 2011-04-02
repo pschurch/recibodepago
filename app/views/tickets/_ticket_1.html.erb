@@ -16,6 +16,7 @@
   <th rowspan=3 width=16></th>
     <%= f.hidden_field :principal_id, :value => @caso.principal_id  %>
     <%= f.hidden_field :product_id, :value => @caso.product_id  %>
+    <%= f.hidden_field :collection_type_id, :value => @caso.collection_type_id  %>
     <td>Rut:</td><td class="ro"><%= f.text_field :rut, :size => "10", :value => @caso.rut, :readonly => true %> - <%= f.text_field :digit, :size => "1", :value => @caso.digit, :readonly => true %></td>
   </tr>
   <tr>
@@ -48,7 +49,7 @@
   </tr>
   <tr>
     <td>Gastos Envío:</td><td><%= f.text_field :shipping_costs, :size => "8", :value => 0 %></td>
-    <td>Vencimiento:</td><td><%= f.text_field :expir_date, :size => "37", :value => @caso.expir_date.strftime("%d-%b-%Y") %></td>
+    <td>Vencimiento:</td><td><%= f.text_field :expir_date, :size => "37", :value => @caso.expir_date.strftime("%d-%m-%Y") %></td>
   </tr>
   <tr>
     <td>Gastos Judiciales:</td><td><%= f.text_field :legal_costs, :size => "8", :value => 0 %></td>

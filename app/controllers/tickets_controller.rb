@@ -28,6 +28,11 @@ class TicketsController < ApplicationController
         @ticket.update_attribute 'state', "anulado"
         @ticket.update_attribute 'canceled_by', current_user.name
         @ticket.update_attribute 'canceled_time', Time.now
+        @caso = Assignment.where("ticket_id =?", @ticket.id)
+        @caso.each do |c|
+          c.update_attribute 'state', "cargado"
+          c.update_attribute 'ticket_id', nil
+        end
     end
   end
 
@@ -88,7 +93,7 @@ class TicketsController < ApplicationController
       @pay_p = PaymentPolicy.where("principal_id =?", @caso.principal_id).where("product_id =?", @caso.product_id).where("collection_type_id =?", @caso.collection_type_id)
     end
     if @pay_p.empty?
-      redirect_to(:action => "ntc", :acc => '6' ) #por modificar Supervisor  
+      redirect_to(:action => "ntc", :acc => '6' ) # no existe politica de pago  
     else 
       @pay_p.each do |a|
         @fee = a.fee  
@@ -105,6 +110,8 @@ class TicketsController < ApplicationController
             @ticket.update_attribute 'state', "pms"
             @ticket.update_attribute 'adjust_sup_time', Time.now
           end
+          @caso.update_attribute 'state', "ticket_creado"
+          @caso.update_attribute 'ticket_id', @ticket.id
           session[:caso] = nil
         elsif params[:next_button]   
           @ticket.next_step

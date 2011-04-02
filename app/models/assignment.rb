@@ -5,9 +5,9 @@ class Assignment < ActiveRecord::Base
 
  def self.search(search)
   if search
-    where('rut LIKE ?', "%#{search}%").where("state = 'cargado'")
+    where('rut LIKE ?', "%#{search}%").where(["state='cargado' OR state ='ticket_creado' OR state='rp_creado'"])
   else
-    where("state = 'cargado'")
+    where(["state='cargado' OR state ='ticket_creado' OR state='rp_creado'"])
   end
  end
 end

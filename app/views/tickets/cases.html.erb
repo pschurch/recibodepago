@@ -23,11 +23,14 @@
       <td><%= a.principal.name %></td>
       <td><%= a.product.name %></td>
       <td><%= number_to_currency(a.capital, :precision => 0, :delimiter => ".") %></td>
-      <td><%= a.alloc_date.strftime("%d-%b-%Y") %></td>
-      <td>
-        <% if current_user.group_id==a.group_id %> 
-          <%= link_to 'Crear Ticket', :controller => "tickets", :action => "new", :t => a.id %>
-        <% end %>
+      <td><%= a.alloc_date.strftime("%d-%m-%Y") %></td>
+      <td><% if a.state=='ticket_creado' %>
+            Ticket N° <%= a.ticket_id %>
+          <% elsif a.state=='rp_creado' %> 
+            RP N° <%= a.receipt_id %>
+          <% elsif a.state=='cargado' and current_user.group_id==a.group_id %> 
+            <%= link_to 'Crear Ticket', :controller => "tickets", :action => "new", :t => a.id %>
+          <% end %>            
       </td>
     </tr>
     <% end %>
