@@ -3,6 +3,7 @@ namespace :db do
   desc "Carga los datos Iniciales."
   task :datosiniciales => :environment do
     perfilesinit
+    payagreementinit
     singrupoinit
     usuarioadmininit
     comunasinit
@@ -26,6 +27,16 @@ def perfilesinit
                   :description => "Administra las tablas de codigos")
   Profile.create!(:name => "Designer",
                   :description => "Administra los Perfiles")
+end
+
+def payagreementinit
+  PaymentAgreement.create!(:name => "Pago en TechMill", :description => "El Deudor realiza el pago en persona en las oficinas de TechMill", :state => 1)
+  PaymentAgreement.create!(:name => "Envio por Correo", :description => "El Deudor envia cheque por correo tradicional", :state => 1)
+  PaymentAgreement.create!(:name => "Negocia Ejecutivo de Cobranza", :description => "", :state => 1)
+  PaymentAgreement.create!(:name => "Gestion en Terreno", :description => "", :state => 1)
+  PaymentAgreement.create!(:name => "Deposito en CtaCte TechMill", :description => "El Deudor realiza el deposito en la cuenta corriente de TechMill", :state => 1)
+  PaymentAgreement.create!(:name => "Deposito en CtaCte Mandante", :description => "El Deudor realiza el deposito en la cuenta corriente del Mandante", :state => 1)
+  PaymentAgreement.create!(:name => "Express", :description => "", :state => 1)
 end
 
 def singrupoinit

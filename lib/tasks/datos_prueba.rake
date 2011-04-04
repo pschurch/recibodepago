@@ -12,7 +12,6 @@ namespace :db do
     tipos_cobranza
     formas_pago
     politicas_pago
-    acuerdos_pago
  end
 end
 
@@ -106,16 +105,3 @@ def politicas_pago
   PaymentPolicy.create!(:principal_id => 4, :product_id => 4, :collection_type_id => 4, :arrear_interest => 1000, :term_interest => 1000, :fee => 1000, :legal_costs => 1, :installment => 0, :state => 1)
   PaymentPolicy.create!(:principal_id => 4, :product_id => 8, :collection_type_id => 4, :arrear_interest => 1000, :term_interest => 1000, :fee => 1000, :legal_costs => 1, :installment => 0, :state => 1)
 end
-
-
-def acuerdos_pago
-  PaymentAgreement.create!(:name => "Pago en TechMill", :state => 1)
-  PaymentAgreement.create!(:name => "Envio por Correo", :state => 1)
-  PaymentAgreement.create!(:name => "Negocia Ejecutivo de Cobranza", :state => 1)
-  PaymentAgreement.create!(:name => "Gestion en Terreno", :state => 1)
-  PaymentAgreement.create!(:name => "Deposito en CtaCte TechMill", :state => 1)
-  PaymentAgreement.create!(:name => "Deposito en CtaCte Mandante", :state => 1)
-  PaymentAgreement.create!(:name => "Express", :state => 1)
-  PaymentAgreement.create!(:name => "No Activo", :state => 0)
-end
-

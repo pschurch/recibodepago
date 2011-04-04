@@ -7,29 +7,29 @@
   <div class="field_txt">
     <%= @profile.name %>
   </div>
-
   <div class="field">
     Descripción:
   </div>
   <div class="field_txt">
     <%= @profile.description %>
   </div>
-
   <div class="field">
     Estado:
   </div>
   <div class="field_txt">
     <% if @profile.state %>Activo<% else %>Inactivo<% end %>
   </div>
-
 </td></tr></table>
 </div>
 
 <div class="botones">
-  <% if current_user.profile_id==8 %> 
+  <% if current_user.profile_id==7 %>  <!--  Administrador --> 
+    <%= link_to 'Listado de Perfiles', profiles_path %>
+    <%= link_to 'Página Principal', :controller => "sessions", :action => "adm" %>
+  <% elsif current_user.profile_id==8 %> <!-- Designer -->
     <%= link_to 'Editar', edit_profile_path(@profile) %>
+    <%= link_to 'Listado de Perfiles', dprofiles_path %>
+    <%= link_to 'Página Principal', :controller => "sessions", :action => "dsg" %>
   <% end %>
-  <%= link_to 'Listado de Perfiles', profiles_path %>
-  <%= link_to 'Página Principal', :controller => "sessions", :action => "adm" %>
 </div>
 

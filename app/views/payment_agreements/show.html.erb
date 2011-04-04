@@ -12,7 +12,7 @@
     Descripción:
   </div>
   <div class="field_txt">
-    <%= @payment_agreement.description %>
+    <%= @payment_agreement.description %>&nbsp;
   </div>
 
   <div class="field">
@@ -26,11 +26,11 @@
 </div>
 
 <div class="botones">
-<% if current_user.profile_id==7 %>
-  <%= link_to 'Editar', edit_payment_agreement_path(@payment_agreement) %> 
+<% if current_user.profile_id==7 %>  <!--  Administrador --> 
   <%= link_to 'Listado de Acuerdos de Pago', payment_agreements_path %>
   <%= render 'shared/pp_adm_dsg' %>
-<% elsif current_user.profile_id==8 %>
+<% elsif current_user.profile_id==8 %> <!-- Designer -->
+  <%= link_to 'Editar', edit_payment_agreement_path(@payment_agreement) %> 
   <%= link_to "Listado de Todos los Acuerdos de Pago", dpayment_agreements_path %>
   <%= link_to 'Página Principal', :controller => "sessions", :action => "dsg" %>
 <% end %>

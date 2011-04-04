@@ -1,9 +1,16 @@
 <div class="seccion">
+  <div class="subtit">
+    Códigos sensibles:
+  </div>
   <ul>
-    <li><%= link_to "Listado de Todos los Casos", dcasos_path %></li>
-    <li><%= link_to "Listado de Todos los Tickets", dtickets_path %></li>
-    <li><%= link_to "Listado de Todos los Recibos de Pago", dreceipts_path %></li>
     <li><%= link_to "Listado de Todos los Perfiles", dprofiles_path %></li>
+    <li><%= link_to "Listado de Todos los Acuerdos de Pago", dpayment_agreements_path %>
+  </ul>
+
+  <div class="subtit">
+    Códigos generales:
+  </div>
+  <ul>
     <li><%= link_to "Listado de Todos los Grupos", dgroups_path %></li>
     <li><%= link_to "Listado de Todos los Mandantes", dprincipals_path %></li>
     <li><%= link_to "Listado de Todos los Usuarios", dusers_path %>
@@ -11,6 +18,13 @@
     <li><%= link_to "Listado de Todos los Tipos de Cobranza", dcollection_types_path %>
     <li><%= link_to "Listado de Todos las Formas de Pago", dpayment_forms_path %>
     <li><%= link_to "Listado de Todos las Políticas de Pago", dpayment_policies_path %>
-    <li><%= link_to "Listado de Todos los Acuerdos de Pago", dpayment_agreements_path %>
+  </ul>
+  <div class="subtit">
+    Registros:
+  </div>
+  <ul>
+    <li><%= link_to "Listado de Todos los Casos", dcasos_path %></li>
+    <li><%= link_to "Listado de Todos los Tickets", dtickets_path %></li>
+    <li><%= link_to "Listado de Todos los Recibos de Pago", dreceipts_path %></li>
   </ul>
 </div>
