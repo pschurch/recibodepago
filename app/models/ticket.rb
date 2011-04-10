@@ -6,7 +6,7 @@ class Ticket < ActiveRecord::Base
   attr_writer :current_step  
 
   validate :no_nulos
-  #  validate :valida_rut
+  validate :valida_rut
   validates_format_of :rut, :with => /\A[+-]?\d+\Z/, :message => " : debe ingresar solamente digitos y sin puntos ni guiones.", :allow_blank => true
   validates_inclusion_of :digit, :in => %w(0 1 2 3 4 5 6 7 8 9 k K),  :message => "(Digito verificador) no es un valor valido.", :allow_blank => true
   validates_numericality_of :capital, :only_integer => true, :message => " : el valor debe ser numerico.", :allow_blank => true
@@ -76,6 +76,7 @@ class Ticket < ActiveRecord::Base
   end
 
   def valida_rut
+   if not cas_id.nil?
     if rut.blank?
       errors.add(:rut, " : debe ingresar un valor en este campo.")
     else !rut.blank? 
@@ -107,6 +108,7 @@ class Ticket < ActiveRecord::Base
         end
       end
     end
+   end
   end
 
 end

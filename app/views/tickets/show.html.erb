@@ -1,12 +1,176 @@
-<% if current_user.profile_id==1 %>  <!-- Ejec Cobrana -->
-  <%= render "show_ejc" %>  
-<% elsif current_user.profile_id==2 %>  <!-- Supervisor -->  
-  <%= render "show_sup" %>  
-<% elsif current_user.profile_id==4 %>  <!-- Tesoreria -->  
-  <%= render "show_tsr" %>  
-<% elsif current_user.profile_id==6 %>  <!-- Gerencia -->  
-  <%= render "show_ger" %>  
-<% elsif current_user.profile_id==8 %>  <!-- Designer -->  
-  <%= render "show_dsg" %>  
-<% end %>
+<div class="seccion">
+<table><tr><td class="formulario">
+  <% if notice == '1' %>
+    <p id="notice">El Ticket N° <%= @ticket.id %> se ha creado exitosamente.</p>
+  <% elsif not notice.nil? %><p id="notice"><%= notice %></p><% end %>
+  <table class="display">
+  <tr>
+    <td>Ticket N°:</td><td><div class="sh"><%= @ticket.id %></div></td>
+    <th rowspan=4 width=16></th>
+    <td>Estado:</td><td><div><%= case @ticket.state 
+          when "pms"
+            "por modificar supervisor"
+          when "pmg"
+            "por modificar gerencia"
+          else
+            @ticket.state
+        end %></div></td>
+  </tr>
+  <tr>
+    <td>Recibo Pago N°:</td><td><div class="sh"><%= @ticket.receipt_id %>&nbsp;</div></td>
+    <td>Rut:</td><td><div class="sh"><%= @ticket.rut %> - <%= @ticket.digit %></div></td>
+  </tr>
+  <tr>
+    <td width="130">Identificador:</td><td width="70"><div class="sh"><%= @ticket.cas_id %></div></td>
+    <td width="110">Nombre:</td><td><div class="n"><%= @ticket.name %></div></td>
+  </tr>
+  <tr>
+    <td>Tipo de Cobranza:</td><td><div class="sh"><%= @ticket.collection_type_name %>&nbsp;</div></td>
+    <td>Mandante:</td><td><div class="n"><%= @ticket.principal_name %>&nbsp;</div></td>
+  </tr>
+  <tr>
+    <td>Descripción del Pago:</td><td colspan="4"><div class="lg"><%= @ticket.payment_description %>&nbsp;</div></td>
+  </tr>
+  <tr>
+    <td>Capital:</td><td><div class="sh"><%= number_to_currency(@ticket.capital, :precision => 0, :delimiter => ".") %>&nbsp;</div></td>
+    <th rowspan=7 width=16></th>
+    <td>Producto:</td><td><div class="n"><%= @ticket.product_name %>&nbsp;</div></td>
+  </tr>
+  <tr>
+    <td>Interés Mora:</td><td><div class="sh"><%= number_to_currency(@ticket.arrear_interest, :precision => 0, :delimiter => ".") %>&nbsp;</div></td>
+    <td>Número:</td><td><div class="n"><%= @ticket.number %>&nbsp;</div></td>
+  </tr>
+  <tr>
+    <td>Interés Plazo:</td><td><div class="sh"><%= number_to_currency(@ticket.term_interest, :precision => 0, :delimiter => ".") %>&nbsp;</div></td>
+    <td>Emisor:</td><td><div class="n"><%= @ticket.emitter %>&nbsp;</div></td>
+  </tr>
+  <tr>
+    <td>Honorarios:</td><td><div class="sh"><%= number_to_currency(@ticket.fee, :precision => 0, :delimiter => ".") %>&nbsp;</div></td>
+    <td>Cuenta Corriente:</td><td><div class="n"><%= @ticket.ctacte %>&nbsp;</div></td>
+  </tr>
+  <tr>
+    <td>Gastos Envío:</td><td><div class="sh"><%= number_to_currency(@ticket.shipping_costs, :precision => 0, :delimiter => ".") %>&nbsp;</div></td>
+    <td>Vencimiento:</td><td><div class="n"><%= @ticket.expir_date.strftime("%d/%m/%Y") %>&nbsp;</div></td>
+  </tr>
+  <tr>
+    <td>Gastos Judiciales:</td><td><div class="sh"><%= number_to_currency(@ticket.legal_costs, :precision => 0, :delimiter => ".") %>&nbsp;</div></td>
+    <td>Boleta N°: </td><td><div class="n"><%= @ticket.ballot %>&nbsp;</div></td>
+  </tr>
+  <tr>
+    <td>Total a Pagar:</td><td><div class="sh"><%= number_to_currency(@ticket.total_pay, :precision => 0, :delimiter => ".") %></div></td>
+    <td>Cuota:</td><td><div class="sh"><%= @ticket.quota_num %>
+    <% if not @ticket.total_q.empty? %> de <%= @ticket.total_q %><% end %>&nbsp;</div></td>
+  </tr>
+  <% if not @ticket.adjust.nil? %> <!-- Ajuste -->
+    <tr>
+      <td>Ajuste:</td><td><div class="sh"><%= number_to_currency(@ticket.adjust, :precision => 0, :delimiter => ".") %>&nbsp;</div></td>
+      <th rowspan=3 width=16></th>
+      <td rowspan="2">Observación ajuste:</td><td rowspan="2"><div class="w"><%= @ticket.adjust_obs %>&nbsp;</div></td>
+    </tr>
+    <tr>
+      <td>Nuevo Total a Pagar:</td><td><div class="sh"><%= number_to_currency(@ticket.new_total_pay, :precision => 0, :delimiter => ".") %></div></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Fecha ajuste:</td><td><div class="sh"><% if not @ticket.adjust_time.nil? %><%= @ticket.adjust_time.strftime("%d-%m-%Y") %><% end %>&nbsp;</div></td>
+      <td>Ajustado por:</td><td><div class="n"><%= @ticket.adjust_by %>&nbsp;</div></td>
+    </tr>
+  <% end %>
+  <tr><td height="20"></td></tr>
+  <tr>
+    <td>Preparado por:</td><td colspan=4><div class="n"><%= @ticket.prepared_by%>&nbsp;</div></td>
+  </tr>
+  <tr>
+    <td colspan=3>Entrega documento a deudor:</td>
+    <td><div class="sn"><% if @ticket.doc_delivery %>Sí<% else %>No<% end %></div></td>
+  </tr>
 
+  <tr><td height="20"></td></tr>
+  <tr>
+    <td colspan=3>Solicita modificación a Supervisor:</td>
+    <td><div class="sn"><% if @ticket.adjust_sup %>Sí<% else %>No<% end %></div></td>
+  </tr>
+  <% if @ticket.adjust_sup %>
+    <tr>
+      <td>Descripción de la modificación solicitada:</td>
+      <td colspan="4"><div class="lgh"><%= @ticket.adjust_sup_des %></div></td>
+    </tr>
+    <tr>
+      <td>Fecha solicitud:</td><td><div class="sh"><%= @ticket.adjust_sup_time.strftime("%d/%m/%Y") %></div></td>
+      <td></td>
+      <td>Hora solicitud:</td><td><div class="sh"><%= @ticket.adjust_sup_time.strftime("%H:%M") %> hrs.</div></td>
+    <tr>
+  <% end %>
+
+  <% if current_user.profile_id==2 OR current_user.profile_id==4 %> <!-- Supervisor o Tesoreria -->
+    <% if @ticket.adjust_mgt %>
+      <tr>
+        <td colspan=3>Solicita modificación a Gerencia:</td>
+        <td><div class="sn"><% if @ticket.adjust_mgt %>Sí<% else %>No<% end %></div></td>
+      </tr>
+      <tr>
+        <td>Descripción de la modificación solicitada:</td>
+        <td colspan="4"><div class="lgh"><%= @ticket.adjust_mgt_des %></div></td>
+      </tr>
+      <tr>
+        <td>Fecha solicitud:</td>
+        <td><div class="sh"><% if not @ticket.adjust_mgt_time.nil? %><%= @ticket.adjust_mgt_time.strftime("%d/%m/%Y") %><% end %>&nbsp;</div></td><td></td>
+        <td>Hora solicitud:</td>
+        <td><div class="sh"><% if not @ticket.adjust_mgt_time.nil? %><%= @ticket.adjust_mgt_time.strftime("%H:%M") %> hrs.<% end %>&nbsp;</div></td>
+      <tr>
+    <% end %>
+  <% elsif current_user.profile_id==6 %>  <!-- Gerencia -->  
+    <tr>
+      <td colspan=3>Solicita modificación a Gerencia:</td>
+      <td><div class="sn"><% if @ticket.adjust_mgt %>Sí<% else %>No<% end %></div></td>
+    </tr>
+    <% if @ticket.adjust_mgt %>
+      <tr>
+        <td>Descripción de la modificación solicitada:</td>
+        <td colspan="4"><div class="lgh"><%= @ticket.adjust_mgt_des %></div></td>
+      </tr>
+      <tr>
+        <td>Fecha solicitud:</td><td><div class="sh"><%= @ticket.adjust_mgt_time.strftime("%d/%m/%Y") %></div></td>
+        <td></td>
+        <td>Hora solicitud:</td><td><div class="sh"><%= @ticket.adjust_mgt_time.strftime("%H:%M") %> hrs.</div></td>
+      <tr>
+    <% end %>
+  <% end %>
+
+  <% if current_user.profile_id==2 OR current_user.profile_id==4 OR current_user.profile_id==6 %> <!-- Supervisor o Tesoreria o Gerencia -->
+    <% if @ticket.state=='anulado' %>
+      <tr>
+        <td>Fecha anulación:</td><td><div class="sh"><%= @ticket.canceled_time.strftime("%d/%m/%Y") %> </div></td>
+        <td></td>
+        <td>Anulado por:</td><td><div><%= @ticket.canceled_by %></div></td>
+      <tr>
+    <% end %>
+  <% end %>
+
+  </table>
+</td></tr></table>
+</div>
+
+<div class="botones">
+  <% if current_user.profile_id==1 %>  <!-- Ejec Cobrana -->
+    <% if not @ticket.adjust_sup? %>
+      <%= link_to 'Editar', edit_ticket_path(@ticket) %> 
+    <% end %>
+    <%= link_to 'Listado de Tickets', tickets_path %>
+    <%= link_to 'Página Principal', :controller => "sessions", :action => "ejc" %>
+  <% elsif current_user.profile_id==2 %>  <!-- Supervisor -->  
+  <% if @ticket.state=='creado' or @ticket.state=='pms' %>
+    <%= link_to 'Editar', edit_ticket_path(@ticket) %> 
+  <% end %>
+    <%= link_to 'Listado de Tickets', :controller => "supervisor", :action => "stlist" %>
+    <%= link_to 'Página Principal', :controller => "sessions", :action => "sup" %>  
+  <% elsif current_user.profile_id==4 %>  <!-- Tesoreria -->  
+    <%= link_to 'Listado de Tickets', :controller => "finance", :action => "ftlist" %>
+    <%= link_to 'Página Principal', :controller => "sessions", :action => "tsr" %>  
+  <% elsif current_user.profile_id==6 %>  <!-- Gerencia -->  
+    <%= link_to 'Listado de Tickets', :controller => "manager", :action => "mtlist" %>
+    <%= link_to 'Página Principal', :controller => "sessions", :action => "ger" %>  
+  <% elsif current_user.profile_id==8 %>  <!-- Designer -->  
+    <%= render "show_dsg" %>  
+  <% end %>
+</div>

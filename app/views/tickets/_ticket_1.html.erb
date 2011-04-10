@@ -36,11 +36,11 @@
     <td>Producto:</td><td class="ro"><%= f.text_field :product_name, :size => "37", :value => @caso.product.name, :readonly => true %></td>
   </tr>
   <tr>
-    <td>Interés Mora:</td><td class="ro"><%= f.text_field :arrear_interest, :size => "8", :value => @arr, :readonly => true %></td>
+    <td>Interés Mora:</td><td><%= f.text_field :arrear_interest, :size => "8", :value => 0 %></td>
     <td>Número:</td><td><%= f.text_field :number, :size => "37", :value => @caso.number %></td>
   </tr>
   <tr>
-    <td>Interés Plazo:</td><td class="ro"><%= f.text_field :term_interest, :size => "8", :value => @term, :readonly => true %></td>
+    <td>Interés Plazo:</td><td><%= f.text_field :term_interest, :size => "8", :value => 0 %></td>
     <td>Emisor:</td><td><%= f.text_field :emitter, :size => "37", :value => @caso.emitter %></td>
   </tr>
   <tr>

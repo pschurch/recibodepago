@@ -63,10 +63,10 @@ class TicketsController < ApplicationController
       @pay_p = PaymentPolicy.where("principal_id =?", @caso.principal_id).where("product_id =?", @caso.product_id).where("collection_type_id =?", @caso.collection_type_id)
       @pay_p.each do |a|
         @fee = a.fee  
-        @arr = a.arrear_interest
-        @term = a.term_interest
+        #@arr = a.arrear_interest
+        #@term = a.term_interest
       end
-      @total = @caso.capital + @fee + @arr + @term 
+      #@total = @caso.capital + @fee + @arr + @term 
       #---------------------------------------------------------
     end
     @ticket = Ticket.new
@@ -97,8 +97,8 @@ class TicketsController < ApplicationController
     else 
       @pay_p.each do |a|
         @fee = a.fee  
-        @arr = a.arrear_interest
-        @term = a.term_interest
+        #@arr = a.arrear_interest
+        #@term = a.term_interest
       end
       if @ticket.valid?
         if params[:rec_button]  
@@ -110,9 +110,11 @@ class TicketsController < ApplicationController
             @ticket.update_attribute 'state', "pms"
             @ticket.update_attribute 'adjust_sup_time', Time.now
           end
-          @caso.update_attribute 'state', "ticket_creado"
-          @caso.update_attribute 'ticket_id', @ticket.id
-          session[:caso] = nil
+          if not session[:caso].nil?
+            @caso.update_attribute 'state', "ticket_creado"
+            @caso.update_attribute 'ticket_id', @ticket.id
+            session[:caso] = nil
+          end
         elsif params[:next_button]   
           @ticket.next_step
         end  

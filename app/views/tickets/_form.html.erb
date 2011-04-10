@@ -23,11 +23,11 @@
 
   <% if current_user.profile_id==1 %> <!-- Ejecutivo de Cobranza -->
   <tr>
-    <td>Interés Mora:</td><td class="ro"><div class="pp"><%= @ticket.arrear_interest %></div></td>
+    <td>Interés Mora:</td><td><%= f.text_field :arrear_interest, :size => "8", :value => 0 %></td>
     <td>Número:</td><td><%= f.text_field :number, :size => "37" %></td>
   </tr>
   <tr>
-    <td>Interés Plazo:</td><td class="ro"><div class="pp"><%= @ticket.term_interest %></div></td>
+    <td>Interés Plazo:</td><td><%= f.text_field :term_interest, :size => "8", :value => 0 %></td>
     <td>Emisor:</td><td><%= f.text_field :emitter, :size => "37" %></td>
   </tr>
   <tr>
