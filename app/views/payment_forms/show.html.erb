@@ -7,14 +7,24 @@
   <div class="field_txt">
     <%= @payment_form.name %>
   </div>
-
+  <div class="field">
+    Requiere emisor:
+  </div>
+  <div class="field_txt">
+    <% if @payment_form.emitter %>Sí<% else %>No<% end %>
+  </div>
+  <div class="field">
+    Requiere n&uacute;mero de documento:
+  </div>
+  <div class="field_txt">
+    <% if @payment_form.num_doc %>Sí<% else %>No<% end %>
+  </div>
   <div class="field">
     Descripción:
   </div>
   <div class="field_txt">
-    <%= @payment_form.description %>
+    <%= @payment_form.description %>&nbsp;
   </div>
-
   <div class="field">
     Estado:
   </div>

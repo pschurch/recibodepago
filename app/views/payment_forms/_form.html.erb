@@ -2,7 +2,29 @@
 <%= form_for(@payment_form) do |f| %>
   <%= render "shared/error_messages", :target => @payment_form, :text => "la Forma de Pago" %>  
 
-  <%= render "shared/name_descr_state", :f => f %> 
+  <div class="field">
+   Nombre:<br>
+   <%= f.text_field :name, :size => "40" %>
+  </div>
+  <div class="field">
+    Requiere emisor:<br>
+    <%= f.check_box :emitter %> Sí
+  </div>
+  <div class="field">
+    Requiere n&uacute;mero de documento:<br>
+    <%= f.check_box :num_doc %> Sí
+  </div>
+  <div class="field">
+   Descripción: <br>
+   <%= f.text_area :description, :size => "40x2" %>
+  </div>
+  <div class="field">
+   Estado: <br>
+   <%= f.check_box :state %> Activo
+  </div>
+  <div class="actions">
+    <%= f.submit "Grabar"%>
+  </div>
 
 <% end %>
 </td></tr></table>

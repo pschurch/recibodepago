@@ -1,4 +1,6 @@
 Recibodepago::Application.routes.draw do
+  resources :emitters
+
   get "supervisor/stmod"
   get "supervisor/stlist"
   get "supervisor/srlist"

@@ -1,0 +1,8 @@
+<table><tr><td class="formulario">
+<%= form_for(@emitter) do |f| %>
+  <%= render "shared/error_messages", :target => @emitter, :text => "el Emisor" %>  
+  
+  <%= render "shared/name_descr_state", :f => f %>
+<% end %>
+</td></tr></table>
+

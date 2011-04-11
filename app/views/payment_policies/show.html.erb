@@ -21,18 +21,6 @@
     <%= @payment_policy.collection_type.name %>
   </div>
   <div class="field">
-    Interés Mora:
-  </div>
-  <div class="field_txt">
-    <%= @payment_policy.arrear_interest %>&nbsp;
-  </div>
-  <div class="field">
-    Interés Plazo:
-  </div>
-  <div class="field_txt">
-    <%= @payment_policy.term_interest %>&nbsp;
-  </div>
-  <div class="field">
     Honorarios:
   </div>
   <div class="field_txt">
@@ -56,7 +44,6 @@
   <div class="field_txt">
     <%= @payment_policy.description %>&nbsp;
   </div>
-
   <div class="field">
     Formas de Pago:   
   </div>
@@ -65,7 +52,7 @@
       <% @payment_form_list.each do |f| %>
         <% if p == f.id %><%= f.name %><br><% end %>
       <% end %>
-    <% end %>
+    <% end %>&nbsp;
   </div>
 
   <div class="field">

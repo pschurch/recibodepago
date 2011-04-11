@@ -15,14 +15,6 @@
    <%= f.collection_select :collection_type_id, CollectionType.find(:all, :conditions => {:state => true}, :order => 'name'), :id, :name %>
   </div>
   <div class="field">
-    Interés Mora:<br>
-    <%= f.text_field :arrear_interest %>
-  </div>
-  <div class="field">
-    Interés Plazo:<br>
-    <%= f.text_field :term_interest %>
-  </div>
-  <div class="field">
     Honorarios:<br>
     <%= f.text_field :fee %>
   </div>
