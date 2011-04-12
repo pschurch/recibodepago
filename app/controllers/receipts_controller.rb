@@ -9,10 +9,20 @@ class ReceiptsController < ApplicationController
     @titulo = "Crear Recibo de Pago"
     grupo = current_user.group_id
     @tickets = Ticket.where("state='creado' OR state='modificado'").where("group_id=?", grupo).order(sort_column + ' ' + sort_direction)  
-    @msg = params[:msg]
+    if not params[:msg].nil?
+      case params[:msg]
+        when "1"
+        @msg = "Debe seleccionar al menos un Ticket"
+        when "2"
+        @msg = "No se puede crear un mismo Recibo de Pago para diferentes Mandantes" 
+        when "3"
+        @msg = "No se puede crear un mismo Recibo de Pago para diferentes Productos" 
+        when "4"
+        @msg = "No se puede crear un mismo Recibo de Pago para diferentes Tipos de Cobranza" 
+      end
+    end
   end
 
-  # GET /receipts - index.html.erb
   def index
     deny_access unless (current_user.profile_id == 1)
     @titulo = "Listado de Recibos de Pago"
@@ -26,7 +36,6 @@ class ReceiptsController < ApplicationController
     end
   end
 
-  # GET /receipts/1 - show.html.erb
   def show
     @titulo = "Ver Recibo de Pago"
     @receipt = Receipt.find(params[:id])
@@ -36,14 +45,30 @@ class ReceiptsController < ApplicationController
   #-------------- new2.html.erb ------------------
   def new2
     if params[:ticket_ids].nil?
-      @tickets = Ticket.all
-      redirect_to(:action => "create_rp", :msg => "Debe seleccionar al menos un Ticket" )
+      #@tickets = Ticket.all
+      redirect_to(:action => "create_rp", :msg => "1" ) #"Debe seleccionar al menos un Ticket"
     else
+      session[:ticket_ids] = params[:ticket_ids]
+      @tickets = Ticket.find(params[:ticket_ids])
+      @mandante = @tickets.first.principal_id
+      @producto = @tickets.first.product_id
+      @tipo_cobranza = @tickets.first.collection_type_id
+      @tickets.each do |a|
+        if not(a.principal_id == @mandante)
+          @msg =  "2"  #"No se puede crear un solo Recibo de Pago para diferentes Mandantes"
+        elsif not(a.product_id == @producto)
+          @msg = "3"  #"No se puede crear un solo Recibo de Pago para diferentes Productos"
+        elsif not(a.collection_type_id == @tipo_cobranza)
+          @msg = "4"  #"No se puede crear un solo Recibo de Pago para diferentes Tipos de Cobranza"
+        end
+      end
+      if not @msg.nil?
+        redirect_to(:action => "create_rp", :msg => @msg )
+      end
       @titulo = "Crear Recibo de Pago-new"
       session[:receipt_step] = nil
       @receipt = Receipt.new
-      session[:ticket_ids] = params[:ticket_ids]
-      @tickets = Ticket.find(params[:ticket_ids])
+      session[:nuevo] = true
       @total_rp = 0
       @tickets.each do |a|
         if a.adjust.nil?
@@ -59,7 +84,21 @@ class ReceiptsController < ApplicationController
   def create
     @titulo = "Crear Recibo de Pago-create"
     @tickets = Ticket.find(session[:ticket_ids])
-    @receipt = Receipt.new(params[:receipt])  
+
+    @payment_form_list = PaymentForm.find(:all)
+
+    for p in PaymentPolicy.where("principal_id =?", @tickets.first.principal_id).where("product_id=?", @tickets.first.product_id).where("collection_type_id =?", @tickets.first.collection_type_id) 
+      @payment_policy_id = p.id
+    end
+    
+#SELECT name FROM payment_forms, payment_forms_payment_policies where payment_forms.id = payment_forms_payment_policies.payment_form_id and payment_forms_payment_policies.payment_policy_id = 22
+
+
+    @receipt = Receipt.new(params[:receipt]) 
+    if session[:nuevo]
+      10.times { @receipt.payment_details.build }
+      session[:nuevo] = false
+    end
     @receipt.current_step = session[:receipt_step]  
     for a in PaymentAgreement.where("id =?", @receipt.payment_agreement_id) 
       @payment_agreement = a.name
@@ -74,7 +113,7 @@ class ReceiptsController < ApplicationController
     end
     if params[:next_button]     
       @receipt.next_step  
-    elsif params[:rec_button]  
+    elsif params[:rec_button] 
       @receipt.save 
     end  
     session[:receipt_step] = @receipt.current_step  

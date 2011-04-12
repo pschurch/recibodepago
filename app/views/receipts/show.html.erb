@@ -74,42 +74,17 @@
       <th>N° Documento</th>
       <th>Monto</th>
     </tr>
+    <% for d in @receipt.payment_details %>  
+    <% if not d.amount.nil? %>
     <tr>
-      <td><div class="sh"><%= @receipt.formapago1 %>&nbsp;</div></td>
-      <td><div class="n"><%= @receipt.emisor1 %>&nbsp;</div></td>
-      <td><div class="sh"><%= @receipt.docnum1 %>&nbsp;</div></td>
-      <td><div class="sh"><%= @receipt.monto1 %>&nbsp;</div></td>
+      <td><div class="sh"><%= h d.payment_form %>&nbsp;</div></td>
+      <td><div class="n"><%= h d.emitter %>&nbsp;</div></td>
+      <td><div class="sh"><%= h d.doc_num %>&nbsp;</div></td>
+      <td><div class="sh"><%= h number_to_currency(d.amount, :precision => 0, :delimiter => ".") %>
+&nbsp;</div></td>
     </tr>
-    <tr>
-      <td><div><%= @receipt.formapago2 %>&nbsp;</div></td>
-      <td><div><%= @receipt.emisor2 %>&nbsp;</div></td>
-      <td><div class="sh"><%= @receipt.docnum2 %>&nbsp;</div></td>
-      <td><div class="sh"><%= @receipt.monto2 %>&nbsp;</div></td>
-    </tr>
-    <tr>
-      <td><div><%= @receipt.formapago3 %>&nbsp;</div></td>
-      <td><div><%= @receipt.emisor3 %>&nbsp;</div></td>
-      <td><div class="sh"><%= @receipt.docnum3 %>&nbsp;</div></td>
-      <td><div class="sh"><%= @receipt.monto3 %>&nbsp;</div></td>
-    </tr>
-    <tr>
-      <td><div><%= @receipt.formapago4 %>&nbsp;</div></td>
-      <td><div><%= @receipt.emisor4 %>&nbsp;</div></td>
-      <td><div class="sh"><%= @receipt.docnum4 %>&nbsp;</div></td>
-      <td><div class="sh"><%= @receipt.monto4 %>&nbsp;</div></td>
-    </tr>
-    <tr>
-      <td><div><%= @receipt.formapago5 %>&nbsp;</div></td>
-      <td><div><%= @receipt.emisor5 %>&nbsp;</div></td>
-      <td><div class="sh"><%= @receipt.docnum5 %>&nbsp;</div></td>
-      <td><div class="sh"><%= @receipt.monto5 %>&nbsp;</div></td>
-    </tr>
-    <tr>
-      <td><div><%= @receipt.formapago6 %>&nbsp;</div></td>
-      <td><div><%= @receipt.emisor6 %>&nbsp;</div></td>
-      <td><div class="sh"><%= @receipt.docnum6 %>&nbsp;</div></td>
-      <td><div class="sh"><%= @receipt.monto6 %>&nbsp;</div></td>
-    </tr>
+    <% end %>
+    <% end %>  
     <tr>
       <td colspan=2></td>
       <th>Total Pagado:</th>

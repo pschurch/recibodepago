@@ -59,7 +59,7 @@
   </tr>
   </table>
 
-<% if @receipt.state!="solicita gestion terreno" %>
+  <% if @receipt.state!="solicita gestion terreno" %>
   <div class="subtit">
     Detalle del Pago:
   </div>
@@ -70,50 +70,16 @@
       <th width="118">N° Documento</th>
       <th>Monto</th>
     </tr>
-    <tr>
-      <td><%= f.collection_select :formapago1, PaymentForm.where('state = true').order('name ASC'), :name, :name, options ={:prompt => "- Seleccione -"} %></td>
-      <td><%= f.text_field :emisor1, :size => "35" %></td>
-      <td><%= f.text_field :docnum1, :size => "16" %></td>
-      <td><%= f.text_field :monto1, :size => "8" %></td>
-    </tr>
-    <tr>
-      <td><%= f.collection_select :formapago2, PaymentForm.where('state = true').order('name ASC'), :name, :name, options ={:prompt => "- Seleccione -"} %></td>
-      <td><%= f.text_field :emisor2, :size => "35" %></td>
-      <td><%= f.text_field :docnum2, :size => "16" %></td>
-      <td><%= f.text_field :monto2, :size => "8" %></td>
-    </tr>
-    <tr>
-      <td><%= f.collection_select :formapago3, PaymentForm.where('state = true').order('name ASC'), :name, :name, options ={:prompt => "- Seleccione -"} %></td>
-      <td><%= f.text_field :emisor3, :size => "35" %></td>
-      <td><%= f.text_field :docnum3, :size => "16" %></td>
-      <td><%= f.text_field :monto3, :size => "8" %></td>
-    </tr>
-    <tr>
-      <td><%= f.collection_select :formapago4, PaymentForm.where('state = true').order('name ASC'), :name, :name, options ={:prompt => "- Seleccione -"} %></td>
-      <td><%= f.text_field :emisor4, :size => "35" %></td>
-      <td><%= f.text_field :docnum4, :size => "16" %></td>
-      <td><%= f.text_field :monto4, :size => "8" %></td>
-    </tr>
-    <tr>
-      <td><%= f.collection_select :formapago5, PaymentForm.where('state = true').order('name ASC'), :name, :name, options ={:prompt => "- Seleccione -"} %></td>
-      <td><%= f.text_field :emisor5, :size => "35" %></td>
-      <td><%= f.text_field :docnum5, :size => "16" %></td>
-      <td><%= f.text_field :monto5, :size => "8" %></td>
-    </tr>
-    <tr>
-      <td><%= f.collection_select :formapago6, PaymentForm.where('state = true').order('name ASC'), :name, :name, options ={:prompt => "- Seleccione -"} %></td>
-      <td><%= f.text_field :emisor6, :size => "35" %></td>
-      <td><%= f.text_field :docnum6, :size => "16" %></td>
-      <td><%= f.text_field :monto6, :size => "8" %></td>
-    </tr>
-    <tr>
-      <td colspan=2></td>
-      <th>Total Pagado:</th>
-      <td><div class="n"><%= f.text_field :total_paid, :size => "8", :value => @total_paid, :readonly => true %></div></td>
-    </tr>
+    <% f.fields_for :payment_details do |builder| %>  
+      <tr>
+        <td><%= builder.collection_select :payment_form, PaymentForm.where('state = true').order('name ASC'), :name, :name, options ={:prompt => "- Seleccione -"} %></td>
+        <td><%= builder.collection_select :emitter, Emitter.where('state = true').order('name ASC'), :name, :name, options ={:prompt => "- Seleccione -"} %></td>
+        <td><%= builder.text_field :doc_num, :size => "16" %></td>
+        <td><%= builder.text_field :amount, :size => "8" %></td>
+      </tr>
+    <% end %>  
     </table>
-<% end %>
-
+  <% end %>
 
   <div class="actions">
   <% if @receipt.state=="solicita gestion terreno" %>

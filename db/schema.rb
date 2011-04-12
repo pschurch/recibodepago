@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110411132123) do
+ActiveRecord::Schema.define(:version => 20110411184244) do
 
   create_table "assignments", :force => true do |t|
     t.string   "state"
@@ -90,6 +90,16 @@ ActiveRecord::Schema.define(:version => 20110411132123) do
     t.string   "name"
     t.text     "description"
     t.boolean  "state",       :default => true
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "payment_details", :force => true do |t|
+    t.integer  "receipt_id"
+    t.string   "payment_form"
+    t.string   "emitter"
+    t.string   "doc_num"
+    t.integer  "amount"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -194,30 +204,6 @@ ActiveRecord::Schema.define(:version => 20110411132123) do
     t.string   "cont_telf1"
     t.string   "cont_telf2"
     t.string   "cont_telf3"
-    t.string   "formapago1"
-    t.string   "formapago2"
-    t.string   "formapago3"
-    t.string   "formapago4"
-    t.string   "formapago5"
-    t.string   "formapago6"
-    t.string   "emisor1"
-    t.string   "emisor2"
-    t.string   "emisor3"
-    t.string   "emisor4"
-    t.string   "emisor5"
-    t.string   "emisor6"
-    t.string   "docnum1"
-    t.string   "docnum2"
-    t.string   "docnum3"
-    t.string   "docnum4"
-    t.string   "docnum5"
-    t.string   "docnum6"
-    t.integer  "monto1"
-    t.integer  "monto2"
-    t.integer  "monto3"
-    t.integer  "monto4"
-    t.integer  "monto5"
-    t.integer  "monto6"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

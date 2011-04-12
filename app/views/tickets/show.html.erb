@@ -102,7 +102,7 @@
     <tr>
   <% end %>
 
-  <% if current_user.profile_id==2 OR current_user.profile_id==4 %> <!-- Supervisor o Tesoreria -->
+  <% if current_user.profile_id==2 or current_user.profile_id==4 %> <!-- Supervisor o Tesoreria -->
     <% if @ticket.adjust_mgt %>
       <tr>
         <td colspan=3>Solicita modificación a Gerencia:</td>
@@ -137,7 +137,7 @@
     <% end %>
   <% end %>
 
-  <% if current_user.profile_id==2 OR current_user.profile_id==4 OR current_user.profile_id==6 %> <!-- Supervisor o Tesoreria o Gerencia -->
+  <% if current_user.profile_id==2 or current_user.profile_id==4 or current_user.profile_id==6 %> <!-- Supervisor o Tesoreria o Gerencia -->
     <% if @ticket.state=='anulado' %>
       <tr>
         <td>Fecha anulación:</td><td><div class="sh"><%= @ticket.canceled_time.strftime("%d/%m/%Y") %> </div></td>
