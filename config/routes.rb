@@ -4,6 +4,12 @@ Recibodepago::Application.routes.draw do
   get "supervisor/stmod"
   get "supervisor/stlist"
   get "supervisor/srlist"
+  get "supervisor/sr_recp_cobr"
+  get "supervisor/sr_envio_terreno"
+  get "supervisor/sr_recp_terreno"
+  get "supervisor/sr_rech_terreno"
+  get "supervisor/sr_rend_tesoreria"
+  get "supervisor/sr_rech_tesoreria"
 
   get "finance/ftlist"
   get "finance/frlist"

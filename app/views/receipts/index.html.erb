@@ -1,45 +1,27 @@
 <div class="seccion">
+
 <table><tr><td class="formulario">
 <% form_tag({:controller => :receipts, :action => :index}, :method => :get) do %>
   <table class="display">
   <tr>
     <td>
-      Area:  <%= select_tag('area', options_for_select([['Todas'], ['Cobranza'], ['Terreno'], ['Supervisor']], :selected => @area))%>
+      Area: <%= select_tag('area', options_for_select([['Todas'], ['Cobranza'], ['Terreno'], ['Supervisor']], :selected => @area))%>
     </td>
     <td>
       Estado: <%= select_tag('estado', 
       options_for_select([['Todos'], 
                           ['abierto'], 
-                          ['cerrado por cobranza'], 
                           ['solicita gestion terreno'], 
-                          ['rinde cobranza a supervisor'], 
-                          ['acepta cobranza rechazo supervisor'], 
-
-                          ['envia a terreno'], 
-                          ['acepta supervisor rechazo terreno'], 
-                          ['recepciona supervisor a terreno'], 
-                          ['recepciona supervisor a cobranza'], 
-                          ['rechaza supervisor a cobranza'], 
-                          ['cerrado por supervisor'], 
-
-                          ['recepciona terreno'], 
-                          ['rechaza terreno'], 
-                          ['rinde terreno a supervisor'], 
-                          ['acepta terreno rechazo supervisor'] ], :selected => @estado))%>
+                          ['enviado a terreno'], 
+                          ['rendido'],   
+                          ['recepcionado'],   
+                          ['rechazado'],   
+                          ['aceptado rechazo'],   
+                          ['cerrado'],    
+                          ['anulado']  ], :selected => @estado))%>
     </td>
     <td rowspan=2>
       <div class="boton"><%= submit_tag "Filtrar", :state => 'nil' %></div>
-    </td>
-  </tr>  
-  <tr>
-    <td colspan=2>
-      Rango de Fechas: 
-       <%= text_field_tag :f3 %> - 
-       <%= text_field_tag :f4  %> 
-       <!-- <%= text_field_tag :f2, :size => "10", :value => Time.now.strftime("%d-%m-%Y")  %> -->
-      <br>
-      &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
-      dd/mm/aaaa Ej.: <%= @t.strftime("%d") %>/<%= @t.strftime("%m") %>/<%= @t.strftime("%Y") %>
     </td>
   </tr>  
   </table>
@@ -53,6 +35,7 @@
     <th>N° RP</th>
     <th>Fecha de Pago</th>
     <th>Estado</th>
+    <th>Area</th>
     <th>N° Ticket</th>
     <th>Rut</th>
     <th>Identificador</th>
@@ -68,23 +51,45 @@
   </tr>  
   <% else %>
     <% @receipts.each do |receipt| %>
-      <% cont=true %>
-      <%  for a in Ticket.where("receipt_id=?", receipt.id) %>
-        <tr>
-          <td><% if cont==true %><%= receipt.id %><% end %></td>
-          <td><% if cont==true %><%= receipt.date_r.strftime("%d-%m-%Y") %><% end %></td>
-          <td><% if cont==true %><%= receipt.state %><% end %></td>
-          <td><%= a.id %></td>
-          <td><%= a.rut %> - <%= a.digit %></td>
-          <td><%= a.cas_id %></td>
-          <td><%= a.principal.name %></td>
-          <td><%= a.product.name %></td>
-          <td><%= number_to_currency(a.capital, :precision => 0, :delimiter => ".") %></td>
-          <td><%= number_to_currency(receipt.total_paid, :precision => 0, :delimiter => ".") %>
-          <td><% if cont==true %><%= link_to 'Ver', receipt %><% end %></td>
-        </tr>
-        <% cont=false %>
-      <% end %>
+      <% @tickets = Ticket.where("receipt_id=?", receipt.id) %>
+      <tr>
+        <td><%= receipt.id %></td>
+        <td><%= receipt.date_r.strftime("%d/%m/%Y") %></td>
+        <td><%= receipt.state %></td>
+        <td><%= receipt.area %></td>
+        <td>
+          <% @tickets.each  do |p| %>
+          <%= p.id %><br>
+          <% end %>
+        </td>
+        <td>
+          <% @tickets.each  do |p| %>
+          <%= p.rut %>-<%= p.digit %><br>
+          <% end %>
+        </td>
+        <td>
+          <% @tickets.each  do |p| %>
+          <%= p.cas_id %><br>
+          <% end %>
+        </td>
+        <td><% stop=false %>
+          <% @tickets.each  do |p| %>
+          <%= p.principal_name unless stop%><% stop=true %>
+          <% end %>
+        </td>
+        <td><% stop=false %>
+          <% @tickets.each  do |p| %>
+          <%= p.product_name unless stop%><% stop=true %>
+          <% end %>
+        </td>
+        <td>
+          <% @tickets.each  do |p| %>
+          <%= number_to_currency(p.capital, :precision => 0, :delimiter => ".") %><br>
+          <% end %>
+        </td>
+        <td><%= number_to_currency(receipt.total_paid, :precision => 0, :delimiter => ".") unless receipt.total_paid==0 %>
+        <td><%= link_to 'Ver', receipt %></td>
+      </tr>
     <% end %>
   <% end %>
 </table>

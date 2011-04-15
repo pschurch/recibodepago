@@ -5,8 +5,17 @@
   <%= render "tickets" %>
   <%= render "#{@receipt.current_step}_step", :f => f %>
 
-  <div class="actions"><%= f.submit "Continuar", :name => "next_button" unless @receipt.last_step?%></div>  
-  <div class="actions"><%= f.submit "Grabar", :name => "rec_button" unless @receipt.first_step?%></div>
+  <div class="actions"><%= f.submit "Continuar", :name => "next_button" unless @receipt.last_step?%></div>
+
+  <!-- Solo para Tickets sin Detalle, Acuerdos de Pago = 3,4-->
+  <% if (@receipt.payment_agreement_id==3 or @receipt.payment_agreement_id==4) %>
+    <div class="actions"><%= f.submit "Grabar", :name => "rec_button" unless @receipt.first_step?%></div>
+  <% end %>
+  <!-- Solo para Tickets con Detalle, Acuerdos de Pago = 1,2,5,6  -->
+  <% if (@receipt.payment_agreement_id==1 or @receipt.payment_agreement_id==2 or @receipt.payment_agreement_id==5 or @receipt.payment_agreement_id==6) %>
+    <div class="actions"><%= f.submit "Cerrar Recibo de Pago", :name => "rec_button" unless @receipt.first_step?%></div>
+  <% end %>
+
 <% end %>
 </td></tr></table>
 </div>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110411184244) do
+ActiveRecord::Schema.define(:version => 20110415121553) do
 
   create_table "assignments", :force => true do |t|
     t.string   "state"
@@ -18,6 +18,9 @@ ActiveRecord::Schema.define(:version => 20110411184244) do
     t.integer  "principal_id"
     t.integer  "collection_type_id"
     t.integer  "product_id"
+    t.integer  "group_id"
+    t.integer  "ticket_id"
+    t.integer  "receipt_id"
     t.string   "name"
     t.string   "rut"
     t.string   "digit"
@@ -29,9 +32,6 @@ ActiveRecord::Schema.define(:version => 20110411184244) do
     t.date     "expir_date"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "group_id"
-    t.integer  "ticket_id"
-    t.integer  "receipt_id"
   end
 
   create_table "cargrups", :force => true do |t|
@@ -47,9 +47,9 @@ ActiveRecord::Schema.define(:version => 20110411184244) do
   create_table "carteras", :force => true do |t|
     t.integer  "principal_id"
     t.integer  "product_id"
+    t.boolean  "state",        :default => true
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "state",        :default => true
   end
 
   add_index "carteras", ["principal_id"], :name => "index_carteras_on_principal_id"
@@ -94,24 +94,14 @@ ActiveRecord::Schema.define(:version => 20110411184244) do
     t.datetime "updated_at"
   end
 
-  create_table "payment_details", :force => true do |t|
-    t.integer  "receipt_id"
-    t.string   "payment_form"
-    t.string   "emitter"
-    t.string   "doc_num"
-    t.integer  "amount"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "payment_forms", :force => true do |t|
     t.string   "name"
     t.text     "description"
     t.boolean  "state",       :default => true
-    t.datetime "created_at"
-    t.datetime "updated_at"
     t.boolean  "emitter",     :default => false
     t.boolean  "num_doc",     :default => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "payment_forms_payment_policies", :id => false, :force => true do |t|
@@ -169,7 +159,7 @@ ActiveRecord::Schema.define(:version => 20110411184244) do
     t.string   "state",                  :default => "abierto"
     t.integer  "payment_agreement_id"
     t.integer  "user_id"
-    t.integer  "comuna_id"
+    t.string   "comuna"
     t.string   "payment_agreement_name"
     t.date     "date_r"
     t.integer  "total_pay"
@@ -206,6 +196,80 @@ ActiveRecord::Schema.define(:version => 20110411184244) do
     t.string   "cont_telf3"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "formapago1"
+    t.string   "formapago2"
+    t.string   "formapago3"
+    t.string   "formapago4"
+    t.string   "formapago5"
+    t.string   "formapago6"
+    t.string   "formapago7"
+    t.string   "formapago8"
+    t.string   "formapago9"
+    t.string   "formapago10"
+    t.string   "formapago11"
+    t.string   "formapago12"
+    t.string   "formapago13"
+    t.string   "formapago14"
+    t.string   "formapago15"
+    t.string   "formapago16"
+    t.string   "formapago17"
+    t.string   "formapago18"
+    t.string   "emisor1"
+    t.string   "emisor2"
+    t.string   "emisor3"
+    t.string   "emisor4"
+    t.string   "emisor5"
+    t.string   "emisor6"
+    t.string   "emisor7"
+    t.string   "emisor8"
+    t.string   "emisor9"
+    t.string   "emisor10"
+    t.string   "emisor11"
+    t.string   "emisor12"
+    t.string   "emisor13"
+    t.string   "emisor14"
+    t.string   "emisor15"
+    t.string   "emisor16"
+    t.string   "emisor17"
+    t.string   "emisor18"
+    t.string   "docnum1"
+    t.string   "docnum2"
+    t.string   "docnum3"
+    t.string   "docnum4"
+    t.string   "docnum5"
+    t.string   "docnum6"
+    t.string   "docnum7"
+    t.string   "docnum8"
+    t.string   "docnum9"
+    t.string   "docnum10"
+    t.string   "docnum11"
+    t.string   "docnum12"
+    t.string   "docnum13"
+    t.string   "docnum14"
+    t.string   "docnum15"
+    t.string   "docnum16"
+    t.string   "docnum17"
+    t.string   "docnum18"
+    t.integer  "monto1"
+    t.integer  "monto2"
+    t.integer  "monto3"
+    t.integer  "monto4"
+    t.integer  "monto5"
+    t.integer  "monto6"
+    t.integer  "monto7"
+    t.integer  "monto8"
+    t.integer  "monto9"
+    t.integer  "monto10"
+    t.integer  "monto11"
+    t.integer  "monto12"
+    t.integer  "monto13"
+    t.integer  "monto14"
+    t.integer  "monto15"
+    t.integer  "monto16"
+    t.integer  "monto17"
+    t.integer  "monto18"
+    t.string   "substate"
+    t.string   "area"
   end
 
   create_table "tickets", :force => true do |t|
@@ -246,8 +310,6 @@ ActiveRecord::Schema.define(:version => 20110411184244) do
     t.boolean  "adjust_mgt"
     t.text     "adjust_mgt_des"
     t.string   "canceled_by"
-    t.datetime "created_at"
-    t.datetime "updated_at"
     t.integer  "assignment_id"
     t.datetime "adjust_sup_time"
     t.datetime "adjust_mgt_time"
@@ -257,6 +319,8 @@ ActiveRecord::Schema.define(:version => 20110411184244) do
     t.string   "adjust_by"
     t.text     "adjust_obs"
     t.integer  "new_total_pay"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "users", :force => true do |t|

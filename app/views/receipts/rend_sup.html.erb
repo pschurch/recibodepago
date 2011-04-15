@@ -1,5 +1,36 @@
 <div class="seccion">
-
+<table>
+  <tr>
+    <th>Preparado Por</th>
+    <th>N° RP</th>
+    <th>Rut</th>
+    <th>Identificador</th>
+    <th>Mandante</th>
+    <th>Producto</th>
+    <th>Fecha</th>
+    <th>T.Pagado</th>
+    <th>selecc.</th>
+    <th></th>
+  </tr>
+  <% if @receipts.empty? %> 
+    <tr><td colspan=10>No se han encontrado Recibos de Pago para ser Rendidos a Supervisor.</td></tr>
+  <% else %>
+  <% @receipts.each do |receipt| %>
+  <tr>
+    <td><%= receipt.user_name %></td>
+    <td><%= receipt.id %></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td><%= link_to 'Ver', receipt %></td>
+  </tr>
+  <% end %>
+<% end %>
+</table>
 </div>
 
 <div class="botones">

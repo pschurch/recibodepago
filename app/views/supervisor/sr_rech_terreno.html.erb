@@ -1,0 +1,64 @@
+<div class="seccion">
+  <div class="subtit">
+    Recibos de Pago en Espera - Rechazados por Terreno:
+  </div>
+  <table>
+  <tr>
+    <th>N° RP</th>
+    <th>Rut</th>
+    <th>Mandante</th>
+    <th>Producto</th>
+    <th>Identificador</th>
+    <th>Capital</th>
+    <th>Fecha</th>
+    <th>selecc.</th>
+    <th></th>
+  </tr>
+  <% @receipts.each do |receipt| %>
+  <tr>
+    <td><%= receipt.id %></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td><%= link_to 'Ver', receipt %></td>
+  </tr>
+  <% end %>
+  </table>
+
+
+  <div class="subtit">
+    &nbsp;<p>Recibos de Pago Aceptados - Rechazados por Terreno:
+  </div>
+  <table>
+  <tr>
+    <th>N° RP</th>
+    <th>Rut</th>
+    <th>Mandante</th>
+    <th>Producto</th>
+    <th>Identificador</th>
+    <th>Capital</th>
+    <th>Fecha</th>
+    <th>selecc.</th>
+    <th></th>
+  </tr>
+  <% @receipts.each do |receipt| %>
+  <tr>
+    <td><%= receipt.id %></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td><%= link_to 'Ver', receipt %></td>
+  </tr>
+  <% end %>
+  </table>
+</div>
+
+<div class="botones">
+  <%= link_to 'Página Principal', :controller => "sessions", :action => 'sup' %>
+</botones>

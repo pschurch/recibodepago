@@ -1,7 +1,7 @@
 class PaymentDetail < ActiveRecord::Base
   belongs_to :receipt
 
-  validates_numericality_of :amount, :only_integer => true, :message => "(Monto): el valor debe ser numerico.", :allow_blank => true
+  validates_numericality_of :amount, :only_integer => true, :message => "(Monto): el valor debe ser un numero entero.", :allow_blank => true
   validate :detalle_correcto
 
   def detalle_correcto

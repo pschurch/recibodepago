@@ -4,7 +4,8 @@ class CreatePaymentForms < ActiveRecord::Migration
       t.string :name
       t.text :description
       t.boolean :state, :default => true
-
+      t.boolean :emitter, :default => false 
+      t.boolean :num_doc, :default => false
       t.timestamps
     end
   end

@@ -11,7 +11,7 @@ class SupervisorController < ApplicationController
 
   def stlist
     @titulo = "Listado de Tickets"
-    @principals = Principal.all
+    @principals = Principal.where("state=true")
     if (params[:f1].nil? or params[:f1]=='0') and (params[:f2].nil? or params[:f2]=='t')
       @tickets = Ticket.where("state='creado' OR state='anulado' OR state='pms' OR state='pmg' OR state='modificado' OR state='rc'").where("group_id=?", current_user.group_id)
     elsif (params[:f1]=='0') and (not params[:f2]=='t')       
@@ -21,6 +21,31 @@ class SupervisorController < ApplicationController
     elsif (not params[:f1]=='0') and (not params[:f2]=='t')
       @tickets = Ticket.where("principal_id=?", params[:f1].to_i).where("state=?", params[:f2]).where("group_id=?", current_user.group_id)
     end
+  end
+
+  def sr_recp_cobr
+    @titulo = "Recepcionar Recibos de Pago de Cobranza"
+    @receipts = Receipt.all
+  end
+  def sr_envio_terreno
+    @titulo = "Enviar Recibos de Pago a Terreno"
+    @receipts = Receipt.all
+  end
+  def sr_recp_terreno
+    @titulo = "Recepcionar Recibos de Pago de Terreno"
+    @receipts = Receipt.all
+  end
+  def sr_rech_terreno
+    @titulo = "Recibos de Pago Rechazador por Terreno"
+    @receipts = Receipt.all
+  end
+  def sr_rend_tesoreria
+    @titulo = "Rendir Recibos de Pago a Tesoreria"
+    @receipts = Receipt.all
+  end
+  def sr_rech_tesoreria
+    @titulo = "Recibos de Pago Rechazador por Tesoreria"
+    @receipts = Receipt.all
   end
 
   def srlist

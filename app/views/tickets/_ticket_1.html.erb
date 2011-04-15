@@ -49,7 +49,7 @@
   </tr>
   <tr>
     <td>Gastos Envío:</td><td><%= f.text_field :shipping_costs, :size => "8", :value => 0 %></td>
-    <td>Vencimiento:</td><td><%= f.text_field :expir_date, :size => "37", :value => @caso.expir_date.strftime("%d-%m-%Y") %></td>
+    <td>Vencimiento:</td><td><%= f.text_field :expir_date, :size => "37", :value => @caso.expir_date.strftime("%d/%m/%Y") %></td>
   </tr>
   <tr>
     <td>Gastos Judiciales:</td><td><%= f.text_field :legal_costs, :size => "8", :value => 0 %></td>

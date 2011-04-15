@@ -1,8 +1,8 @@
 <div class="seccion">
   <div class="subtit">
-    Recibos de Pago Rechazados por Supervisor, en espera a ser Aceptados:
+    Recibos de Pago para enviar a Terreno:
   </div>
-<table>
+  <table>
   <tr>
     <th>Preparado Por</th>
     <th>N° RP</th>
@@ -11,14 +11,12 @@
     <th>Mandante</th>
     <th>Producto</th>
     <th>Fecha</th>
-    <th>T.Pagado</th>
+    <th>Capital</th>
+    <th>Imprs.</th>
     <th>selecc.</th>
     <th></th>
   </tr>
-  <% if @receipts1.empty? %> 
-    <tr><td colspan=10>No se han encontrado Recibos de Pago para ser Aceptados.</td></tr>
-  <% else %>
-  <% @receipts1.each do |receipt| %>
+  <% @receipts.each do |receipt| %>
   <tr>
     <td><%= receipt.user_name %></td>
     <td><%= receipt.id %></td>
@@ -29,16 +27,17 @@
     <td></td>
     <td></td>
     <td></td>
+    <td></td>
     <td><%= link_to 'Ver', receipt %></td>
   </tr>
   <% end %>
-<% end %>
-</table>
+  </table>
+
 
   <div class="subtit">
-    &nbsp;<p>Recibos de Pago Rechazados por Supervisor, Aceptados por Ejecutivo Cobranza:
+    &nbsp;<p>Recibos de Pago enviados a Terreno, en espera de Recepci&oacute;nados:
   </div>
-<table>
+  <table>
   <tr>
     <th>Preparado Por</th>
     <th>N° RP</th>
@@ -47,13 +46,11 @@
     <th>Mandante</th>
     <th>Producto</th>
     <th>Fecha</th>
-    <th>T.Pagado</th>
-    <th colspan=2></th>
+    <th>Capital</th>
+    <th>Imprs.</th>
+    <th></th>
   </tr>
-  <% if @receipts2.empty? %> 
-    <tr><td colspan=10>No se han encontrado Recibos de Pago Rechazados por Supervisor y Aceptados.</td></tr>
-  <% else %>
-  <% @receipts2.each do |receipt| %>
+  <% @receipts.each do |receipt| %>
   <tr>
     <td><%= receipt.user_name %></td>
     <td><%= receipt.id %></td>
@@ -63,16 +60,13 @@
     <td></td>
     <td></td>
     <td></td>
+    <td></td>
     <td><%= link_to 'Ver', receipt %></td>
-    <td><%= link_to 'Editar', edit_receipt_path(receipt) %></td>
   </tr>
   <% end %>
-<% end %>
-</table>
-
+  </table>
 </div>
 
 <div class="botones">
-  <%= render 'shared/pp_ejc_dsg' %>
-</div>
-
+  <%= link_to 'Página Principal', :controller => "sessions", :action => 'sup' %>
+</botones>

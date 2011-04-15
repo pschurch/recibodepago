@@ -10,5 +10,4 @@ class CreatePaymentFormsPaymentPolicies < ActiveRecord::Migration
   def self.down
     drop_table :payment_forms_payment_policies
   end
-
 end

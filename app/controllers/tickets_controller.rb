@@ -111,6 +111,7 @@ class TicketsController < ApplicationController
             @ticket.update_attribute 'adjust_sup_time', Time.now
           end
           if not session[:caso].nil?
+            @ticket.update_attribute 'assignment_id', @caso.id 
             @caso.update_attribute 'state', "ticket_creado"
             @caso.update_attribute 'ticket_id', @ticket.id
             session[:caso] = nil

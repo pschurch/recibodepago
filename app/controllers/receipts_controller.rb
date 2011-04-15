@@ -27,12 +27,18 @@ class ReceiptsController < ApplicationController
     deny_access unless (current_user.profile_id == 1)
     @titulo = "Listado de Recibos de Pago"
     @t=Time.now
+
     params[:area].nil? ? @area = 'Todas' : @area = params[:area]
     params[:estado].nil? ? @estado = 'Todos' : @estado = params[:estado]
-    if (params[:estado]=='Todos' or params[:estado].nil? )
+
+    if (@area=='Todas' and @estado=='Todos')
       @receipts = Receipt.all
+    elsif (@area=='Todas' and @estado!='Todos')
+      @receipts = Receipt.where("state=?", @estado)
+    elsif (@area!='Todas' and @estado=='Todos')
+      @receipts = Receipt.where("area=?", @area)
     else
-      @receipts = Receipt.where("state=?", params[:estado])
+      @receipts = Receipt.where("area=?", @area).where("state=?", @estado)
     end
   end
 
@@ -84,21 +90,7 @@ class ReceiptsController < ApplicationController
   def create
     @titulo = "Crear Recibo de Pago-create"
     @tickets = Ticket.find(session[:ticket_ids])
-
-    @payment_form_list = PaymentForm.find(:all)
-
-    for p in PaymentPolicy.where("principal_id =?", @tickets.first.principal_id).where("product_id=?", @tickets.first.product_id).where("collection_type_id =?", @tickets.first.collection_type_id) 
-      @payment_policy_id = p.id
-    end
-    
-#SELECT name FROM payment_forms, payment_forms_payment_policies where payment_forms.id = payment_forms_payment_policies.payment_form_id and payment_forms_payment_policies.payment_policy_id = 22
-
-
-    @receipt = Receipt.new(params[:receipt]) 
-    if session[:nuevo]
-      10.times { @receipt.payment_details.build }
-      session[:nuevo] = false
-    end
+    @receipt = Receipt.new(params[:receipt])  
     @receipt.current_step = session[:receipt_step]  
     for a in PaymentAgreement.where("id =?", @receipt.payment_agreement_id) 
       @payment_agreement = a.name
@@ -113,13 +105,35 @@ class ReceiptsController < ApplicationController
     end
     if params[:next_button]     
       @receipt.next_step  
-    elsif params[:rec_button] 
+    elsif params[:rec_button]  
       @receipt.save 
     end  
     session[:receipt_step] = @receipt.current_step  
     if @receipt.new_record?  
       render :action => "new2"  
     else 
+      if not session[:tickets].nil?
+        @total_paid = 0
+        @total_paid = (not @receipt.monto1.nil?) ? @total_paid + @receipt.monto1 : @total_paid
+        @total_paid = (not @receipt.monto2.nil?) ? @total_paid + @receipt.monto2 : @total_paid
+        @total_paid = (not @receipt.monto3.nil?) ? @total_paid + @receipt.monto3 : @total_paid
+        @total_paid = (not @receipt.monto4.nil?) ? @total_paid + @receipt.monto4 : @total_paid
+        @total_paid = (not @receipt.monto5.nil?) ? @total_paid + @receipt.monto5 : @total_paid
+        @total_paid = (not @receipt.monto6.nil?) ? @total_paid + @receipt.monto6 : @total_paid
+        @total_paid = (not @receipt.monto7.nil?) ? @total_paid + @receipt.monto7 : @total_paid
+        @total_paid = (not @receipt.monto8.nil?) ? @total_paid + @receipt.monto8 : @total_paid
+        @total_paid = (not @receipt.monto9.nil?) ? @total_paid + @receipt.monto9 : @total_paid
+        @total_paid = (not @receipt.monto10.nil?) ? @total_paid + @receipt.monto10 : @total_paid
+        @total_paid = (not @receipt.monto11.nil?) ? @total_paid + @receipt.monto11 : @total_paid
+        @total_paid = (not @receipt.monto12.nil?) ? @total_paid + @receipt.monto12 : @total_paid
+        @total_paid = (not @receipt.monto13.nil?) ? @total_paid + @receipt.monto13 : @total_paid
+        @total_paid = (not @receipt.monto14.nil?) ? @total_paid + @receipt.monto14 : @total_paid
+        @total_paid = (not @receipt.monto15.nil?) ? @total_paid + @receipt.monto15 : @total_paid
+        @total_paid = (not @receipt.monto16.nil?) ? @total_paid + @receipt.monto16 : @total_paid
+        @total_paid = (not @receipt.monto17.nil?) ? @total_paid + @receipt.monto17 : @total_paid
+        @total_paid = (not @receipt.monto18.nil?) ? @total_paid + @receipt.monto18 : @total_paid
+        @receipt.update_attribute 'total_paid', @total_paid  
+      end
       @receipt.update_attribute 'group_id', current_user.group_id
       @tickets.each do |a|
         a.update_attribute 'receipt_id', @receipt.id
@@ -131,45 +145,17 @@ class ReceiptsController < ApplicationController
         end
       end
       session[:tickets_ids] = nil
-      if @receipt.payment_agreement_id==3 # Gestiona Eje Cobranza
+      @receipt.update_attribute 'area', 'Cobranza'
+      if (@receipt.payment_agreement_id==3) # Gestiona Eje Cobranza 
         redirect_to(@receipt, :notice => 'El Recibo de Pago se ha creado exitosamente y se encuentra listo para ser impreso.') 
-      elsif @receipt.payment_agreement_id==4 # Gestion en Terreno
+      elsif (@receipt.payment_agreement_id==4  or @receipt.payment_agreement_id==7) # Gestion en Terreno/ Express
         @receipt.update_attribute 'state', 'solicita gestion terreno'
         redirect_to(@receipt, :notice => 'El Recibo de Pago se ha creado exitosamente y se encuentra listo para ser gestionado en terreno.') 
       else
         redirect_to(@receipt, :notice => 'El Recibo de Pago se ha cerrado exitosamente y se encuentra listo para ser rendido.')     
       end
-
-
     end  
-
-    
-#    if not session[:tickets].nil?
-
-#      @total_paid = 0
-#      @total_paid = (not @receipt.monto1.nil?) ? @total_paid + @receipt.monto1 : @total_paid
-#      @total_paid = (not @receipt.monto2.nil?) ? @total_paid + @receipt.monto2 : @total_paid
-#      @total_paid = (not @receipt.monto3.nil?) ? @total_paid + @receipt.monto3 : @total_paid
-#      @total_paid = (not @receipt.monto4.nil?) ? @total_paid + @receipt.monto4 : @total_paid
-#      @total_paid = (not @receipt.monto5.nil?) ? @total_paid + @receipt.monto5 : @total_paid
-#      @total_paid = (not @receipt.monto6.nil?) ? @total_paid + @receipt.monto6 : @total_paid
-#      if @receipt.save
-#
-#        @receipt.update_attribute 'total_paid', @total_paid
-#        @tickets.each do |a|
-#          a.update_attribute 'receipt_id', @receipt.id
-#          a.update_attribute 'state', 'recibo creado'
-#        end
-#        session[:tickets_ids] = nil
-#        redirect_to(@receipt, :notice => '1') 
-#      else
-#        render :action => "new2" 
-#      end
-#    else
-#      render :action => "new2" 
-#    end
   end
-
 
   # GET /receipts/1/edit
   def edit
@@ -181,6 +167,7 @@ class ReceiptsController < ApplicationController
   # PUT /receipts/1
   def update
     @receipt = Receipt.find(params[:id])
+    @tickets = Ticket.where("receipt_id=?", @receipt.id)
     if @receipt.update_attributes(params[:receipt])
       redirect_to(@receipt, :notice => 'El Recibo de Pago se ha actualizado exitosamente.') 
     else
@@ -197,12 +184,14 @@ class ReceiptsController < ApplicationController
   def rp_rechz
     deny_access unless (current_user.profile_id == 1)
     @titulo = "Recibos de Pago Rechazados"
-    @receipts = Receipt.where("state='rechaza supervisor a cobranza' OR state='acepta cobranza rechazo supervisor'").where("group_id=?", current_user.group_id)
+    @receipts1 = Receipt.where("state='rechazado'").where("area='Supervisor'").where("group_id=?", current_user.group_id)
+    @receipts2 = Receipt.where("state='rechaza supervisor a cobranza' OR state='acepta cobranza rechazo supervisor'").where("group_id=?", current_user.group_id)
   end
 
   def rend_sup
     deny_access unless (current_user.profile_id == 1)
     @titulo = "Rendir Recibos de Pago a Supervisor"
+    @receipts = Receipt.where("state='cerrado'").where("group_id=?", current_user.group_id)
   end
 
   def destroy

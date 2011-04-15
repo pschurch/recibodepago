@@ -1,27 +1,36 @@
 <div class="seccion">
 <table>
   <tr>
-    <th><%= sortable "prepared_by", "Preparado por" %></th>
-    <th><%= sortable "id", "N° RP" %></th>
-    <th><%= sortable "rut" %></th>
-    <th><%= sortable "cas_id", "Identificador" %></th>
-    <th><%= sortable "principal_id", "Mandante" %></th>
-    <th><%= sortable "product_id", "Producto" %></th>
+    <th>Preparado por<!-- <%= sortable "prepared_by", "Preparado por" %> --></th>
+    <th>N° RP<!-- <%= sortable "id", "N° RP" %> --></th>
+    <th>Rut<!-- <%= sortable "rut" %> --></th>
+    <th>Identificador<!-- <%= sortable "cas_id", "Identificador" %> --></th>
+    <th>Mandante<!-- <%= sortable "principal_id", "Mandante" %> --></th>
+    <th>Producto<!-- <%= sortable "product_id", "Producto" %> --></th>
     <th></th>
     <th></th>
   </tr>
-<% @receipts.each do |receipt| %>
-  <tr>
-    <td><%= receipt.user_name %></td>
-    <td><%= receipt.id %></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td><%= link_to 'Ver', receipt %></td>
-    <td><%= link_to 'Editar', edit_receipt_path(receipt) %></td>
-  </tr>
-<% end %>
+  <% @receipts.each do |receipt| %>
+    <% @tickets = Ticket.where("receipt_id=?", receipt.id) %>
+    <tr>
+      <td><%= receipt.user_name %></td>
+      <td><%= receipt.id %></td>
+      <td>
+        <% @tickets.each  do |p| %>
+        <%= p.rut %>-<%= p.digit %><br>
+        <% end %>
+      </td>
+      <td>
+        <% @tickets.each  do |p| %>
+        <%= p.cas_id %><br>
+        <% end %>
+      </td>
+      <td><%= @tickets.first.principal_name %></td>
+      <td><%= @tickets.first.product_name %></td>
+      <td><%= link_to 'Ver', receipt %></td>
+      <td><%= link_to 'Editar', edit_receipt_path(receipt) %></td>
+    </tr>
+  <% end %>
 </table>
 </div>
 

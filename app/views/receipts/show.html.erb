@@ -20,7 +20,7 @@
     <td>Total a Pagar: &nbsp;</td><td><div class="sh"><%= number_to_currency(@receipt.total_pay, :precision => 0, :delimiter => ".") %></div></td>
   </tr>
   <tr>
-    <td>Fecha de Pago:</td><td><div class="sh"><%= @receipt.date_r.strftime("%d-%m-%Y") %></div></td>
+    <td>Fecha de Pago:</td><td><div class="sh"><%= @receipt.date_r.strftime("%d/%m/%Y") %></div></td>
   </tr>
   <tr>
     <td>Preparado por:</td><td><div class="n"><%= @receipt.user_name %></div></td>
@@ -45,7 +45,7 @@
     <td>N° </td><td><div class="sh"><%= @receipt.cont_num %>&nbsp;</div></td>
   </tr>
   <tr>
-    <td>Comuna: </td><td><div class="sl"><%= @receipt.comuna.name %>&nbsp;</div></td>
+    <td>Comuna: </td><td><div class="sl"><%= @receipt.comuna %>&nbsp;</div></td>
     <td>N° Depto.:</td><td><div class="sh"><%= @receipt.cont_depto %>&nbsp;</div></td>
   </tr>
   <tr>
@@ -74,21 +74,118 @@
       <th>N° Documento</th>
       <th>Monto</th>
     </tr>
-    <% for d in @receipt.payment_details %>  
-    <% if not d.amount.nil? %>
-    <tr>
-      <td><div class="sh"><%= h d.payment_form %>&nbsp;</div></td>
-      <td><div class="n"><%= h d.emitter %>&nbsp;</div></td>
-      <td><div class="sh"><%= h d.doc_num %>&nbsp;</div></td>
-      <td><div class="sh"><%= h number_to_currency(d.amount, :precision => 0, :delimiter => ".") %>
-&nbsp;</div></td>
-    </tr>
-    <% end %>
-    <% end %>  
+     <% if (not @receipt.monto1.nil?) %> <tr>
+      <td><div class="sh"><%= h @receipt.formapago1 %>&nbsp;</div></td>
+      <td><div class="n"><%= h @receipt.emisor1 %>&nbsp;</div></td>
+      <td><div class="sh"><%= h @receipt.docnum1 %>&nbsp;</div></td>
+      <td><div class="sh"><%= h number_to_currency(@receipt.monto1, :precision => 0, :delimiter => ".")%></div></td>
+    </tr><% end %>
+    <% if (not @receipt.monto2.nil?) %> <tr>
+      <td><div><%= @receipt.formapago2 %>&nbsp;</div></td>
+      <td><div><%= @receipt.emisor2 %>&nbsp;</div></td>
+      <td><div class="sh"><%= @receipt.docnum2 %>&nbsp;</div></td>
+      <td><div class="sh"><%= h number_to_currency(@receipt.monto2, :precision => 0, :delimiter => ".")%></div></td>
+    </tr><% end %>
+    <% if (not @receipt.monto3.nil?) %> <tr>
+      <td><div><%= @receipt.formapago3 %>&nbsp;</div></td>
+      <td><div><%= @receipt.emisor3 %>&nbsp;</div></td>
+      <td><div class="sh"><%= @receipt.docnum3 %>&nbsp;</div></td>
+      <td><div class="sh"><%= h number_to_currency(@receipt.monto3, :precision => 0, :delimiter => ".")%></div></td>
+    </tr><% end %>
+    <% if (not @receipt.monto4.nil?) %> <tr>
+      <td><div><%= @receipt.formapago4 %>&nbsp;</div></td>
+      <td><div><%= @receipt.emisor4 %>&nbsp;</div></td>
+      <td><div class="sh"><%= @receipt.docnum4 %>&nbsp;</div></td>
+      <td><div class="sh"><%= h number_to_currency(@receipt.monto4, :precision => 0, :delimiter => ".")%></div></td>
+    </tr><% end %>
+    <% if (not @receipt.monto5.nil?) %> <tr>
+      <td><div><%= @receipt.formapago5 %>&nbsp;</div></td>
+      <td><div><%= @receipt.emisor5 %>&nbsp;</div></td>
+      <td><div class="sh"><%= @receipt.docnum5 %>&nbsp;</div></td>
+      <td><div class="sh"><%= h number_to_currency(@receipt.monto5, :precision => 0, :delimiter => ".")%></div></td>
+    </tr><% end %>
+    <% if (not @receipt.monto6.nil?) %> <tr>
+      <td><div><%= @receipt.formapago6 %>&nbsp;</div></td>
+      <td><div><%= @receipt.emisor6 %>&nbsp;</div></td>
+      <td><div class="sh"><%= @receipt.docnum6 %>&nbsp;</div></td>
+      <td><div class="sh"><%= h number_to_currency(@receipt.monto6, :precision => 0, :delimiter => ".") %></div></td>
+    </tr><% end %>
+    <% if (not @receipt.monto7.nil?) %> <tr>
+      <td><div><%= @receipt.formapago7 %>&nbsp;</div></td>
+      <td><div><%= @receipt.emisor7 %>&nbsp;</div></td>
+      <td><div class="sh"><%= @receipt.docnum7 %>&nbsp;</div></td>
+      <td><div class="sh"><%= h number_to_currency(@receipt.monto7, :precision => 0, :delimiter => ".") %></div></td>
+    </tr><% end %>
+    <% if (not @receipt.monto8.nil?) %> <tr>
+      <td><div><%= @receipt.formapago8 %>&nbsp;</div></td>
+      <td><div><%= @receipt.emisor8 %>&nbsp;</div></td>
+      <td><div class="sh"><%= @receipt.docnum8 %>&nbsp;</div></td>
+      <td><div class="sh"><%= h number_to_currency(@receipt.monto8, :precision => 0, :delimiter => ".") %></div></td>
+    </tr><% end %>
+    <% if (not @receipt.monto9.nil?) %> <tr>
+      <td><div><%= @receipt.formapago9 %>&nbsp;</div></td>
+      <td><div><%= @receipt.emisor9 %>&nbsp;</div></td>
+      <td><div class="sh"><%= @receipt.docnum9 %>&nbsp;</div></td>
+      <td><div class="sh"><%= h number_to_currency(@receipt.monto9, :precision => 0, :delimiter => ".") %></div></td>
+    </tr><% end %>
+    <% if (not @receipt.monto10.nil?) %> <tr>
+      <td><div><%= @receipt.formapago10 %>&nbsp;</div></td>
+      <td><div><%= @receipt.emisor10 %>&nbsp;</div></td>
+      <td><div class="sh"><%= @receipt.docnum10 %>&nbsp;</div></td>
+      <td><div class="sh"><%= h number_to_currency(@receipt.monto10, :precision => 0, :delimiter => ".") %></div></td>
+    </tr><% end %>
+    <% if (not @receipt.monto11.nil?) %> <tr>
+      <td><div><%= @receipt.formapago11 %>&nbsp;</div></td>
+      <td><div><%= @receipt.emisor11 %>&nbsp;</div></td>
+      <td><div class="sh"><%= @receipt.docnum11 %>&nbsp;</div></td>
+      <td><div class="sh"><%= h number_to_currency(@receipt.monto11, :precision => 0, :delimiter => ".") %></div></td>
+    </tr><% end %>
+    <% if (not @receipt.monto12.nil?) %> <tr>
+      <td><div><%= @receipt.formapago12 %>&nbsp;</div></td>
+      <td><div><%= @receipt.emisor12 %>&nbsp;</div></td>
+      <td><div class="sh"><%= @receipt.docnum12 %>&nbsp;</div></td>
+      <td><div class="sh"><%= h number_to_currency(@receipt.monto12, :precision => 0, :delimiter => ".") %></div></td>
+    </tr><% end %>
+    <% if (not @receipt.monto13.nil?) %> <tr>
+      <td><div><%= @receipt.formapago13 %>&nbsp;</div></td>
+      <td><div><%= @receipt.emisor13 %>&nbsp;</div></td>
+      <td><div class="sh"><%= @receipt.docnum13 %>&nbsp;</div></td>
+      <td><div class="sh"><%= h number_to_currency(@receipt.monto13, :precision => 0, :delimiter => ".") %></div></td>
+    </tr><% end %>
+    <% if (not @receipt.monto14.nil?) %> <tr>
+      <td><div><%= @receipt.formapago14 %>&nbsp;</div></td>
+      <td><div><%= @receipt.emisor14 %>&nbsp;</div></td>
+      <td><div class="sh"><%= @receipt.docnum14 %>&nbsp;</div></td>
+      <td><div class="sh"><%= h number_to_currency(@receipt.monto14, :precision => 0, :delimiter => ".") %></div></td>
+    </tr><% end %>    
+    <% if (not @receipt.monto15.nil?) %> <tr>
+      <td><div><%= @receipt.formapago15 %>&nbsp;</div></td>
+      <td><div><%= @receipt.emisor15 %>&nbsp;</div></td>
+      <td><div class="sh"><%= @receipt.docnum15 %>&nbsp;</div></td>
+      <td><div class="sh"><%= h number_to_currency(@receipt.monto15, :precision => 0, :delimiter => ".") %></div></td>
+    </tr><% end %>
+    <% if (not @receipt.monto16.nil?) %> <tr>
+      <td><div><%= @receipt.formapago16 %>&nbsp;</div></td>
+      <td><div><%= @receipt.emisor16 %>&nbsp;</div></td>
+      <td><div class="sh"><%= @receipt.docnum16 %>&nbsp;</div></td>
+      <td><div class="sh"><%= h number_to_currency(@receipt.monto16, :precision => 0, :delimiter => ".") %></div></td>
+    </tr><% end %>
+    <% if (not @receipt.monto17.nil?) %> <tr>
+      <td><div><%= @receipt.formapago17 %>&nbsp;</div></td>
+      <td><div><%= @receipt.emisor17 %>&nbsp;</div></td>
+      <td><div class="sh"><%= @receipt.docnum17 %>&nbsp;</div></td>
+      <td><div class="sh"><%= h number_to_currency(@receipt.monto17, :precision => 0, :delimiter => ".") %></div></td>
+    </tr><% end %>
+    <% if (not @receipt.monto18.nil?) %> <tr>
+      <td><div><%= @receipt.formapago18 %>&nbsp;</div></td>
+      <td><div><%= @receipt.emisor18 %>&nbsp;</div></td>
+      <td><div class="sh"><%= @receipt.docnum18 %>&nbsp;</div></td>
+      <td><div class="sh"><%= h number_to_currency(@receipt.monto18, :precision => 0, :delimiter => ".") %></div></td>
+    </tr><% end %>
     <tr>
       <td colspan=2></td>
       <th>Total Pagado:</th>
-      <td><div class="sh"><%= @receipt.total_paid %>&nbsp;</div></td>
+      <td><div class="sh"><%= h number_to_currency(@receipt.total_paid, :precision => 0, :delimiter => ".") unless @receipt.total_paid.nil?%>&nbsp;</div></td>
     </tr>
     </table>
 <% end %>
@@ -98,9 +195,7 @@
 
 <div class="botones">
 <% if current_user.profile_id==1 %>
-  <% if not notice == '1' %>
-    <%= link_to 'Editar', edit_receipt_path(@receipt) %> 
-  <% end %>
+  <%= link_to 'Editar', edit_receipt_path(@receipt) unless notice=='1'%> 
   <%= link_to 'Página Principal', :controller => "sessions", :action => "ejc" %>
 <% elsif current_user.profile_id==8 %>
   <%= link_to "Listado de Todos los Recibos de Pago", dreceipts_path %>

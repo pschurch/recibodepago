@@ -28,8 +28,13 @@
     <th>Estado</th>
     <th colspan="2"></th>
   </tr>
-  <% @tickets.each do |a| %>
-  <tr>
+  <% if @tickets.nil? %>
+    <tr>
+      <td colspan= 8>No se han encontrado Tickets.</td>
+    </tr>  
+  <% else %>
+   <% @tickets.each do |a| %>
+   <tr>
     <td><%= a.id %></td>
     <td><%= a.receipt_id %></td>
     <td><%= a.prepared_by %></td>
@@ -53,7 +58,8 @@
           link_to 'Editar', edit_ticket_path(a) 
          end %>
     </td>
-  </tr>
+   </tr>
+   <% end %>
   <% end %>
   </table>
 </div>

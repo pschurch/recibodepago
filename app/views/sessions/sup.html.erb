@@ -2,13 +2,13 @@
   <ul>
     <li><%= link_to "Tickets por Modificar", :controller => "supervisor", :action => "stmod" %></li>
     <li><%= link_to "Listado de Tickets", :controller => "supervisor", :action => "stlist" %></li>
-    <li><%= link_to "Enviar Recibo de Pago a Terreno", '#' %></li>
-    <li><%= link_to "Recepcionar Recibo de Pago de Cobranza", '#' %></li>
-    <li><%= link_to "Recepcionar Recibo de Pago de Terreno", '#' %></li>
-    <li><%= link_to "Generar PDF de Recibo de Pago", '#' %></li>
-    <li><%= link_to "Recibos de Pago Rechazados por Terreno", '#' %></li>
-    <li><%= link_to "Rendir Recibos de Pago a Tesoreria", '#' %></li>
-    <li><%= link_to "Recibos de Pago Rechazados por Tesoreria", '#' %></li>
-    <li><%= link_to "Listado de Todos los Recibos de Pago", '#' %></li>
+    <li><%= link_to "Recepcionar Recibo de Pago de Cobranza", :controller => "supervisor", :action => "sr_recp_cobr"%></li>
+    <li><%= link_to "Enviar Recibo de Pago a Terreno", :controller => "supervisor", :action => "sr_envio_terreno" %></li>
+    <li><%= link_to "Recepcionar Recibo de Pago de Terreno", :controller => "supervisor", :action => "sr_recp_terreno" %></li>
+    <li><%= link_to "Generar PDF de Recibo de Pago", :controller => "supervisor", :action => "stlist" %></li>
+    <li><%= link_to "Recibos de Pago Rechazados por Terreno", :controller => "supervisor", :action => "sr_rech_terreno" %></li>
+    <li><%= link_to "Rendir Recibos de Pago a Tesoreria", :controller => "supervisor", :action => "sr_rend_tesoreria" %></li>
+    <li><%= link_to "Recibos de Pago Rechazados por Tesoreria", :controller => "supervisor", :action => "sr_rech_tesoreria" %></li>
+    <li><%= link_to "Listado de Todos los Recibos de Pago", :controller => "supervisor", :action => "srlist" %></li>
   </ul>
 </div>

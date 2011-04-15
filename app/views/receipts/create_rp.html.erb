@@ -21,8 +21,11 @@
     <th>Selecc</th>
     <th colspan=2></th>
   </tr>
-  <% @tickets.each do |ticket| %>
-  <tr>
+  <% if @tickets.empty? %> 
+    <tr><td colspan=11>No se han encontrado Tickets para crear Recibos de Pago.</td></tr>
+  <% else %>
+   <% @tickets.each do |ticket| %>
+   <tr>
     <td><%= ticket.id %></td>
     <td><%= ticket.rut %>-<%= ticket.digit %></td>
     <td><%= ticket.name %></td>
@@ -34,7 +37,8 @@
     <td><%= check_box_tag "ticket_ids[]", ticket.id %></td>
     <td><%= link_to 'Ver', ticket %></td>
     <td><%= link_to 'Editar', edit_ticket_path(ticket) %></td>
-  </tr>
+   </tr>
+   <% end %>
   <% end %>
   </table>
   <div class="actions">

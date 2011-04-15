@@ -35,15 +35,18 @@ class CreateTickets < ActiveRecord::Migration
       t.boolean :doc_delivery
       t.boolean :adjust_sup
       t.text :adjust_sup_des
-      t.date :adjust_sup_date
-      t.time :adjust_sup_tm
       t.boolean :adjust_mgt
       t.text :adjust_mgt_des
-      t.date :adjust_mgt_date
-      t.time :adjust_mgt_tm
       t.string :canceled_by
-      t.date :canceled_date
-
+      t.integer :assignment_id 
+      t.datetime :adjust_sup_time
+      t.datetime :adjust_mgt_time
+      t.datetime :canceled_time
+      t.integer :adjust
+      t.datetime  :adjust_time
+      t.string :adjust_by
+      t.text :adjust_obs
+      t.integer :new_total_pay	
       t.timestamps
     end
   end

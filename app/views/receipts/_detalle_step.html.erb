@@ -36,7 +36,7 @@
     <td>N° </td><td><%= f.text_field :cont_num, :size => "12" %></td>
   </tr>
   <tr>
-    <td>Comuna: </td><td><%= f.collection_select :comuna_id, Comuna.where('state = true').order('name ASC'), :id, :name, options ={:prompt => "- Seleccione -"} %></td>
+    <td>Comuna: </td><td><%= f.collection_select :comuna, Comuna.where('state = true').order('name ASC'), :name, :name, options ={:prompt => "- Seleccione -"} %></td>
     <td>N° Depto.:</td><td><%= f.text_field :cont_depto, :size => "12" %></td>
   </tr>
   <tr>
@@ -66,15 +66,120 @@
       <th width="118">N° Documento</th>
       <th>Monto</th>
     </tr>
-
-    <% f.fields_for :payment_details do |builder| %>  
-      <tr>
-        <td><%= builder.collection_select :payment_form, PaymentForm.where('state = true').order('name ASC'), :name, :name, options ={:prompt => "- Seleccione -"} %></td>
-        <td><%= builder.collection_select :emitter, Emitter.where('state = true').order('name ASC'), :name, :name, options ={:prompt => "- Seleccione -"} %></td>
-        <td><%= builder.text_field :doc_num, :size => "16" %></td>
-        <td><%= builder.text_field :amount, :size => "8" %></td>
-      </tr>
-    <% end %>  
+    <tr>
+      <td><%= f.collection_select :formapago1, PaymentForm.where('state = true').order('name ASC'), :name, :name, options ={:prompt => "- Seleccione -"} %></td>
+      <td><%= f.collection_select :emisor1, Emitter.where('state = true').order('name ASC'), :name, :name, options ={:prompt => "- Seleccione -"} %></td>
+      <td><%= f.text_field :docnum1, :size => "16" %></td>
+      <td><%= f.text_field :monto1, :size => "8" %></td>
+    </tr>
+    <tr>
+      <td><%= f.collection_select :formapago2, PaymentForm.where('state = true').order('name ASC'), :name, :name, options ={:prompt => "- Seleccione -"} %></td>
+      <td><%= f.collection_select :emisor2, Emitter.where('state = true').order('name ASC'), :name, :name, options ={:prompt => "- Seleccione -"} %></td>
+      <td><%= f.text_field :docnum2, :size => "16" %></td>
+      <td><%= f.text_field :monto2, :size => "8" %></td>
+    </tr>
+    <tr>
+      <td><%= f.collection_select :formapago3, PaymentForm.where('state = true').order('name ASC'), :name, :name, options ={:prompt => "- Seleccione -"} %></td>
+      <td><%= f.collection_select :emisor3, Emitter.where('state = true').order('name ASC'), :name, :name, options ={:prompt => "- Seleccione -"} %></td>
+      <td><%= f.text_field :docnum3, :size => "16" %></td>
+      <td><%= f.text_field :monto3, :size => "8" %></td>
+    </tr>
+    <tr>
+      <td><%= f.collection_select :formapago4, PaymentForm.where('state = true').order('name ASC'), :name, :name, options ={:prompt => "- Seleccione -"} %></td>
+      <td><%= f.collection_select :emisor4, Emitter.where('state = true').order('name ASC'), :name, :name, options ={:prompt => "- Seleccione -"} %></td>
+      <td><%= f.text_field :docnum4, :size => "16" %></td>
+      <td><%= f.text_field :monto4, :size => "8" %></td>
+    </tr>
+    <tr>
+      <td><%= f.collection_select :formapago5, PaymentForm.where('state = true').order('name ASC'), :name, :name, options ={:prompt => "- Seleccione -"} %></td>
+      <td><%= f.collection_select :emisor5, Emitter.where('state = true').order('name ASC'), :name, :name, options ={:prompt => "- Seleccione -"} %></td>
+      <td><%= f.text_field :docnum5, :size => "16" %></td>
+      <td><%= f.text_field :monto5, :size => "8" %></td>
+    </tr>
+    <tr>
+      <td><%= f.collection_select :formapago6, PaymentForm.where('state = true').order('name ASC'), :name, :name, options ={:prompt => "- Seleccione -"} %></td>
+      <td><%= f.collection_select :emisor6, Emitter.where('state = true').order('name ASC'), :name, :name, options ={:prompt => "- Seleccione -"} %></td>
+      <td><%= f.text_field :docnum6, :size => "16" %></td>
+      <td><%= f.text_field :monto6, :size => "8" %></td>
+    </tr>
+    <tr>
+      <td><%= f.collection_select :formapago7, PaymentForm.where('state = true').order('name ASC'), :name, :name, options ={:prompt => "- Seleccione -"} %></td>
+      <td><%= f.collection_select :emisor7, Emitter.where('state = true').order('name ASC'), :name, :name, options ={:prompt => "- Seleccione -"} %></td>
+      <td><%= f.text_field :docnum7, :size => "16" %></td>
+      <td><%= f.text_field :monto7, :size => "8" %></td>
+    </tr>
+    <tr>
+      <td><%= f.collection_select :formapago8, PaymentForm.where('state = true').order('name ASC'), :name, :name, options ={:prompt => "- Seleccione -"} %></td>
+      <td><%= f.collection_select :emisor8, Emitter.where('state = true').order('name ASC'), :name, :name, options ={:prompt => "- Seleccione -"} %></td>
+      <td><%= f.text_field :docnum8, :size => "16" %></td>
+      <td><%= f.text_field :monto8, :size => "8" %></td>
+    </tr>
+    <tr>
+      <td><%= f.collection_select :formapago9, PaymentForm.where('state = true').order('name ASC'), :name, :name, options ={:prompt => "- Seleccione -"} %></td>
+      <td><%= f.collection_select :emisor9, Emitter.where('state = true').order('name ASC'), :name, :name, options ={:prompt => "- Seleccione -"} %></td>
+      <td><%= f.text_field :docnum9, :size => "16" %></td>
+      <td><%= f.text_field :monto9, :size => "8" %></td>
+    </tr>
+    <tr>
+      <td><%= f.collection_select :formapago10, PaymentForm.where('state = true').order('name ASC'), :name, :name, options ={:prompt => "- Seleccione -"} %></td>
+      <td><%= f.collection_select :emisor10, Emitter.where('state = true').order('name ASC'), :name, :name, options ={:prompt => "- Seleccione -"} %></td>
+      <td><%= f.text_field :docnum10, :size => "16" %></td>
+      <td><%= f.text_field :monto10, :size => "8" %></td>
+    </tr>
+    <tr>
+      <td><%= f.collection_select :formapago11, PaymentForm.where('state = true').order('name ASC'), :name, :name, options ={:prompt => "- Seleccione -"} %></td>
+      <td><%= f.collection_select :emisor11, Emitter.where('state = true').order('name ASC'), :name, :name, options ={:prompt => "- Seleccione -"} %></td>
+      <td><%= f.text_field :docnum11, :size => "16" %></td>
+      <td><%= f.text_field :monto11, :size => "8" %></td>
+    </tr>
+    <tr>
+      <td><%= f.collection_select :formapago12, PaymentForm.where('state = true').order('name ASC'), :name, :name, options ={:prompt => "- Seleccione -"} %></td>
+      <td><%= f.collection_select :emisor12, Emitter.where('state = true').order('name ASC'), :name, :name, options ={:prompt => "- Seleccione -"} %></td>
+      <td><%= f.text_field :docnum12, :size => "16" %></td>
+      <td><%= f.text_field :monto12, :size => "8" %></td>
+    </tr>
+    <tr>
+      <td><%= f.collection_select :formapago13, PaymentForm.where('state = true').order('name ASC'), :name, :name, options ={:prompt => "- Seleccione -"} %></td>
+      <td><%= f.collection_select :emisor13, Emitter.where('state = true').order('name ASC'), :name, :name, options ={:prompt => "- Seleccione -"} %></td>
+      <td><%= f.text_field :docnum13, :size => "16" %></td>
+      <td><%= f.text_field :monto13, :size => "8" %></td>
+    </tr>
+    <tr>
+      <td><%= f.collection_select :formapago14, PaymentForm.where('state = true').order('name ASC'), :name, :name, options ={:prompt => "- Seleccione -"} %></td>
+      <td><%= f.collection_select :emisor14, Emitter.where('state = true').order('name ASC'), :name, :name, options ={:prompt => "- Seleccione -"} %></td>
+      <td><%= f.text_field :docnum14, :size => "16" %></td>
+      <td><%= f.text_field :monto14, :size => "8" %></td>
+    </tr>
+    <tr>
+      <td><%= f.collection_select :formapago15, PaymentForm.where('state = true').order('name ASC'), :name, :name, options ={:prompt => "- Seleccione -"} %></td>
+      <td><%= f.collection_select :emisor15, Emitter.where('state = true').order('name ASC'), :name, :name, options ={:prompt => "- Seleccione -"} %></td>
+      <td><%= f.text_field :docnum15, :size => "16" %></td>
+      <td><%= f.text_field :monto15, :size => "8" %></td>
+    </tr>
+    <tr>
+      <td><%= f.collection_select :formapago16, PaymentForm.where('state = true').order('name ASC'), :name, :name, options ={:prompt => "- Seleccione -"} %></td>
+      <td><%= f.collection_select :emisor16, Emitter.where('state = true').order('name ASC'), :name, :name, options ={:prompt => "- Seleccione -"} %></td>
+      <td><%= f.text_field :docnum16, :size => "16" %></td>
+      <td><%= f.text_field :monto16, :size => "8" %></td>
+    </tr>
+    <tr>
+      <td><%= f.collection_select :formapago17, PaymentForm.where('state = true').order('name ASC'), :name, :name, options ={:prompt => "- Seleccione -"} %></td>
+      <td><%= f.collection_select :emisor17, Emitter.where('state = true').order('name ASC'), :name, :name, options ={:prompt => "- Seleccione -"} %></td>
+      <td><%= f.text_field :docnum17, :size => "16" %></td>
+      <td><%= f.text_field :monto17, :size => "8" %></td>
+    </tr>
+    <tr>
+      <td><%= f.collection_select :formapago18, PaymentForm.where('state = true').order('name ASC'), :name, :name, options ={:prompt => "- Seleccione -"} %></td>
+      <td><%= f.collection_select :emisor18, Emitter.where('state = true').order('name ASC'), :name, :name, options ={:prompt => "- Seleccione -"} %></td>
+      <td><%= f.text_field :docnum18, :size => "16" %></td>
+      <td><%= f.text_field :monto18, :size => "8" %></td>
+    </tr>
+    <tr>
+      <td colspan=2></td>
+      <th>Total Pagado:</th>
+      <td><div class="n"><%= f.text_field :total_paid, :size => "8", :value => @total_paid, :readonly => true %></div></td>
+    </tr>
+  
     </table>
 <% end %>
 

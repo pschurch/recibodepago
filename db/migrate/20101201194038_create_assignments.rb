@@ -7,6 +7,8 @@ class CreateAssignments < ActiveRecord::Migration
       t.integer :collection_type_id
       t.integer :product_id
       t.integer :group_id
+      t.integer :ticket_id 
+      t.integer :receipt_id 
       t.string :name
       t.string :rut
       t.string :digit
