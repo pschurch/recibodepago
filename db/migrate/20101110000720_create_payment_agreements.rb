@@ -4,7 +4,7 @@ class CreatePaymentAgreements < ActiveRecord::Migration
       t.string :name
       t.text :description
       t.boolean :state, :default => true
-
+      t.integer :payment_flow_id
       t.timestamps
     end
   end

@@ -1,0 +1,35 @@
+<div class="seccion">
+<table><tr><td class="formulario">
+  <% if not notice.nil? %><p id="notice"><%= notice %></p><% end %>
+  <div class="field">
+    Nombre:
+  </div>
+  <div class="field_txt">
+    <%= @payment_flow.name %>
+  </div>
+  <div class="field">
+    Descripción:
+  </div>
+  <div class="field_txt">
+    <%= @payment_flow.description %>
+  </div>
+  <div class="field">
+    Estado:
+  </div>
+  <div class="field_txt">
+    <% if @payment_flow.state %>Activo<% else %>Inactivo<% end %>
+  </div>
+</td></tr></table>
+</div>
+
+<div class="botones">
+  <% if current_user.profile_id==7 %>  <!--  Administrador --> 
+    <%= link_to 'Listado de Flujos de Pago', payment_flows_path %>
+    <%= link_to 'Página Principal', :controller => "sessions", :action => "adm" %>
+  <% elsif current_user.profile_id==8 %> <!-- Designer -->
+    <%= link_to 'Editar', edit_payment_flow_path(@payment_flow) %>
+    <%= link_to 'Listado de Flujos de Pago', payment_flows_path %>
+    <%= link_to 'Página Principal', :controller => "sessions", :action => "dsg" %>
+  <% end %>
+</div>
+

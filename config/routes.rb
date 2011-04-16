@@ -1,4 +1,6 @@
 Recibodepago::Application.routes.draw do
+  resources :payment_flows
+
   resources :emitters
 
   get "supervisor/stmod"

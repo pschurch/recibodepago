@@ -7,6 +7,7 @@ namespace :db do
     singrupoinit
     usuarioadmininit
     comunasinit
+    payflowinit
   end
 end
 
@@ -30,13 +31,13 @@ def perfilesinit
 end
 
 def payagreementinit
-  PaymentAgreement.create!(:name => "Pago en TechMill", :description => "El Deudor realiza el pago en persona en las oficinas de TechMill", :state => 1)
-  PaymentAgreement.create!(:name => "Envio por Correo", :description => "El Deudor envia cheque por correo tradicional", :state => 1)
-  PaymentAgreement.create!(:name => "Negocia Ejecutivo de Cobranza", :description => "", :state => 1)
-  PaymentAgreement.create!(:name => "Gestion en Terreno", :description => "", :state => 1)
-  PaymentAgreement.create!(:name => "Deposito en CtaCte TechMill", :description => "El Deudor realiza el deposito en la cuenta corriente de TechMill", :state => 1)
-  PaymentAgreement.create!(:name => "Deposito en CtaCte Mandante", :description => "El Deudor realiza el deposito en la cuenta corriente del Mandante", :state => 1)
-  PaymentAgreement.create!(:name => "Express", :description => "", :state => 1)
+  PaymentAgreement.create!(:name => "Gestion en Terreno", :description => "", :state => 1, :payment_flow_id=> 3)
+  PaymentAgreement.create!(:name => "Express", :description => "", :state => 1, :payment_flow_id=> 3)
+  PaymentAgreement.create!(:name => "Negocia Ejecutivo de Cobranza", :description => "", :state => 1, :payment_flow_id=> 2)
+  PaymentAgreement.create!(:name => "Pago en TechMill", :description => "El Deudor realiza el pago en persona en las oficinas de TechMill", :state => 1, :payment_flow_id=> 1)
+  PaymentAgreement.create!(:name => "Envio por Correo", :description => "El Deudor envia cheque por correo tradicional", :state => 1, :payment_flow_id=> 1)
+  PaymentAgreement.create!(:name => "Deposito en CtaCte TechMill", :description => "El Deudor realiza el deposito en la cuenta corriente de TechMill", :state => 1, :payment_flow_id=> 1)
+  PaymentAgreement.create!(:name => "Deposito en CtaCte Mandante", :description => "El Deudor realiza el deposito en la cuenta corriente del Mandante", :state => 1, :payment_flow_id=> 1)
 end
 
 def singrupoinit
@@ -86,6 +87,12 @@ def comunasinit
   Comuna.create!(:name => "San Ramon")
   Comuna.create!(:name => "Santiago Centro")
   Comuna.create!(:name => "Vitacura ")
+end
+
+def payflowinit
+  PaymentFlow.create!(:name => "RP Completo", :description => "Se debe ingresar la informacion de Detalle de Pago y el RP debe cuadrar.", :state => 1)
+  PaymentFlow.create!(:name => "RP por Completar", :description => "Se debe ingresar la informacion de Contacto. El RP queda incompleto hasta ingresarle el Detalle de Pago.", :state => 1)
+  PaymentFlow.create!(:name => "RP con Gestion Terreno", :description => "Se debe ingresar la informacion de Contacto, quedando incompleto. El RP es gestionado en Terreno y posteriormente se le ingresa el Detalle de Pago.", :state => 1)
 end
 
 

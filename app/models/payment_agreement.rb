@@ -13,6 +13,7 @@
 
 class PaymentAgreement < ActiveRecord::Base
   has_many :receipts
+  belongs_to :payment_flow
 
   validates_presence_of :name, :message => "(Nombre) : debe ingresar un valor en este campo."
 end
