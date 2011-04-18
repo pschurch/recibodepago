@@ -88,7 +88,7 @@ class ReceiptsController < ApplicationController
 
   #------------ POST /receipts --------------------
   def create
-    @titulo = "Crear Recibo de Pago-create"
+    @titulo = "Crear Recibo de Pago"
     @tickets = Ticket.find(session[:ticket_ids])
     @receipt = Receipt.new(params[:receipt])  
     @receipt.current_step = session[:receipt_step]  
@@ -113,7 +113,7 @@ class ReceiptsController < ApplicationController
     if @receipt.new_record?  
       render :action => "new2"  
     else 
-      if (not session[:tickets].nil?) and (@payment_flow==1)
+      if (not session[:tickets].nil?) 
         @total_paid = 0
         @total_paid = (not @receipt.monto1.nil?) ? @total_paid + @receipt.monto1 : @total_paid
         @total_paid = (not @receipt.monto2.nil?) ? @total_paid + @receipt.monto2 : @total_paid
