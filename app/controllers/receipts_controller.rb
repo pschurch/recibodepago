@@ -94,6 +94,7 @@ class ReceiptsController < ApplicationController
     @receipt.current_step = session[:receipt_step]  
     for a in PaymentAgreement.where("id =?", @receipt.payment_agreement_id) 
       @payment_agreement = a.name
+      @payment_flow = a.payment_flow_id
     end 
     @total_rp = 0
     @tickets.each do |a|
@@ -112,7 +113,7 @@ class ReceiptsController < ApplicationController
     if @receipt.new_record?  
       render :action => "new2"  
     else 
-      if not session[:tickets].nil?
+      if (not session[:tickets].nil?) and (@payment_flow==1)
         @total_paid = 0
         @total_paid = (not @receipt.monto1.nil?) ? @total_paid + @receipt.monto1 : @total_paid
         @total_paid = (not @receipt.monto2.nil?) ? @total_paid + @receipt.monto2 : @total_paid
@@ -146,14 +147,20 @@ class ReceiptsController < ApplicationController
       end
       session[:tickets_ids] = nil
       @receipt.update_attribute 'area', 'Cobranza'
-      if (@receipt.payment_agreement_id==3) # Gestiona Eje Cobranza 
+      # Solo para Flujo de Pago 1 (RP Completo)
+      if @payment_flow==1 
+        @receipt.update_attribute 'state', 'cerrado'
+        redirect_to(@receipt, :notice => 'El Recibo de Pago se ha cerrado exitosamente y se encuentra listo para ser rendido.')           
+      # Solo para Flujo de Pago 2 (RP por Completar)    
+      elsif @payment_flow==2 
         redirect_to(@receipt, :notice => 'El Recibo de Pago se ha creado exitosamente y se encuentra listo para ser impreso.') 
-      elsif (@receipt.payment_agreement_id==4  or @receipt.payment_agreement_id==7) # Gestion en Terreno/ Express
+      # Solo para Flujo de Pago 3 (RP con Gestion Terreno) 
+      elsif @payment_flow==3
         @receipt.update_attribute 'state', 'solicita gestion terreno'
-        redirect_to(@receipt, :notice => 'El Recibo de Pago se ha creado exitosamente y se encuentra listo para ser gestionado en terreno.') 
+        redirect_to(@receipt, :notice => 'El Recibo de Pago se ha creado exitosamente y se encuentra listo para ser enviado a terreno.') 
+      # existe un Error
       else
-        redirect_to(@receipt, :notice => 'El Recibo de Pago se ha cerrado exitosamente y se encuentra listo para ser rendido.')     
-      end
+      end  
     end  
   end
 
@@ -161,6 +168,7 @@ class ReceiptsController < ApplicationController
   def edit
     @titulo = "Editar Recibo de Pago"
     @receipt = Receipt.find(params[:id])
+    deny_access unless (@receipt.state!='cerrado') # No puede editarse un RP estado cerrado
     @tickets = Ticket.where("receipt_id=?", @receipt.id)
   end
 
@@ -169,7 +177,33 @@ class ReceiptsController < ApplicationController
     @receipt = Receipt.find(params[:id])
     @tickets = Ticket.where("receipt_id=?", @receipt.id)
     if @receipt.update_attributes(params[:receipt])
-      redirect_to(@receipt, :notice => 'El Recibo de Pago se ha actualizado exitosamente.') 
+      if @receipt.state=='abierto' and @receipt.valid?
+        @total_paid = 0
+        @total_paid = (not @receipt.monto1.nil?) ? @total_paid + @receipt.monto1 : @total_paid
+        @total_paid = (not @receipt.monto2.nil?) ? @total_paid + @receipt.monto2 : @total_paid
+        @total_paid = (not @receipt.monto3.nil?) ? @total_paid + @receipt.monto3 : @total_paid
+        @total_paid = (not @receipt.monto4.nil?) ? @total_paid + @receipt.monto4 : @total_paid
+        @total_paid = (not @receipt.monto5.nil?) ? @total_paid + @receipt.monto5 : @total_paid
+        @total_paid = (not @receipt.monto6.nil?) ? @total_paid + @receipt.monto6 : @total_paid
+        @total_paid = (not @receipt.monto7.nil?) ? @total_paid + @receipt.monto7 : @total_paid
+        @total_paid = (not @receipt.monto8.nil?) ? @total_paid + @receipt.monto8 : @total_paid
+        @total_paid = (not @receipt.monto9.nil?) ? @total_paid + @receipt.monto9 : @total_paid
+        @total_paid = (not @receipt.monto10.nil?) ? @total_paid + @receipt.monto10 : @total_paid
+        @total_paid = (not @receipt.monto11.nil?) ? @total_paid + @receipt.monto11 : @total_paid
+        @total_paid = (not @receipt.monto12.nil?) ? @total_paid + @receipt.monto12 : @total_paid
+        @total_paid = (not @receipt.monto13.nil?) ? @total_paid + @receipt.monto13 : @total_paid
+        @total_paid = (not @receipt.monto14.nil?) ? @total_paid + @receipt.monto14 : @total_paid
+        @total_paid = (not @receipt.monto15.nil?) ? @total_paid + @receipt.monto15 : @total_paid
+        @total_paid = (not @receipt.monto16.nil?) ? @total_paid + @receipt.monto16 : @total_paid
+        @total_paid = (not @receipt.monto17.nil?) ? @total_paid + @receipt.monto17 : @total_paid
+        @total_paid = (not @receipt.monto18.nil?) ? @total_paid + @receipt.monto18 : @total_paid
+        @receipt.update_attribute 'total_paid', @total_paid  
+        @receipt.update_attribute 'state', 'cerrado' 
+        redirect_to(@receipt, :notice => 'El Recibo de Pago se ha cerrado exitosamente.') 
+      else
+        redirect_to(@receipt, :notice => 'El Recibo de Pago se ha actualizado exitosamente.') 
+      end
+
     else
       render :action => "edit" 
     end
@@ -178,7 +212,7 @@ class ReceiptsController < ApplicationController
   def rp_abtos
     deny_access unless (current_user.profile_id == 1)
     @titulo = "Recibos de Pago Abiertos"
-    @receipts = Receipt.where("state='abierto'").where("group_id=?", current_user.group_id)
+    @receipts = Receipt.where("state='abierto'").where("user_name=?", current_user.name).where("group_id=?", current_user.group_id).where("area='Cobranza'")
   end
 
   def rp_rechz
@@ -191,7 +225,22 @@ class ReceiptsController < ApplicationController
   def rend_sup
     deny_access unless (current_user.profile_id == 1)
     @titulo = "Rendir Recibos de Pago a Supervisor"
-    @receipts = Receipt.where("state='cerrado'").where("group_id=?", current_user.group_id)
+    @receipts = Receipt.where("state='cerrado'").where("area='Cobranza'").where("group_id=?", current_user.group_id)
+  end
+
+  def print
+    deny_access unless (current_user.profile_id == 1)
+    @receipt = Receipt.find(params[:id])
+    @tickets = Ticket.where("receipt_id=?", @receipt.id)
+    @rconforme = false
+    @tickets.each do |a|
+      if a.doc_delivery
+        @rconforme = true
+      end
+    end
+    # @receipt.num_print.nil? ? @num_print=1 : @num_print=@receipt.num_print 
+    @receipt.update_attribute 'print_user', current_user.name
+    @receipt.update_attribute 'print_date', Time.now
   end
 
   def destroy

@@ -7,8 +7,8 @@
     <th>Identificador</th>
     <th>Mandante</th>
     <th>Producto</th>
-    <th>Fecha</th>
-    <th>T.Pagado</th>
+    <th>Fecha Pago</th>
+    <th>Total Pagado</th>
     <th>selecc.</th>
     <th></th>
   </tr>
@@ -16,18 +16,27 @@
     <tr><td colspan=10>No se han encontrado Recibos de Pago para ser Rendidos a Supervisor.</td></tr>
   <% else %>
   <% @receipts.each do |receipt| %>
-  <tr>
-    <td><%= receipt.user_name %></td>
-    <td><%= receipt.id %></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td><%= link_to 'Ver', receipt %></td>
-  </tr>
+    <% @tickets = Ticket.where("receipt_id=?", receipt.id) %>
+    <tr>
+     <td><%= receipt.user_name %></td>
+     <td><%= receipt.id %></td>
+     <td>
+       <% @tickets.each  do |p| %>
+       <%= p.rut %>-<%= p.digit %><br>
+       <% end %>
+     </td>
+     <td>
+        <% @tickets.each  do |p| %>
+        <%= p.cas_id %><br>
+        <% end %>
+     </td>
+     <td><%= @tickets.first.principal_name %></td>
+     <td><%= @tickets.first.product_name %></td>
+     <td><%= receipt.date_r.strftime("%d/%m/%Y") %></td>
+     <td><%= number_to_currency(receipt.total_pay, :precision => 0, :delimiter => ".") %></td>
+     <td></td>
+     <td><%= link_to 'Ver', receipt %></td>
+    </tr>
   <% end %>
 <% end %>
 </table>

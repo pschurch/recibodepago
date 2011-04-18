@@ -7,9 +7,10 @@
     <%= render "form_ejc", :f => f %>  
   <% elsif current_user.profile_id==2 %> <!-- Supervisor -->
     <%= render "form_sup", :f => f %>   
+    <div class="actions"><%= f.submit "Modificar Ticket", :name => "rec_button" unless @ticket.state!='pms'%></div>  
   <% elsif current_user.profile_id==6 %> <!-- Gerencia -->
     <%= render "form_ger", :f => f %>  
-  <% end %>  
+  <% end %> 
 <% end %>
 </td></tr></table>
 </div>

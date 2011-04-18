@@ -1,0 +1,268 @@
+<table class="info"><tr>
+<td>
+    Administración y Soluciones Tecnológicas S.A.<br>
+    Rut: 96.965.290-0<br>
+    Guardia Vieja 181, Oficina 1401 Providencia, Santiago<br>
+    Fonos: 840 8500 - 233 8468  Fax: 234 9527<br>
+</td>
+<td>
+    <div class="centrar">
+    <%= image_tag("logotm.jpg", :alt => "TechMill - Soluciones Tecnologicas", :height=>"35px") %><br>
+    <h4>Recibo de Pago N° <%= @receipt.id %></h4>
+    Fecha: <%= @receipt.date_r.strftime("%d / %m / %Y") %><br>
+    Sólo válido con timbre TechMill
+    </div>
+</td>
+</tr></table>
+
+<div class="nbsp"></div>
+
+<% @tickets.each do |a| %>
+  <table class="print">
+  <tr>
+    <td>Nombre: <%= a.name %></td>
+    <td>Rut: <%= a.rut %> - <%= a.digit %></td>
+    <td>Ticket N°: <%= a.id %></td>
+  </tr>
+  <tr>
+    <td colspan="3">Recaudado por cuenta de: <%= a.principal_name %></td>
+  </tr>
+  <tr>
+    <td colspan="3">Descripción del Pago: <%= a.payment_description %></td>
+  </tr>
+  <tr>
+    <td>Producto: <%= a.product_name %></td>
+    <td>N°: <%= a.number %></td>
+    <td>Cuota: <%= a.quota_num %><% if not a.total_q.empty? %> de <%= a.total_q %><% end %></td>
+  </tr>
+  <tr>
+    <td>Emisor: <%= a.emitter %></td>
+    <td>Cta Cte: <%= a.ctacte %></td>
+    <td>Vencimiento: <%= a.expir_date.strftime("%d/%m/%Y") unless a.expir_date.nil? %></td>
+  </tr>
+  <tr>
+    <td>Capital: <%= number_to_currency(a.capital, :precision => 0, :delimiter => ".") %></td>
+    <td>Interés Mora: <%= number_to_currency(a.arrear_interest, :precision => 0, :delimiter => ".") %></td>
+    <td>Interés Plazo: <%= number_to_currency(a.term_interest, :precision => 0, :delimiter => ".") %></td>
+  </tr>
+  <tr>
+    <td>Honorarios: <%= number_to_currency(a.fee, :precision => 0, :delimiter => ".") %></td>
+    <td>Gtos. Envío: <%= number_to_currency(a.shipping_costs, :precision => 0, :delimiter => ".") %></td>
+    <td>Gtos. Judiciales: <%= number_to_currency(a.legal_costs, :precision => 0, :delimiter => ".") %></td>
+  </tr>
+  <tr>
+    <td>Boleta: <%= a.ballot %></td>
+    <td>&nbsp;</td>
+    <td>Monto a Pagar: <%= number_to_currency(a.total_pay, :precision => 0, :delimiter => ".") %></td>
+  </tr>
+  </table>
+  <div class="nbsp"></div>
+<% end %>
+
+<!-- inicio A PAGAR -->
+<table class="print">
+  <tr>
+    <td width="30%">Total a Pagar: <%= number_to_currency(@receipt.total_pay, :precision => 0, :delimiter => ".") %></td>
+    <td class="t" rowspan=3>Observación de ajuste: </td>
+    <td class="t" rowspan=3>Firma: <div class="nota">(sólo válido con firma)</div></td>
+  </tr>
+  <tr>
+    <td>Ajuste en Terreno: </td>
+  </tr>
+  <tr>
+    <td>Nuevo Total a Pagar: </td>
+  </tr>
+</table>
+<!-- fin  A PAGAR -->
+
+<div class="nbsp"></div>
+
+<!-- inicio DETALLE DE PAGO -->
+  <div class="subtit">
+    Detalle del Pago:
+  </div>
+  <table class="print">
+    <tr>
+      <th width="25%">Forma de Pago</th>
+      <th width="35%">Emisor</th>
+      <th width="25%">N° Documento</th>
+      <th width="15%">Monto</th>
+    </tr>
+    <tr>
+      <td><%= h @receipt.formapago1 %></td>
+      <td><%= h @receipt.emisor1 %></td>
+      <td><%= h @receipt.docnum1 %></td>
+      <td><%= h number_to_currency(@receipt.monto1, :precision => 0, :delimiter => ".")%>&nbsp;</td>
+    </tr>
+    <tr>
+      <td><%= @receipt.formapago2 %></td>
+      <td><%= @receipt.emisor2 %></td>
+      <td><%= @receipt.docnum2 %></td>
+      <td><%= h number_to_currency(@receipt.monto2, :precision => 0, :delimiter => ".")%>&nbsp;</td>
+    </tr>
+    <tr>
+      <td><%= @receipt.formapago3 %></td>
+      <td><%= @receipt.emisor3 %></td>
+      <td><%= @receipt.docnum3 %></td>
+      <td><%= h number_to_currency(@receipt.monto3, :precision => 0, :delimiter => ".")%>&nbsp;</td>
+    </tr>
+    <tr>
+      <td><%= @receipt.formapago4 %></td>
+      <td><%= @receipt.emisor4 %></td>
+      <td><%= @receipt.docnum4 %></td>
+      <td><%= h number_to_currency(@receipt.monto4, :precision => 0, :delimiter => ".")%>&nbsp;</td>
+    </tr>
+    <tr>
+      <td><%= @receipt.formapago5 %></td>
+      <td><%= @receipt.emisor5 %></td>
+      <td><%= @receipt.docnum5 %></td>
+      <td><%= h number_to_currency(@receipt.monto5, :precision => 0, :delimiter => ".")%>&nbsp;</td>
+    </tr>
+    <tr>
+      <td><%= @receipt.formapago6 %></td>
+      <td><%= @receipt.emisor6 %></td>
+      <td><%= @receipt.docnum6 %></td>
+      <td><%= h number_to_currency(@receipt.monto6, :precision => 0, :delimiter => ".") %>&nbsp;</td>
+    </tr>
+    <tr>
+      <td><%= @receipt.formapago7 %></td>
+      <td><%= @receipt.emisor7 %></td>
+      <td><%= @receipt.docnum7 %></td>
+      <td><%= h number_to_currency(@receipt.monto7, :precision => 0, :delimiter => ".") %>&nbsp;</td>
+    </tr>
+    <tr>
+      <td><%= @receipt.formapago8 %></td>
+      <td><%= @receipt.emisor8 %></td>
+      <td><%= @receipt.docnum8 %></td>
+      <td><%= h number_to_currency(@receipt.monto8, :precision => 0, :delimiter => ".") %>&nbsp;</td>
+    </tr>
+    <tr>
+      <td><%= @receipt.formapago9 %></td>
+      <td><%= @receipt.emisor9 %></td>
+      <td><%= @receipt.docnum9 %></td>
+      <td><%= h number_to_currency(@receipt.monto9, :precision => 0, :delimiter => ".") %>&nbsp;</td>
+    </tr>
+    <tr>
+      <td><%= @receipt.formapago10 %></td>
+      <td><%= @receipt.emisor10 %></td>
+      <td><%= @receipt.docnum10 %></td>
+      <td><%= h number_to_currency(@receipt.monto10, :precision => 0, :delimiter => ".") %>&nbsp;</td>
+    </tr>
+    <tr>
+      <td><%= @receipt.formapago11 %></td>
+      <td><%= @receipt.emisor11 %></td>
+      <td><%= @receipt.docnum11 %></td>
+      <td><%= h number_to_currency(@receipt.monto11, :precision => 0, :delimiter => ".") %>&nbsp;</td>
+    </tr>
+    <tr>
+      <td><%= @receipt.formapago12 %></td>
+      <td><%= @receipt.emisor12 %></td>
+      <td><%= @receipt.docnum12 %></td>
+      <td><%= h number_to_currency(@receipt.monto12, :precision => 0, :delimiter => ".") %>&nbsp;</td>
+    </tr>
+    <tr>
+      <td><%= @receipt.formapago13 %></td>
+      <td><%= @receipt.emisor13 %></td>
+      <td><%= @receipt.docnum13 %></td>
+      <td><%= h number_to_currency(@receipt.monto13, :precision => 0, :delimiter => ".") %>&nbsp;</td>
+    </tr>
+    <tr>
+      <td><%= @receipt.formapago14 %></td>
+      <td><%= @receipt.emisor14 %></td>
+      <td><%= @receipt.docnum14 %></td>
+      <td><%= h number_to_currency(@receipt.monto14, :precision => 0, :delimiter => ".") %>&nbsp;</td>
+    </tr>    
+    <tr>
+      <td><%= @receipt.formapago15 %></td>
+      <td><%= @receipt.emisor15 %></td>
+      <td><%= @receipt.docnum15 %></td>
+      <td><%= h number_to_currency(@receipt.monto15, :precision => 0, :delimiter => ".") %>&nbsp;</td>
+    </tr>
+    <tr>
+      <td><%= @receipt.formapago16 %></td>
+      <td><%= @receipt.emisor16 %></td>
+      <td><%= @receipt.docnum16 %></td>
+      <td><%= h number_to_currency(@receipt.monto16, :precision => 0, :delimiter => ".") %>&nbsp;</td>
+    </tr>
+    <tr>
+      <td><%= @receipt.formapago17 %></td>
+      <td><%= @receipt.emisor17 %></td>
+      <td><%= @receipt.docnum17 %></td>
+      <td><%= h number_to_currency(@receipt.monto17, :precision => 0, :delimiter => ".") %>&nbsp;</td>
+    </tr>
+    <tr>
+      <td><%= @receipt.formapago18 %></td>
+      <td><%= @receipt.emisor18 %></td>
+      <td><%= @receipt.docnum18 %></td>
+      <td><%= h number_to_currency(@receipt.monto18, :precision => 0, :delimiter => ".") %>&nbsp;</td>
+    </tr>
+    <tr>
+      <td colspan=3 class="r">Total Pagado:</th>
+      <td><%= h number_to_currency(@receipt.total_paid, :precision => 0, :delimiter => ".") unless (@receipt.total_paid.nil? or @receipt.total_paid==0)%>&nbsp;</td>
+    </tr>
+  </table>
+<!-- fin DETALLE DE PAGO -->
+
+<div class="nbsp"></div>
+
+<!-- inicio RECIBO CONFORME -->
+<% if @rconforme %>
+  <div class="subtit">
+    Recibo conforme:
+  </div>
+  <table class="print">
+    <tr>
+      <td class="t" width="40%">Nombre: </td>
+      <td class="t" width="30%">Rut: </td>
+      <td class="t" width="30%">Firma: <div class="nota">(sólo válido con firma)</div></td>
+    </tr>
+  </table>
+  <div class="nbsp"></div>
+<% end %>
+<!-- fin  RECIBO CONFORME -->
+
+<!-- inicio DATOS DE CONTACTO -->
+<!-- Solo para Flujo de Pago 2 (RP por Completar) y 3 (RP con Gestion Terreno) -->
+<% if (@receipt.payment_flow_id==2 or @receipt.payment_flow_id==3)%>
+  <div class="subtit">
+    Datos de Contacto:
+  </div>
+  <table class="print">
+  <tr>
+    <td>Nombre: <%= @receipt.cont_name %></td>
+    <td>Rut: <%= @receipt.cont_rut %>-<%= @receipt.cont_digit %></div></td>
+    <td>Comuna: <%= @receipt.cont_comuna %></td>
+  </tr>
+  <tr>
+    <td>Calle: <%= @receipt.cont_calle %></td>
+    <td>N° <%= @receipt.cont_num %></td>
+    <td>N° Depto.: <%= @receipt.cont_depto %></td>
+  </tr>
+  <tr>
+    <td colspan="2">Referencias: <%= @receipt.cont_ref %></td>
+    <td>Horario: <%= @receipt.cont_hr %></td>
+  </tr>
+  <tr>
+    <td>Teléfono1: <%= @receipt.cont_telf1 %></td>
+    <td>Teléfono2: <%= @receipt.cont_telf2 %></td>
+    <td>Teléfono3: <%= @receipt.cont_telf3 %></td>
+  </tr>
+  </table>
+<% end %>
+<!-- fin DATOS DE CONTACTO -->
+
+<div class="nbsp"></div>
+
+<table class="print">
+  <tr>
+    <td colspan="2">Motivo caso frustrado:<p>&nbsp;<p></td>
+  </tr>
+  <tr>
+    <td>Preparado por: <%= @receipt.user_name %></td>
+    <td width="50%">Ejecutivo de Terreno:</td>
+  </tr>
+</table>
+
+<div class="botones">
+    <%= link_to 'Página Principal', :controller => "sessions", :action => "ejc" %>
+</div>

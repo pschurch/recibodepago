@@ -7,8 +7,7 @@
     <th>Identificador<!-- <%= sortable "cas_id", "Identificador" %> --></th>
     <th>Mandante<!-- <%= sortable "principal_id", "Mandante" %> --></th>
     <th>Producto<!-- <%= sortable "product_id", "Producto" %> --></th>
-    <th></th>
-    <th></th>
+    <th colspan="2"></th>
   </tr>
   <% @receipts.each do |receipt| %>
     <% @tickets = Ticket.where("receipt_id=?", receipt.id) %>
@@ -28,7 +27,9 @@
       <td><%= @tickets.first.principal_name %></td>
       <td><%= @tickets.first.product_name %></td>
       <td><%= link_to 'Ver', receipt %></td>
-      <td><%= link_to 'Editar', edit_receipt_path(receipt) %></td>
+      <td><% if receipt.timbre.nil? %> en espera timbre
+          <% else %><%= link_to 'Editar', edit_receipt_path(receipt)%> 
+          <% end %></td>
     </tr>
   <% end %>
 </table>

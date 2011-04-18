@@ -25,32 +25,35 @@ class SupervisorController < ApplicationController
 
   def sr_recp_cobr
     @titulo = "Recepcionar Recibos de Pago de Cobranza"
-    @receipts = Receipt.all
+    @receipts1 = Receipt.where("group_id=?", current_user.group_id).where("state='rendido'").where("area='Cobranza'")
+    @receipts2 = Receipt.where("group_id=?", current_user.group_id).where("state='recepcionado'").where("area='Supervisor'")
   end
+
   def sr_envio_terreno
     @titulo = "Enviar Recibos de Pago a Terreno"
-    @receipts = Receipt.all
+    @receipts = Receipt.where("group_id=?", current_user.group_id).where("state='solicita gestion terreno'")
   end
+
   def sr_recp_terreno
     @titulo = "Recepcionar Recibos de Pago de Terreno"
-    @receipts = Receipt.all
+    @receipts = Receipt.where("group_id=?", current_user.group_id)
   end
   def sr_rech_terreno
     @titulo = "Recibos de Pago Rechazador por Terreno"
-    @receipts = Receipt.all
+    @receipts = Receipt.where("group_id=?", current_user.group_id)
   end
   def sr_rend_tesoreria
     @titulo = "Rendir Recibos de Pago a Tesoreria"
-    @receipts = Receipt.all
+    @receipts = Receipt.where("group_id=?", current_user.group_id)
   end
   def sr_rech_tesoreria
     @titulo = "Recibos de Pago Rechazador por Tesoreria"
-    @receipts = Receipt.all
+    @receipts = Receipt.where("group_id=?", current_user.group_id)
   end
 
   def srlist
     @titulo = "Listado de Todos los Recibos de Pago"
-    @receipts = Receipt.all
+    @receipts = Receipt.where("group_id=?", current_user.group_id)
   end
 
   def sort_column  

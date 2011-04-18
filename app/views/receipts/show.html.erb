@@ -29,41 +29,18 @@
   </table>
 
 <!-- inicio DATOS DE CONTACTO -->
-<!-- Solo para Tickets sin Detalle, Acuerdos de Pago != 1,2,5,6 -->
-<% if (@receipt.payment_agreement_id!=1 and @receipt.payment_agreement_id!=2 and @receipt.payment_agreement_id!=5 and @receipt.payment_agreement_id!=6) %>
+<!-- Solo para Flujo de Pago 2 (RP por Completar) y 3 (RP con Gestion Terreno) -->
+<% if (@receipt.payment_flow_id==2 or @receipt.payment_flow_id==3)%>
   <div class="subtit">
     Datos de Contacto:
   </div>
-  <table class="display">
-  <tr>
-    <td>Nombre: </td><td><div class="sl"><%= @receipt.cont_name %>&nbsp;</div></td>
-    <th rowspan=20 width=25></th>
-    <td>Rut:</td><td><div class="sh"><%= @receipt.cont_rut %>-<%= @receipt.cont_digit %></div></td>
-  </tr>
-  <tr>
-    <td>Calle:</td><td><div class="sl"><%= @receipt.cont_calle %>&nbsp;</div></td>
-    <td>N° </td><td><div class="sh"><%= @receipt.cont_num %>&nbsp;</div></td>
-  </tr>
-  <tr>
-    <td>Comuna: </td><td><div class="sl"><%= @receipt.comuna %>&nbsp;</div></td>
-    <td>N° Depto.:</td><td><div class="sh"><%= @receipt.cont_depto %>&nbsp;</div></td>
-  </tr>
-  <tr>
-    <td>Referencias:</td><td colspan=4><div class="lg"><%= @receipt.cont_ref %>&nbsp;</div></td>
-  </tr>
-  <tr>
-    <td>Horario: </td><td><div class="sl"><%= @receipt.cont_hr %>&nbsp;</div></td>
-    <td>Teléfono 1: </td><td><div class="sh"><%= @receipt.cont_telf1 %>&nbsp;</div></td>
-  </tr>
-  <tr>
-    <td>Teléfono 2: </td><td><div class="sh"><%= @receipt.cont_telf2 %>&nbsp;</div></td>
-    <td>Teléfono 3: </td><td><div class="sh"><%= @receipt.cont_telf3 %>&nbsp;</div></td>
-  </tr>
-  </table>
+  <%= render "datos_contacto", :f => @receipt %>
 <% end %>
 <!-- fin DATOS DE CONTACTO -->
 
-<% if @receipt.state!="solicita gestion terreno" %>
+<!-- inicio DETALLE DE PAGO -->
+<!-- Solo para Flujo de Pago 1 (RP Completo) o cerrado -->
+<% if (@receipt.payment_flow_id==1 or @receipt.state=='cerrado')%>
   <div class="subtit">
     Detalle del Pago:
   </div>
@@ -189,15 +166,30 @@
     </tr>
     </table>
 <% end %>
-
 </td></tr></table>
 </div>
 
 <div class="botones">
-<% if current_user.profile_id==1 %>
-  <%= link_to 'Editar', edit_receipt_path(@receipt) unless notice=='1'%> 
-  <%= link_to 'Página Principal', :controller => "sessions", :action => "ejc" %>
-<% elsif current_user.profile_id==8 %>
+<% if current_user.profile_id==1 %>  <!-- ----------  Cobranza ---------- -->
+    <!-- # Flujo de Pago 1 (RP Completo) -->
+    <% if @receipt.payment_flow_id==1 %> 
+
+    <% end %>
+    <!-- # Flujo de Pago 2 (RP por Completar) -->
+    <% if @receipt.payment_flow_id==2 %> 
+      <%= link_to 'Recibo de Pago para Imprimir', :action => "print", :id => @receipt.id unless not @receipt.print_user.nil? %>
+      <%= link_to 'Editar', edit_receipt_path(@receipt) unless (@receipt.timbre.nil? or @receipt.state=='cerrado')%>
+    <% end %>
+    <!-- # Flujo de Pago 3 (RP con Gestion Terreno) -->
+    <% if @receipt.payment_flow_id==3 %> 
+
+    <% end %> 
+    <%= link_to 'Página Principal', :controller => "sessions", :action => "ejc" %>
+
+<% elsif current_user.profile_id==2 %> 
+  <%= link_to 'Página Principal', :controller => "sessions", :action => "sup" %>
+
+<% elsif current_user.profile_id==8 %> <!-- ---------- Designer ------------  -->
   <%= link_to "Listado de Todos los Recibos de Pago", dreceipts_path %>
   <%= link_to 'Página Principal', :controller => "sessions", :action => "dsg" %>
 <% end %>

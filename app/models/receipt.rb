@@ -39,7 +39,9 @@ class Receipt < ActiveRecord::Base
   end 
 
   def cierre_correcto
-    if(payment_agreement_id==3 or payment_agreement_id==4) # Gestiona Eje Cobranza # Gestion en Terreno
+
+    # Solo para Flujo de Pago 2 (RP por Completar) y 3 (RP con Gestion Terreno) 
+    if(payment_flow_id==2 or payment_flow_id==3) 
       if (cont_name=="")
         errors.add(:cont_name, "(Nombre de Contacto): debe ingresar un valor para este campo.")
       end 
@@ -55,8 +57,8 @@ class Receipt < ActiveRecord::Base
       if (cont_num=="")
         errors.add(:cont_num, "(Nro. Calle de Contacto): debe ingresar un valor para este campo.")
       end 
-      if (comuna=="")
-        errors.add(:comuna, "(Comuna de Contacto): debe seleccionar un valor para este campo.")
+      if (cont_comuna=="")
+        errors.add(:cont_comuna, "(Comuna de Contacto): debe seleccionar un valor para este campo.")
       end 
       if (cont_telf1=="")
         errors.add(:cont_telf1, "(Telefono de Contacto): debe ingresar un valor para este campo.")

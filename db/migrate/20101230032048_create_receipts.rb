@@ -2,11 +2,13 @@ class CreateReceipts < ActiveRecord::Migration
   def self.up
     create_table :receipts do |t|
       t.string :state, :default => "abierto"
+      t.string :substate 
+      t.string :area
       t.integer :payment_agreement_id
-      t.integer :user_id
-      t.string :comuna
+      t.integer :payment_flow_id
+      t.integer :remesa_id
       t.string :payment_agreement_name
-      t.date :date_r
+      t.datetime :date_r
       t.integer :total_pay
       t.integer :total_paid
       t.string :user_name
@@ -15,18 +17,19 @@ class CreateReceipts < ActiveRecord::Migration
       t.string :et_name 
       t.string :horario
       t.boolean :rc
-      t.string :user_print
-      t.date :date_print
-      t.integer :num_print
+      t.string :print_user
+      t.datetime :print_date
+      t.boolean :timbre
       t.string :canc_by 
-      t.date :canc_date 
+      t.datetime :canc_date
+      t.text :canc_mtvo 
       t.string :rech_by
-      t.string :rech_mtvo
-      t.date :rech_date
+      t.text :rech_mtvo
+      t.datetime :rech_date
       t.string :pdf_by
-      t.date :pdf_date
-      t.string :frs_mtvo
-      t.date :date_tsrc
+      t.datetime :pdf_date
+      t.text :frs_mtvo
+      t.datetime :tsrc_date
       t.string :cont_name
       t.string :cont_rut
       t.string :cont_digit

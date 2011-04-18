@@ -24,7 +24,7 @@ def asignacion
                      :ctacte => "989987-098",
                      :expir_date => "2010-12-11" )  
 
-  15.times do |n|
+  35.times do |n|
     nombre  = Faker::Name.name
     ot = "ot-#{n+1}"
     pp = (rand 3) + 1

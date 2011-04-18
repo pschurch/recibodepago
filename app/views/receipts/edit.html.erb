@@ -30,37 +30,12 @@
   </table>
 
 <!-- inicio DATOS DE CONTACTO -->
-<!-- Solo para Tickets sin Detalle, Acuerdos de Pago != 1,2,5,6 -->
-<% if (@receipt.payment_agreement_id!=1 and @receipt.payment_agreement_id!=2 and @receipt.payment_agreement_id!=5 and @receipt.payment_agreement_id!=6) %>
+<!-- Solo para Flujo de Pago 2 (RP por Completar) y 3 (RP con Gestion Terreno) -->
+<% if (@receipt.payment_flow_id==2 or @receipt.payment_flow_id==3)%>
   <div class="subtit">
     Datos de Contacto:
   </div>
-  <table class="datos">
-  <tr>
-    <td width="85">Nombre: </td><td><%= f.text_field :cont_name, :size => "37" %></td>
-    <th rowspan=20 width=16></th>
-    <td width="70">Rut:</td><td><%= f.text_field :cont_rut, :size => "7" %> - <%= f.text_field :cont_digit, :size => "1" %></td>
-  </tr>
-  <tr>
-    <td>Calle:</td><td><%= f.text_field :cont_calle, :size => "37" %></td>
-    <td>N° </td><td><%= f.text_field :cont_num, :size => "12" %></td>
-  </tr>
-  <tr>
-    <td>Comuna: </td><td><%= f.collection_select :comuna, Comuna.where('state = true').order('name ASC'), :name, :name, options ={:prompt => "- Seleccione -"} %></td>
-    <td>N° Depto.:</td><td><%= f.text_field :cont_depto, :size => "12" %></td>
-  </tr>
-  <tr>
-    <td>Referencias:</td><td colspan=4><%= f.text_field :cont_ref, :size => "67" %></td>
-  </tr>
-  <tr>
-    <td>Horario: </td><td><%= f.text_field :cont_hr, :size => "37" %></td>
-    <td>Teléfono 1: </td><td><%= f.text_field :cont_telf1, :size => "12" %></td>
-  </tr>
-  <tr>
-    <td>Teléfono 2: </td><td><%= f.text_field :cont_telf2, :size => "12" %></td>
-    <td>Teléfono 3: </td><td><%= f.text_field :cont_telf3, :size => "12" %></td>
-  </tr>
-  </table>
+  <%= render "datos_contacto", :f => @receipt %>
 <% end %>
 <!-- fin DATOS DE CONTACTO -->
 

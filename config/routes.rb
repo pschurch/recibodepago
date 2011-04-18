@@ -36,6 +36,7 @@ Recibodepago::Application.routes.draw do
   match '/dpayment_agreements', :to => 'designer#payment_agreements'
   get "designer/del_reg"
 
+  get "receipts/print"
   match '/listk', :to => 'receipts#create_rp'
   match '/lisra', :to => 'receipts#rp_abtos'
   match '/lisrr', :to => 'receipts#rp_rechz'

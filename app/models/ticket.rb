@@ -52,18 +52,18 @@ class Ticket < ActiveRecord::Base
       errors.add(:adjust_mgt_des, "(Descripcion modificacion) : debe ingresar la descripcion de la modificacion solicitada a Gerencia.")
     end
   end
+
   def valida_ajuste_sup 
-    if (state=='pms' and not adjust_mgt?)
-      if (adjust.nil?)
-        errors.add(:adjust, "(Ajuste) : Debe ingresar un valor en este campo.xxxxxxxxx")
-      elsif  (adjust > 1000) or (adjust < -1000)
-        errors.add(:adjust, "(Ajuste) : El valor ingresado debe estar entre -$1.000 y $1.000. Si requiere un valor distinto, solicite modificacion a Gerencia.yyyyyyyyyyy")
+    if (not adjust.nil?) 
+      if  (adjust < -1000)
+        errors.add(:adjust, "(Ajuste) : El descuento no puede ser mayor que -$1000. Si requiere un valor distinto, solicite modificacion a Gerencia.")
+      end
+      if (adjust_obs.nil? or adjust_obs.empty?)
+        errors.add(:adjust_obs, "(Observacion ajuste) : debe ingresar un valor en este campo.")
       end
     end
-    if (not adjust.nil?) and (adjust_obs.nil? or adjust_obs.empty?)
-      errors.add(:adjust_obs, "(Observacion ajuste) : debe ingresar un valor en este campo.zzzzzzzzz")
-    end
   end
+
   def valida_ajuste_mgt
     if (state=='pmg')
       if (adjust.nil?)

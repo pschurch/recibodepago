@@ -7,12 +7,12 @@
 
   <div class="actions"><%= f.submit "Continuar", :name => "next_button" unless @receipt.last_step?%></div>
 
-  <!-- Solo para Tickets sin Detalle, Acuerdos de Pago = 3,4-->
-  <% if (@receipt.payment_agreement_id==3 or @receipt.payment_agreement_id==4) %>
+  <!-- Solo para Flujo de Pago 2 y 3 -->
+  <% if (@payment_flow==2 or @payment_flow==3)%>
     <div class="actions"><%= f.submit "Grabar", :name => "rec_button" unless @receipt.first_step?%></div>
   <% end %>
-  <!-- Solo para Tickets con Detalle, Acuerdos de Pago = 1,2,5,6  -->
-  <% if (@receipt.payment_agreement_id==1 or @receipt.payment_agreement_id==2 or @receipt.payment_agreement_id==5 or @receipt.payment_agreement_id==6) %>
+  <!-- Solo para Flujo de Pago 1 -->
+  <% if (@payment_flow==1)%>
     <div class="actions"><%= f.submit "Cerrar Recibo de Pago", :name => "rec_button" unless @receipt.first_step?%></div>
   <% end %>
 

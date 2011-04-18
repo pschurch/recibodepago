@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110416011550) do
+ActiveRecord::Schema.define(:version => 20110417021448) do
 
   create_table "assignments", :force => true do |t|
     t.string   "state"
@@ -167,10 +167,8 @@ ActiveRecord::Schema.define(:version => 20110416011550) do
   create_table "receipts", :force => true do |t|
     t.string   "state",                  :default => "abierto"
     t.integer  "payment_agreement_id"
-    t.integer  "user_id"
-    t.string   "comuna"
+    t.integer  "remesa_id"
     t.string   "payment_agreement_name"
-    t.date     "date_r"
     t.integer  "total_pay"
     t.integer  "total_paid"
     t.string   "user_name"
@@ -179,14 +177,10 @@ ActiveRecord::Schema.define(:version => 20110416011550) do
     t.string   "et_name"
     t.string   "horario"
     t.boolean  "rc"
-    t.string   "user_print"
-    t.date     "date_print"
-    t.integer  "num_print"
+    t.string   "print_user"
     t.string   "canc_by"
-    t.date     "canc_date"
     t.string   "rech_by"
     t.string   "rech_mtvo"
-    t.date     "rech_date"
     t.string   "pdf_by"
     t.date     "pdf_date"
     t.string   "frs_mtvo"
@@ -279,6 +273,12 @@ ActiveRecord::Schema.define(:version => 20110416011550) do
     t.integer  "monto18"
     t.string   "substate"
     t.string   "area"
+    t.integer  "payment_flow_id"
+    t.datetime "date_r"
+    t.datetime "canc_date"
+    t.datetime "rech_date"
+    t.datetime "print_date"
+    t.boolean  "timbre"
   end
 
   create_table "tickets", :force => true do |t|

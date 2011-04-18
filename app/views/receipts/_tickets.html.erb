@@ -35,7 +35,7 @@
   </tr>
   <tr>
     <td>Gastos Envío:</td><td class="ro"><div class="sh"><%= number_to_currency(a.shipping_costs, :precision => 0, :delimiter => ".") %>&nbsp;</div></td>
-    <td>Vencimiento:</td><td class="ro"><div class="n"><% if not a.expir_date.nil? %><%= a.expir_date.strftime("%d-%m-%Y") %><% end %></div></td>
+    <td>Vencimiento:</td><td class="ro"><div class="n"><%= a.expir_date.strftime("%d/%m/%Y") unless a.expir_date.nil? %></div></td>
   </tr>
   <tr>
     <td>Gastos Judiciales:</td><td class="ro"><div class="sh"><%= number_to_currency(a.legal_costs, :precision => 0, :delimiter => ".") %>&nbsp;</div></td>
