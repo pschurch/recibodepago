@@ -1,0 +1,26 @@
+<div class="seccion">
+  <table class="index">
+  <tr>
+    <th>Id</th>
+    <th>Nombre</th>
+    <th>Descripci&oacute;n</th>
+    <th>Estado</th>
+    <th></th>
+  </tr>
+  <% @payment_periods.each do |payment_period| %>
+  <tr>
+    <td><%= payment_period.id %></td>
+    <td><%= payment_period.name %></td>
+    <td><%= payment_period.description %></td>
+    <td><% if payment_period.state %>Activo<% else %>Inactivo<% end %></td>
+    <td><%= link_to 'Ver', payment_period %></td>
+  </tr>
+  <% end %>
+  </table>
+</div>
+
+<div class="botones">
+  <%= link_to 'Crear Periodo de Pago', new_payment_period_path %>
+  <%= render 'shared/pp_adm_dsg' %>
+</div>
+

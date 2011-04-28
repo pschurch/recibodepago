@@ -1,24 +1,26 @@
-  <table class="datos">
+  <%= f.hidden_field :payment_agreement_id, :value=> @receipt.payment_agreement_id %>  
+  <%= f.hidden_field :payment_flow_id, :value=> @payment_flow %>
+  <%= f.hidden_field :total_pay, :value=> @total_rp %>
+  <%= f.hidden_field :payment_agreement_name, :value=> @payment_agreement %>
+  <%= f.hidden_field :user_name, :value=> current_user.name %>
+  <%= f.hidden_field :telephone_user, :value=> current_user.telephone %>
+  <table class="formulario">
   <tr>
-    <td>Acuerdo de Pago: &nbsp;</td>
-    <td><%= f.text_field :payment_agreement_name, :value=> @payment_agreement, :readonly => true, :size => "30" %>
-    <%= f.hidden_field :payment_agreement_id, :value=> @receipt.payment_agreement_id %></td>
-    <%= f.hidden_field :payment_flow_id, :value=> @payment_flow %></td>
-    <th rowspan=20 width=30></th>
-    <td>Total a Pagar: &nbsp;</td>
-    <td class="ro"><div class="sh"><%= number_to_currency(@total_rp, :precision => 0, :delimiter => ".") %>
-    <%= f.hidden_field :total_pay, :value=> @total_rp %></div></td>
+    <td>Acuerdo de Pago:</td><td class="ro"><div class="n"><%= @payment_agreement %></div></td>
+    <th rowspan=3 width=16></th>
+    <td>Total a Pagar:</td><td class="ro"><div class="sh"><%= number_to_currency(@total_rp, :precision => 0, :delimiter => ".") %></div></td>
   </tr>
   <tr>
-    <td width="115">Fecha de Pago:</td><td><%= f.date_select :date_r, :order => [:day, :month, :year] %></td>
+    <td width="130">Fecha de Pago:</td><td><div class="n"><%= f.date_select :date_r, :order => [:day, :month, :year] %></div></td>
+    <td width="110"></td><td></td>
   </tr>
   <tr>
-    <td>Preparado por:</td>
-    <td><div class="n"><%= f.text_field :user_name, :size => "30", :value => current_user.name, :readonly => true %></div></td>
-    <td>Teléfono: </td>
-    <td><div class="n"><%= f.text_field :telephone_user, :size => "12" , :value => current_user.telephone, :readonly => true %></div></td>
+    <td>Preparado por:</td><td class="ro"><div class="n"><%= current_user.name %></div></td>
+    <td>Teléfono:</td><td class="ro"><div class="sh"><%= current_user.telephone %></div></td>
   </tr>
   </table>
+
+<div class="nbsp"></div>
 
 <!-- inicio DATOS DE CONTACTO -->
 <!-- Solo para Flujo de Pago 2 (RP por Completar) y 3 (RP con Gestion Terreno) -->
@@ -26,7 +28,7 @@
   <div class="subtit">
     Datos de Contacto: 
   </div>
-  <table class="datos">
+  <table class="formulario">
   <tr>
     <td width="85">Nombre: </td><td><%= f.text_field :cont_name, :size => "37" %></td>
     <th rowspan=20 width=16></th>
@@ -60,7 +62,7 @@
   <div class="subtit">
     Detalle del Pago:
   </div>
-    <table class="datos">
+    <table class="formulario">
     <tr>
       <th width="120">Forma de Pago</th>
       <th width="245">Emisor</th>
@@ -175,11 +177,12 @@
       <td><%= f.text_field :docnum18, :size => "16" %></td>
       <td><%= f.text_field :monto18, :size => "8" %></td>
     </tr>
+<!--
     <tr>
-      <td colspan=2></td>
-      <th>Total Pagado:</th>
-      <td><div class="n"><%= f.text_field :total_paid, :size => "8", :value => @total_paid, :readonly => true %></div></td>
+      <th colspan=3>Total Pagado:</th>
+      <td><div class="sh"><%= f.text_field :total_paid, :size => "8", :value => @total_paid, :readonly => true %></div></td>
     </tr>
+-->
     </table>
 <% end %>
 

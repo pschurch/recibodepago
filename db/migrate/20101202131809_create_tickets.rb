@@ -4,7 +4,8 @@ class CreateTickets < ActiveRecord::Migration
       t.integer :principal_id
       t.integer :collection_type_id
       t.integer :product_id
-      t.integer :user_id
+      t.integer :user_id 
+      t.date :date_pay
       t.integer :receipt_id
       t.string :state, :default => "creado"
       t.string :state_fees, :default => "sin_facturar"
@@ -17,6 +18,7 @@ class CreateTickets < ActiveRecord::Migration
       t.string :collection_type_name
       t.text :payment_description
       t.integer :capital
+      t.string :pay_period
       t.integer :arrear_interest
       t.integer :term_interest
       t.integer :fee
@@ -39,10 +41,13 @@ class CreateTickets < ActiveRecord::Migration
       t.text :adjust_mgt_des
       t.string :canceled_by
       t.integer :assignment_id 
+      t.integer :adjust_mx
       t.datetime :adjust_sup_time
       t.datetime :adjust_mgt_time
       t.datetime :canceled_time
-      t.integer :adjust
+      t.integer :adjust_ejc_val
+      t.integer :adjust_sup_val
+      t.integer :adjust_mgt_val
       t.datetime  :adjust_time
       t.string :adjust_by
       t.text :adjust_obs
@@ -55,3 +60,4 @@ class CreateTickets < ActiveRecord::Migration
     drop_table :tickets
   end
 end
+

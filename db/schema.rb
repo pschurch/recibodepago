@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110417021448) do
+ActiveRecord::Schema.define(:version => 20110427193200) do
 
   create_table "assignments", :force => true do |t|
     t.string   "state"
@@ -86,6 +86,16 @@ ActiveRecord::Schema.define(:version => 20110417021448) do
     t.datetime "updated_at"
   end
 
+  create_table "parameters", :force => true do |t|
+    t.string   "name"
+    t.integer  "val_int"
+    t.decimal  "val_dec",     :precision => 10, :scale => 0
+    t.text     "description"
+    t.boolean  "state",                                      :default => true
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "payment_agreements", :force => true do |t|
     t.string   "name"
     t.text     "description"
@@ -116,6 +126,14 @@ ActiveRecord::Schema.define(:version => 20110417021448) do
   create_table "payment_forms_payment_policies", :id => false, :force => true do |t|
     t.integer  "payment_form_id"
     t.integer  "payment_policy_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "payment_periods", :force => true do |t|
+    t.string   "name"
+    t.text     "description"
+    t.boolean  "state",       :default => true
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -285,7 +303,6 @@ ActiveRecord::Schema.define(:version => 20110417021448) do
     t.integer  "principal_id"
     t.integer  "collection_type_id"
     t.integer  "product_id"
-    t.integer  "user_id"
     t.integer  "receipt_id"
     t.string   "state",                :default => "creado"
     t.string   "state_fees",           :default => "sin_facturar"
@@ -323,13 +340,19 @@ ActiveRecord::Schema.define(:version => 20110417021448) do
     t.datetime "adjust_sup_time"
     t.datetime "adjust_mgt_time"
     t.datetime "canceled_time"
-    t.integer  "adjust"
+    t.integer  "adjust_sup_val"
     t.datetime "adjust_time"
     t.string   "adjust_by"
     t.text     "adjust_obs"
     t.integer  "new_total_pay"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "adjust_ejc_val"
+    t.date     "date_pay"
+    t.string   "pay_period"
+    t.integer  "user_id"
+    t.integer  "adjust_mgt_val"
+    t.integer  "adjust_mx"
   end
 
   create_table "users", :force => true do |t|

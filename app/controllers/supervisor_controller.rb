@@ -12,14 +12,16 @@ class SupervisorController < ApplicationController
   def stlist
     @titulo = "Listado de Tickets"
     @principals = Principal.where("state=true")
-    if (params[:f1].nil? or params[:f1]=='0') and (params[:f2].nil? or params[:f2]=='t')
+    (params[:mandante].nil? or params[:mandante]=='0') ? @mandante = 'Todos' : @mandante = params[:mandante]
+    (params[:estado].nil? or params[:estado]=='t') ? @estado = 'Todos' : @estado = params[:estado]
+    if (@mandante=='Todos' and @estado=='Todos')
       @tickets = Ticket.where("state='creado' OR state='anulado' OR state='pms' OR state='pmg' OR state='modificado' OR state='rc'").where("group_id=?", current_user.group_id)
-    elsif (params[:f1]=='0') and (not params[:f2]=='t')       
-      @tickets = Ticket.where("state=?", params[:f2]).where("group_id=?", current_user.group_id)
-    elsif (not params[:f1]=='0') and (params[:f2]=='t')
-      @tickets = Ticket.where("principal_id=?", params[:f1].to_i).where("state='creado' OR state='anulado' OR state='pms' OR state='pmg' OR state='modificado' OR state='rc'").where("group_id=?", current_user.group_id)
-    elsif (not params[:f1]=='0') and (not params[:f2]=='t')
-      @tickets = Ticket.where("principal_id=?", params[:f1].to_i).where("state=?", params[:f2]).where("group_id=?", current_user.group_id)
+    elsif (@mandante=='Todos' and @estado!='Todos')       
+      @tickets = Ticket.where("state=?", @estado).where("group_id=?", current_user.group_id)
+    elsif (@mandante!='Todos') and (@estado=='Todos')
+      @tickets = Ticket.where("principal_id=?", @mandante.to_i).where("state='creado' OR state='anulado' OR state='pms' OR state='pmg' OR state='modificado' OR state='rc'").where("group_id=?", current_user.group_id)
+    elsif (@mandante!='Todos') and (@estado!='Todos')
+      @tickets = Ticket.where("principal_id=?", @mandante.to_i).where("state=?", @estado).where("group_id=?", current_user.group_id)
     end
   end
 

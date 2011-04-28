@@ -10,6 +10,8 @@ h1, h2, h3, h4, {font-weight:normal;color:#111;}
 h1 {font-size:3em;line-height:1;margin-bottom:0.5em;}
 h2 {font-size:2em;margin-bottom:0.75em;}
 h3 {font-size:1.7em;line-height:1;margin-bottom:1em;}
+h4 {font-size:20px;margin-bottom:5px;}
+hr {background:rgb(229,179,90);color:rgb(229,179,90);width:100%;height:2px;margin-top:2px;margin-bottom:10px;padding:0;border:none;}
 
 /* marco externo */
 .ext {width: 800px; background: #CCC2B5; border: 2px solid #D4C9BD; padding: 2px; padding-top: 0;
@@ -32,6 +34,12 @@ div.botones a {margin: 7px; padding: 4px 8px; text-decoration: none; color: #222
 div.botones a:hover { background: rgb(229,179,90); text-decoration: none;}
 div.botones a:active { border: 1px inset #000;}
 
+div.actions { text-align: center;}
+div.actions input { margin: 7px; margin-top:20px; padding: 4px 8px; text-decoration: none; font-weight: bold;  color: #222; font-size: 12px; border: 1px outset #CCC;  background: rgb(255,199,100);	}
+td div.actions input { margin-top:8px;}
+div.nbsp {height: 18px;} 
+div.subtit {margin-top:6px; margin-bottom: 6px; font-size: 14px; font-weight: bold;}
+
 ul { list-style-type: square; margin-left: 60px; font-size: 15px;  }
 a { color: #AC0000; font-weight: bold; text-decoration: none;}
 a:hover {  text-decoration: underline;	color: rgb(172,0,0);}
@@ -50,82 +58,43 @@ p {  margin: 0;  padding: 0;}
 
 input[type=text], input[type=password], input.text, input.title, textarea, select, input.checkbox, input.radio {margin:2px 0; font-size: 13px; }
 
-/* Tablas de contenido */
-table { margin:0 auto; border-collapse: collapse; border: 1px solid rgb(229,179,90); font-size: 13px;}
-th, td { border: 1px solid rgb(229,179,90); padding: 3px;}
-th { background: rgb(255, 199, 100);}
-td { background: white; }
-table a { font-weight: normal; }
+/* Tablas */
+table { margin:0 auto; border-collapse: collapse; font-size: 13px; }
 
-/* Tablas para formularios */
-table.display, table.datos { border: 0px; margin:0; }
+td {padding: 2px; }
+td.marco {border: 1px solid rgb(229,179,90); padding: 12px; }
+td.ro input[type=text] {background: rgb(235, 235, 228); margin:3px 0; border: 1px solid #AAA; padding:2px;}
 
-table.display th { background: #FFDC9E; border: 0px; padding: 2px;}
-table.display td { background: #FFDC9E; border: 0px; padding: 2px; vertical-align: middle; } 
-table.display td.ro input[type=text] { background: rgb(235, 235, 228); margin:3px 0; font-size: 13px;}
+table.formulario { width:100%}
+table.formulario td {vertical-align: middle; border-bottom: 1px solid rgb(254,204,115);}
+table.formulario td.ro div {background: rgb(235, 235, 228); margin:3px 0; border: 1px solid #AAA; padding:4px;}
 
-table.display td .field_with_errors  { background: #FFDC9E; border: 1px solid #FFDC9E;}
-table.display td .field_with_errors input[type=text] {padding: 1px; border: 3px solid rgb(172,0,0)}
-table.display td .field_with_errors textarea  {padding: 1px; border: 3px solid rgb(172,0,0)}
+table.index th, table.index td { border: 1px solid rgb(229,179,90); padding: 3px;}
+table.index th { background: rgb(255, 199, 100);}
+table.index td { background: white; }
+table.index a { font-weight: normal; }
 
-table.display div { border: 1px solid #AAA; background: white; padding:2px;}
-table.display div.n { width: 240px; }
-table.display div.w {height:40px; width: 240px;}
-table.display div.sn {width: 30px;} 
-table.display div.pp {width: 70px;}
-table.display div.sh {width: 104px;}
-table.display div.sl {width: 290px;} 
-table.display div.lg {width: 484px;}
-table.display div.lgh {width: 484px; height:40px} 
-table.display div.boton { width:100px; text-align: center; background: #FFDC9E; border: 0px;}
-table.display div.boton input {margin: 1px; padding: 4px 8px; text-decoration: none; font-weight: bold; 	color: #222; font-size: 12px; border: 1px outset #CCC;  background: rgb(255,199,100);} 
-table.display td.ro div {background: rgb(235, 235, 228); margin:3px 0; }
+div.field    { margin-top: 3px; margin-bottom: 3px;} 
+div.field_txt{ margin-bottom: 4px; padding: 5px; border: 1px solid #AAA;  background: white;  width: 350px; }
 
-table.datos td.ro div {background: rgb(235, 235, 228); margin:3px 0; border: 1px solid #AAA; padding:2px;}
-table.datos td.ro div.sh {width: 104px;}
-table.datos td.ro div.n {width: 240px;}
-table.datos td.ro input[type=text] {background: rgb(235, 235, 228); margin:3px 0; }
-table.datos th { background: #FFDC9E; border: 2px solid #FFDC9E; padding: 0}
-table.datos td { background: #FFDC9E; border: 2px solid #FFDC9E; padding: 0} 
+table.display { width:100%}
+table.display td {vertical-align: middle; border-bottom: 1px solid rgb(254,204,115);}
+table.display div    { margin-top:2px; margin-bottom:2px; border:1px solid #AAA; background:white; padding:2px;}
 
-td.formulario { padding: 12px; padding-bottom: 5px; vertical-align: top; background: #FFDC9E; font-size: 13px; }
-
-hr {background:rgb(229,179,90);color:rgb(229,179,90);width:100%;height:2px;margin-top:2px;margin-bottom:10px;padding:0;border:none;}
-
-div.subtit {margin-top:6px; margin-bottom: 6px; font-size: 14px; font-weight: bold;}
-
-div.field, div.field-r, div.field-l { margin-bottom: 4px;}
-div.field-r, div.fieldt-r, div.field_txt-r { float: right;}
-div.field-l, div.fieldt-l, div.field_txt-l, div.fieldg_txt-l, div.fields_txt-l { float: left;}
-div.fieldt-l, div.fieldt-r { margin-top: 5px; margin-right: 3px;}
-div.field_txt, div.field_txt-l, div.fieldg_txt-l, div.fields_txt-l, div.field_txt-r, div.field_area{
-  margin:2px 0; margin-bottom: 6px;  padding: 5px; border: 1px solid #AAA;  background: white;
-  width: 350px; }
-div.field_area { width: 450px;}
-div.field_txt-l { width: 100px;}
-div.field_txt-r { width: 100px; }
-div.fieldg_txt-l { width: 300px; }
-div.fields_txt-l { width: 20px; }
-div.field-r div.field_txt {width: 160px;}
-div.field-l div.field_txt {width: 160px;}
-div.actions { text-align: center;}
-div.actions input { margin: 7px; padding: 4px 8px; text-decoration: none; font-weight: bold;		
-  color: #222; font-size: 12px; border: 1px outset #CCC;  background: rgb(255,199,100);	}
-div.nbsp {height: 18px;} 
+div.sn { width: 30px;} 
+div.sh { width: 104px;}
+div.n  { width: 240px; }
+div.lg { width: 484px;}
+div.lgh {width: 484px; height:40px} 
+div.lmh {width: 405px; height:40px}
 
 /* print */
 table.info { margin:0 auto; border-collapse: collapse; border:0px; width:100%}
 table.info td {padding:3px; border:1px solid white; vertical-align:top}
 .centrar {text-align: center; }
 table.print { margin:0 auto; border-collapse: collapse; border:0px; width:100%}
-table.print th, td {padding:2px; border:1px solid rgb(200,200,200); background:white;}
+table.print th, table.print td {padding:2px; border:1px solid rgb(200,200,200); background:white;}
 table.print td.r {text-align: right; vertical-align:middle;}
-
-h4 {font-size:20px;margin-bottom:5px;}
-div.nota {font-size:10px;margin-top:35px;text-align: center;}
-
-
-
 
 
 

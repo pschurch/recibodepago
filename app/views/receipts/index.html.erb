@@ -1,8 +1,8 @@
 <div class="seccion">
 
-<table><tr><td class="formulario">
+<table><tr><td class="marco">
 <% form_tag({:controller => :receipts, :action => :index}, :method => :get) do %>
-  <table class="display">
+  <table>
   <tr>
     <td>
       Area: <%= select_tag('area', options_for_select([['Todas'], ['Cobranza'], ['Terreno'], ['Supervisor']], :selected => @area))%>
@@ -21,7 +21,7 @@
                           ['anulado']  ], :selected => @estado))%>
     </td>
     <td rowspan=2>
-      <div class="boton"><%= submit_tag "Filtrar", :state => 'nil' %></div>
+      <div class="actions"><%= submit_tag "Filtrar", :state => 'nil' %></div>
     </td>
   </tr>  
   </table>
@@ -30,7 +30,7 @@
 
 <div class="nbsp"></div>
 
-<table>
+<table class="index">
   <tr>
     <th>N° RP</th>
     <th>Fecha de Pago</th>
@@ -47,7 +47,7 @@
   </tr>
   <% if @receipts.empty? %>
   <tr>
-    <td colspan= 11>No se han encontrado Recibos de Pago con el filtro seleccionado.</td>
+    <td colspan= 12>No se han encontrado Recibos de Pago con el filtro seleccionado.</td>
   </tr>  
   <% else %>
     <% @receipts.each do |receipt| %>

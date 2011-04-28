@@ -1,18 +1,29 @@
 <div class="seccion">
 
-<table><tr><td class="formulario">
+<table><tr><td class="marco">
 <% form_tag({:controller => :manager, :action => :mtlist}, :method => :get) do %>
-  <table class="display">
+  <table>
   <tr>
-    <td>Seleccionar Estado: <%= select_tag( 'f1', options_for_select([['Todos', 't'], ['creado','creado'], ['por modificar supervisor', 'pms'], ['por modificar gerencia','pmg'], ['modificdo','modificado'], ['recibo creado','rc'], ['para remesar','pr'], ['remesado','remesado'], ['cerrado','cerrado'], ['anulado', 'anulado']]) )%></td>
-    <td><div class="boton"><%= submit_tag "Filtrar", :state => 'nil' %></div></td>
+    <td>Seleccionar Estado: <%= select_tag( 'estado', 
+        options_for_select([['Todos', 't'], 
+                            ['creado','creado'], 
+                            ['por modificar supervisor', 'pms'], 
+                            ['por modificar gerencia','pmg'], 
+                            ['modificdo','modificado'], 
+                            ['recibo creado','recibo creado'], 
+                            ['para remesar','para remesar'], 
+                            ['remesado','remesado'], 
+                            ['cerrado','cerrado'], 
+                            ['anulado', 'anulado']], :selected => @estado))%>
+    </td>
+    <td><div class="actions"><%= submit_tag "Filtrar", :state => 'nil' %></div></td>
   </tr>
   </table>
 <% end %>
 </td></tr></table>
 
   <div class="nbsp"></div>
-  <table>
+  <table class="index">
   <tr>
     <th>N° Ticket</th>
     <th>N° RP</th>
@@ -34,10 +45,6 @@
             "por modificar supervisor"
           when "pmg"
             "por modificar gerencia"
-          when "rc"
-            "por recibo creado"
-          when "pr"
-            "para remesar"
           else
             @estado
         end %>".</td>
@@ -59,10 +66,6 @@
             "por modificar supervisor"
           when "pmg"
             "por modificar gerencia"
-          when "rc"
-            "por recibo creado"
-          when "pr"
-            "para remesar"
           else
             a.state
         end %>

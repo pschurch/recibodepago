@@ -15,11 +15,12 @@ class Ticket < ActiveRecord::Base
   validates_numericality_of :fee, :only_integer => true, :message => "(Honorarios) : el valor debe ser numerico.", :allow_blank => true
   validates_numericality_of :shipping_costs, :only_integer => true, :message => "(Gastos Envio) : el valor debe ser numerico.", :allow_blank => true
   validates_numericality_of :legal_costs, :only_integer => true, :message => "(Gastos Judiciales) : el valor debe ser numerico.", :allow_blank => true
-  validates_numericality_of :adjust, :only_integer => true, :message => "(Ajuste) : el valor debe ser numerico.", :allow_blank => true
+  validates_numericality_of :adjust_ejc_val, :only_integer => true, :message => "(Ajuste) : el valor debe ser numerico.", :allow_blank => true
+  validates_numericality_of :adjust_sup_val, :only_integer => true, :message => "(Ajuste) : el valor debe ser numerico.", :allow_blank => true
+  validates_numericality_of :adjust_mgt_val, :only_integer => true, :message => "(Ajuste) : el valor debe ser numerico.", :allow_blank => true
   validate :valida_mod_sup
   validate :valida_mod_mgt
-  validate :valida_ajuste_sup
-  validate :valida_ajuste_mgt
+  validate :valida_ajustes
 
   def current_step  
     @current_step || "ticket_1"  
@@ -53,25 +54,14 @@ class Ticket < ActiveRecord::Base
     end
   end
 
-  def valida_ajuste_sup 
-    if (not adjust.nil?) 
-      if  (adjust < -1000)
-        errors.add(:adjust, "(Ajuste) : El descuento no puede ser mayor que -$1000. Si requiere un valor distinto, solicite modificacion a Gerencia.")
-      end
-      if (adjust_obs.nil? or adjust_obs.empty?)
-        errors.add(:adjust_obs, "(Observacion ajuste) : debe ingresar un valor en este campo.")
-      end
+  def valida_ajustes
+    if (not adjust_ejc_val.nil?) and (adjust_ejc_val< adjust_mx)
+        errors.add(:adjust_ejc_val, "(Ajuste) : El descuento no puede ser mayor que $"+adjust_mx.to_s+". Si requiere un valor distinto, solicite modificacion a Supervisor.")
+    elsif (not adjust_sup_val.nil?) and (adjust_sup_val< -adjust_mx)
+        errors.add(:adjust, "(Ajuste) : El descuento no puede ser mayor que $"+adjust_mx+". Si requiere un valor distinto, solicite modificacion a Gerencia.")
     end
-  end
-
-  def valida_ajuste_mgt
-    if (state=='pmg')
-      if (adjust.nil?)
-        errors.add(:adjust, "(Ajuste) : Debe ingresar un valor en este campo.")
-      end
-      if (adjust_obs.nil? or adjust_obs.empty?)
-        errors.add(:adjust_obs, "(Observacion ajuste) : debe ingresar un valor en este campo.")
-      end
+    if (not adjust_ejc_val.nil? or not adjust_sup_val.nil? or not adjust_mgt_val.nil?) and (adjust_obs.nil? or adjust_obs.empty?)
+      errors.add(:adjust_obs, "(Observacion ajuste) : debe ingresar un valor en este campo.")
     end
   end
 

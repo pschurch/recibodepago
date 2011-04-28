@@ -10,18 +10,11 @@ class ManagerController < ApplicationController
 
   def mtlist
     @titulo = "Listado de Todos los Tickets"
-    if (params[:f1]=='t' or params[:f1].nil? )
+    (params[:estado].nil? or params[:estado]=='t') ? @estado = 'Todos' : @estado = params[:estado]
+    if (@estado=='Todos')
       @tickets = Ticket.all
     else
-      @tickets = Ticket.where("state=?", params[:f1])
-      case params[:f1] 
-        when "pms"
-          @estado ="por modificar supervisor"
-        when "pmg"
-          @estado ="por modificar gerencia"
-        else
-          @estado = params[:f1]
-      end
+      @tickets = Ticket.where("state=?", @estado)
     end
   end
 

@@ -1,4 +1,8 @@
 Recibodepago::Application.routes.draw do
+  resources :parameters
+
+  resources :payment_periods
+
   resources :payment_flows
 
   resources :emitters

@@ -1,7 +1,6 @@
-<table><tr><td class="formulario">
+<table><tr><td class="marco">
 <%= form_for(@payment_form) do |f| %>
   <%= render "shared/error_messages", :target => @payment_form, :text => "la Forma de Pago" %>  
-
   <div class="field">
    Nombre:<br>
    <%= f.text_field :name, :size => "40" %>
@@ -25,7 +24,6 @@
   <div class="actions">
     <%= f.submit "Grabar"%>
   </div>
-
 <% end %>
 </td></tr></table>
 

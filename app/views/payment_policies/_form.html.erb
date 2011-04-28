@@ -1,7 +1,6 @@
-<table><tr><td class="formulario">
+<table><tr><td class="marco">
 <%= form_for(@payment_policy) do |f| %>
   <%= render "shared/error_messages", :target => @payment_policy, :text => "la Politica de Pago" %>  
-
   <div class="field">
    Mandante:<br>
    <%= f.collection_select :principal_id, Principal.find(:all, :conditions => {:state => true}, :order => 'name'), :id, :name %>
@@ -41,12 +40,10 @@
    Estado: <br>
    <%= f.check_box :state %> Activo
   </div>
-
   <div class="actions">
     <%= f.submit "Grabar"%>
   </div>  
 <% end %>
-
 </td></tr></table>
 
 

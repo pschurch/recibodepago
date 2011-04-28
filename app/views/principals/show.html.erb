@@ -1,48 +1,42 @@
 <div class="seccion">
-<table><tr><td class="formulario">
   <% if not notice.nil? %><p id="notice"><%= notice %></p><% end %>
+  <table><tr><td class="marco">
   <div class="field">
     Nombre:
   </div>
   <div class="field_txt">
     <%= @principal.name %>
   </div>
-
   <div class="field">
   Razón Social:
   </div>
   <div class="field_txt">
   <%= @principal.social_reason %>
   </div>
-
   <div class="field">
   Rut:
   </div>
   <div class="field_txt">
   <%= @principal.rut %> - <%= @principal.digit %>
   </div>
-
   <div class="field">
   Contacto:
   </div>
   <div class="field_txt">
   <%= @principal.contact %>
   </div>
-
   <div class="field">
   Teléfono:
   </div>
   <div class="field_txt">
   <%= @principal.telephone %>
   </div>
-
   <div class="field">
   Email:
   </div>
   <div class="field_txt">
   <%= @principal.email %>
   </div>
-
   <div class="field">
   Productos:
   </div>
@@ -53,14 +47,12 @@
       <% end %>
     <% end %>
   </div>
-
   <div class="field">
     Estado:
   </div>
   <div class="field_txt">
     <% if @principal.state %>Activo<% else %>Inactivo<% end %>
   </div>
-
 </td></tr></table>
 </div>
 

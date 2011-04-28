@@ -1,120 +1,122 @@
 <% if @caso.nil? %>  
-  <table class="display">
-  <tr><td></td><td></td>   
-  <th rowspan=3 width=16></th>
-    <td>Rut:</td><td><%= f.text_field :rut, :size => "10"%> - <%= f.text_field :digit, :size => "1"%></td>
+  <%= f.hidden_field :collection_type_id, :value=> @ticket.collection_type_id %>
+  <%= f.hidden_field :principal_id, :value=> @ticket.principal_id %>
+  <%= f.hidden_field :product_id, :value=> @ticket.product_id %>
+  <%= f.hidden_field :adjust_mx, :value=> @ajuste_mx %>
+  <table class="formulario">
+  <tr>
+    <td></td><td></td>   
+    <th rowspan=3 width=15></th>
+    <td>Rut:</td>
+    <td><%= f.text_field :rut, :size => "10"%> - <%= f.text_field :digit, :size => "1"%></td>
   </tr>
   <tr>
-    <td>Identificador:</td><td><%= f.text_field :cas_id, :size => "12"%></td>
-    <td>Nombre:</td><td><%= f.text_field :name, :size => "37"%></td>
+    <td width="140">Identificador:</td><td><%= f.text_field :cas_id, :size => "12"%></td>
+    <td width="130">Nombre:</td><td><%= f.text_field :name, :size => "35"%></td>
   </tr>
   <tr>
-    <td width="130">Tipo de Cobranza:</td><td class="ro">
-    <%= f.text_field :collection_type_name, :value=> @collection, :readonly => true, :size => "16" %>
-    <%= f.hidden_field :collection_type_id, :value=> @ticket.collection_type_id %></td>
-    <td width="110">Mandante:</td><td class="ro">
-    <%= f.text_field :principal_name, :value=> @principal, :readonly => true %>
-    <%= f.hidden_field :principal_id, :value=> @ticket.principal_id %></td>
+    <td>Tipo de Cobranza:</td>
+    <td class="ro"><%= f.text_field :collection_type_name, :value=> @collection, :readonly => true, :size => "16" %></td>
+    <td>Mandante:</td>
+    <td class="ro"><%= f.text_field :principal_name, :value=> @principal, :readonly => true %></td>
   </tr>
   <tr>
     <td>Descripción del Pago:</td><td colspan="4"><%= f.text_area :payment_description, :size => "61x2" %></td>
   </tr>
   <tr>
-    <td>Capital:</td><td><%= f.text_field :capital, :size => "8" %></td>
-    <th rowspan=7 width=16></th>
+    <td>Período de Pago:</td><td><%= f.collection_select :pay_period, PaymentPeriod.where('state = true').order('name ASC'), :name, :name, options ={:prompt => "- Seleccione -"} %></td>
+    <th rowspan=9 width=16></th>
     <td>Producto:</td><td class="ro">
-    <%= f.text_field :product_name, :value=> @product, :readonly => true %>
-    <%= f.hidden_field :product_id, :value=> @ticket.product_id %></td>
+    <%= f.text_field :product_name, :value=> @product, :readonly => true %></td>
   </tr>
-  <% if current_user.profile_id==1 %> 
+  <tr>
+    <td>Capital:</td><td><%= f.text_field :capital, :size => "8", :value => 0 %></td>
+    <td>Número:</td><td><%= f.text_field :number, :size => "35" %></td>
+  </tr>
   <tr>
     <td>Interés Mora:</td><td><%= f.text_field :arrear_interest, :size => "8", :value => 0 %></td>
-    <td>Número:</td><td><%= f.text_field :number, :size => "37" %></td>
+    <td>Emisor:</td><td><%= f.collection_select :emitter, Emitter.where('state = true').order('name ASC'), :name, :name, options ={:prompt => "- Seleccione -"} %></td>
   </tr>
   <tr>
     <td>Interés Plazo:</td><td><%= f.text_field :term_interest, :size => "8", :value => 0 %></td>
-    <td>Emisor:</td><td><%= f.text_field :emitter, :size => "37" %></td>
+    <td>Cuenta Corriente:</td><td><%= f.text_field :ctacte, :size => "35"%></td>
   </tr>
   <tr>
-    <td>Honorarios:</td><td class="ro"><%= f.text_field :fee, :size => "8", :readonly => true, :value => @fee %></td>
-    <td>Cuenta Corriente:</td><td><%= f.text_field :ctacte, :size => "37"%></td>
+    <td>Honorarios:</td>
+    <% if current_user.profile_id==1 %>
+      <td class="ro"><%= f.text_field :fee, :size => "8", :readonly => true, :value => @fee %></td>
+    <% elsif current_user.profile_id==2 %> 
+      <td><%= f.text_field :fee, :size => "8"%></td>
+    <% end %> 
+    <td>Vencimiento:</td><td><%= f.date_select :expir_date, 
+         {:order => [:day, :month, :year], 
+         :start_year => (Time.now - 7.years).year, 
+         :end_year =>(Time.now + 2.years).year,
+         :prompt => {:month => '- Mes -', :day => '- Día -', :year => '- Año -'} } %></td>
   </tr>
-  <% elsif current_user.profile_id==2 %> 
-  <tr>
-    <td>Interés Mora:</td><td><%= f.text_field :arrear_interest, :size => "8", :value => 0 %></td>
-    <td>Número:</td><td><%= f.text_field :number, :size => "37" %></td>
-  </tr>
-  <tr>
-    <td>Interés Plazo:</td><td><%= f.text_field :term_interest, :size => "8", :value => 0%></td>
-    <td>Emisor:</td><td><%= f.text_field :emitter, :size => "37" %></td>
-  </tr>
-  <tr>
-    <td>Honorarios:</td><td><%= f.text_field :fee, :size => "8"%></td>
-    <td>Cuenta Corriente:</td><td><%= f.text_field :ctacte, :size => "37"%></td>
-  </tr>
-  <% end %> 
   <tr>
     <td>Gastos Envío:</td><td><%= f.text_field :shipping_costs, :size => "8", :value => 0 %></td>
-    <td>Vencimiento:</td><td><%= f.date_select :expir_date, :order => [:day, :month, :year] %></td>
+    <td>Boleta N°: </td><td><%= f.text_field :ballot, :size => "35" %></td>
   </tr>
   <tr>
     <td>Gastos Judiciales:</td><td><%= f.text_field :legal_costs, :size => "8", :value => 0 %></td>
-    <td>Boleta N°: </td><td><%= f.text_field :ballot, :size => "37" %></td>
-  </tr>
-  <tr>
-    <td></td><td></td>
     <td>Cuota:</td><td><%= f.text_field :quota_num, :size => "2" %> de <%= f.text_field :total_q, :size => "3" %></td>
   </tr>
-  <% if current_user.profile_id==2 %> 
   <tr>
-    <td>Ajuste:</td><td><%= f.text_field :adjust , :size => "8"%></td>
-    <th rowspan="3" width=16></th>
-    <td rowspan="2">Observación ajuste:</td><td rowspan="2"><%= f.text_area :adjust , :size => "28x2"%></td>
+    <td>Ajuste:</td><td>
+      <% if current_user.profile_id==1 %> <!-- Eje Cobranza -->
+        <%= f.text_field :adjust_ejc_val , :size => "8"%>
+      <% elsif current_user.profile_id==2 %> <!-- Supervisor -->
+        <%= f.text_field :adjust_sup_val , :size => "8"%>
+      <% elsif current_user.profile_id==6 %> <!-- Gerencia -->
+        <%= f.text_field :adjust_mgt_val , :size => "8"%>
+      <% end %>
+    </td>
+    <td>Obs. ajuste:</td><td><%= f.text_area :adjust_obs , :size => "33x2"%></td>
+  </tr>
+  </table>
+
+  <table class="formulario">
+  <tr><th height="10"></th></tr>
+  <tr>
+    <td>Fecha pago deuda:</td>
+    <td colspan="3"><%= f.date_select :date_pay, 
+         {:order => [:day, :month, :year], 
+         :start_year => Time.now.year, 
+         :end_year => (Time.now + 1.years).year }%></td>
   </tr>
   <tr>
-    <td>Nuevo Total a Pagar:</td><td><%= f.text_field :new_total_pay , :size => "8"%></td>
-    <td></td>
+    <td>Preparado por:</td>
+    <% if @ticket.id.nil? %> 
+      <td colspan="3"><%= f.select(:user_id, User.find(:all, :conditions => {:state => true, :profile_id => current_user.profile_id}, :order => 'name').collect {|u| [u.name, u.id]}, {:selected => @user_id}) %></td>
+    <% else %>
+      <td colspan="3" class="ro"><%= @ticket.prepared_by %></td>
+    <% end %>
   </tr>
   <tr>
-    <td>Fecha ajuste:</td><td class="ro"><%= f.text_field :adjust_time , :size => "13", :value => Time.now.strftime("%d-%m-%Y"), :readonly => "true" %></td>
-    <td>Ajustado por:</td><td class="ro"><%= f.text_field :adjust_by , :size => "37", :value => current_user.name, :readonly => "true" %></td>
+    <td>Entrega documento a deudor:</td>
+    <td colspan="3"><%= f.check_box :doc_delivery %> Sí</td>
   </tr>
-  <% end %>
-  <tr><td height="20"></td></tr>
-  <tr>
-  <% if @ticket.id.nil? %> 
-    <td>Preparado por:</td><td colspan=4><%= f.select(:user_id, User.find(:all, :conditions => {:state => true, :profile_id => current_user.profile_id}, :order => 'name').collect {|u| [u.name, u.id]}, {:selected => @user_id}) %></td>
-  <% else %>
-    <td>Preparado por:</td><td colspan=4 class="ro"><div class="lg"><%= @ticket.prepared_by %></div></td>
-  <% end %>
-  </tr>
-  <tr>
-    <td colspan=3>Entrega documento a deudor:</td><td><%= f.check_box :doc_delivery %> Sí</td>
-  </tr>
-  <tr><td height="20"></td></tr>
+  <tr><th height="10"></th></tr>
   <!-------  Modificacion de supervisor ------->
   <% if current_user.profile_id==1 %> <!-- Eje Cobranza -->
-    <tr>
-      <td colspan=3>Solicita modificación a Supervisor:</td><td><%= f.check_box :adjust_sup %> Sí</td>
-    </tr>
-    <tr>
-      <td>Descripción de la modificación solicitada:</td><td colspan="4"><%= f.text_area :adjust_sup_des, :size => "61x2" %></td>
-    </tr>
-  <% end %>
-  <% if @ticket.adjust_sup_time %>
-    <tr>
-      <td>Fecha solicitud:</td><td class="ro"><div class="sh"><%= @ticket.adjust_sup_time.strftime("%d/%m/%Y") %></div></td><td></td>
-      <td>Hora solicitud:</td><td class="ro"><div class="sh"><%= @ticket.adjust_sup_time.strftime("%H:%M") %> hrs.</div></td>
-    </tr>
+   <tr>
+     <td>Solicita modificación a Supervisor:</td>
+     <td colspan="3"><%= f.check_box :adjust_sup %> Sí</td>
+   </tr>
+   <tr>
+     <td>Descripción de la modificación solicitada:</td>
+     <td colspan="3"><%= f.text_area :adjust_sup_des, :size => "54x2" %></td>
+   </tr>
   <% end %>
   <!-------  Fin Modificacion de supervisor ------->
   <!-------  Modificacion de Gerencia ------->
   <% if current_user.profile_id==2 %> <!-- Supervisor -->
     <tr>
-      <td colspan=3>Solicita modificación a Gerencia:</td><td><%= f.check_box :adjust_mgt %> Sí</td>
+      <td>Solicita modificación a Gerencia:</td><td><%= f.check_box :adjust_mgt %> Sí</td>
     </tr>
     <tr>
-      <td>Descripción de la modificación solicitada:</td><td colspan="4"><%= f.text_area :adjust_mgt_des, :size => "61x2" %></td>
+      <td>Descripción de la modificación solicitada:</td><td colspan="4"><%= f.text_area :adjust_mgt_des, :size => "54x2" %></td>
     </tr>
     <% if @ticket.adjust_mgt_time %>
       <tr>

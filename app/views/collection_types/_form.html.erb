@@ -1,7 +1,6 @@
-<table><tr><td class="formulario">
+<table><tr><td class="marco">
 <%= form_for(@collection_type) do |f| %>
   <%= render "shared/error_messages", :target => @collection_type, :text => "el Tipo de Cobranza" %>  
-  
   <%= render "shared/name_descr_state", :f => f %>
 <% end %>
 </td></tr></table>

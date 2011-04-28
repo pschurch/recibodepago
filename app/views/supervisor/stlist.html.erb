@@ -1,20 +1,28 @@
 <div class="seccion">
 
-<table><tr><td class="formulario">
+<table><tr><td class="marco">
 <% form_tag({:controller => :supervisor, :action => :stlist}, :method => :get) do %>
-  <table class="display">
+  <table>
   <tr>
-    <td>Mandante: <%= select_tag('f1', options_for_select([['Todos', 0]] + @principals.collect{|p| [p.name, p.id]})  )%></td>
-    <td>Estado: <%= select_tag('f2', options_for_select([['Todos', 't'], ['creado','creado'], ['por modificar supervisor', 'pms'], ['por modificar gerencia','pmg'], ['modificado','modificado'], ['recibo creado','rc'],  ['anulado', 'anulado']]))%>
-</td>
-    <td><div class="boton"><%= submit_tag "Filtrar", :state => 'nil' %></div></td>
+    <td>Mandante: <%= select_tag('mandante', 
+      options_for_select([['Todos', 0]] + @principals.collect{|p| [p.name, p.id]}, :selected => @mandante))%></td>
+    <td>Estado: <%= select_tag('estado', 
+      options_for_select([['Todos', 't'], 
+                          ['creado','creado'], 
+                          ['por modificar supervisor', 'pms'], 
+                          ['por modificar gerencia','pmg'], 
+                          ['modificado','modificado'], 
+                          ['recibo creado','recibo creado'],  
+                          ['anulado', 'anulado']], :selected => @estado))%>
+    </td>
+    <td><div class="actions"><%= submit_tag "Filtrar", :state => 'nil' %></div></td>
   </tr>
   </table>
 <% end %>
 </td></tr></table>
 
   <div class="nbsp"></div>
-  <table>
+  <table class="index">
   <tr>
     <th>N° Ticket</th>
     <th>N° RP</th>
@@ -28,9 +36,9 @@
     <th>Estado</th>
     <th colspan="2"></th>
   </tr>
-  <% if @tickets.nil? %>
+  <% if @tickets.nil? or @tickets.empty?%>
     <tr>
-      <td colspan= 8>No se han encontrado Tickets.</td>
+      <td colspan= 12>No se han encontrado Tickets.</td>
     </tr>  
   <% else %>
    <% @tickets.each do |a| %>

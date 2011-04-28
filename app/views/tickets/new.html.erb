@@ -1,6 +1,5 @@
 <div class="seccion">
-<table><tr><td class="formulario">
-
+<table><tr><td class="marco">
 <%= form_for(@ticket) do |f| %>
   <%= render "shared/error_messages", :target => @ticket, :text => "el Ticket" %>  
   <%= render "#{@ticket.current_step}", :f=> f %>
@@ -11,7 +10,6 @@
     <div class="actions"><%= f.submit "Grabar", :name => "rec_button"%></div>  
   <% end %>
 <% end %>
-
 </td></tr></table>
 </div>
 

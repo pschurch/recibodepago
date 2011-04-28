@@ -1,7 +1,6 @@
 <div class="seccion">
-<table><tr><td class="formulario">
-  <% if not notice.nil? %><p id="notice"><%= notice %></p><% end %>
-
+<% if not notice.nil? %><p id="notice"><%= notice %></p><% end %>
+<table><tr><td class="marco">
   <div class="field">
     Mandante:
   </div>
@@ -54,14 +53,12 @@
       <% end %>
     <% end %>&nbsp;
   </div>
-
   <div class="field">
     Estado:
   </div>
   <div class="field_txt">
     <% if @payment_policy.state %>Activo<% else %>Inactivo<% end %>
   </div>
-
 </td></tr></table>
 </div>
 

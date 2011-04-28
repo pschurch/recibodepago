@@ -1,0 +1,6 @@
+<table><tr><td class="marco">
+<%= form_for(@payment_period) do |f| %>
+  <%= render "shared/error_messages", :target => @payment_period, :text => "el Periodo de Pago" %>  
+  <%= render "shared/name_descr_state", :f => f %>
+<% end %>
+</td></tr></table>

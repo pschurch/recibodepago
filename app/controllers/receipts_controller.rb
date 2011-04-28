@@ -77,7 +77,7 @@ class ReceiptsController < ApplicationController
       session[:nuevo] = true
       @total_rp = 0
       @tickets.each do |a|
-        if a.adjust.nil?
+        if a.new_total_pay.nil?
           @total_rp = @total_rp + a.total_pay
         else
           @total_rp = @total_rp + a.new_total_pay
@@ -98,7 +98,7 @@ class ReceiptsController < ApplicationController
     end 
     @total_rp = 0
     @tickets.each do |a|
-      if a.adjust.nil?
+      if a.new_total_pay.nil?
         @total_rp = @total_rp + a.total_pay
       else
         @total_rp = @total_rp + a.new_total_pay
@@ -212,7 +212,7 @@ class ReceiptsController < ApplicationController
   def rp_abtos
     deny_access unless (current_user.profile_id == 1)
     @titulo = "Recibos de Pago Abiertos"
-    @receipts = Receipt.where("state='abierto'").where("user_name=?", current_user.name).where("group_id=?", current_user.group_id).where("area='Cobranza'")
+    @receipts = Receipt.where("state='abierto'").where("area='Cobranza'").where("group_id=?", current_user.group_id).where("user_name=?", current_user.name)
   end
 
   def rp_rechz

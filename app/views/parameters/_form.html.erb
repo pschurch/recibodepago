@@ -1,0 +1,29 @@
+<table><tr><td class="marco">
+<%= form_for(@parameter) do |f| %>
+  <%= render "shared/error_messages", :target => @parameter, :text => "el Parametro" %>
+  <div class="field">
+   Nombre:<br>
+   <%= f.text_field :name, :size => "40", :readonly=>true %>
+  </div>
+  <div class="field">
+   Valor entero:<br>
+   <%= f.text_field :val_int, :size => "40" %>
+  </div>
+  <div class="field">
+   Valor decimal:<br>
+   <%= f.text_field :val_dec, :size => "40" %>
+  </div>
+  <div class="field">
+   Descripción: <br>
+   <%= f.text_area :description, :size => "40x2" %>
+  </div>
+  <div class="field">
+   Estado: <br>
+   <%= f.check_box :state %> Activo
+  </div>
+  <div class="actions">
+    <%= f.submit "Grabar"%>
+  </div>
+<% end %>
+</td></tr></table>
+

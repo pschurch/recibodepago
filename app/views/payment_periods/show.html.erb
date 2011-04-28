@@ -1,0 +1,34 @@
+<div class="seccion">
+<% if not notice.nil? %><p id="notice"><%= notice %></p><% end %>
+<table><tr><td class="marco">
+  <div class="field">
+    Nombre:
+  </div>
+  <div class="field_txt">
+    <%= @payment_period.name %>
+  </div>
+  <div class="field">
+    Descripción:
+  </div>
+  <div class="field_txt">
+    <%= @payment_period.description %>&nbsp;
+  </div>
+  <div class="field">
+    Estado:
+  </div>
+  <div class="field_txt">
+    <% if @payment_period.state %>Activo<% else %>Inactivo<% end %>
+  </div>
+</td></tr></table>
+</div>
+
+<div class="botones">
+<% if current_user.profile_id==7 %>
+  <%= link_to 'Editar', edit_payment_period_path(@payment_period) %> 
+  <%= link_to 'Listado de Periodos de Pago', payment_periods_path %>
+  <%= render 'shared/pp_adm_dsg' %>
+<% elsif current_user.profile_id==8 %>
+  <%= link_to "Listado de Todos los Periodos de Pago", dcollection_types_path %>
+  <%= link_to 'Página Principal', :controller => "sessions", :action => "dsg" %>
+<% end %>
+</div>

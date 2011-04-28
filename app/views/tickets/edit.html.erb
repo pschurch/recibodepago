@@ -1,15 +1,15 @@
 <div class="seccion">
-<table><tr><td class="formulario">
+<table><tr><td class="marco">
+
 <%= form_for(@ticket) do |f| %>
   <%= render "shared/error_messages", :target => @ticket, :text => "el Ticket" %>  
   <%= render "form", :f => f %>  
   <% if current_user.profile_id==1 %> <!-- Ejecutivo de Cobranza -->
-    <%= render "form_ejc", :f => f %>  
+    <div class="actions"><%= f.submit "Grabar"%></div>  
   <% elsif current_user.profile_id==2 %> <!-- Supervisor -->
-    <%= render "form_sup", :f => f %>   
     <div class="actions"><%= f.submit "Modificar Ticket", :name => "rec_button" unless @ticket.state!='pms'%></div>  
   <% elsif current_user.profile_id==6 %> <!-- Gerencia -->
-    <%= render "form_ger", :f => f %>  
+    <div class="actions"><%= f.submit "Modificar Ticket"%></div>   
   <% end %> 
 <% end %>
 </td></tr></table>

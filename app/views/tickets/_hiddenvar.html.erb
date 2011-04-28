@@ -1,9 +1,0 @@
-<% if Rails.env.development? and (not @ticket.id.nil?) %> 
-  <table class="display">
-    <tr><td>
-      state: <%= @ticket.state %> | 
-      anulado por: <%= @ticket.canceled_by %> |
-      fecha anulacion: <%= @ticket.canceled_time %> | 
-    <td></tr>
-  </table>
-<% end %>

@@ -1,62 +1,54 @@
 <div class="seccion">
-<table><tr><td class="formulario">
-  <% if not notice.nil? %><p id="notice"><%= notice %></p><% end %>
+<% if not notice.nil? %><p id="notice"><%= notice %></p><% end %>
+<table><tr><td class="marco">
   <div class="field">
     Usuario:
   </div>
   <div class="field_txt">
     <%= @user.user %>
   </div>
-
   <div class="field">
     Perfil:
   </div>
   <div class="field_txt">
     <%= @user.profile.name %>
   </div>
-
   <div class="field">
     Grupo:
   </div>
   <div class="field_txt">
     <%= @user.group.name %>
   </div>
-
   <div class="field">
     Nombre:
   </div>
   <div class="field_txt">
     <%= @user.name %>
   </div>
-
   <div class="field">
     Teléfono:
   </div>
   <div class="field_txt">
     <%= @user.telephone %>
   </div>
-
   <div class="field">
     Email:
   </div>
   <div class="field_txt">
-    <%= @user.email %>
+    <%= @user.email %>&nbsp;
   </div>
-
   <div class="field">
     Descripción:
   </div>
   <div class="field_txt">
-    <%= @user.description %>
+    <%= @user.description %>&nbsp;
   </div>
-
   <div class="field">
     Estado:
   </div>
   <div class="field_txt">
     <% if @user.state %>Activo<% else %>Inactivo<% end %>
   </div>
-
 </td></tr></table>
 </div>
 

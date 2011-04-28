@@ -1,27 +1,24 @@
 <div class="seccion">
-<table><tr><td class="formulario">
-  <% if not notice.nil? %><p id="notice"><%= notice %></p><% end %>
+<% if not notice.nil? %><p id="notice"><%= notice %></p><% end %>
+<table><tr><td class="marco">
   <div class="field">
     Nombre:
   </div>
   <div class="field_txt">
     <%= @collection_type.name %>
   </div>
-
   <div class="field">
     Descripción:
   </div>
   <div class="field_txt">
-    <%= @collection_type.description %>
+    <%= @collection_type.description %>&nbsp;
   </div>
-
   <div class="field">
     Estado:
   </div>
   <div class="field_txt">
     <% if @collection_type.state %>Activo<% else %>Inactivo<% end %>
   </div>
-
 </td></tr></table>
 </div>
 
@@ -34,6 +31,5 @@
   <%= link_to "Listado de Todos los Tipos de Cobranza", dcollection_types_path %>
   <%= link_to 'Página Principal', :controller => "sessions", :action => "dsg" %>
 <% end %>
-
 </div>
 

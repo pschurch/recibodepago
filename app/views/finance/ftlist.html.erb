@@ -1,30 +1,30 @@
 <div class="seccion">
 
-<table><tr><td class="formulario">
+<table><tr><td class="marco">
 <% form_tag({:controller => :finance, :action => :ftlist}, :method => :get) do %>
-  <table class="display">
+  <table>
   <tr>
-    <td>Seleccionar Estado: <%= select_tag( 'filtro', options_for_select([['Todos', 't'], ['creado','creado'], ['por modificar supervisor', 'pms'], ['por modificar gerencia','pmg'], ['modificdo','modificado'], ['recibo creado','rc'], ['para remesar','pr'], ['remesado','remesado'], ['cerrado','cerrado'], ['anulado', 'anulado']]) )%>
-</td>
-    <td><div class="boton"><%= submit_tag "Filtrar", :state => 'nil' %></div></td>
+    <td>Seleccionar Estado: <%= select_tag( 'estado', 
+        options_for_select([['Todos', 't'], 
+                            ['creado','creado'], 
+                            ['por modificar supervisor', 'pms'], 
+                            ['por modificar gerencia','pmg'], 
+                            ['modificdo','modificado'], 
+                            ['recibo creado','recibo creado'], 
+                            ['para remesar','para remesar'], 
+                            ['remesado','remesado'], 
+                            ['cerrado','cerrado'], 
+                            ['anulado', 'anulado']], :selected => @estado))%>
+    </td>
+    <td><div class="actions"><%= submit_tag "Filtrar", :state => 'nil' %></div></td>
   </tr>
   </table>
 <% end %>
 </td></tr></table>
 
   <div class="nbsp"></div>
-  <table>
+  <table class="index">
   <tr>
-    <!--<th><%= link_to "N° Ticket", :sort => "id" %></th>
-    <th><%= link_to "N° RP", :sort => "id" %></th>
-    <th><%= link_to "Preparado por", :sort => "prepared_by" %></th>
-    <th><%= link_to "Rut", :sort => "rut" %></th>
-    <th><%= link_to "Nombre Deudor", :sort => "name" %></th>
-    <th><%= link_to "Mandante", :sort => "principal_id" %></th>
-    <th><%= link_to "Producto", :sort => "product_id" %></th>
-    <th><%= link_to "Identificador", :sort => "cas_id" %></th>
-    <th><%= link_to "Capital", :sort => "capital" %></th>
-    <th><%= link_to "Estado", :sort => "state" %></th>-->
     <th>N° Ticket</th>
     <th>N° RP</th>
     <th>Preparado por</th>
@@ -37,9 +37,17 @@
     <th>Estado</th>
     <th></th>
   </tr>
-  <% if @tickets.empty? %>
+  <% if @tickets.empty? or @tickets.nil? %>
   <tr>
-    <td colspan= 11>No se han encontrado Tickets con el estado "<%= @estado %>".</td>
+    <td colspan= 11>No se han encontrado Tickets con el estado 
+        "<%= case @estado 
+          when "pms"
+            "por modificar supervisor"
+          when "pmg"
+            "por modificar gerencia"
+          else
+            @estado
+        end %>".</td>
   </tr>  
   <% else %>
     <% @tickets.each do |a| %>

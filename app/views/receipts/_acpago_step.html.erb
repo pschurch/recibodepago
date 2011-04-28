@@ -1,4 +1,4 @@
-<table class="datos">
+<table class="formulario">
   <tr>
     <td>Acuerdo de Pago: &nbsp;</td>
     <td><%= f.collection_select :payment_agreement_id, PaymentAgreement.where('state = true'), :id, :name %></td>

@@ -1,0 +1,47 @@
+<div class="seccion">
+<% if not notice.nil? %><p id="notice"><%= notice %></p><% end %>
+<table><tr><td class="marco">
+  <div class="field">
+    Nombre:
+  </div>
+  <div class="field_txt">
+    <%= @parameter.name %>&nbsp;
+  </div>
+  <div class="field">
+    Valor entero:
+  </div>
+  <div class="field_txt">
+    <%= @parameter.val_int %>&nbsp;
+  </div>
+  <div class="field">
+    Valor decimal:
+  </div>
+  <div class="field_txt">
+    <%= @parameter.val_dec %>&nbsp;
+  </div>
+  <div class="field">
+    Descripción:
+  </div>
+  <div class="field_txt">
+    <%= @parameter.description %>&nbsp;
+  </div>
+  <div class="field">
+    Estado:
+  </div>
+  <div class="field_txt">
+    <% if @parameter.state %>Activo<% else %>Inactivo<% end %>
+  </div>
+</td></tr></table>
+</div>
+
+<div class="botones">
+<% if current_user.profile_id==7 %>
+  <%= link_to 'Editar', edit_parameter_path(@parameter) %> 
+  <%= link_to 'Listado de Parámetros', parameters_path %>
+  <%= render 'shared/pp_adm_dsg' %>
+<% elsif current_user.profile_id==8 %>
+  <%= link_to "Listado de Todos los Parámetros", dpayment_forms_path %>
+  <%= link_to 'Página Principal', :controller => "sessions", :action => "dsg" %>
+<% end %>
+</div>
+

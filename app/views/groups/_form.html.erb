@@ -1,7 +1,6 @@
-<table><tr><td class="formulario">
+<table><tr><td class="marco">
 <%= form_for(@group) do |f| %>
   <%= render "shared/error_messages", :target => @group, :text => "el Grupo" %>  
-  
   <div class="field">
    Nombre:<br>
    <%= f.text_field :name, :size => "40" %>
@@ -10,7 +9,6 @@
    Descripción: <br>
    <%= f.text_area :description, :size => "40x2" %>
   </div>
-
   <div class="field">
    Carteras:   
   </div>
@@ -20,7 +18,6 @@
        <%= cartera.principal.name %> - <%= cartera.product.name %>
     </div>
   <% end %>
-
   <div class="field">
    Estado: <br>
    <%= f.check_box :state %> Activo

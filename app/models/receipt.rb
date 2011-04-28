@@ -39,7 +39,6 @@ class Receipt < ActiveRecord::Base
   end 
 
   def cierre_correcto
-
     # Solo para Flujo de Pago 2 (RP por Completar) y 3 (RP con Gestion Terreno) 
     if(payment_flow_id==2 or payment_flow_id==3) 
       if (cont_name=="")
@@ -63,7 +62,8 @@ class Receipt < ActiveRecord::Base
       if (cont_telf1=="")
         errors.add(:cont_telf1, "(Telefono de Contacto): debe ingresar un valor para este campo.")
       end 
-    else
+    end
+    # cuadre del Detalle de Pago
       total = 0
       if (not monto1.nil?) 
         total=total+monto1
@@ -176,7 +176,6 @@ class Receipt < ActiveRecord::Base
       if total!=total_pay
         errors.add(:total_paid, "(Total Pagado) : el valor pagado, $"+total.to_s+", no corresponde al valor por pagar, $"+total_pay.to_s+".")
       end
-    end
   end
 
 end

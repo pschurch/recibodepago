@@ -1,7 +1,6 @@
-<table><tr><td class="formulario">
+<table><tr><td class="marco">
 <%= form_for(@principal) do |f| %>
   <%= render "shared/error_messages", :target => @principal, :text => "el Mandante" %>
-  
   <div class="field">
    Nombre:<br>
    <%= f.text_field :name, :size => "40" %>
