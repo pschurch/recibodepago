@@ -36,7 +36,7 @@
   <div class="subtit">
     Datos de Contacto:
   </div>
-  <%= render "datos_contacto", :f => @receipt %>
+  <table class="display"><%= render "datos_contacto", :f => @receipt %></table>
 <% end %>
 <!-- fin DATOS DE CONTACTO -->
 
@@ -180,7 +180,7 @@
     <!-- # Flujo de Pago 2 (RP por Completar) -->
     <% if @receipt.payment_flow_id==2 %> 
       <%= link_to 'Recibo de Pago para Imprimir', :action => "print", :id => @receipt.id %>
-      <%= link_to 'Editar', edit_receipt_path(@receipt) unless (@receipt.timbre.nil? or @receipt.state=='cerrado')%>
+      <%= link_to 'Editar', edit_receipt_path(@receipt) unless (@receipt.state!='abierto')%>
     <% end %>
     <!-- # Flujo de Pago 3 (RP con Gestion Terreno) -->
     <% if @receipt.payment_flow_id==3 %> 

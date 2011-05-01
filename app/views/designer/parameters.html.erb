@@ -3,23 +3,28 @@
   <tr>
     <th><%= sortable "id" %></th>
     <th><%= sortable "name", "Nombre" %></th>
+    <th>Valor Entero</th>
+    <th>Valor Decimal</th>
     <th>Descripci&oacute;n</th>
     <th><%= sortable "state", "Estado" %></th>
     <th colspan=3></th>
   </tr>
-  <% @profiles.each do |a| %>
+  <% @parameters.each do |a| %>
   <tr>
     <td><%= a.id %></td>
     <td><%= a.name %></td>
+    <td><%= a.val_int %></td>
+    <td><%= a.val_dec %></td>
     <td><%= a.description %></td>
     <td><%= a.state %>
     <td><%= link_to 'Ver', a %></td>
-    <td><%= link_to 'Editar', edit_profile_path(a) %></td>
-    <td><%= link_to 'Eliminar', :controller => 'designer', :action => 'del_reg', :id => a, :reg => 'profile' %>
+    <td><%= link_to 'Editar', edit_parameter_path(a) %></td>
+    <td><%= link_to 'Eliminar', :controller => 'designer', :action => 'del_reg', :id => a, :reg => 'parameter' %>
   </tr>
   <% end %>
   </table>
 </div>
 <div class="botones">
+  <%= link_to 'Crear Parámetro', new_parameter_path %>
   <%= link_to 'Página Principal', :controller => "sessions", :action => "dsg" %>
 </div>

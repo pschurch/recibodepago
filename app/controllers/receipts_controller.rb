@@ -3,6 +3,61 @@ class ReceiptsController < ApplicationController
   before_filter :authenticate
   helper_method :sort_column, :sort_direction  
 
+  def rend_sup
+    deny_access unless (current_user.profile_id == 1)
+    @titulo = "Rendir Recibos de Pago a Supervisor"
+    if params[:msg]=="1"
+      @msg = "Debe seleccionar al menos un Recibo de Pago."
+    end
+    @receipts = Receipt.where("state='cerrado'").where("area='Cobranza'").where("user_name=?", current_user.name)
+    @receipts_r = Receipt.where("state='rendido'").where("area='Cobranza'").where("user_name=?", current_user.name)
+  end
+  def rend_sup_edit  
+    deny_access unless (current_user.profile_id == 1)
+    @titulo = "Rendicion de Recibos de Pago"
+    if params[:receipt_ids].nil?
+      redirect_to(:action => "rend_sup", :msg => "1" ) 
+    else
+     @receipts = Receipt.find(params[:receipt_ids]) 
+     @formas  = Array.new
+     @pay_forms = PaymentForm.where("state!=0")
+     @pay_forms.each do |pf|
+       @formas << pf.name
+     end
+     @efectivo = 0
+     @total = 0
+     @receipts.each do |r|
+        @efectivo = @efectivo + r.monto1 unless r.formapago1!="Efectivo"    
+        @efectivo = @efectivo + r.monto2 unless r.formapago2!="Efectivo"    
+        @efectivo = @efectivo + r.monto3 unless r.formapago3!="Efectivo"    
+        @efectivo = @efectivo + r.monto4 unless r.formapago4!="Efectivo"    
+        @efectivo = @efectivo + r.monto5 unless r.formapago5!="Efectivo"    
+        @efectivo = @efectivo + r.monto6 unless r.formapago6!="Efectivo"    
+        @efectivo = @efectivo + r.monto7 unless r.formapago7!="Efectivo"    
+        @efectivo = @efectivo + r.monto8 unless r.formapago8!="Efectivo"    
+        @efectivo = @efectivo + r.monto9 unless r.formapago9!="Efectivo"    
+        @efectivo = @efectivo + r.monto10 unless r.formapago10!="Efectivo"    
+        @efectivo = @efectivo + r.monto11 unless r.formapago11!="Efectivo"    
+        @efectivo = @efectivo + r.monto12 unless r.formapago12!="Efectivo"    
+        @efectivo = @efectivo + r.monto13 unless r.formapago13!="Efectivo"    
+        @efectivo = @efectivo + r.monto14 unless r.formapago14!="Efectivo"    
+        @efectivo = @efectivo + r.monto15 unless r.formapago15!="Efectivo"    
+        @efectivo = @efectivo + r.monto16 unless r.formapago16!="Efectivo"    
+        @efectivo = @efectivo + r.monto17 unless r.formapago17!="Efectivo"    
+        @efectivo = @efectivo + r.monto18 unless r.formapago18!="Efectivo"    
+        @total = @total + r.total_paid
+     end
+    end
+  end  
+  def rend_sup_update  
+    @receipts = Receipt.find(params[:receipt_ids]) 
+    @receipts.each do |r|
+      r.update_attribute 'state', 'rendido'  
+      #actualizar los otros estados xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx  
+    end  
+    redirect_to(:action => 'rend_sup') 
+  end 
+
   def create_rp
     deny_access unless (current_user.profile_id == 1)
     session[:ticket_ids] = nil
@@ -27,10 +82,8 @@ class ReceiptsController < ApplicationController
     deny_access unless (current_user.profile_id == 1)
     @titulo = "Listado de Recibos de Pago"
     @t=Time.now
-
     params[:area].nil? ? @area = 'Todas' : @area = params[:area]
     params[:estado].nil? ? @estado = 'Todos' : @estado = params[:estado]
-
     if (@area=='Todas' and @estado=='Todos')
       @receipts = Receipt.all
     elsif (@area=='Todas' and @estado!='Todos')
@@ -51,7 +104,6 @@ class ReceiptsController < ApplicationController
   #-------------- new2.html.erb ------------------
   def new2
     if params[:ticket_ids].nil?
-      #@tickets = Ticket.all
       redirect_to(:action => "create_rp", :msg => "1" ) #"Debe seleccionar al menos un Ticket"
     else
       session[:ticket_ids] = params[:ticket_ids]
@@ -61,7 +113,7 @@ class ReceiptsController < ApplicationController
       @tipo_cobranza = @tickets.first.collection_type_id
       @tickets.each do |a|
         if not(a.principal_id == @mandante)
-          @msg =  "2"  #"No se puede crear un solo Recibo de Pago para diferentes Mandantes"
+          @msg = "2"  #"No se puede crear un solo Recibo de Pago para diferentes Mandantes"
         elsif not(a.product_id == @producto)
           @msg = "3"  #"No se puede crear un solo Recibo de Pago para diferentes Productos"
         elsif not(a.collection_type_id == @tipo_cobranza)
@@ -203,7 +255,6 @@ class ReceiptsController < ApplicationController
       else
         redirect_to(@receipt, :notice => 'El Recibo de Pago se ha actualizado exitosamente.') 
       end
-
     else
       render :action => "edit" 
     end
@@ -220,12 +271,6 @@ class ReceiptsController < ApplicationController
     @titulo = "Recibos de Pago Rechazados"
     @receipts1 = Receipt.where("state='rechazado'").where("area='Supervisor'").where("group_id=?", current_user.group_id)
     @receipts2 = Receipt.where("state='rechaza supervisor a cobranza' OR state='acepta cobranza rechazo supervisor'").where("group_id=?", current_user.group_id)
-  end
-
-  def rend_sup
-    deny_access unless (current_user.profile_id == 1)
-    @titulo = "Rendir Recibos de Pago a Supervisor"
-    @receipts = Receipt.where("state='cerrado'").where("area='Cobranza'").where("group_id=?", current_user.group_id)
   end
 
   def print

@@ -3,6 +3,10 @@
 </div>
 
 <div class="botones">
-  <%= link_to "Cancelar", payment_periods_path %> 
+  <% if current_user.profile_id==7 %>  <!--  Administrador --> 
+    <%= link_to "Cancelar", payment_periods_path %> 
+  <% elsif current_user.profile_id==8 %> <!-- Designer -->
+    <%= link_to 'Cancelar', dpayment_periods_path %>
+  <% end %>
 </div>
 

@@ -1,12 +1,4 @@
 Recibodepago::Application.routes.draw do
-  resources :parameters
-
-  resources :payment_periods
-
-  resources :payment_flows
-
-  resources :emitters
-
   get "supervisor/stmod"
   get "supervisor/stlist"
   get "supervisor/srlist"
@@ -38,6 +30,11 @@ Recibodepago::Application.routes.draw do
   match '/dpayment_forms', :to => 'designer#payment_forms'
   match '/dpayment_policies', :to => 'designer#payment_policies'
   match '/dpayment_agreements', :to => 'designer#payment_agreements'
+  match '/dpayment_flows', :to => 'designer#payment_flows'
+  match '/dparameters', :to => 'designer#parameters'
+  match '/dcomunas', :to => 'designer#comunas'
+  match '/demitters', :to => 'designer#emitters'
+  match '/dpayment_periods', :to => 'designer#payment_periods'
   get "designer/del_reg"
 
   get "receipts/print"
@@ -46,6 +43,12 @@ Recibodepago::Application.routes.draw do
   match '/lisrr', :to => 'receipts#rp_rechz'
   match '/rnsup', :to => 'receipts#rend_sup'
   #resources :receipts
+  resources :receipts do
+    collection do
+      post 'rend_sup_edit'
+      put 'rend_sup_update'                                 
+    end
+  end
   resources :receipts do
     collection do
       post 'new2'
@@ -57,6 +60,10 @@ Recibodepago::Application.routes.draw do
   match '/list', :to => 'tickets#cases'
   resources :tickets
 
+  resources :parameters
+  resources :payment_periods
+  resources :payment_flows
+  resources :emitters
   resources :profiles
   resources :payment_policies
   resources :users
@@ -80,5 +87,4 @@ Recibodepago::Application.routes.draw do
   get "sessions/adm"
   get "sessions/dsg"
   root :to => "sessions#new"
-
 end

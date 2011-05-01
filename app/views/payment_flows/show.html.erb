@@ -28,7 +28,7 @@
     <%= link_to 'Página Principal', :controller => "sessions", :action => "adm" %>
   <% elsif current_user.profile_id==8 %> <!-- Designer -->
     <%= link_to 'Editar', edit_payment_flow_path(@payment_flow) %>
-    <%= link_to 'Listado de Flujos de Pago', payment_flows_path %>
+    <%= link_to 'Listado de Flujos de Pago', dpayment_flows_path %>
     <%= link_to 'Página Principal', :controller => "sessions", :action => "dsg" %>
   <% end %>
 </div>

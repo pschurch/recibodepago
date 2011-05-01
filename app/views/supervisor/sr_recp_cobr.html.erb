@@ -1,62 +1,77 @@
 <div class="seccion">
+  <% if not @msg.nil? %>
+  <table><tr><td class="marco">
+    <p id="notice"><%= @msg %></p>
+  </td></tr></table>  
+  <div class="nbsp"></div>
+  <% end %>
+
   <div class="subtit">
     Recibos de Pago de Cobranza para ser Recepcionados:
   </div>
-  <table>
-  <tr>
-    <th>Preparado Por</th>
-    <th>N° RP</th>
-    <th>Rut</th>
-    <th>Identificador</th>
-    <th>Mandante</th>
-    <th>Producto</th>
-    <th>Fecha de Pago</th>
-    <th>Capital</th>
-    <th>Total Pagado</th>
-    <th>selecc.</th>
-    <th></th>
-  </tr>
-  <% if @receipts1.nil? %>
+  <% form_tag sr_recp_cobr_edit_receipts_path do %>
+    <table class="index">
     <tr>
-      <td colspan="10">No se han encontrado Recibos de Pago para ser recepcionados.</td>
-    </tr>  
-  <% else %>
-    <% @receipts1.each do |rp| %>
-    <% @tickets1 = Ticket.where("receipt_id=?", rp.id) %>
-    <tr>
-      <td><%= rp.user_name %></td>
-      <td><%= rp.id %></td>
-      <td>
-        <% @tickets1.each  do |t| %>
-        <%= t.rut %>-<%= t.digit %><br>
-        <% end %>
-      </td>
-      <td>
-        <% @tickets1.each  do |t| %>
-        <%= t.cas_id %><br>
-        <% end %>
-      </td>
-      <td><%= @tickets1.first.principal_name %></td>
-      <td><%= @tickets1.first.product_name %></td>
-      <td><%= rp.date_r.strftime("%d/%m/%Y") %></td>
-      <td>
-        <% @tickets1.each  do |t| %>
-        <%= number_to_currency(t.capital, :precision => 0, :delimiter => ".") %><br>
-        <% end %>
-      </td>
-      <td><%= number_to_currency(rp.total_pay, :precision => 0, :delimiter => ".") %></td>
-      <td></td>
-      <td><%= link_to 'Ver', rp %></td>
+      <th>Preparado Por</th>
+      <th>N° RP</th>
+      <th>Rut</th>
+      <th>Identificador</th>
+      <th>Mandante</th>
+      <th>Producto</th>
+      <th>Fecha de Pago</th>
+      <th>Capital</th>
+      <th>Total Pagado</th>
+      <th>selecc.</th>
+      <th></th>
     </tr>
-    <% end %>  
+    <% if @receipts1.empty? %>
+      <tr>
+        <td colspan="10">No se han encontrado Recibos de Pago para ser recepcionados.</td>
+      </tr>  
+    <% else %>
+      <% @receipts1.each do |rp| %>
+        <% @tickets1 = Ticket.where("receipt_id=?", rp.id) %>
+        <tr>
+          <td><%= rp.user_name %></td>
+          <td><%= rp.id %></td>
+          <td>
+            <% @tickets1.each  do |t| %>
+              <%= t.rut %>-<%= t.digit %><br>
+            <% end %>
+          </td>
+          <td>
+            <% @tickets1.each  do |t| %>
+              <%= t.cas_id %><br>
+            <% end %>
+          </td>
+          <td><%= @tickets1.first.principal_name %></td>
+          <td><%= @tickets1.first.product_name %></td>
+          <td><%= rp.date_r.strftime("%d/%m/%Y") %></td>
+          <td>
+            <% @tickets1.each  do |t| %>
+              <%= number_to_currency(t.capital, :precision => 0, :delimiter => ".") %><br>
+            <% end %>
+          </td>
+          <td><%= number_to_currency(rp.total_pay, :precision => 0, :delimiter => ".") %></td>
+          <td><%= check_box_tag "receipt1_ids[]", rp.id %></td>
+          <td><%= link_to 'Ver', rp %></td>
+        </tr>
+      <% end %>  
+    <% end %>
+    </table>
+    <% if not @receipts1.empty? %> 
+      <div class="actions">
+        <%= submit_tag "Rendir Recibos de Pago" %>
+      </div>
+    <% end %>
   <% end %>
-  </table>
 
-
+  <div class="nbsp"></div>
+  <hr>
   <div class="subtit">
-    &nbsp;<p>Recibos de Pago de Cobranza Recepcionados, por Confirmar:
+    Recibos de Pago de Cobranza Recepcionados, por Confirmar:
   </div>
-  <table>
+  <table class="index">
   <tr>
     <th>Preparado Por</th>
     <th>N° RP</th>
@@ -69,7 +84,7 @@
     <th>Total Pagado</th>
     <th></th>
   </tr>
-  <% if @receipts2.nil? %>
+  <% if @receipts2.empty? %>
     <tr>
       <td colspan="11">No se han encontrado Recibos de Pago por confirmar.</td>
     </tr>  

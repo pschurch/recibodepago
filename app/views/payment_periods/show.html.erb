@@ -28,6 +28,7 @@
   <%= link_to 'Listado de Periodos de Pago', payment_periods_path %>
   <%= render 'shared/pp_adm_dsg' %>
 <% elsif current_user.profile_id==8 %>
+  <%= link_to 'Editar', edit_payment_period_path(@payment_period) %> 
   <%= link_to "Listado de Todos los Periodos de Pago", dcollection_types_path %>
   <%= link_to 'Página Principal', :controller => "sessions", :action => "dsg" %>
 <% end %>

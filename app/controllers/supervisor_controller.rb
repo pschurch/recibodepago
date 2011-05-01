@@ -3,6 +3,25 @@ class SupervisorController < ApplicationController
   before_filter :authenticate_sup
   helper_method :sort_column, :sort_direction  
 
+  def sr_recp_cobr
+    @titulo = "Recepcionar Recibos de Pago de Cobranza"
+    @receipts1 = Receipt.where("group_id=?", current_user.group_id).where("state='rendido'").where("area='Cobranza'")
+    @receipts2 = Receipt.where("group_id=?", current_user.group_id).where("state='recepcionado'").where("area='Supervisor'")
+  end
+  def sr_recp_cobr_edit  
+    @titulo = "Rendicion de Recibos de Pago"
+  end
+  def sr_recp_cobr_update  
+    @receipts = Receipt.find(params[:receipt_ids]) 
+    @receipts.each do |r|
+      r.update_attribute 'state', 'rendido'  
+      #actualizar los otros estados xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx  
+    end  
+    redirect_to(:action => 'sr_recp_cobr') 
+  end
+
+
+
   def stmod
     @titulo = "Tickets por Modificar"
     grupo = current_user.group_id
@@ -23,12 +42,6 @@ class SupervisorController < ApplicationController
     elsif (@mandante!='Todos') and (@estado!='Todos')
       @tickets = Ticket.where("principal_id=?", @mandante.to_i).where("state=?", @estado).where("group_id=?", current_user.group_id)
     end
-  end
-
-  def sr_recp_cobr
-    @titulo = "Recepcionar Recibos de Pago de Cobranza"
-    @receipts1 = Receipt.where("group_id=?", current_user.group_id).where("state='rendido'").where("area='Cobranza'")
-    @receipts2 = Receipt.where("group_id=?", current_user.group_id).where("state='recepcionado'").where("area='Supervisor'")
   end
 
   def sr_envio_terreno

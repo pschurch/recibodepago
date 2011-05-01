@@ -1,9 +1,9 @@
 <div class="seccion">
-<table><tr><td class="formulario">
+<table><tr><td class="marco">
 <%= form_for(@receipt) do |f| %>
   <%= render "shared/error_messages", :target => @receipt, :text => "el Recibo de Pago" %>
 
-  <table class="display">
+  <table class="formulario">
   <tr>
     <td width="130">Recibo de Pago N°:</td><td class="ro"><div class="sh"><%= @receipt.id %></div></td>
     <th rowspan=20 width=16></th>
@@ -12,9 +12,9 @@
   </table>
   <hr>
 
-  <%= render "tickets" %>
+  <% @tickets.each do |a| %><table class="formulario"><%= render "tickets", :a => a %><% end %>
 
-  <table class="display">
+  <table class="formulario">
   <tr>
     <td>Acuerdo de Pago: &nbsp;</td><td class="ro"><div><%= @receipt.payment_agreement_name %></div></td>
     <th rowspan=20 width=30></th>
@@ -35,7 +35,7 @@
   <div class="subtit">
     Datos de Contacto:
   </div>
-  <%= render "datos_contacto", :f => @receipt %>
+  <table class="formulario"><%= render "datos_contacto", :f => @receipt %></table>
 <% end %>
 <!-- fin DATOS DE CONTACTO -->
 

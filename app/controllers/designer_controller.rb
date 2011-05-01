@@ -62,63 +62,84 @@ class DesignerController < ApplicationController
   end
 
   def casos
-    @titulo = "Listado de Todos los Casos"
+    @titulo = "Listado de Casos"
     @assignments = Assignment.order(sort_column + ' ' + sort_direction)  
   end
 
   def collection_types
-    @titulo = "Listado de Todos los Tipos de Cobranza"
+    @titulo = "Listado de Tipos de Cobranza"
     @collection_types = CollectionType.order(sort_column + ' ' + sort_direction) 
   end
 
   def groups
-    @titulo = "Listado de Todos los Grupos"
+    @titulo = "Listado de Grupos"
     @groups = Group.order(sort_column + ' ' + sort_direction) 
   end
 
   def payment_agreements
-    @titulo = "Listado de Todos los Acuerdos de Pago"
+    @titulo = "Listado de Acuerdos de Pago"
     @payment_agreements = PaymentAgreement.order(sort_column + ' ' + sort_direction) 
   end
 
   def payment_forms
-    @titulo = "Listado de Todos las Formas de Pago"
+    @titulo = "Listado de Formas de Pago"
     @payment_forms = PaymentForm.order(sort_column + ' ' + sort_direction) 
   end
 
   def payment_policies
-    @titulo = "Listado de Todos las Politicas de Pago"
+    @titulo = "Listado de Politicas de Pago"
     @payment_policies = PaymentPolicy.order(sort_column + ' ' + sort_direction) 
   end
 
   def principals
-    @titulo = "Listado de Todos los Mandantes"
+    @titulo = "Listado de Mandantes"
     @principals = Principal.order(sort_column + ' ' + sort_direction) 
   end
 
   def products
-    @titulo = "Listado de Todos los Productos"
+    @titulo = "Listado de Productos"
     @products = Product.order(sort_column + ' ' + sort_direction) 
   end
 
   def profiles
-    @titulo = "Listado de Todos los Perfiles"
+    @titulo = "Listado de Perfiles"
     @profiles = Profile.order(sort_column + ' ' + sort_direction) 
   end
 
   def receipts 
-    @titulo = "Listado de Todos los Recibos de Pago"
+    @titulo = "Listado de Recibos de Pago"
     @receipts = Receipt.order(sort_column + ' ' + sort_direction) 
   end
 
   def tickets
-    @titulo = "Listado de Todos los Tickets"
+    @titulo = "Listado de Tickets"
     @tickets = Ticket.order(sort_column + ' ' + sort_direction) 
   end
 
   def users
-    @titulo = "Listado de Todos los Usuarios"
+    @titulo = "Listado de Usuarios"
     @users = User.order(sort_column + ' ' + sort_direction) 
+  end
+
+  def payment_flows
+    @titulo = "Listado de Flujos de Pago"
+    @payment_flows = PaymentFlow.order(sort_column + ' ' + sort_direction) 
+  end
+  def parameters
+    @titulo = "Listado de Parametros"
+    @parameters = Parameter.order(sort_column + ' ' + sort_direction) 
+  end
+  def comunas
+    @titulo = "Listado de Comunas"
+    @comunas = Comuna.order(sort_column + ' ' + sort_direction) 
+  end
+  def emitters
+    @titulo = "Listado de Emisores"
+    @emitters = Emitter.order(sort_column + ' ' + sort_direction) 
+  end
+  def payment_periods
+    @titulo = "Listado de Periodos de Pago"
+    @payment_periods = PaymentPeriod.order(sort_column + ' ' + sort_direction) 
   end
 
   def sort_column  

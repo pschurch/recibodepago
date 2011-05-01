@@ -1,10 +1,10 @@
 <div class="seccion">
 
 <% if not @msg.nil? %>
-<table><tr><td class="formulario">
+<table><tr><td class="marco">
   <p id="notice"><%= @msg %></p>
 </td></tr></table>  
-<p>&nbsp;</p>
+<div class="nbsp"></div>
 <% end %>
 
 <% form_tag new2_receipts_path do %>

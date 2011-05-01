@@ -3,7 +3,11 @@
   <%= render "shared/error_messages", :target => @parameter, :text => "el Parametro" %>
   <div class="field">
    Nombre:<br>
-   <%= f.text_field :name, :size => "40", :readonly=>true %>
+   <% if current_user.profile_id==7 %>  <!--  Administrador --> 
+     <%= f.text_field :name, :size => "40", :readonly=>true %>
+   <% elsif current_user.profile_id==8 %> <!-- Designer -->
+     <%= f.text_field :name, :size => "40"%>  
+   <% end %>
   </div>
   <div class="field">
    Valor entero:<br>

@@ -3,5 +3,9 @@
 </div>
 
 <div class="botones">
-  <%= link_to "Cancelar", parameters_path %> 
+  <% if current_user.profile_id==7 %>  <!--  Administrador --> 
+    <%= link_to "Cancelar", parameters_path %> 
+  <% elsif current_user.profile_id==8 %> <!-- Designer -->
+    <%= link_to 'Cancelar', dparameters_path %>
+  <% end %>
 </div>
