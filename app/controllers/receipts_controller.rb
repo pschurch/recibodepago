@@ -3,22 +3,61 @@ class ReceiptsController < ApplicationController
   before_filter :authenticate
   helper_method :sort_column, :sort_direction  
 
-  def rend_sup
-    deny_access unless (current_user.profile_id == 1)
-    @titulo = "Rendir Recibos de Pago a Supervisor"
+  #----------- vista para notificaciones --------------------
+  def ntc  
+    @titulo = "Recibo de Pago"
+    if params[:id].nil?
+      @rp_id = nil
+    else
+      @rp = Receipt.find(params[:id])
+      @rp_id = @rp.id
+    end
+    @acc = params[:acc]
+    case params[:acc] 
+      when 'confirmar'  
+        @msje = "ha sido confirmado y se encuentra listo para ser Rendido a Tesoreria"
+        @rp.update_attribute 'state', "cerrado"
+        @rp.update_attribute 'area', "Supervisor"
+        @rp.update_attribute 'substate', ""
+      when 'rechazar'  
+        @msje = "ha sido rechazado"
+        @rp.update_attribute 'state', "rechazado"
+        @rp.update_attribute 'area', "Supervisor"
+        @rp.update_attribute 'substate', "Cobranza"
+    end
+  end
+
+  #--------- Supervisor: recepciona de Cobranza ---------
+  def sup_recp_cobr
+    deny_access unless (current_user.profile_id == 2)
+    @titulo = "Recepcionar Recibos de Pago de Cobranza"
     if params[:msg]=="1"
       @msg = "Debe seleccionar al menos un Recibo de Pago."
     end
-    @receipts = Receipt.where("state='cerrado'").where("area='Cobranza'").where("user_name=?", current_user.name)
-    @receipts_r = Receipt.where("state='rendido'").where("area='Cobranza'").where("user_name=?", current_user.name)
+    @receipts1 = Receipt.where("group_id=?", current_user.group_id).where("state='rendido'").where("area='Cobranza'")
+    @receipts2 = Receipt.where("group_id=?", current_user.group_id).where("state='recepcionado'").where("area='Supervisor'")
   end
-  def rend_sup_edit  
-    deny_access unless (current_user.profile_id == 1)
-    @titulo = "Rendicion de Recibos de Pago"
-    if params[:receipt_ids].nil?
-      redirect_to(:action => "rend_sup", :msg => "1" ) 
+  def sup_recp_terr
+    deny_access unless (current_user.profile_id == 2)
+    @titulo = "Recepcionar Recibos de Pago de Terreno"
+    if params[:msg]=="1"
+      @msg = "Debe seleccionar al menos un Recibo de Pago."
+    end
+    @receipts1 = Receipt.where("group_id=?", current_user.group_id).where("state='rendido'").where("area='Terreno'")
+    @receipts2 = Receipt.where("group_id=?", current_user.group_id).where("state='recepcionado'").where("area='Supervisor'")
+  end
+
+  def sup_edit_multiple
+    deny_access unless (current_user.profile_id == 2)
+    @titulo = "Recepcion de Recibos de Pago"
+    if params[:receipt1_ids].nil?
+      if params[:recp_cobr] 
+        redirect_to(:action => "sup_recp_cobr", :msg => "1" ) 
+      elsif params[:recp_terr] 
+        redirect_to(:action => "sup_recp_terr", :msg => "1" ) 
+      end
     else
-     @receipts = Receipt.find(params[:receipt_ids]) 
+     @receipts = Receipt.find(params[:receipt1_ids]) 
      @formas  = Array.new
      @pay_forms = PaymentForm.where("state!=0")
      @pay_forms.each do |pf|
@@ -48,14 +87,113 @@ class ReceiptsController < ApplicationController
         @total = @total + r.total_paid
      end
     end
-  end  
-  def rend_sup_update  
-    @receipts = Receipt.find(params[:receipt_ids]) 
+  end
+  def sup_update_multiple 
+    @receipts = Receipt.find(params[:receipt1_ids]) 
     @receipts.each do |r|
-      r.update_attribute 'state', 'rendido'  
-      #actualizar los otros estados xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx  
+      if params[:recepcion_button] 
+        r.update_attribute 'state', 'recepcionado' 
+      elsif params[:rechazo_button]  
+        @texto=""
+        for i in (0..params[:receipt1_ids].count-1) 
+          @texto=@texto + params[:receipt1_ids][i].to_s + ", " unless i==params[:receipt1_ids].count-1
+          @texto=@texto + params[:receipt1_ids][i].to_s + ". " unless i!=params[:receipt1_ids].count-1
+        end
+        r.update_attribute 'state', 'rechazado' 
+        r.update_attribute 'rech_by', current_user.name 
+        r.update_attribute 'rech_mtvo', 'Rechazo Conjunto de Recibos de Pago: ' + @texto 
+        r.update_attribute 'rech_date', Time.now 
+      end
+      r.update_attribute 'area', 'Supervisor' 
+      r.update_attribute 'substate', 'Cobranza' 
     end  
-    redirect_to(:action => 'rend_sup') 
+    redirect_to(:action => 'sup_recp_cobr') 
+  end 
+
+  #------------------- Cobranza ---------------------------
+  def rend_sup
+    deny_access unless (current_user.profile_id == 1)
+    @titulo = "Rendir Recibos de Pago a Supervisor"
+    if params[:msg]=="1"
+      @msg = "Debe seleccionar al menos un Recibo de Pago."
+    end
+    @receipts = Receipt.where("state='cerrado'").where("area='Cobranza'").where("user_name=?", current_user.name)
+    @receipts_r = Receipt.where("state='rendido'").where("area='Cobranza'").where("user_name=?", current_user.name)
+  end
+  def rp_rechz
+    deny_access unless (current_user.profile_id == 1)
+    @titulo = "Recibos de Pago Rechazados"
+    if params[:msg]=="1"
+      @msg = "Debe seleccionar al menos un Recibo de Pago."
+    end
+    @receipts1 = Receipt.where("state='rechazado'").where("area='Supervisor'").where("user_name=?", current_user.name)
+    @receipts2 = Receipt.where("state='rechazado'").where("area='Terreno'").where("user_name=?", current_user.name)
+  end
+
+  def ejc_edit_multiple   
+    deny_access unless (current_user.profile_id == 1)
+    if params[:aceptar_button] 			# EjCobranza Acepta RP Rechazados 
+      @titulo = "Seleccion de Recibos de Pago"
+      @button = "aceptar"
+    elsif params[:rendir_button] 		# EjCobranza Rinde RP a Supervisor
+      @titulo = "Rendicion de Recibos de Pago"
+      @button = "rendir"
+    end
+    if params[:receipt_ids].nil?
+      if params[:aceptar_button] 		# EjCobranza Acepta RP Rechazados 
+        redirect_to(:action => "rp_rechz", :msg => "1" ) 
+      elsif params[:rendir_button] 		# EjCobranza Rinde RP a Supervisor
+        redirect_to(:action => "rend_sup", :msg => "1" ) 
+      end
+    else
+      @receipts = Receipt.find(params[:receipt_ids]) 
+      @formas  = Array.new
+      @pay_forms = PaymentForm.where("state!=0")
+      @pay_forms.each do |pf|
+        @formas << pf.name
+      end
+      @efectivo = 0
+      @total = 0
+      @receipts.each do |r|
+         @efectivo = @efectivo + r.monto1 unless r.formapago1!="Efectivo"    
+         @efectivo = @efectivo + r.monto2 unless r.formapago2!="Efectivo"    
+         @efectivo = @efectivo + r.monto3 unless r.formapago3!="Efectivo"    
+         @efectivo = @efectivo + r.monto4 unless r.formapago4!="Efectivo"    
+         @efectivo = @efectivo + r.monto5 unless r.formapago5!="Efectivo"    
+         @efectivo = @efectivo + r.monto6 unless r.formapago6!="Efectivo"    
+         @efectivo = @efectivo + r.monto7 unless r.formapago7!="Efectivo"    
+         @efectivo = @efectivo + r.monto8 unless r.formapago8!="Efectivo"    
+         @efectivo = @efectivo + r.monto9 unless r.formapago9!="Efectivo"    
+         @efectivo = @efectivo + r.monto10 unless r.formapago10!="Efectivo"    
+         @efectivo = @efectivo + r.monto11 unless r.formapago11!="Efectivo"    
+         @efectivo = @efectivo + r.monto12 unless r.formapago12!="Efectivo"    
+         @efectivo = @efectivo + r.monto13 unless r.formapago13!="Efectivo"    
+         @efectivo = @efectivo + r.monto14 unless r.formapago14!="Efectivo"    
+         @efectivo = @efectivo + r.monto15 unless r.formapago15!="Efectivo"    
+         @efectivo = @efectivo + r.monto16 unless r.formapago16!="Efectivo"    
+         @efectivo = @efectivo + r.monto17 unless r.formapago17!="Efectivo"    
+         @efectivo = @efectivo + r.monto18 unless r.formapago18!="Efectivo"    
+         @total = @total + r.total_paid
+      end
+    end
+  end  
+  def ejc_update_multiple  
+    @receipts = Receipt.find(params[:receipt_ids]) 
+    if params[:aceptar_button] 			# EjCobranza Acepta RP Rechazados 
+      @receipts.each do |r|
+        r.update_attribute 'state', 'cerrado'  
+        r.update_attribute 'area', 'Cobranza'
+        r.update_attribute 'substate', '' #actualizar los otros estados xxxxxxxxxxxxxxxxxxxxxxxx       
+      end  
+      redirect_to(:action => 'rp_rechz') 
+    elsif params[:rendir_button] 		# EjCobranza Rinde RP a Supervisor
+      @receipts.each do |r|
+        r.update_attribute 'state', 'rendido'  
+        r.update_attribute 'area', ''  #actualizar los otros estados xxxxxxxxxxxxxxxxxxxxxxxxxx 
+        r.update_attribute 'substate', '' #actualizar los otros estados xxxxxxxxxxxxxxxxxxxxxxxx       
+      end  
+      redirect_to(:action => 'rend_sup') 
+    end
   end 
 
   def create_rp
@@ -85,13 +223,13 @@ class ReceiptsController < ApplicationController
     params[:area].nil? ? @area = 'Todas' : @area = params[:area]
     params[:estado].nil? ? @estado = 'Todos' : @estado = params[:estado]
     if (@area=='Todas' and @estado=='Todos')
-      @receipts = Receipt.all
+      @receipts = Receipt.where("group_id=?", current_user.group_id)
     elsif (@area=='Todas' and @estado!='Todos')
-      @receipts = Receipt.where("state=?", @estado)
+      @receipts = Receipt.where("state=?", @estado).where("group_id=?", current_user.group_id)
     elsif (@area!='Todas' and @estado=='Todos')
-      @receipts = Receipt.where("area=?", @area)
+      @receipts = Receipt.where("area=?", @area).where("group_id=?", current_user.group_id)
     else
-      @receipts = Receipt.where("area=?", @area).where("state=?", @estado)
+      @receipts = Receipt.where("area=?", @area).where("state=?", @estado).where("group_id=?", current_user.group_id)
     end
   end
 
@@ -229,31 +367,39 @@ class ReceiptsController < ApplicationController
     @receipt = Receipt.find(params[:id])
     @tickets = Ticket.where("receipt_id=?", @receipt.id)
     if @receipt.update_attributes(params[:receipt])
-      if @receipt.state=='abierto' and @receipt.valid?
-        @total_paid = 0
-        @total_paid = (not @receipt.monto1.nil?) ? @total_paid + @receipt.monto1 : @total_paid
-        @total_paid = (not @receipt.monto2.nil?) ? @total_paid + @receipt.monto2 : @total_paid
-        @total_paid = (not @receipt.monto3.nil?) ? @total_paid + @receipt.monto3 : @total_paid
-        @total_paid = (not @receipt.monto4.nil?) ? @total_paid + @receipt.monto4 : @total_paid
-        @total_paid = (not @receipt.monto5.nil?) ? @total_paid + @receipt.monto5 : @total_paid
-        @total_paid = (not @receipt.monto6.nil?) ? @total_paid + @receipt.monto6 : @total_paid
-        @total_paid = (not @receipt.monto7.nil?) ? @total_paid + @receipt.monto7 : @total_paid
-        @total_paid = (not @receipt.monto8.nil?) ? @total_paid + @receipt.monto8 : @total_paid
-        @total_paid = (not @receipt.monto9.nil?) ? @total_paid + @receipt.monto9 : @total_paid
-        @total_paid = (not @receipt.monto10.nil?) ? @total_paid + @receipt.monto10 : @total_paid
-        @total_paid = (not @receipt.monto11.nil?) ? @total_paid + @receipt.monto11 : @total_paid
-        @total_paid = (not @receipt.monto12.nil?) ? @total_paid + @receipt.monto12 : @total_paid
-        @total_paid = (not @receipt.monto13.nil?) ? @total_paid + @receipt.monto13 : @total_paid
-        @total_paid = (not @receipt.monto14.nil?) ? @total_paid + @receipt.monto14 : @total_paid
-        @total_paid = (not @receipt.monto15.nil?) ? @total_paid + @receipt.monto15 : @total_paid
-        @total_paid = (not @receipt.monto16.nil?) ? @total_paid + @receipt.monto16 : @total_paid
-        @total_paid = (not @receipt.monto17.nil?) ? @total_paid + @receipt.monto17 : @total_paid
-        @total_paid = (not @receipt.monto18.nil?) ? @total_paid + @receipt.monto18 : @total_paid
-        @receipt.update_attribute 'total_paid', @total_paid  
-        @receipt.update_attribute 'state', 'cerrado' 
-        redirect_to(@receipt, :notice => 'El Recibo de Pago se ha cerrado exitosamente.') 
-      else
-        redirect_to(@receipt, :notice => 'El Recibo de Pago se ha actualizado exitosamente.') 
+
+      if params[:corregir_button] 
+       if @receipt.valid?
+         @receipt.update_attribute 'state', 'solicita gestion terreno' 
+         redirect_to(@receipt, :notice => 'El Recibo de Pago se ha corregido exitosamente y se encuentra listo para ser enviado a terreno.') 
+       end 
+      elsif params[:cerrar_button]       
+       if @receipt.state=='abierto' and @receipt.valid?
+         @total_paid = 0
+         @total_paid = (not @receipt.monto1.nil?) ? @total_paid + @receipt.monto1 : @total_paid
+         @total_paid = (not @receipt.monto2.nil?) ? @total_paid + @receipt.monto2 : @total_paid
+         @total_paid = (not @receipt.monto3.nil?) ? @total_paid + @receipt.monto3 : @total_paid
+         @total_paid = (not @receipt.monto4.nil?) ? @total_paid + @receipt.monto4 : @total_paid
+         @total_paid = (not @receipt.monto5.nil?) ? @total_paid + @receipt.monto5 : @total_paid
+         @total_paid = (not @receipt.monto6.nil?) ? @total_paid + @receipt.monto6 : @total_paid
+         @total_paid = (not @receipt.monto7.nil?) ? @total_paid + @receipt.monto7 : @total_paid
+         @total_paid = (not @receipt.monto8.nil?) ? @total_paid + @receipt.monto8 : @total_paid
+         @total_paid = (not @receipt.monto9.nil?) ? @total_paid + @receipt.monto9 : @total_paid
+         @total_paid = (not @receipt.monto10.nil?) ? @total_paid + @receipt.monto10 : @total_paid
+         @total_paid = (not @receipt.monto11.nil?) ? @total_paid + @receipt.monto11 : @total_paid
+         @total_paid = (not @receipt.monto12.nil?) ? @total_paid + @receipt.monto12 : @total_paid
+         @total_paid = (not @receipt.monto13.nil?) ? @total_paid + @receipt.monto13 : @total_paid
+         @total_paid = (not @receipt.monto14.nil?) ? @total_paid + @receipt.monto14 : @total_paid
+         @total_paid = (not @receipt.monto15.nil?) ? @total_paid + @receipt.monto15 : @total_paid
+         @total_paid = (not @receipt.monto16.nil?) ? @total_paid + @receipt.monto16 : @total_paid
+         @total_paid = (not @receipt.monto17.nil?) ? @total_paid + @receipt.monto17 : @total_paid
+         @total_paid = (not @receipt.monto18.nil?) ? @total_paid + @receipt.monto18 : @total_paid
+         @receipt.update_attribute 'total_paid', @total_paid  
+         @receipt.update_attribute 'state', 'cerrado' 
+         redirect_to(@receipt, :notice => 'El Recibo de Pago se ha cerrado exitosamente.') 
+       else
+         redirect_to(@receipt, :notice => 'El Recibo de Pago se ha actualizado exitosamente.') 
+       end
       end
     else
       render :action => "edit" 
@@ -263,14 +409,7 @@ class ReceiptsController < ApplicationController
   def rp_abtos
     deny_access unless (current_user.profile_id == 1)
     @titulo = "Recibos de Pago Abiertos"
-    @receipts = Receipt.where("state='abierto'").where("area='Cobranza'").where("group_id=?", current_user.group_id).where("user_name=?", current_user.name)
-  end
-
-  def rp_rechz
-    deny_access unless (current_user.profile_id == 1)
-    @titulo = "Recibos de Pago Rechazados"
-    @receipts1 = Receipt.where("state='rechazado'").where("area='Supervisor'").where("group_id=?", current_user.group_id)
-    @receipts2 = Receipt.where("state='rechaza supervisor a cobranza' OR state='acepta cobranza rechazo supervisor'").where("group_id=?", current_user.group_id)
+    @receipts = Receipt.where("state='abierto'").where("area='Cobranza'").where("user_name=?",current_user.name)
   end
 
   def print

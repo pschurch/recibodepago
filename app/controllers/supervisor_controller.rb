@@ -3,29 +3,26 @@ class SupervisorController < ApplicationController
   before_filter :authenticate_sup
   helper_method :sort_column, :sort_direction  
 
-  def sr_recp_cobr
-    @titulo = "Recepcionar Recibos de Pago de Cobranza"
-    @receipts1 = Receipt.where("group_id=?", current_user.group_id).where("state='rendido'").where("area='Cobranza'")
-    @receipts2 = Receipt.where("group_id=?", current_user.group_id).where("state='recepcionado'").where("area='Supervisor'")
-  end
-  def sr_recp_cobr_edit  
-    @titulo = "Rendicion de Recibos de Pago"
-  end
-  def sr_recp_cobr_update  
-    @receipts = Receipt.find(params[:receipt_ids]) 
-    @receipts.each do |r|
-      r.update_attribute 'state', 'rendido'  
-      #actualizar los otros estados xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx  
-    end  
-    redirect_to(:action => 'sr_recp_cobr') 
-  end
-
-
-
   def stmod
     @titulo = "Tickets por Modificar"
     grupo = current_user.group_id
     @tickets = Ticket.where("state='pms'").where("group_id=?", grupo).order(sort_column + ' ' + sort_direction)  
+  end
+
+  def srlist
+    @titulo = "Listado de Todos los Recibos de Pago"
+    @receipts = Receipt.where("group_id=?", current_user.group_id)
+    params[:area].nil? ? @area = 'Todas' : @area = params[:area]
+    params[:estado].nil? ? @estado = 'Todos' : @estado = params[:estado]
+    if (@area=='Todas' and @estado=='Todos')
+      @receipts = Receipt.where("group_id=?", current_user.group_id)
+    elsif (@area=='Todas' and @estado!='Todos')
+      @receipts = Receipt.where("state=?", @estado).where("group_id=?", current_user.group_id)
+    elsif (@area!='Todas' and @estado=='Todos')
+      @receipts = Receipt.where("area=?", @area).where("group_id=?", current_user.group_id)
+    else
+      @receipts = Receipt.where("area=?", @area).where("state=?", @estado).where("group_id=?", current_user.group_id)
+    end
   end
 
   def stlist
@@ -63,11 +60,6 @@ class SupervisorController < ApplicationController
   end
   def sr_rech_tesoreria
     @titulo = "Recibos de Pago Rechazador por Tesoreria"
-    @receipts = Receipt.where("group_id=?", current_user.group_id)
-  end
-
-  def srlist
-    @titulo = "Listado de Todos los Recibos de Pago"
     @receipts = Receipt.where("group_id=?", current_user.group_id)
   end
 

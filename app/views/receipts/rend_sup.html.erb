@@ -9,7 +9,7 @@
   <div class="subtit">
     Recibos de Pago para ser rendidos a Supervisor:
   </div>
-  <% form_tag rend_sup_edit_receipts_path do %>
+  <% form_tag ejc_edit_multiple_receipts_path do %>
     <table class="index">
       <tr>
         <th>N° RP</th>
@@ -51,7 +51,7 @@
     </table>
     <% if not @receipts.empty? %> 
       <div class="actions">
-        <%= submit_tag "Rendir Recibos de Pago" %>
+        <%= submit_tag "Rendir Recibos de Pago", :name => "rendir_button" %>
       </div>
     <% end %>
   <% end %>

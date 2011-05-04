@@ -1,8 +1,10 @@
 Recibodepago::Application.routes.draw do
+  get "terreno/trlist"
+
   get "supervisor/stmod"
   get "supervisor/stlist"
   get "supervisor/srlist"
-  get "supervisor/sr_recp_cobr"
+  #get "supervisor/sr_recp_cobr"
   get "supervisor/sr_envio_terreno"
   get "supervisor/sr_recp_terreno"
   get "supervisor/sr_rech_terreno"
@@ -37,6 +39,9 @@ Recibodepago::Application.routes.draw do
   match '/dpayment_periods', :to => 'designer#payment_periods'
   get "designer/del_reg"
 
+  get "receipts/ntc"
+  get "receipts/sup_recp_cobr"
+  get "receipts/sup_recp_terr"
   get "receipts/print"
   match '/listk', :to => 'receipts#create_rp'
   match '/lisra', :to => 'receipts#rp_abtos'
@@ -45,8 +50,12 @@ Recibodepago::Application.routes.draw do
   #resources :receipts
   resources :receipts do
     collection do
-      post 'rend_sup_edit'
-      put 'rend_sup_update'                                 
+      post 'sup_edit_multiple'
+      put 'sup_update_multiple'                                 
+    end
+    collection do
+      post 'ejc_edit_multiple'
+      put 'ejc_update_multiple'                                  
     end
   end
   resources :receipts do

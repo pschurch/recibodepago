@@ -1,8 +1,8 @@
 <div class="seccion">
 <table class="index">
   <tr>
-    <th>Preparado por<!-- <%= sortable "prepared_by", "Preparado por" %> --></th>
     <th>N° RP<!-- <%= sortable "id", "N° RP" %> --></th>
+    <th>N° Ticket</th>
     <th>Rut<!-- <%= sortable "rut" %> --></th>
     <th>Identificador<!-- <%= sortable "cas_id", "Identificador" %> --></th>
     <th>Mandante<!-- <%= sortable "principal_id", "Mandante" %> --></th>
@@ -16,16 +16,20 @@
    <% @receipts.each do |receipt| %>
     <% @tickets = Ticket.where("receipt_id=?", receipt.id) %>
     <tr>
-      <td><%= receipt.user_name %></td>
       <td><%= receipt.id %></td>
       <td>
         <% @tickets.each  do |p| %>
-        <%= p.rut %>-<%= p.digit %><br>
+         <%= p.id %><br>
         <% end %>
       </td>
       <td>
         <% @tickets.each  do |p| %>
-        <%= p.cas_id %><br>
+         <%= p.rut %>-<%= p.digit %><br>
+        <% end %>
+      </td>
+      <td>
+        <% @tickets.each  do |p| %>
+         <%= p.cas_id %><br>
         <% end %>
       </td>
       <td><%= @tickets.first.principal_name %></td>

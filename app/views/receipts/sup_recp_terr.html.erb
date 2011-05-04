@@ -7,9 +7,9 @@
   <% end %>
 
   <div class="subtit">
-    Recibos de Pago de Cobranza para ser Recepcionados:
+    Recibos de Pago de Terreno para ser Recepcionados:
   </div>
-  <% form_tag sr_recp_cobr_edit_receipts_path do %>
+  <% form_tag sup_edit_multiple_receipts_path do %>
     <table class="index">
     <tr>
       <th>Preparado Por</th>
@@ -26,7 +26,7 @@
     </tr>
     <% if @receipts1.empty? %>
       <tr>
-        <td colspan="10">No se han encontrado Recibos de Pago para ser recepcionados.</td>
+        <td colspan="11">No se han encontrado Recibos de Pago para ser recepcionados.</td>
       </tr>  
     <% else %>
       <% @receipts1.each do |rp| %>
@@ -61,7 +61,7 @@
     </table>
     <% if not @receipts1.empty? %> 
       <div class="actions">
-        <%= submit_tag "Rendir Recibos de Pago" %>
+        <%= submit_tag "Recepcionar Recibos de Pago", :name=> "recp_terr" %>
       </div>
     <% end %>
   <% end %>
@@ -69,7 +69,7 @@
   <div class="nbsp"></div>
   <hr>
   <div class="subtit">
-    Recibos de Pago de Cobranza Recepcionados, por Confirmar:
+    Recibos de Pago de Terreno Recepcionados, por Confirmar:
   </div>
   <table class="index">
   <tr>

@@ -168,6 +168,31 @@
     </tr>
     </table>
 <% end %>
+<!-- fin DETALLE DE PAGO -->
+
+<!-- ----------------- Rechazado -------------------- -->
+<% if @receipt.state=='rechazado' %> 
+  <hr>
+  <table class="display">
+  <tr>
+    <td colspan="2">Recibo de Pago Rechazado</td>
+    <th rowspan=2 width=16></th>
+    <td>Rechazado por:</td>
+    <td class="ro"><div class="n"><%= @receipt.rech_by %></div></td>
+  </tr>
+  <tr>
+    <td>Fecha Rechazo:</td>
+    <td class="ro"><div class="sh"><%= @receipt.rech_date.strftime("%d/%m/%Y") %></div></td>
+    <td rowspan=2>Motivo:</td>
+    <td rowspan=2 class="ro"><div class="nh"><%= @receipt.rech_mtvo %></div></td>
+  </tr>
+  <tr>
+    <td>Hora Rechazo:</td>
+    <td class="ro"><div class="sh"><%= @receipt.rech_date.strftime("%H:%M") %> hrs.</div></td>
+  </tr>
+  </table>
+<% end %>
+<!-- -----------------fin Rechazado -------------------- -->
 </td></tr></table>
 </div>
 
@@ -184,11 +209,13 @@
     <% end %>
     <!-- # Flujo de Pago 3 (RP con Gestion Terreno) -->
     <% if @receipt.payment_flow_id==3 %> 
-
+      <%= link_to 'Editar', edit_receipt_path(@receipt) unless (@receipt.state!='rechazado')%>
     <% end %> 
     <%= link_to 'Página Principal', :controller => "sessions", :action => "ejc" %>
 
 <% elsif current_user.profile_id==2 %> 
+  <%= link_to 'Confirmar', :controller => "receipts", :action => "ntc", :acc => 'confirmar', :id => @receipt.id  unless @receipt.state!="recepcionado" %> 
+  <%= link_to 'Rechazar', :controller => "receipts", :action => "ntc", :acc => 'rechazar', :id => @receipt.id unless @receipt.state!="recepcionado"%> 
   <%= link_to 'Página Principal', :controller => "sessions", :action => "sup" %>
 
 <% elsif current_user.profile_id==8 %> <!-- ---------- Designer ------------  -->

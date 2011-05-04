@@ -1,6 +1,6 @@
 <div class="seccion">
 <table><tr><td class="marco">
- <% form_for :receipt, :url => rend_sup_update_receipts_path, :html => { :method => :put } do |form| %>
+ <% form_for :receipt, :url => sup_update_multiple_receipts_path, :html => { :method => :put } do |form| %>
  <div class="subtit">
    Se han seleccionado los siguientes Recibos de Pago:
  </div>
@@ -10,7 +10,7 @@
     <th>Total Pagado</th>
   </tr>
   <% for receipt in @receipts %>  
-  <%= hidden_field_tag "receipt_ids[]", receipt.id%>  
+  <%= hidden_field_tag "receipt1_ids[]", receipt.id%>  
   <tr>
     <td><%= h receipt.id %></td>  
     <td><%= h number_to_currency(receipt.total_paid, :precision => 0, :delimiter => ".") %></td>  
@@ -190,14 +190,15 @@
   </table>
   <div class="nbsp"></div>
   <div class="actions">
-    <%= form.submit "Rendir"%>
+    <%= form.submit "Recepcionar", :name => "recepcion_button"%> 
+    <%= form.submit "Rechazar", :name => "rechazo_button" %>
   </div>
 <% end %>
 </td></tr></table>
 </div>
 
 <div class="botones">
-  <%= link_to "Cancelar", rnsup_path %> 
-  <%= render 'shared/pp_ejc_dsg' %>
+  <%= link_to "Cancelar", :controller => "receipts", :action => 'sup_recp_cobr' %> 
+  <%= link_to 'Página Principal', :controller => "sessions", :action => 'sup' %>
 </div>
 

@@ -87,6 +87,7 @@ div.n  { width: 240px; }
 div.lg { width: 484px;}
 div.lgh {width: 484px; height:40px} 
 div.lmh {width: 405px; height:40px}
+div.nh  { width: 240px; height:40px}
 
 /* print */
 table.info { margin:0 auto; border-collapse: collapse; border:0px; width:100%}

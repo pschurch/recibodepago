@@ -42,7 +42,7 @@
   <% end %>
   </table>
   <div class="actions">
-    <%= submit_tag "Crear Recibo de Pago" %>
+    <%= submit_tag "Crear Recibo de Pago" unless @tickets.empty?%>
   </div>
 <% end %>
 </div>

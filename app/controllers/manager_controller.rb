@@ -21,6 +21,17 @@ class ManagerController < ApplicationController
   def mrlist
     @titulo = "Listado de Todos los Recibos de Pago"
     @receipts = Receipt.all
+    params[:area].nil? ? @area = 'Todas' : @area = params[:area]
+    params[:estado].nil? ? @estado = 'Todos' : @estado = params[:estado]
+    if (@area=='Todas' and @estado=='Todos')
+      @receipts = Receipt.all
+    elsif (@area=='Todas' and @estado!='Todos')
+      @receipts = Receipt.where("state=?", @estado)
+    elsif (@area!='Todas' and @estado=='Todos')
+      @receipts = Receipt.where("area=?", @area)
+    else
+      @receipts = Receipt.where("area=?", @area).where("state=?", @estado)
+    end
   end
 
   def sort_column  
