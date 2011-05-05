@@ -16,12 +16,17 @@
     
     <table class="formulario">
     <tr>
-      <td>Acuerdo de Pago: &nbsp;</td><td class="ro"><div><%= @receipt.payment_agreement_name %></div></td>
+      <td>Acuerdo de Pago: &nbsp;</td><td class="ro"><div class="n"><%= @receipt.payment_agreement_name %></div></td>
       <th rowspan=20 width=30></th>
       <td>Total a Pagar: &nbsp;</td><td class="ro"><div class="sh"><%= number_to_currency(@receipt.total_pay, :precision => 0, :delimiter => ".") %></div></td>
     </tr>
     <tr>
-      <td>Fecha de Pago:</td><td class="ro"><%= f.date_select :date_r, :order => [:day, :month, :year] %></td>
+      <td>Fecha de Pago:</td>
+      <% if current_user.profile_id==1 %>  
+        <td class="ro"><%= f.date_select :date_r, :order => [:day, :month, :year] %></td>
+      <% elsif current_user.profile_id==2 %>   
+        <td class="ro"><div class="sh"><%= @receipt.date_r.strftime("%d/%m/%Y") %></div></td>
+      <% end %>
     </tr>
     <tr>
       <td>Preparado por:</td><td class="ro"><div class="n"><%= @receipt.user_name %></div></td>
@@ -42,152 +47,35 @@
     <% end %>
     <!-- fin DATOS DE CONTACTO -->
     
-    <!-- Solo para Flujo de Pago 2 (RP por Completar) y 1 (RP Completo) -->
-    <% if (@receipt.payment_flow_id==1 or @receipt.payment_flow_id==2)%>
+    <% if current_user.profile_id==1 %>  
+      <!-- Solo para Flujo de Pago 2 (RP por Completar) y 1 (RP Completo) -->
+      <% if (@receipt.payment_flow_id==1 or @receipt.payment_flow_id==2)%>
+        <div class="subtit">
+          Detalle del Pago:
+        </div>
+        <%= render "detalle_edit", :f => f %>
+      <% end %>
+    <% elsif current_user.profile_id==2 %>   
       <div class="subtit">
         Detalle del Pago:
       </div>
-        <table class="datos">
+      <table class="formulario"><%= render "detalle_show", :f => @receipt %></table>
+    <% end %>
+
+    <!-- ----------------- Ingreso Rechazado -------------------- -->
+    <% if @receipt.state=='recepcionado' %> 
+        <hr>
+        <table class="formulario">
         <tr>
-          <th width="120">Forma de Pago</th>
-          <th width="245">Emisor</th>
-          <th width="118">N° Documento</th>
-          <th>Monto</th>
-        </tr>
-        <tr>
-          <td><%= f.collection_select :formapago1, PaymentForm.where('state = true').order('name ASC'), :name, :name, options ={:prompt => "- Seleccione -"} %></td>
-          <td><%= f.collection_select :emisor1, Emitter.where('state = true').order('name ASC'), :name, :name, options ={:prompt => "- Seleccione -"} %></td>
-          <td><%= f.text_field :docnum1, :size => "16" %></td>
-          <td><%= f.text_field :monto1, :size => "8" %></td>
-        </tr>
-        <tr>
-          <td><%= f.collection_select :formapago2, PaymentForm.where('state = true').order('name ASC'), :name, :name, options ={:prompt => "- Seleccione -"} %></td>
-          <td><%= f.collection_select :emisor2, Emitter.where('state = true').order('name ASC'), :name, :name, options ={:prompt => "- Seleccione -"} %></td>
-          <td><%= f.text_field :docnum2, :size => "16" %></td>
-          <td><%= f.text_field :monto2, :size => "8" %></td>
-        </tr>
-        <tr>
-          <td><%= f.collection_select :formapago3, PaymentForm.where('state = true').order('name ASC'), :name, :name, options ={:prompt => "- Seleccione -"} %></td>
-          <td><%= f.collection_select :emisor3, Emitter.where('state = true').order('name ASC'), :name, :name, options ={:prompt => "- Seleccione -"} %></td>
-          <td><%= f.text_field :docnum3, :size => "16" %></td>
-          <td><%= f.text_field :monto3, :size => "8" %></td>
-        </tr>
-        <tr>
-          <td><%= f.collection_select :formapago4, PaymentForm.where('state = true').order('name ASC'), :name, :name, options ={:prompt => "- Seleccione -"} %></td>
-          <td><%= f.collection_select :emisor4, Emitter.where('state = true').order('name ASC'), :name, :name, options ={:prompt => "- Seleccione -"} %></td>
-          <td><%= f.text_field :docnum4, :size => "16" %></td>
-          <td><%= f.text_field :monto4, :size => "8" %></td>
-        </tr>
-        <tr>
-          <td><%= f.collection_select :formapago5, PaymentForm.where('state = true').order('name ASC'), :name, :name, options ={:prompt => "- Seleccione -"} %></td>
-          <td><%= f.collection_select :emisor5, Emitter.where('state = true').order('name ASC'), :name, :name, options ={:prompt => "- Seleccione -"} %></td>
-          <td><%= f.text_field :docnum5, :size => "16" %></td>
-          <td><%= f.text_field :monto5, :size => "8" %></td>
-        </tr>
-        <tr>
-          <td><%= f.collection_select :formapago6, PaymentForm.where('state = true').order('name ASC'), :name, :name, options ={:prompt => "- Seleccione -"} %></td>
-          <td><%= f.collection_select :emisor6, Emitter.where('state = true').order('name ASC'), :name, :name, options ={:prompt => "- Seleccione -"} %></td>
-          <td><%= f.text_field :docnum6, :size => "16" %></td>
-          <td><%= f.text_field :monto6, :size => "8" %></td>
-        </tr>
-        <tr>
-          <td><%= f.collection_select :formapago7, PaymentForm.where('state = true').order('name ASC'), :name, :name, options ={:prompt => "- Seleccione -"} %></td>
-          <td><%= f.collection_select :emisor7, Emitter.where('state = true').order('name ASC'), :name, :name, options ={:prompt => "- Seleccione -"} %></td>
-          <td><%= f.text_field :docnum7, :size => "16" %></td>
-          <td><%= f.text_field :monto7, :size => "8" %></td>
-        </tr>
-        <tr>
-          <td><%= f.collection_select :formapago8, PaymentForm.where('state = true').order('name ASC'), :name, :name, options ={:prompt => "- Seleccione -"} %></td>
-          <td><%= f.collection_select :emisor8, Emitter.where('state = true').order('name ASC'), :name, :name, options ={:prompt => "- Seleccione -"} %></td>
-          <td><%= f.text_field :docnum8, :size => "16" %></td>
-          <td><%= f.text_field :monto8, :size => "8" %></td>
-        </tr>
-        <tr>
-          <td><%= f.collection_select :formapago9, PaymentForm.where('state = true').order('name ASC'), :name, :name, options ={:prompt => "- Seleccione -"} %></td>
-          <td><%= f.collection_select :emisor9, Emitter.where('state = true').order('name ASC'), :name, :name, options ={:prompt => "- Seleccione -"} %></td>
-          <td><%= f.text_field :docnum9, :size => "16" %></td>
-          <td><%= f.text_field :monto9, :size => "8" %></td>
-        </tr>
-        <tr>
-          <td><%= f.collection_select :formapago10, PaymentForm.where('state = true').order('name ASC'), :name, :name, options ={:prompt => "- Seleccione -"} %></td>
-          <td><%= f.collection_select :emisor10, Emitter.where('state = true').order('name ASC'), :name, :name, options ={:prompt => "- Seleccione -"} %></td>
-          <td><%= f.text_field :docnum10, :size => "16" %></td>
-          <td><%= f.text_field :monto10, :size => "8" %></td>
-        </tr>
-        <tr>
-          <td><%= f.collection_select :formapago11, PaymentForm.where('state = true').order('name ASC'), :name, :name, options ={:prompt => "- Seleccione -"} %></td>
-          <td><%= f.collection_select :emisor11, Emitter.where('state = true').order('name ASC'), :name, :name, options ={:prompt => "- Seleccione -"} %></td>
-          <td><%= f.text_field :docnum11, :size => "16" %></td>
-          <td><%= f.text_field :monto11, :size => "8" %></td>
-        </tr>
-        <tr>
-          <td><%= f.collection_select :formapago12, PaymentForm.where('state = true').order('name ASC'), :name, :name, options ={:prompt => "- Seleccione -"} %></td>
-          <td><%= f.collection_select :emisor12, Emitter.where('state = true').order('name ASC'), :name, :name, options ={:prompt => "- Seleccione -"} %></td>
-          <td><%= f.text_field :docnum12, :size => "16" %></td>
-          <td><%= f.text_field :monto12, :size => "8" %></td>
-        </tr>
-        <tr>
- <!-- ----------------- Rechazado -------------------- -->
-<% if @receipt.state=='rechazado' %> 
-  <hr>
-  <table class="display">
-  <tr>
-    <td colspan="2">Recibo de Pago Rechazado</td>
-    <th rowspan=2 width=16></th>
-    <td>Rechazado por:</td>
-    <td class="ro"><div class="n"><%= @receipt.rech_by %></div></td>
-  </tr>
-  <tr>
-    <td>Fecha Rechazo:</td>
-    <td class="ro"><div class="sh"><%= @receipt.rech_date.strftime("%d/%m/%Y") %></div></td>
-    <td rowspan=2>Motivo:</td>
-    <td rowspan=2 class="ro"><div class="nh"><%= @receipt.rech_mtvo %></div></td>
-  </tr>
-  <tr>
-    <td>Hora Rechazo:</td>
-    <td class="ro"><div class="sh"><%= @receipt.rech_date.strftime("%H:%M") %> hrs.</div></td>
-  </tr>
-  </table>
-<% end %>
-<!-- -----------------fin Rechazado -------------------- -->         <td><%= f.collection_select :formapago13, PaymentForm.where('state = true').order('name ASC'), :name, :name, options ={:prompt => "- Seleccione -"} %></td>
-          <td><%= f.collection_select :emisor13, Emitter.where('state = true').order('name ASC'), :name, :name, options ={:prompt => "- Seleccione -"} %></td>
-          <td><%= f.text_field :docnum13, :size => "16" %></td>
-          <td><%= f.text_field :monto13, :size => "8" %></td>
-        </tr>
-        <tr>
-          <td><%= f.collection_select :formapago14, PaymentForm.where('state = true').order('name ASC'), :name, :name, options ={:prompt => "- Seleccione -"} %></td>
-          <td><%= f.collection_select :emisor14, Emitter.where('state = true').order('name ASC'), :name, :name, options ={:prompt => "- Seleccione -"} %></td>
-          <td><%= f.text_field :docnum14, :size => "16" %></td>
-          <td><%= f.text_field :monto14, :size => "8" %></td>
-        </tr>
-        <tr>
-          <td><%= f.collection_select :formapago15, PaymentForm.where('state = true').order('name ASC'), :name, :name, options ={:prompt => "- Seleccione -"} %></td>
-          <td><%= f.collection_select :emisor15, Emitter.where('state = true').order('name ASC'), :name, :name, options ={:prompt => "- Seleccione -"} %></td>
-          <td><%= f.text_field :docnum15, :size => "16" %></td>
-          <td><%= f.text_field :monto15, :size => "8" %></td>
-        </tr>
-        <tr>
-          <td><%= f.collection_select :formapago16, PaymentForm.where('state = true').order('name ASC'), :name, :name, options ={:prompt => "- Seleccione -"} %></td>
-          <td><%= f.collection_select :emisor16, Emitter.where('state = true').order('name ASC'), :name, :name, options ={:prompt => "- Seleccione -"} %></td>
-          <td><%= f.text_field :docnum16, :size => "16" %></td>
-          <td><%= f.text_field :monto16, :size => "8" %></td>
-        </tr>
-        <tr>
-          <td><%= f.collection_select :formapago17, PaymentForm.where('state = true').order('name ASC'), :name, :name, options ={:prompt => "- Seleccione -"} %></td>
-          <td><%= f.collection_select :emisor17, Emitter.where('state = true').order('name ASC'), :name, :name, options ={:prompt => "- Seleccione -"} %></td>
-          <td><%= f.text_field :docnum17, :size => "16" %></td>
-          <td><%= f.text_field :monto17, :size => "8" %></td>
-        </tr>
-        <tr>
-          <td><%= f.collection_select :formapago18, PaymentForm.where('state = true').order('name ASC'), :name, :name, options ={:prompt => "- Seleccione -"} %></td>
-          <td><%= f.collection_select :emisor18, Emitter.where('state = true').order('name ASC'), :name, :name, options ={:prompt => "- Seleccione -"} %></td>
-          <td><%= f.text_field :docnum18, :size => "16" %></td>
-          <td><%= f.text_field :monto18, :size => "8" %></td>
+          <td>Si Recibo de Pago es Rechazado, ingrese motivo: <br>
+          <%= f.text_area :rech_mtvo, :size => "75x1" %>
+          </td>
         </tr>
         </table>
-      <% end %>
+    <% end %>
+    <!-- -----------------fin Ingreso Rechazado -------------------- -->
 
-      <!-- ----------------- Rechazado -------------------- -->
+    <!-- ----------------- Ver datos Rechazado -------------------- -->
       <% if @receipt.state=='rechazado' %> 
         <hr>
         <table class="formulario">
@@ -209,17 +97,26 @@
         </tr>
         </table>
       <% end %>
-      <!-- -----------------fin Rechazado -------------------- -->
+    <!-- -----------------fin Ver datosRechazado -------------------- -->
         
-      <div class="actions">
+    <div class="actions">
+      <% if current_user.profile_id==1 %>  <!-- ----------  Cobranza ---------- -->
         <%= f.submit "Cerrar Recibo de Pago", :name=>"cerrar_button" unless @receipt.state=="rechazado"%>
         <%= f.submit "Corregir", :name=>"corregir_button" unless @receipt.state!="rechazado"%> 
-      </div>
+      <% elsif current_user.profile_id==2 %> 
+        <div class="botones"><%= link_to 'Cerrar Recibo de Pago', :controller => "receipts", :action => "ntc", :acc => 'confirmar', :id => @receipt.id  unless @receipt.state!="recepcionado" %>
+        <%= f.submit "Rechazar Recibo de Pago", :name=>"rechazar_sup_ejc_button" unless @receipt.state!="recepcionado"%> </div>
+      <% end %>
+    </div>
   <% end %>
 </td></tr></table>
 </div>
 
 <div class="botones">
-  <%= link_to "Cancelar", :controller => "sessions", :action => "ejc" %> 
+  <% if current_user.profile_id==1 %>  <!-- ----------  Cobranza ---------- -->
+    <%= link_to "Cancelar", :controller => "sessions", :action => "ejc" %> 
+  <% elsif current_user.profile_id==2 %> 
+    <%= link_to 'Página Principal', :controller => "sessions", :action => "sup" %>
+  <% end %>
 </div> 
 

@@ -26,7 +26,7 @@
     </tr>
     <% if @receipts1.empty? %>
       <tr>
-        <td colspan="11">No se han encontrado Recibos de Pago para ser recepcionados.</td>
+        <td colspan="11">No se han encontrado Recibos de Pago para ser Recepcionados.</td>
       </tr>  
     <% else %>
       <% @receipts1.each do |rp| %>
@@ -53,7 +53,7 @@
             <% end %>
           </td>
           <td><%= number_to_currency(rp.total_pay, :precision => 0, :delimiter => ".") %></td>
-          <td><%= check_box_tag "receipt1_ids[]", rp.id %></td>
+          <td><%= check_box_tag "receipt_ids[]", rp.id %></td>
           <td><%= link_to 'Ver', rp %></td>
         </tr>
       <% end %>  
@@ -69,7 +69,7 @@
   <div class="nbsp"></div>
   <hr>
   <div class="subtit">
-    Recibos de Pago de Cobranza Recepcionados, por Confirmar:
+    Recibos de Pago de Cobranza Recepcionados, por Cerrar/Rechazar:
   </div>
   <table class="index">
   <tr>
@@ -86,7 +86,7 @@
   </tr>
   <% if @receipts2.empty? %>
     <tr>
-      <td colspan="11">No se han encontrado Recibos de Pago por confirmar.</td>
+      <td colspan="11">No se han encontrado Recibos de Pago por Cerrar/Rechazar.</td>
     </tr>  
   <% else %>
     <% @receipts2.each do |receipt| %>
@@ -113,7 +113,7 @@
         <% end %>
       </td>
       <td><%= number_to_currency(receipt.total_pay, :precision => 0, :delimiter => ".") %></td>
-      <td><%= link_to 'Ver', receipt %></td>
+      <td><%= link_to 'Editar', edit_receipt_path(receipt)%></td>
     </tr>
     <% end %>  
   <% end %>

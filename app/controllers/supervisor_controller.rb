@@ -54,10 +54,7 @@ class SupervisorController < ApplicationController
     @titulo = "Recibos de Pago Rechazador por Terreno"
     @receipts = Receipt.where("group_id=?", current_user.group_id)
   end
-  def sr_rend_tesoreria
-    @titulo = "Rendir Recibos de Pago a Tesoreria"
-    @receipts = Receipt.where("group_id=?", current_user.group_id)
-  end
+
   def sr_rech_tesoreria
     @titulo = "Recibos de Pago Rechazador por Tesoreria"
     @receipts = Receipt.where("group_id=?", current_user.group_id)

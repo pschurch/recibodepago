@@ -10,7 +10,7 @@
     <th>Total Pagado</th>
   </tr>
   <% for receipt in @receipts %>  
-  <%= hidden_field_tag "receipt1_ids[]", receipt.id%>  
+  <%= hidden_field_tag "receipt_ids[]", receipt.id%>  
   <tr>
     <td><%= h receipt.id %></td>  
     <td><%= h number_to_currency(receipt.total_paid, :precision => 0, :delimiter => ".") %></td>  
@@ -190,15 +190,17 @@
   </table>
   <div class="nbsp"></div>
   <div class="actions">
-    <%= form.submit "Recepcionar", :name => "recepcion_button"%> 
-    <%= form.submit "Rechazar", :name => "rechazo_button" %>
+    <%= form.submit "Recepcionar", :name => "recepcion_button" unless @button!="recp_cobr"%> 
+    <%= form.submit "Rechazar", :name => "rechazo_button"  unless @button!="recp_cobr"%>
+    <%= form.submit "Rendir", :name => "rendir_button" unless @button!="rendir_tsr_button"%> 
   </div>
 <% end %>
 </td></tr></table>
 </div>
 
 <div class="botones">
-  <%= link_to "Cancelar", :controller => "receipts", :action => 'sup_recp_cobr' %> 
+  <%= link_to "Cancelar", :controller => "receipts", :action => 'sup_recp_cobr' unless @button!="recp_cobr"%> 
+  <%= link_to "Cancelar", :controller => "receipts", :action => 'rend_tsr' unless @button!="rendir_tsr_button"%> 
   <%= link_to 'Página Principal', :controller => "sessions", :action => 'sup' %>
 </div>
 

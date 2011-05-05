@@ -10,17 +10,17 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110427193200) do
+ActiveRecord::Schema.define(:version => 20110504203839) do
 
   create_table "assignments", :force => true do |t|
     t.string   "state"
     t.string   "cas_id"
+    t.integer  "ticket_id"
+    t.integer  "receipt_id"
     t.integer  "principal_id"
     t.integer  "collection_type_id"
     t.integer  "product_id"
     t.integer  "group_id"
-    t.integer  "ticket_id"
-    t.integer  "receipt_id"
     t.string   "name"
     t.string   "rut"
     t.string   "digit"
@@ -30,6 +30,7 @@ ActiveRecord::Schema.define(:version => 20110427193200) do
     t.string   "emitter"
     t.string   "ctacte"
     t.date     "expir_date"
+    t.integer  "validity"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -97,12 +98,22 @@ ActiveRecord::Schema.define(:version => 20110427193200) do
   end
 
   create_table "payment_agreements", :force => true do |t|
+    t.integer  "payment_flow_id"
     t.string   "name"
     t.text     "description"
     t.boolean  "state",           :default => true
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "payment_flow_id"
+  end
+
+  create_table "payment_details", :force => true do |t|
+    t.integer  "receipt_id"
+    t.string   "payment_form"
+    t.string   "emitter"
+    t.string   "doc_num"
+    t.integer  "amount"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "payment_flows", :force => true do |t|
@@ -115,10 +126,10 @@ ActiveRecord::Schema.define(:version => 20110427193200) do
 
   create_table "payment_forms", :force => true do |t|
     t.string   "name"
-    t.text     "description"
-    t.boolean  "state",       :default => true
     t.boolean  "emitter",     :default => false
     t.boolean  "num_doc",     :default => false
+    t.text     "description"
+    t.boolean  "state",       :default => true
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -133,7 +144,7 @@ ActiveRecord::Schema.define(:version => 20110427193200) do
   create_table "payment_periods", :force => true do |t|
     t.string   "name"
     t.text     "description"
-    t.boolean  "state",       :default => true
+    t.boolean  "state"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -184,9 +195,13 @@ ActiveRecord::Schema.define(:version => 20110427193200) do
 
   create_table "receipts", :force => true do |t|
     t.string   "state",                  :default => "abierto"
+    t.string   "area"
+    t.string   "subarea"
+    t.integer  "payment_flow_id"
     t.integer  "payment_agreement_id"
     t.integer  "remesa_id"
     t.string   "payment_agreement_name"
+    t.datetime "date_r"
     t.integer  "total_pay"
     t.integer  "total_paid"
     t.string   "user_name"
@@ -195,14 +210,16 @@ ActiveRecord::Schema.define(:version => 20110427193200) do
     t.string   "et_name"
     t.string   "horario"
     t.boolean  "rc"
-    t.string   "print_user"
     t.string   "canc_by"
+    t.datetime "canc_date"
+    t.text     "canc_mtvo"
     t.string   "rech_by"
-    t.string   "rech_mtvo"
+    t.text     "rech_mtvo"
+    t.datetime "rech_date"
     t.string   "pdf_by"
-    t.date     "pdf_date"
-    t.string   "frs_mtvo"
-    t.date     "date_tsrc"
+    t.datetime "pdf_date"
+    t.text     "frs_mtvo"
+    t.datetime "tsrc_date"
     t.string   "cont_name"
     t.string   "cont_rut"
     t.string   "cont_digit"
@@ -289,20 +306,14 @@ ActiveRecord::Schema.define(:version => 20110427193200) do
     t.integer  "monto16"
     t.integer  "monto17"
     t.integer  "monto18"
-    t.string   "substate"
-    t.string   "area"
-    t.integer  "payment_flow_id"
-    t.datetime "date_r"
-    t.datetime "canc_date"
-    t.datetime "rech_date"
-    t.datetime "print_date"
-    t.boolean  "timbre"
   end
 
   create_table "tickets", :force => true do |t|
     t.integer  "principal_id"
     t.integer  "collection_type_id"
     t.integer  "product_id"
+    t.integer  "user_id"
+    t.date     "date_pay"
     t.integer  "receipt_id"
     t.string   "state",                :default => "creado"
     t.string   "state_fees",           :default => "sin_facturar"
@@ -315,6 +326,7 @@ ActiveRecord::Schema.define(:version => 20110427193200) do
     t.string   "collection_type_name"
     t.text     "payment_description"
     t.integer  "capital"
+    t.string   "pay_period"
     t.integer  "arrear_interest"
     t.integer  "term_interest"
     t.integer  "fee"
@@ -331,28 +343,25 @@ ActiveRecord::Schema.define(:version => 20110427193200) do
     t.string   "total_q"
     t.string   "prepared_by"
     t.boolean  "doc_delivery"
+    t.string   "canceled_by"
+    t.datetime "canceled_time"
+    t.integer  "assignment_id"
+    t.integer  "adjust_mx"
+    t.integer  "adjust_ejc_val"
+    t.integer  "adjust_sup_val"
+    t.integer  "adjust_mgt_val"
     t.boolean  "adjust_sup"
     t.text     "adjust_sup_des"
     t.boolean  "adjust_mgt"
     t.text     "adjust_mgt_des"
-    t.string   "canceled_by"
-    t.integer  "assignment_id"
     t.datetime "adjust_sup_time"
     t.datetime "adjust_mgt_time"
-    t.datetime "canceled_time"
-    t.integer  "adjust_sup_val"
     t.datetime "adjust_time"
     t.string   "adjust_by"
     t.text     "adjust_obs"
     t.integer  "new_total_pay"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "adjust_ejc_val"
-    t.date     "date_pay"
-    t.string   "pay_period"
-    t.integer  "user_id"
-    t.integer  "adjust_mgt_val"
-    t.integer  "adjust_mx"
   end
 
   create_table "users", :force => true do |t|

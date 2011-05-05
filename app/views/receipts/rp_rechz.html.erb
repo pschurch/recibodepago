@@ -25,7 +25,7 @@
         <th></th>
       </tr>
       <% if @receipts1.empty? %> 
-        <tr><td colspan=10>No se han encontrado Recibos de Pago Rechazados por Supervisor.</td></tr>
+        <tr><td colspan=11>No se han encontrado Recibos de Pago Rechazados por Supervisor.</td></tr>
       <% else %>
       <% @receipts1.each do |receipt| %>
         <% @tickets = Ticket.where("receipt_id=?", receipt.id) %>

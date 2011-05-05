@@ -7,7 +7,7 @@
     <li><%= link_to "Recepcionar Recibo de Pago de Terreno", :controller => "receipts", :action => "sup_recp_terr" %></li>
     <li><%= link_to "Generar PDF de Recibo de Pago", :controller => "supervisor", :action => "stlist" %></li>
     <li><%= link_to "Recibos de Pago Rechazados por Terreno", :controller => "supervisor", :action => "sr_rech_terreno" %></li>
-    <li><%= link_to "Rendir Recibos de Pago a Tesoreria", :controller => "supervisor", :action => "sr_rend_tesoreria" %></li>
+    <li><%= link_to "Rendir Recibos de Pago a Tesoreria", :controller => "receipts", :action => "rend_tsr" %></li>
     <li><%= link_to "Recibos de Pago Rechazados por Tesoreria", :controller => "supervisor", :action => "sr_rech_tesoreria" %></li>
     <li><%= link_to "Listado de Todos los Recibos de Pago", :controller => "supervisor", :action => "srlist" %></li>
   </ul>

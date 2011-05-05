@@ -53,7 +53,7 @@
             <% end %>
           </td>
           <td><%= number_to_currency(rp.total_pay, :precision => 0, :delimiter => ".") %></td>
-          <td><%= check_box_tag "receipt1_ids[]", rp.id %></td>
+          <td><%= check_box_tag "receipt_ids[]", rp.id %></td>
           <td><%= link_to 'Ver', rp %></td>
         </tr>
       <% end %>  

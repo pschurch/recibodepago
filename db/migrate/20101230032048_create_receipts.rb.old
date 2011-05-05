@@ -2,10 +2,10 @@ class CreateReceipts < ActiveRecord::Migration
   def self.up
     create_table :receipts do |t|
       t.string :state, :default => "abierto"
-      t.string :substate 
       t.string :area
-      t.integer :payment_agreement_id
+      t.string :subarea 
       t.integer :payment_flow_id
+      t.integer :payment_agreement_id
       t.integer :remesa_id
       t.string :payment_agreement_name
       t.datetime :date_r
@@ -17,9 +17,6 @@ class CreateReceipts < ActiveRecord::Migration
       t.string :et_name 
       t.string :horario
       t.boolean :rc
-      t.string :print_user
-      t.datetime :print_date
-      t.boolean :timbre
       t.string :canc_by 
       t.datetime :canc_date
       t.text :canc_mtvo 

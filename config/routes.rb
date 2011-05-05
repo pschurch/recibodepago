@@ -8,7 +8,7 @@ Recibodepago::Application.routes.draw do
   get "supervisor/sr_envio_terreno"
   get "supervisor/sr_recp_terreno"
   get "supervisor/sr_rech_terreno"
-  get "supervisor/sr_rend_tesoreria"
+  #get "supervisor/sr_rend_tesoreria"
   get "supervisor/sr_rech_tesoreria"
 
   get "finance/ftlist"
@@ -40,6 +40,7 @@ Recibodepago::Application.routes.draw do
   get "designer/del_reg"
 
   get "receipts/ntc"
+  get "receipts/rend_tsr"
   get "receipts/sup_recp_cobr"
   get "receipts/sup_recp_terr"
   get "receipts/print"

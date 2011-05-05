@@ -15,17 +15,20 @@ class ReceiptsController < ApplicationController
     @acc = params[:acc]
     case params[:acc] 
       when 'confirmar'  
-        @msje = "ha sido confirmado y se encuentra listo para ser Rendido a Tesoreria"
+        @msje = "ha sido cerrado y se encuentra listo para ser Rendido a Tesoreria"
         @rp.update_attribute 'state', "cerrado"
         @rp.update_attribute 'area', "Supervisor"
-        @rp.update_attribute 'substate', ""
+        @rp.update_attribute 'subarea', ""
       when 'rechazar'  
         @msje = "ha sido rechazado"
         @rp.update_attribute 'state', "rechazado"
         @rp.update_attribute 'area', "Supervisor"
-        @rp.update_attribute 'substate', "Cobranza"
+        @rp.update_attribute 'subarea', "Cobranza"
+        @rp.update_attribute 'rech_by', current_user.name 
+        @rp.update_attribute 'rech_date', Time.now 
     end
   end
+
 
   #--------- Supervisor: recepciona de Cobranza ---------
   def sup_recp_cobr
@@ -34,7 +37,7 @@ class ReceiptsController < ApplicationController
     if params[:msg]=="1"
       @msg = "Debe seleccionar al menos un Recibo de Pago."
     end
-    @receipts1 = Receipt.where("group_id=?", current_user.group_id).where("state='rendido'").where("area='Cobranza'")
+    @receipts1 = Receipt.where("group_id=?", current_user.group_id).where("state='rendido'").where("area='Cobranza'").where("subarea='Supervisor'")
     @receipts2 = Receipt.where("group_id=?", current_user.group_id).where("state='recepcionado'").where("area='Supervisor'")
   end
   def sup_recp_terr
@@ -43,21 +46,41 @@ class ReceiptsController < ApplicationController
     if params[:msg]=="1"
       @msg = "Debe seleccionar al menos un Recibo de Pago."
     end
-    @receipts1 = Receipt.where("group_id=?", current_user.group_id).where("state='rendido'").where("area='Terreno'")
+    @receipts1 = Receipt.where("group_id=?", current_user.group_id).where("state='rendido'").where("area='Terreno'").where("subarea='Supervisor'")
     @receipts2 = Receipt.where("group_id=?", current_user.group_id).where("state='recepcionado'").where("area='Supervisor'")
+  end
+  def rend_tsr
+    deny_access unless (current_user.profile_id == 2)
+    @titulo = "Rendir Recibos de Pago a Tesoreria"
+    if params[:msg]=="1"
+      @msg = "Debe seleccionar al menos un Recibo de Pago."
+    end
+    @receipts = Receipt.where("group_id=?", current_user.group_id).where("state='cerrado'").where("area='Supervisor'")
+    @receipts_r = Receipt.where("group_id=?", current_user.group_id).where("state='rendido'").where("area='Supervisor'")
   end
 
   def sup_edit_multiple
     deny_access unless (current_user.profile_id == 2)
-    @titulo = "Recepcion de Recibos de Pago"
-    if params[:receipt1_ids].nil?
+    if params[:recp_cobr] 
+      @titulo = "Recepcion de Recibos de Pago"
+      @button ="recp_cobr"
+    elsif params[:recp_terr] 
+      @titulo = "Recepcion de Recibos de Pago"
+      @button ="recp_terr"
+    elsif params[:rendir_tsr_button] 
+      @titulo = "Rendicion de Recibos de Pago"
+      @button ="rendir_tsr_button"
+    end
+    if params[:receipt_ids].nil?
       if params[:recp_cobr] 
         redirect_to(:action => "sup_recp_cobr", :msg => "1" ) 
       elsif params[:recp_terr] 
         redirect_to(:action => "sup_recp_terr", :msg => "1" ) 
+      elsif params[:rendir_tsr_button] 
+        redirect_to(:action => "rend_tsr", :msg => "1" ) 
       end
     else
-     @receipts = Receipt.find(params[:receipt1_ids]) 
+     @receipts = Receipt.find(params[:receipt_ids]) 
      @formas  = Array.new
      @pay_forms = PaymentForm.where("state!=0")
      @pay_forms.each do |pf|
@@ -89,25 +112,37 @@ class ReceiptsController < ApplicationController
     end
   end
   def sup_update_multiple 
-    @receipts = Receipt.find(params[:receipt1_ids]) 
-    @receipts.each do |r|
-      if params[:recepcion_button] 
-        r.update_attribute 'state', 'recepcionado' 
-      elsif params[:rechazo_button]  
-        @texto=""
-        for i in (0..params[:receipt1_ids].count-1) 
-          @texto=@texto + params[:receipt1_ids][i].to_s + ", " unless i==params[:receipt1_ids].count-1
-          @texto=@texto + params[:receipt1_ids][i].to_s + ". " unless i!=params[:receipt1_ids].count-1
-        end
+    @receipts = Receipt.find(params[:receipt_ids]) 
+    if params[:recepcion_button] 
+      @receipts.each do |r|
+        r.update_attribute 'state', 'recepcionado'
+        r.update_attribute 'area', 'Supervisor' 
+        r.update_attribute 'subarea', 'Cobranza' 
+      end  
+      redirect_to(:action => 'sup_recp_cobr') 
+    elsif params[:rechazo_button]  
+      @texto=""
+      for i in (0..params[:receipt_ids].count-1) 
+        @texto=@texto + params[:receipt_ids][i].to_s + ", " unless i==params[:receipt_ids].count-1
+        @texto=@texto + params[:receipt_ids][i].to_s + ". " unless i!=params[:receipt_ids].count-1
+      end
+      @receipts.each do |r|
         r.update_attribute 'state', 'rechazado' 
+        r.update_attribute 'area', 'Supervisor' 
+        r.update_attribute 'subarea', 'Cobranza' 
         r.update_attribute 'rech_by', current_user.name 
         r.update_attribute 'rech_mtvo', 'Rechazo Conjunto de Recibos de Pago: ' + @texto 
         r.update_attribute 'rech_date', Time.now 
-      end
-      r.update_attribute 'area', 'Supervisor' 
-      r.update_attribute 'substate', 'Cobranza' 
-    end  
-    redirect_to(:action => 'sup_recp_cobr') 
+      end  
+      redirect_to(:action => 'sup_recp_cobr') 
+    elsif params[:rendir_button]  
+      @receipts.each do |r|
+        r.update_attribute 'state', 'rendido'  
+        r.update_attribute 'area', 'Supervisor'   
+        r.update_attribute 'subarea', 'Tesoreria'     
+      end  
+      redirect_to(:action => 'rend_tsr') 
+    end
   end 
 
   #------------------- Cobranza ---------------------------
@@ -183,14 +218,17 @@ class ReceiptsController < ApplicationController
       @receipts.each do |r|
         r.update_attribute 'state', 'cerrado'  
         r.update_attribute 'area', 'Cobranza'
-        r.update_attribute 'substate', '' #actualizar los otros estados xxxxxxxxxxxxxxxxxxxxxxxx       
+        r.update_attribute 'subarea', 'Supervisor'  
+        #r.update_attribute 'rech_mtvo', ''
+        #r.update_attribute 'rech_date', nil
+        #r.update_attribute 'rech_by', ''
       end  
       redirect_to(:action => 'rp_rechz') 
     elsif params[:rendir_button] 		# EjCobranza Rinde RP a Supervisor
       @receipts.each do |r|
         r.update_attribute 'state', 'rendido'  
-        r.update_attribute 'area', ''  #actualizar los otros estados xxxxxxxxxxxxxxxxxxxxxxxxxx 
-        r.update_attribute 'substate', '' #actualizar los otros estados xxxxxxxxxxxxxxxxxxxxxxxx       
+        r.update_attribute 'area', 'Cobranza'   
+        r.update_attribute 'subarea', 'Supervisor'     
       end  
       redirect_to(:action => 'rend_sup') 
     end
@@ -368,11 +406,10 @@ class ReceiptsController < ApplicationController
     @tickets = Ticket.where("receipt_id=?", @receipt.id)
     if @receipt.update_attributes(params[:receipt])
 
-      if params[:corregir_button] 
+      if params[:rechazar_sup_ejc_button] 
        if @receipt.valid?
-         @receipt.update_attribute 'state', 'solicita gestion terreno' 
-         redirect_to(@receipt, :notice => 'El Recibo de Pago se ha corregido exitosamente y se encuentra listo para ser enviado a terreno.') 
-       end 
+         redirect_to(:action => "ntc", :acc => 'rechazar', :id => @receipt.id )
+       end
       elsif params[:cerrar_button]       
        if @receipt.state=='abierto' and @receipt.valid?
          @total_paid = 0
@@ -400,6 +437,11 @@ class ReceiptsController < ApplicationController
        else
          redirect_to(@receipt, :notice => 'El Recibo de Pago se ha actualizado exitosamente.') 
        end
+      elsif params[:corregir_button] 
+       if @receipt.valid?
+         @receipt.update_attribute 'state', 'solicita gestion terreno' 
+         redirect_to(@receipt, :notice => 'El Recibo de Pago se ha corregido exitosamente y se encuentra listo para ser enviado a terreno.') 
+       end 
       end
     else
       render :action => "edit" 
@@ -423,8 +465,8 @@ class ReceiptsController < ApplicationController
       end
     end
     # @receipt.num_print.nil? ? @num_print=1 : @num_print=@receipt.num_print 
-    @receipt.update_attribute 'print_user', current_user.name
-    @receipt.update_attribute 'print_date', Time.now
+    #@receipt.update_attribute 'print_user', current_user.name
+    #@receipt.update_attribute 'print_date', Time.now
   end
 
   def destroy
