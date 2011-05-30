@@ -1,5 +1,5 @@
 <div class="seccion">
-  <table>
+  <table class="index">
   <tr>
     <th><%= sortable "id" %></th>
     <th><%= sortable "name", "Nombre" %></th>
@@ -15,12 +15,12 @@
     <td><%= a.state %>
     <td><%= link_to 'Ver', a %></td>
     <td><%= link_to 'Editar', edit_payment_agreement_path(a) %></td>
-    <td><%= link_to 'Eliminar', :controller => 'designer', :action => 'del_reg', :id => a, :reg => 'payment_agreement' %>
-
+    <td><%= link_to 'Eliminar', :controller => 'designer', :action => 'del_reg', :id => a, :reg => 'payment_agreement' %></td>
   </tr>
   <% end %>
   </table>
 </div>
 <div class="botones">
+  <%= link_to 'Crear Acuerdo de Pago', new_payment_agreement_path %>
   <%= link_to 'Página Principal', :controller => "sessions", :action => "dsg" %>
 </div>

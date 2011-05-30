@@ -35,12 +35,12 @@
 </div>
 
 <div class="botones">
+<%= link_to 'Editar', edit_group_path(@group) %> 
 <% if current_user.profile_id==7 %>
-  <%= link_to 'Editar', edit_group_path(@group) %> 
   <%= link_to 'Listado de Grupos', groups_path %>
   <%= render 'shared/pp_adm_dsg' %>
 <% elsif current_user.profile_id==8 %>
-  <%= link_to "Listado de Todos los Grupos", dgroups_path %>
+  <%= link_to "Listado de Grupos", dgroups_path %>
   <%= link_to 'Página Principal', :controller => "sessions", :action => "dsg" %>
 <% end %>
 </div>

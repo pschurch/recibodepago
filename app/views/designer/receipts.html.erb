@@ -1,16 +1,20 @@
 <div class="seccion">
-  <table>
+  <table class="index">
   <tr>
     <th><%= sortable "id", "N° RP" %></th>
-    <th><%= sortable "date_r", "Fecha" %></th>
+    <th><%= sortable "date_r", "Fecha Pago" %></th>
     <th><%= sortable "state", "Estado" %></th>
+    <th><%= sortable "area", "Area" %></th>
+    <th><%= sortable "subarea", "Sub Area" %></th>
     <th colspan=2></th>
   </tr>
   <% @receipts.each do |a| %>
   <tr>
     <td><%= a.id %></td>
-    <td><%= a.date_r %></td>
+    <td><%= a.date_r.strftime("%d/%m/%Y") %></td>
     <td><%= a.state %>
+    <td><%= a.area %>
+    <td><%= a.subarea %>
     <td><%= link_to 'Ver', a %></td>
     <td><%= link_to 'Eliminar', :controller => 'designer', :action => 'del_reg', :id => a, :reg => 'receipt' %>
   </tr>

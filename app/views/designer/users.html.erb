@@ -1,11 +1,11 @@
 <div class="seccion">
-  <table>
+  <table class="index">
   <tr>
     <th><%= sortable "id" %></th>
     <th><%= sortable "user", "Usuario" %></th>
     <th><%= sortable "name", "Nombre" %></th>
     <th><%= sortable "state", "Estado" %></th>
-    <th colspan=2></th>
+    <th colspan=3></th>
   </tr>
   <% @users.each do |a| %>
   <tr>
@@ -14,11 +14,13 @@
     <td><%= a.name %></td>
     <td><%= a.state %>
     <td><%= link_to 'Ver', a %></td>
-    <td><%= link_to 'Eliminar', :controller => 'designer', :action => 'del_reg', :id => a, :reg => 'user' %>
+    <td><%= link_to 'Editar', edit_user_path(a) %></td>
+    <td><%= link_to 'Eliminar', :controller => 'designer', :action => 'del_reg', :id => a, :reg => 'user' %></td>
   </tr>
   <% end %>
   </table>
 </div>
 <div class="botones">
+  <%= link_to 'Crear Usuario', new_user_path %>
   <%= link_to 'Página Principal', :controller => "sessions", :action => "dsg" %>
 </div>

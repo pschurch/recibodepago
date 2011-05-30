@@ -184,23 +184,28 @@
     <% end %>
   <% end %>
   <tr>
-    <th colspan="3">Total:</th>
+    <th colspan="2"></th>
+    <th>Total:</th>
     <td><%= number_to_currency(@total, :precision => 0, :delimiter => ".") %></td>
   </tr>
   </table>
   <div class="nbsp"></div>
-  <div class="actions">
-    <%= form.submit "Recepcionar", :name => "recepcion_button" unless @button!="recp_cobr"%> 
-    <%= form.submit "Rechazar", :name => "rechazo_button"  unless @button!="recp_cobr"%>
-    <%= form.submit "Rendir", :name => "rendir_button" unless @button!="rendir_tsr_button"%> 
+  <div class="botones">
+    <%= form.submit "Recepcionar", :name => "recepcionc_button" if @accion=="recpc"%> 
+    <%= form.submit "Recepcionar", :name => "recepciont_button" if @accion=="recpt"%> 
+    <%= form.submit "Aceptar", :name => "acepta_trr_button" if @accion=="rechtr"%> 
+    <%= form.submit "Aceptar", :name => "acepta_tsr_button" if @accion=="rechts"%> 
+    <%= form.submit "Rendir", :name => "rendir_button" if @accion=="rend"%> 
+    <%= form.submit "Rechazar", :name => "rech_ejc_button"  if @accion=="recpc"%>
+    <%= form.submit "Rechazar", :name => "rech_terr_button"  if @accion=="recpt"%>
+    <% acc = @accion %>
+    <%= link_to "Cancelar", :controller => "receipts", :action => "sup", :ac => acc unless @accion!=acc%> 
   </div>
 <% end %>
 </td></tr></table>
 </div>
 
 <div class="botones">
-  <%= link_to "Cancelar", :controller => "receipts", :action => 'sup_recp_cobr' unless @button!="recp_cobr"%> 
-  <%= link_to "Cancelar", :controller => "receipts", :action => 'rend_tsr' unless @button!="rendir_tsr_button"%> 
   <%= link_to 'Página Principal', :controller => "sessions", :action => 'sup' %>
 </div>
 

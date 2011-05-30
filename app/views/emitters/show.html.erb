@@ -23,13 +23,12 @@
 </div>
 
 <div class="botones">
+<%= link_to 'Editar', edit_emitter_path(@emitter) %> 
 <% if current_user.profile_id==7 %>
-  <%= link_to 'Editar', edit_emitter_path(@emitter) %> 
   <%= link_to 'Listado de Emisores', emitters_path %>
   <%= render 'shared/pp_adm_dsg' %>
 <% elsif current_user.profile_id==8 %>
-  <%= link_to 'Editar', edit_emitter_path(@emitter) %> 
-  <%= link_to "Listado de Todos los Emisores", demitters_path %>
+  <%= link_to "Listado de Emisores", demitters_path %>
   <%= link_to 'Página Principal', :controller => "sessions", :action => "dsg" %>
 <% end %>
 </div>

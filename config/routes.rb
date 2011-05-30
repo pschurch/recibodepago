@@ -1,18 +1,30 @@
 Recibodepago::Application.routes.draw do
+  #resources :remesas
+  resources :remesas do
+    collection do
+      post 'new2'
+    end
+  end
+
+  resources :rejection_types
+
+  resources :cancellations
+
+  resources :field_users
+
   get "terreno/trlist"
+  get "terreno/trrecp"
+  get "terreno/trcerr"
 
   get "supervisor/stmod"
   get "supervisor/stlist"
   get "supervisor/srlist"
-  #get "supervisor/sr_recp_cobr"
-  get "supervisor/sr_envio_terreno"
-  get "supervisor/sr_recp_terreno"
-  get "supervisor/sr_rech_terreno"
-  #get "supervisor/sr_rend_tesoreria"
-  get "supervisor/sr_rech_tesoreria"
+  get "supervisor/sanular"
 
   get "finance/ftlist"
   get "finance/frlist"
+  get "finance/frmmp"
+  get "finance/frmnew"
   get "finance/fhlist"
   get "finance/frmlist"
 
@@ -20,6 +32,7 @@ Recibodepago::Application.routes.draw do
   get "manager/mtlist"
   get "manager/mrlist"
 
+  match '/dfield_users', :to => 'designer#field_users'
   match '/dcasos', :to => 'designer#casos'
   match '/dtickets', :to => 'designer#tickets'
   match '/dreceipts', :to => 'designer#receipts'
@@ -39,15 +52,14 @@ Recibodepago::Application.routes.draw do
   match '/dpayment_periods', :to => 'designer#payment_periods'
   get "designer/del_reg"
 
+  get "receipts/ejc"
+  get "receipts/sup"
+  get "receipts/jtr"
+  get "receipts/tsr"
   get "receipts/ntc"
-  get "receipts/rend_tsr"
-  get "receipts/sup_recp_cobr"
-  get "receipts/sup_recp_terr"
   get "receipts/print"
   match '/listk', :to => 'receipts#create_rp'
   match '/lisra', :to => 'receipts#rp_abtos'
-  match '/lisrr', :to => 'receipts#rp_rechz'
-  match '/rnsup', :to => 'receipts#rend_sup'
   #resources :receipts
   resources :receipts do
     collection do
@@ -57,6 +69,14 @@ Recibodepago::Application.routes.draw do
     collection do
       post 'ejc_edit_multiple'
       put 'ejc_update_multiple'                                  
+    end
+    collection do
+      post 'jtr_edit_multiple'
+      put 'jtr_update_multiple'                                  
+    end
+    collection do
+      post 'tsr_edit_multiple'
+      put 'tsr_update_multiple'                                  
     end
   end
   resources :receipts do

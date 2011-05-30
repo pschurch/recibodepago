@@ -1,0 +1,25 @@
+<div class="seccion">
+  <table class="index">
+  <tr>
+    <th><%= sortable "rut", "Rut" %></th>
+    <th><%= sortable "name", "Nombre" %></th>
+    <th><%= sortable "state", "Estado" %></th>
+    <th colspan=3></th>
+  </tr>
+  <% @field_users.each do |user| %>
+  <tr>
+    <td><%= user.rut %>-<%= user.digit %></td>
+    <td><%= user.name %></td>
+    <td><% if user.state %>Activo<% else %>Inactivo<% end %></td>
+    <td><%= link_to 'Ver', user %></td>
+    <td><%= link_to 'Editar', edit_field_user_path(user) %></td>
+    <td><%= link_to 'Eliminar', :controller => 'designer', :action => 'del_reg', :id => user, :reg => 'field_user' %></td>
+  </tr>
+  <% end %>
+  </table>
+</div>
+
+<div class="botones">
+  <%= link_to 'Crear Ejecutivo de Terreno', new_field_user_path %>
+  <%= link_to 'Página Principal', :controller => "sessions", :action => "dsg" %>
+</div>

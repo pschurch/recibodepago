@@ -1,26 +1,28 @@
 <div class="seccion">
-  <table>
+  <table class="index">
   <tr>
     <th><%= sortable "id" %></th>
     <th><%= sortable "principal_id", "Mandante" %></th>
     <th><%= sortable "product_id", "Producto" %></th>
     <th><%= sortable "collection_type_id", "Tipo de Cobranza" %></th>
     <th><%= sortable "state", "Estado" %></th>
-    <th colspan=2></th>
+    <th colspan=3></th>
   </tr>
   <% @payment_policies.each do |a| %>
   <tr>
     <td><%= a.id %></td>
-    <td><%= a.principal_id %></td>
-    <td><%= a.product_id %></td>
-    <td><%= a.collection_type_id %></td>
+    <td><%= a.principal.name %></td>
+    <td><%= a.product.name %></td>
+    <td><%= a.collection_type.name %></td>
     <td><%= a.state %>
     <td><%= link_to 'Ver', a %></td>
-    <td><%= link_to 'Eliminar', :controller => 'designer', :action => 'del_reg', :id => a, :reg => 'payment_policy' %>
+    <td><%= link_to 'Editar', edit_payment_policy_path(a) %></td>
+    <td><%= link_to 'Eliminar', :controller => 'designer', :action => 'del_reg', :id => a, :reg => 'payment_policy' %></td>
   </tr>
   <% end %>
   </table>
 </div>
 <div class="botones">
+  <%= link_to 'Crear Política de ', new_payment_policy_path %>
   <%= link_to 'Página Principal', :controller => "sessions", :action => "dsg" %>
 </div>

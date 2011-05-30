@@ -17,6 +17,7 @@ class Group < ActiveRecord::Base
   has_many :users
   has_many :cargrups
   has_many :carteras, :through => :cargrups
+  has_many :receipts
 
   validates_presence_of :name, :message => "(Nombre) : debe ingresar un valor en este campo."
 

@@ -9,6 +9,9 @@ namespace :db do
     comunasinit
     emisoresinit
     payflowinit
+    parameterinit
+    rejectioninit
+    cancellationinit
   end
 end
 
@@ -135,4 +138,20 @@ def payflowinit
   PaymentFlow.create!(:name => "RP con Gestion Terreno", :description => "Se debe ingresar la informacion de Contacto, quedando incompleto. El RP es gestionado en Terreno y posteriormente se le ingresa el Detalle de Pago.", :state => 1)
 end
 
+def parameterinit
+  Parameter.create!(:name => "Descuento maximo Cobranza", :val_int=> -200, :description => "Valor maximo de descuento para Cobranza", :state => 1)
+  Parameter.create!(:name => "Descuento maximo Supervisor", :val_int=> -1000, :description => "Valor maximo de descuento para Supervisor", :state => 1)
+end
 
+def rejectioninit
+  RejectionType.create!(:name => "Datos de Contacto incorrectos", :area => "Terreno", :state => 1)
+  RejectionType.create!(:name => "Falta de documentacion adjunta", :area => "Terreno", :state => 1)
+  RejectionType.create!(:name => "Monto Total Pagado de conjunto de Recibos de Pago no corresponde", :area => "", :state => 1)
+  RejectionType.create!(:name => "Falta/Incorrecto Detalle de Pago", :area => "All", :state => 1)
+end
+   
+def cancellationinit
+  Cancellation.create!(:message => "Solamente debe anular el Registro de Recibo de Pago.", :description => "", :state => 1)
+  Cancellation.create!(:message => "Para anular el registro de Recibo de Pago requiere las dos copias impresas con el timbre.", :description => "", :state => 1)
+  Cancellation.create!(:message => "Para anular el registro de Recibo de Pago requiere la copia impresa con el timbre y el dinero recaudado.", :description => "", :state => 1)
+end

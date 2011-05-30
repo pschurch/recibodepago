@@ -1,0 +1,43 @@
+<div class="seccion">
+<% if not notice.nil? %><p id="notice"><%= notice %></p><% end %>
+<table><tr><td class="marco">
+
+  <div class="field">
+    Rut:
+  </div>
+  <div class="field_txt">
+    <%= @field_user.rut %> - <%= @field_user.digit %>
+  </div>
+  <div class="field">
+    Nombre:
+  </div>
+  <div class="field_txt">
+    <%= @field_user.name %>
+  </div>
+  <div class="field">
+    Descripción:
+  </div>
+  <div class="field_txt">
+    <%= @field_user.description %>&nbsp;
+  </div>
+  <div class="field">
+    Estado:
+  </div>
+  <div class="field_txt">
+    <% if @field_user.state %>Activo<% else %>Inactivo<% end %>
+  </div>
+</td></tr></table>
+</div>
+
+<div class="botones">
+<%= link_to 'Editar', edit_field_user_path(@field_user) %> 
+<% if current_user.profile_id==7 %>
+  <%= link_to 'Listado de Ejecutivos de Terreno', field_users_path %>
+  <%= render 'shared/pp_adm_dsg' %>
+<% elsif current_user.profile_id==8 %>
+  <%= link_to "Listado de Ejecutivos de Terreno", dfield_users_path %>
+  <%= link_to 'Página Principal', :controller => "sessions", :action => "dsg" %>
+<% end %>
+</div>
+
+

@@ -3,7 +3,11 @@
 </div>
 
 <div class="botones">
-  <%= link_to "Cancelar", groups_path %> 
+  <% if current_user.profile_id==7 %>  <!--  Administrador --> 
+    <%= link_to "Cancelar", groups_path %> 
+  <% elsif current_user.profile_id==8 %> <!-- Designer -->
+    <%= link_to 'Cancelar', dgroups_path %>
+  <% end %>
 </div>
 
 

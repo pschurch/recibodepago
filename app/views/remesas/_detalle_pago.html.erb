@@ -1,0 +1,35 @@
+ <% if (not monto.nil?) %>      
+ <% @fee_real = t.fee + t.adjust_val + t.adjust_trr_val %>
+ <% if @fee_real<0 %>
+  <% @sc_real = t.shipping_costs + @fee_real %>
+  <% @fee_real = 0 %>
+ <% else %>
+  <% @sc_real = t.shipping_costs %>
+ <% end %>
+ <% if @sc_real<0 %>
+  <% @ai_real = t.arrear_interest + @sc_real %>
+  <% @sc_real = 0 %>
+ <% else %>
+  <% @ai_real = t.arrear_interest %>
+ <% end %>
+   <tr>
+     <td><%= t.rut %>-<%= t.digit %></td>
+     <td><%= t.name %></td>
+     <td><%= t.number %></td>
+     <td><%= t.emitter %></td>
+     <td><%= t.ctacte %></td>
+     <td><%= t.id %></td>
+     <td><%= r.id %></td>
+     <td><%= number_to_currency(t.capital, :precision => 0, :delimiter => ".") %></td>
+     <td><%= number_to_currency(@ai_real, :precision => 0, :delimiter => ".") if (not ai.nil? and ai.include?(t.id.to_s))%></td>
+     <td><%= number_to_currency(t.term_interest, :precision => 0, :delimiter => ".") if (not ti.nil? and ti.include?(t.id.to_s))%></td>
+     <td><%= number_to_currency(@fee_real, :precision => 0, :delimiter => ".") if (not fe.nil? and fe.include?(t.id.to_s))%></td>
+     <td><%= number_to_currency(@sc_real, :precision => 0, :delimiter => ".") if (not sc.nil? and sc.include?(t.id.to_s))%></td>
+     <td><%= number_to_currency(t.legal_costs, :precision => 0, :delimiter => ".") if (not lc.nil? and lc.include?(t.id.to_s))%></td>
+     <td><%= forma %></td>
+     <td><%= emisor %></td>
+     <td><%= doc %></td>
+     <td><%= number_to_currency(monto, :precision => 0, :delimiter => ".") %></td>
+   </tr>
+ <% end %>
+

@@ -1,0 +1,63 @@
+<div class="seccion">
+
+  <div class="subtit">
+    Recibos de Pago para Anular:
+  </div>
+
+
+   <table class="index">
+     <tr>
+      <th>N° RP</th>
+      <th>N° Ticket</th>
+      <th>Preparado por</th>
+      <th>Identificador</th>
+      <th>Mandante</th>
+      <th>Producto</th>
+      <th>Capital</th>
+      <th>Total Pagado</th>
+      <th>Solicita anular</th>
+      <th></th>
+    </tr>
+    <% if @receipts.empty?%> 
+      <tr>
+        <td colspan="10">No se han encontrado Recibos de Pago para anular.</td>
+      </tr>
+    <% else %>
+
+      <% @receipts.each do |receipt| %>
+        <% @tickets = Ticket.where("receipt_id=?", receipt.id) %>
+        <tr>
+          <td><%= receipt.id %></td>
+          <td>
+            <% @tickets.each  do |p| %>
+              <%= p.id %><br>
+            <% end %>
+          </td>
+          <td><%= receipt.user_name %></td>
+          <td>
+             <% @tickets.each  do |p| %>
+               <%= p.cas_id %><br>
+             <% end %>
+          </td>
+          <td><%= @tickets.first.principal_name %></td>
+          <td><%= @tickets.first.product_name %></td>
+          <td>
+             <% @tickets.each  do |p| %>
+               <%= number_to_currency(p.capital, :precision => 0, :delimiter => ".") %><br>
+             <% end %>
+          </td>
+          <td><%= number_to_currency(receipt.total_pay, :precision => 0, :delimiter => ".") %></td>
+          <td><%= receipt.canc_solc_by %></td>
+          <td><%= link_to 'Ver', receipt%></td>
+        </tr>
+      <% end %>
+
+
+    <% end %>
+  </table>
+
+</div>
+
+<div class="botones">
+  <%= link_to 'Página Principal', :controller => "sessions", :action => 'sup' %>
+</div>

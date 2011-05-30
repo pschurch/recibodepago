@@ -1,0 +1,133 @@
+<div class="seccion">
+  <% if not @msg.nil? %>
+  <table><tr><td class="marco">
+    <p id="notice"><%= @msg %></p>
+  </td></tr></table>  
+  <div class="nbsp"></div>
+  <% end %>
+
+  <div class="subtit">
+    <% if @accion=="recpc" %>
+      Recibos de Pago de Supervisor para ser Recepcionados:
+    <% end %>
+  </div>
+  <% form_tag tsr_edit_multiple_receipts_path do %>
+    <table class="index">
+      <tr>
+        <th>N° RP</th>
+        <th>N° Ticket</th>
+        <th>Rut</th>
+        <th>Identificador</th>
+        <th>Mandante</th>
+        <th>Producto</th>
+        <th>Fecha de Pago</th>
+        <th>Total Pagado</th>
+        <% if @accion=="rechts" or @accion=="rechtr"%>
+          <th>Fecha Rechazo</th>
+        <% end %>
+        <th>selecc.</th>
+        <th></th>
+      </tr>
+      <% if @receipts1.empty? %> 
+        <% if @accion=="recpc" %>
+          <td colspan="11">No se han encontrado Recibos de Pago de Supervisor para ser Recepcionados.</td>
+        <% end %>        
+      <% else %>
+      <% @receipts1.each do |receipt| %>
+        <% @tickets = Ticket.where("receipt_id=?", receipt.id) %>
+        <tr>
+          <td><%= receipt.id %></td>
+          <td>
+            <% @tickets.each  do |p| %>
+              <%= p.id %><br>
+            <% end %>
+          </td>
+          <td>
+            <% @tickets.each  do |p| %>
+              <%= p.rut %>-<%= p.digit %><br>
+            <% end %>
+          </td>
+          <td>
+            <% @tickets.each  do |p| %>
+              <%= p.cas_id %><br>
+            <% end %>
+          </td>
+          <td><%= @tickets.first.principal_name %></td>
+          <td><%= @tickets.first.product_name %></td>
+          <td><%= receipt.date_r.strftime("%d/%m/%Y")  %></td>
+          <td><%= number_to_currency(receipt.total_paid, :precision => 0, :delimiter => ".") unless receipt.total_paid.nil?%></td>
+          <% if @accion=="rechts" or @accion=="rechtr"%>
+            <td><%= receipt.rech_date.strftime("%d/%m/%Y") %></td>
+          <% end %>     
+          <td><%= check_box_tag "receipt_ids[]", receipt.id %></td>
+          <td><%= link_to 'Ver', receipt %></td>
+        </tr>
+      <% end %>
+    <% end %>
+    </table>
+    <% if not @receipts1.empty? %> 
+      <div class="botones">
+        <%= submit_tag "Recepcionar Recibos de Pago", :name => "recep_button" if @accion=="recpc"%>
+      </div>
+    <% end %>
+  <% end %>
+
+   <div class="nbsp"></div>
+   <hr>
+   <div class="subtit">
+     <% if @accion=="recpc" %>
+       Recibos de Pago de Supervisor Recepcionados, por Cerrar/Rechazar:
+     <% end %>        
+   </div>
+   <table class="index">
+     <tr>
+       <th>N° RP</th>
+       <th>N° Ticket</th>
+       <th>Rut</th>
+       <th>Identificador</th>
+       <th>Mandante</th>
+       <th>Producto</th>
+       <th>Fecha Pago</th>
+       <th>Total Pagado</th>
+       <% if @accion=="recpc"%><th></th><% end %>
+     </tr>
+     <% if @receipts2.empty?%> 
+       <tr>
+        <% if @accion=="recpc"%>
+         <td colspan="10">No se han encontrado Recibos de Pago por Cerrar/Rechazar.</td>
+        <% end %>        
+       </tr>
+     <% else %>
+       <% @receipts2.each do |receipt| %>
+         <% @tickets = Ticket.where("receipt_id=?", receipt.id) %>
+         <tr>
+           <td><%= receipt.id %></td>
+           <td>
+             <% @tickets.each  do |p| %>
+               <%= p.id %><br>
+             <% end %>
+           </td>
+           <td>
+             <% @tickets.each  do |p| %>
+               <%= p.rut %>-<%= p.digit %><br>
+             <% end %>
+           </td>
+           <td>
+             <% @tickets.each  do |p| %>
+               <%= p.cas_id %><br>
+             <% end %>
+           </td>
+           <td><%= @tickets.first.principal_name %></td>
+           <td><%= @tickets.first.product_name %></td>
+           <td><%= receipt.date_r.strftime("%d/%m/%Y") %></td>
+           <td><%= number_to_currency(receipt.total_pay, :precision => 0, :delimiter => ".") %></td>
+           <% if @accion=="recpc"%><td><%= link_to 'Ver', receipt%></td><% end %>
+         </tr>
+       <% end %>
+     <% end %>
+   </table>
+</div>
+
+<div class="botones">
+  <%= link_to 'Página Principal', :controller => "sessions", :action => 'tsr' %>
+</div>

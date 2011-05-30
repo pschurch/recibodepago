@@ -1,0 +1,206 @@
+<div class="seccion">
+<table><tr><td class="marco">
+ <% form_for :receipt, :url => jtr_update_multiple_receipts_path, :html => { :method => :put } do |form| %>
+ <div class="subtit">
+   Se han seleccionado los siguientes Recibos de Pago:
+ </div>
+ <table class="index">
+  <tr>
+    <th>N° RP</th>
+    <th>Total Pagado</th>
+  </tr>
+  <% for receipt in @receipts %>  
+  <%= hidden_field_tag "receipt_ids[]", receipt.id%>  
+  <tr>
+    <td><%= h receipt.id %></td>  
+    <td><%= h number_to_currency(receipt.total_paid, :precision => 0, :delimiter => ".") %></td>  
+  </tr>  
+  <% end %>  
+</table>    
+
+  <div class="subtit">
+    Detalle del Pago:
+  </div>
+
+  <table class="index">
+    <tr>
+      <th>Forma de Pago</th>
+      <th>Emisor</th>
+      <th>N° Documento</th>
+      <th>Monto</th>
+    </tr>
+    <tr>
+      <td>Efectivo</td>
+      <td></td>
+      <td></td>
+      <td><%= number_to_currency(@efectivo, :precision => 0, :delimiter => ".") %></td>
+    </tr>
+    <% for i in (1..@formas.count) %>
+      <% for r in @receipts %>  
+        <% if r.formapago1==@formas[i]%>
+          <tr>
+            <td><%= @formas[i] %></td>
+            <td><%= r.emisor1 %></td>
+            <td><%= r.docnum1 %></td>
+            <td><%= number_to_currency(r.monto1, :precision => 0, :delimiter => ".") %></td>
+          </tr>
+        <% end %>
+        <% if r.formapago2==@formas[i]%>
+          <tr>
+            <td><%= @formas[i] %></td>
+            <td><%= r.emisor2 %></td>
+            <td><%= r.docnum2 %></td>
+            <td><%= number_to_currency(r.monto2, :precision => 0, :delimiter => ".") %></td>
+          </tr>
+        <% end %>
+        <% if r.formapago3==@formas[i]%>
+          <tr>
+            <td><%= @formas[i] %></td>
+            <td><%= r.emisor3 %></td>
+            <td><%= r.docnum3 %></td>
+            <td><%= number_to_currency(r.monto3, :precision => 0, :delimiter => ".") %></td>
+          </tr>
+        <% end %>
+        <% if r.formapago4==@formas[i]%>
+          <tr>
+            <td><%= @formas[i] %></td>
+            <td><%= r.emisor4 %></td>
+            <td><%= r.docnum4 %></td>
+            <td><%= number_to_currency(r.monto4, :precision => 0, :delimiter => ".") %></td>
+          </tr>
+        <% end %>
+        <% if r.formapago5==@formas[i]%>
+          <tr>
+            <td><%= @formas[i] %></td>
+            <td><%= r.emisor5 %></td>
+            <td><%= r.docnum5 %></td>
+            <td><%= number_to_currency(r.monto5, :precision => 0, :delimiter => ".") %></td>
+          </tr>
+        <% end %>
+        <% if r.formapago6==@formas[i]%>  
+          <tr>
+            <td><%= @formas[i] %></td>
+            <td><%= r.emisor6 %></td>
+            <td><%= r.docnum6 %></td>
+            <td><%= number_to_currency(r.monto6, :precision => 0, :delimiter => ".") %></td>
+          </tr>
+        <% end %>
+        <% if r.formapago7==@formas[i]%>
+          <tr>
+            <td><%= @formas[i] %></td>
+            <td><%= r.emisor7 %></td>
+            <td><%= r.docnum7 %></td>
+            <td><%= number_to_currency(r.monto7, :precision => 0, :delimiter => ".") %></td>
+          </tr>
+        <% end %>
+        <% if r.formapago8==@formas[i]%>
+          <tr>
+            <td><%= @formas[i] %></td>
+            <td><%= r.emisor8 %></td>
+            <td><%= r.docnum8 %></td>
+            <td><%= number_to_currency(r.monto8, :precision => 0, :delimiter => ".") %></td>
+          </tr>
+        <% end %>
+        <% if r.formapago9==@formas[i]%>
+          <tr>
+            <td><%= @formas[i] %></td>
+            <td><%= r.emisor9 %></td>
+            <td><%= r.docnum9 %></td>
+            <td><%= number_to_currency(r.monto9, :precision => 0, :delimiter => ".") %></td>
+          </tr>
+        <% end %>
+        <% if r.formapago10==@formas[i]%>
+          <tr>
+            <td><%= @formas[i] %></td>
+            <td><%= r.emisor10 %></td>
+            <td><%= r.docnum10 %></td>
+            <td><%= number_to_currency(r.monto10, :precision => 0, :delimiter => ".") %></td>
+          </tr>
+        <% end %>
+        <% if r.formapago11==@formas[i]%>
+          <tr>
+            <td><%= @formas[i] %></td>
+            <td><%= r.emisor11 %></td>
+            <td><%= r.docnum11 %></td>
+            <td><%= number_to_currency(r.monto11, :precision => 0, :delimiter => ".") %></td>
+          </tr>
+        <% end %>
+        <% if r.formapago12==@formas[i]%>
+          <tr>
+            <td><%= @formas[i] %></td>
+            <td><%= r.emisor12 %></td>
+            <td><%= r.docnum12 %></td>
+            <td><%= number_to_currency(r.monto12, :precision => 0, :delimiter => ".") %></td>
+          </tr>
+        <% end %>
+        <% if r.formapago13==@formas[i]%>
+          <tr>
+            <td><%= @formas[i] %></td>
+            <td><%= r.emisor13 %></td>
+            <td><%= r.docnum13 %></td>
+            <td><%= number_to_currency(r.monto13, :precision => 0, :delimiter => ".") %></td>
+          </tr>
+        <% end %>
+        <% if r.formapago14==@formas[i]%>
+          <tr>
+            <td><%= @formas[i] %></td>
+            <td><%= r.emisor14 %></td>
+            <td><%= r.docnum14 %></td>
+            <td><%= number_to_currency(r.monto14, :precision => 0, :delimiter => ".") %></td>
+          </tr>
+        <% end %>
+        <% if r.formapago15==@formas[i]%>
+          <tr>
+            <td><%= @formas[i] %></td>
+            <td><%= r.emisor15 %></td>
+            <td><%= r.docnum15 %></td>
+            <td><%= number_to_currency(r.monto15, :precision => 0, :delimiter => ".") %></td>
+          </tr>
+        <% end %>
+        <% if r.formapago16==@formas[i]%>
+          <tr>
+            <td><%= @formas[i] %></td>
+            <td><%= r.emisor16 %></td>
+            <td><%= r.docnum16 %></td>
+            <td><%= number_to_currency(r.monto16, :precision => 0, :delimiter => ".") %></td>
+          </tr>
+        <% end %>
+        <% if r.formapago17==@formas[i]%>
+          <tr>
+            <td><%= @formas[i] %></td>
+            <td><%= r.emisor17 %></td>
+            <td><%= r.docnum17 %></td>
+            <td><%= number_to_currency(r.monto17, :precision => 0, :delimiter => ".") %></td>
+         </tr>
+       <% end %>
+       <% if r.formapago18==@formas[i]%>
+         <tr>
+           <td><%= @formas[i] %></td>
+           <td><%= r.emisor18 %></td>
+           <td><%= r.docnum18 %></td>
+           <td><%= number_to_currency(r.monto18, :precision => 0, :delimiter => ".") %></td>
+         </tr>
+       <% end %>
+     <% end %>
+    <% end %>
+    <tr>
+      <th colspan="2"></th>
+      <th>Total:</th>
+      <td><%= number_to_currency(@total, :precision => 0, :delimiter => ".") %></td>
+    </tr>
+    </table>
+    <div class="nbsp"></div>
+    <div class="botones">
+      <%= form.submit "Rendir", :name => "rendir_button" if @accion=="rend"%>
+      <%= form.submit "Aceptar", :name => "aceptar_button" if @accion=="rech"%>
+      <%= link_to "Cancelar", :controller => "receipts", :action => "jtr", :ac => "rend" if @accion=="rend"%> 
+      <%= link_to "Cancelar", :controller => "receipts", :action => "jtr", :ac => "rech" if @accion=="rech"%> 
+    </div>
+  <% end %> 
+  </td></tr></table>
+
+</div>
+
+<div class="botones">
+  <%= link_to 'Página Principal', :controller => "sessions", :action => 'jtr' %>
+</div>

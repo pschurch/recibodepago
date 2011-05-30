@@ -63,12 +63,12 @@
 </div>
 
 <div class="botones">
+<%= link_to 'Editar', edit_payment_policy_path(@payment_policy) %> 
 <% if current_user.profile_id==7 %>
-  <%= link_to 'Editar', edit_payment_policy_path(@payment_policy) %> 
   <%= link_to 'Listado de Políticas de Pago', payment_policies_path %>
   <%= render 'shared/pp_adm_dsg' %>
 <% elsif current_user.profile_id==8 %>
-  <%= link_to "Listado de Todas las Politicas de Pago", dpayment_policies_path %>
+  <%= link_to "Listado de Políticas de Pago", dpayment_policies_path %>
   <%= link_to 'Página Principal', :controller => "sessions", :action => "dsg" %>
 <% end %>
 </div>

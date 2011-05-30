@@ -1,0 +1,55 @@
+</div></div></div>
+<div class="ext2"><div class="med2"><div class="int2">
+<div class="seccion">
+<table><tr><td class="marco">
+  <p id="notice"><%= notice %></p>
+  <div class="subtit">
+    <%= @remesa.principal_rs %><br>
+    <%= @remesa.product_name %><br>
+    Creado por: <%= @remesa.create_by %><br>
+    Fecha Creación: <%= @remesa.created_at.strftime("%d/%m/%Y") %><br>
+    Recibido Conforme por: <%= @remesa.rc_by %><br>
+    Fecha Recepcion: 
+  </div>
+  <table class="index">
+    <tr>
+      <th>Rut</th>
+      <th>Nombre</th>
+      <th>N° Producto</th>
+      <th>Emisor</th>
+      <th>Cta Cte</th>
+      <th>N° Ticket</th>
+      <th>N° RP</th>
+      <th>Capital</th>
+      <th>Int Mora</th>
+      <th>Int Plazo</th>
+      <th>Honor.</th>
+      <th>Gtos Envio</th>
+      <th>Gtos Judic.</th>
+      <th>Forma Pago</th>
+      <th>Emisor</th>
+      <th>N° doc/cta</th>
+      <th>Monto</th>
+    </tr>
+  </table>
+
+<%= @remesa.product_name %>
+@test: <%= @test %><br>
+largo: <%= @test.length %><br>
+[" : <%= @test.index('["') %><br>
+1° "," : <%= @test.index('", "') %><br>
+l "," : <%= @test.rindex('", "') %><br>
+"] : <%= @test.index('"]') %><br>
+
+repartion: <%= @test.rpartition('", "') %><br>
+
+, : <%= @test.count ", " %><br>
+
+
+
+</td></tr></table>
+</div>
+
+<div class="botones">
+  <%= link_to 'Página Principal', :controller => "sessions", :action => 'tsr' %>
+</div>

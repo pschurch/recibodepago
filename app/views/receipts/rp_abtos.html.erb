@@ -10,7 +10,7 @@
     <th colspan="2"></th>
   </tr>
   <% if @receipts.empty? %> 
-    <tr><td colspan=10>No se han encontrado Recibos de Pago Abiertos.</td></tr>
+    <tr><td colspan=10>No se han encontrado Recibos de Pago para Cerrar.</td></tr>
   <% else %>
 
    <% @receipts.each do |receipt| %>
@@ -35,7 +35,7 @@
       <td><%= @tickets.first.principal_name %></td>
       <td><%= @tickets.first.product_name %></td>
       <td><%= link_to 'Ver', receipt %></td>
-      <td><%= link_to 'Editar', edit_receipt_path(receipt)%> </td>
+      <td><%= link_to 'Cerrar', edit_receipt_path(receipt)%> </td>
     </tr>
    <% end %>
   <% end %>

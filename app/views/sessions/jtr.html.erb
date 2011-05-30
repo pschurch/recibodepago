@@ -1,8 +1,9 @@
 <div class="seccion">
   <ul>
-    <li><%= link_to "Recepcionar Recibos de Pago de Supervisores", '#' %></li>
-    <li><%= link_to "Rendir Recibos de Pago a Supervisores", :controller => "receipts", :action => "rend_sup_terr" %></li>
-    <li><%= link_to "Recibos de Pago Rechazados por Supervisores", '#' %></li>
+    <li><%= link_to "Recibos de Pago para gestionar en Terreno", :controller => "terreno", :action => "trrecp" %></li>
+    <li><%= link_to "Cerrar Recibos de Pago", :controller => "terreno", :action => "trcerr" %></li>
+    <li><%= link_to "Rendir Recibos de Pago a Supervisores", :controller => "receipts", :action => "jtr", :ac => "rend" %></li>
+    <li><%= link_to "Recibos de Pago Rechazados por Supervisores", :controller => "receipts", :action => "jtr", :ac => "rech" %></li>
     <li><%= link_to "Listado de Recibos de Pago", :controller => "terreno", :action => "trlist" %></li>
   </ul>
 </div>

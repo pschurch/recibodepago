@@ -1,0 +1,49 @@
+<%= form_for(@remesa) do |f| %>
+  <% if @remesa.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@remesa.errors.count, "error") %> prohibited this remesa from being saved:</h2>
+
+      <ul>
+      <% @remesa.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :state %><br />
+    <%= f.text_field :state %>
+  </div>
+  <div class="field">
+    <%= f.label :principal_id %><br />
+    <%= f.text_field :principal_id %>
+  </div>
+  <div class="field">
+    <%= f.label :product_id %><br />
+    <%= f.text_field :product_id %>
+  </div>
+  <div class="field">
+    <%= f.label :principal_rs %><br />
+    <%= f.text_field :principal_rs %>
+  </div>
+  <div class="field">
+    <%= f.label :create_by %><br />
+    <%= f.text_field :create_by %>
+  </div>
+  <div class="field">
+    <%= f.label :date_rem %><br />
+    <%= f.datetime_select :date_rem %>
+  </div>
+  <div class="field">
+    <%= f.label :rc_by %><br />
+    <%= f.text_field :rc_by %>
+  </div>
+  <div class="field">
+    <%= f.label :date_rc %><br />
+    <%= f.datetime_select :date_rc %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

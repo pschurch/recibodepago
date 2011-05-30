@@ -53,6 +53,10 @@ class DesignerController < ApplicationController
            @ticket = Ticket.find(params[:id])
            @ticket.destroy
            redirect_to(:action => 'tickets')
+         when "field_user"
+           @field_user = FieldUser.find(params[:id])
+           @field_user.destroy
+           redirect_to(:action => 'field_users')
          when "user"
            @user = User.find(params[:id])
            @user.destroy
@@ -121,10 +125,16 @@ class DesignerController < ApplicationController
     @users = User.order(sort_column + ' ' + sort_direction) 
   end
 
+  def field_users
+    @titulo = "Listado de Ejecutivos de Terreno"
+    @field_users = FieldUser.order(sort_column + ' ' + sort_direction) 
+  end
+
   def payment_flows
     @titulo = "Listado de Flujos de Pago"
     @payment_flows = PaymentFlow.order(sort_column + ' ' + sort_direction) 
   end
+
   def parameters
     @titulo = "Listado de Parametros"
     @parameters = Parameter.order(sort_column + ' ' + sort_direction) 

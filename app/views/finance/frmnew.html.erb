@@ -1,0 +1,123 @@
+<div class="seccion">
+<table><tr><td class="marco">
+
+<% form_tag new2_remesas_path do %>
+  <div class="subtit">
+    Mandante: <%= @principal_name %><br>
+    Producto: <%= @product_name %>
+  </div>
+  <table class="index">
+    <tr>
+      <th colspan="2">N° RP</th>
+      <th>N° Ticket</th>
+      <th>Capital</th>
+      <th colspan="2">Interes Mora</th>
+      <th colspan="2">Interes Plazo</th>
+      <th colspan="2">Honor.</th>
+      <th colspan="2">Gastos Envio</th>
+      <th colspan="2">Gastos Judic.</th>
+      <th>Total Pagado</th>
+      <th>Ajustes</th>
+      <th></th>
+    </tr>
+    <% if @receipts.nil? or @receipts.empty?%>
+      <tr>
+        <td colspan=17>No se han encontrado Recibos de Pago para Remesar.</td>
+      </tr>  
+    <% else %>
+      <% @receipts.each do |receipt| %>
+         <% @tickets = Ticket.where("receipt_id=?", receipt.id) %>
+         <tr>
+           <td><%= receipt.id %></td><td><%= check_box_tag "receipt_ids[]", receipt.id %></td>
+           <td>
+             <% @tickets.each  do |p| %>
+               <%= p.id %><br>
+             <% end %>
+           </td>
+           <td>
+             <% @tickets.each  do |p| %>
+               <%= number_to_currency(p.capital, :precision => 0, :delimiter => ".") %><br>
+             <% end %>
+           </td>
+           <td>
+             <% @tickets.each  do |p| %>
+               <%= number_to_currency(p.arrear_interest, :precision => 0, :delimiter => ".") %><br>
+             <% end %>
+           </td> 
+           <td>
+             <% @tickets.each  do |p| %>
+               <%= check_box_tag "t_arrear_interest[]", p.id %><br>
+             <% end %>
+           </td> 
+           <td>
+             <% @tickets.each  do |p| %>
+               <%= number_to_currency(p.term_interest, :precision => 0, :delimiter => ".") %><br>
+             <% end %>
+           </td>
+           <td>
+             <% @tickets.each  do |p| %>
+               <%= check_box_tag "t_term_interest[]", p.id %><br>
+             <% end %>
+           </td> 
+           <td>
+             <% @tickets.each  do |p| %>
+               <%= number_to_currency(p.fee, :precision => 0, :delimiter => ".") %><br>
+             <% end %>
+           </td>
+           <td>
+             <% @tickets.each  do |p| %>
+               <%= check_box_tag "t_fee[]", p.id %><br>
+             <% end %>
+           </td> 
+           <td>
+             <% @tickets.each  do |p| %>
+               <%= number_to_currency(p.shipping_costs, :precision => 0, :delimiter => ".") %><br>
+             <% end %>
+           </td>
+           <td>
+             <% @tickets.each  do |p| %>
+               <%= check_box_tag "t_shipping_costs[]", p.id %><br>
+             <% end %>
+           </td> 
+           <td>
+             <% @tickets.each  do |p| %>
+               <%= number_to_currency(p.legal_costs, :precision => 0, :delimiter => ".") %><br>
+             <% end %>
+           </td>
+           <td>
+             <% @tickets.each  do |p| %>
+               <%= check_box_tag "t_legal_costs[]", p.id %><br>
+             <% end %>
+           </td> 
+           <td><%= number_to_currency(receipt.total_pay, :precision => 0, :delimiter => ".") %></td>
+           <td>
+             <% @tickets.each  do |p| %>
+               <% @ajuste = p.adjust_val %>
+               <% @ajuste = p.adjust_val + p.adjust_trr_val if not p.adjust_trr_val.nil?%>
+               <%= number_to_currency(@ajuste, :precision => 0, :delimiter => ".") %><br>
+             <% end %>
+           </td>
+           <td><%= link_to 'Ver', receipt%></td>
+         </tr>
+      <% end %>
+    <% end %>
+  </table>
+  <div class="actions">
+    <%= submit_tag "Continuar" if not(@receipts.nil? or @receipts.empty?)%>
+  </div>
+<% end %>          
+
+<div class="obs">
+Los ajuses se aplicarán a:
+  <ul>
+    <li>Honorarios
+    <li>Gastos de Envío
+    <li>Interés Mora
+  </ul>
+</div>
+</td></tr></table>
+</div>
+
+<div class="botones">
+  <%= link_to 'Página Principal', :controller => "sessions", :action => 'tsr' %>
+</div>

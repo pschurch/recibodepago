@@ -1,0 +1,26 @@
+<table><tr><td class="marco">
+<%= form_for(@field_user) do |f| %>
+  <%= render "shared/error_messages", :target => @field_user, :text => "el Ejecutivo de Terreno" %>
+
+  <div class="field">
+    Rut:<br />
+    <%= f.text_field :rut, :size => "10" %> - <%= f.text_field :digit, :size => "1" %>
+  </div>
+  <div class="field">
+   Nombre:<br>
+   <%= f.text_field :name, :size => "40" %>
+  </div>
+  <div class="field">
+   Descripción: <br>
+   <%= f.text_area :description, :size => "40x2" %>
+  </div>
+  <div class="field">
+   Estado: <br>
+   <%= f.check_box :state %> Activo
+  </div>
+  <div class="actions">
+    <%= f.submit "Grabar"%>
+  </div>
+<% end %>
+</td></tr></table>
+

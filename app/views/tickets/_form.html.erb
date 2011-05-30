@@ -44,7 +44,7 @@
     <td>Número:</td><td><%= f.text_field :number, :size => "35" %></td>
   </tr>
   <tr>
-    <td>Interés Mora:</td><td><%= f.text_field :arrear_interest, :size => "8", :value => 0 %></td>
+    <td>Interés Mora:</td><td><%= f.text_field :arrear_interest, :size => "8" %></td>
     <td>Emisor:</td><td>
     <% if @ticket.assignment_id.nil? %>
       <%= f.collection_select :emitter, Emitter.where('state = true').order('name ASC'), :name, :name, options ={:prompt => "- Seleccione -"} %>
@@ -54,7 +54,7 @@
 </td>
   </tr>
   <tr>
-    <td>Interés Plazo:</td><td><%= f.text_field :term_interest, :size => "8", :value => 0 %></td>
+    <td>Interés Plazo:</td><td><%= f.text_field :term_interest, :size => "8" %></td>
     <td>Cuenta Corriente:</td><td><%= f.text_field :ctacte, :size => "35"%></td>
   </tr>
   <tr>
@@ -71,36 +71,27 @@
          :prompt => {:month => '- Mes -', :day => '- Día -', :year => '- Año -'} } %></td>
   </tr>
   <tr>
-    <td>Gastos Envío:</td><td><%= f.text_field :shipping_costs, :size => "8", :value => 0 %></td>
+    <td>Gastos Envío:</td><td><%= f.text_field :shipping_costs, :size => "8" %></td>
     <td>Boleta N°: </td><td><%= f.text_field :ballot, :size => "35" %></td>
   </tr>
   <tr>
-    <td>Gastos Judiciales:</td><td><%= f.text_field :legal_costs, :size => "8", :value => 0 %></td>
+    <td>Gastos Judiciales:</td><td><%= f.text_field :legal_costs, :size => "8" %></td>
     <td>Cuota:</td><td><%= f.text_field :quota_num, :size => "2" %> de <%= f.text_field :total_q, :size => "3" %></td>
-  <tr>
-    <% if (@ticket.state=='modificado' and (not @ticket.adjust_sup_val.nil? or not @ticket.adjust_mgt_val.nil?))%>
-      <td>Ajuste:</td>
-      <td class="ro">
-        <%= f.text_field :adjust_ejc_val, :size => "8", :readonly => true, :value => @ticket.adjust_ejc_val unless @ticket.adjust_ejc_val.nil? %>
-        <%= f.text_field :adjust_sup_val, :size => "8", :readonly => true, :value => @ticket.adjust_sup_val unless @ticket.adjust_sup_val.nil? %>
-        <%= f.text_field :adjust_mgt_val, :size => "8", :readonly => true, :value => @ticket.adjust_mgt_val unless @ticket.adjust_mgt_val.nil? %>
-      </td>
-      <td>Obs. ajuste:</td>
-      <td class="ro"><div class="n"><%= @ticket.adjust_obs %></div></td>
-    <% else %>
-      <td>Ajuste:</td>
-      <td>
-        <% if current_user.profile_id==1 %> <!-- Eje Cobranza -->
-          <%= f.text_field :adjust_ejc_val , :size => "8"%>
-        <% elsif current_user.profile_id==2 %> <!-- Supervisor -->
-          <%= f.text_field :adjust_sup_val , :size => "8"%>
-        <% elsif current_user.profile_id==6 %> <!-- Gerencia -->
-          <%= f.text_field :adjust_mgt_val , :size => "8"%>
-        <% end %>
-      </td>
-      <td>Obs. ajuste:</td><td><%= f.text_area :adjust_obs , :size => "33x2"%></td>
-    <% end %>
   </tr>
+  <% if @ticket.state=="modificado" and current_user.profile_id==1 %>
+    <tr>
+      <td>Ajuste:</td>
+      <td class="ro"><%= f.text_field :adjust_val, :size => "8", :readonly => true %></td>
+      <td>Obs. ajuste:</td><td><%= f.text_area :adjust_obs , :size => "33x2", :readonly => true%></td>
+    </tr>
+  <% else %>
+    <tr>
+      <td>Ajuste:</td>
+      <td><%= f.text_field :adjust_val , :size => "8"%></td>
+      <td>Obs. ajuste:</td><td><%= f.text_area :adjust_obs , :size => "33x2"%></td>
+    </tr>
+  <% end %>
+
   <% if not @ticket.adjust_time.nil? %>
     <tr>
       <td>Fecha ajuste:</td><td class="ro"><div class="sh"><%= @ticket.adjust_time.strftime("%d/%m/%Y") %></div></td>

@@ -1,16 +1,16 @@
 <div class="seccion">
-  <table>
+  <table class="index">
   <tr>
     <th><%= sortable "id", "N° Caso" %><br>id</th>
     <th><%= sortable "state", "Estado" %><br>state</th>
-    <th><%= sortable "cas_id", "Identificador" %><br>cas_id</th>
+    <th><%= sortable "cas_id", "Ident." %><br>cas_id</th>
     <th><%= sortable "principal_id","Mandante" %><br>principal_id</th>
     <th><%= sortable "collection_type_id","Tipo cobranza" %><br></th>
     <th><%= sortable "product_id" %><br></th>
     <th><%= sortable "rut" %></th>
     <th><%= sortable "name" %><br></th>
     <th><%= sortable "alloc_date","Fecha asignacion" %><br></th>
-    <th><%= sortable "expir_date","Vencimiento" %><br></th>
+    <th><%= sortable "expir_date","Vencimto." %><br></th>
     <th><%= sortable "capital" %></th>
     <th></th>
   </tr>
@@ -19,9 +19,9 @@
     <td><%= a.id %></td>
     <td><%= a.state %></td>
     <td><%= a.cas_id %></td>
-    <td><%= a.principal_id %></td>
-    <td><%= a.collection_type_id %></td>
-    <td><%= a.product_id %></td>
+    <td><%= a.principal.name %></td>
+    <td><%= a.collection_type.name %></td>
+    <td><%= a.product.name %></td>
     <td><%= a.rut %>-<%= a.digit %></td>
     <td><%= a.name %></td>
     <td><%= a.alloc_date %></td>

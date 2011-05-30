@@ -1,9 +1,23 @@
 <div class="seccion">
 <table><tr><td class="marco">
   <%= form_for(@receipt) do |f| %>
+    <%= hidden_field_tag "button", @button%>  
+    <%= f.hidden_field :button, :value=> @button%>
     <%= render "shared/error_messages", :target => @receipt, :text => "el Recibo de Pago" %>
-     
+    <% if not @msg.nil? %>
+     <div id="error">
+       <h2>Error en el Recibo de Pago. <br>Corregir lo siguiente:</h2>
+       <ul>
+         <% if @msg=="1" %>
+           <li>La suma de los ajustes no puede ser superior al permitido para el Supervisor. Si requiere un valor distinto, solicite modificacion a Gerencia.</li>
+         <% elsif @msg=="2" %>
+           <li>Adjust val (Ajuste): debe ingresar un valor en el campo de Ajuste.</li>
+         <% end %>  
+       </ul>
+     </div>
+    <% end %>
     <table class="formulario">
+
     <tr>
       <td width="130">Recibo de Pago N°:</td><td class="ro"><div class="sh"><%= @receipt.id %></div></td>
       <th rowspan=20 width=16></th>
@@ -22,11 +36,11 @@
     </tr>
     <tr>
       <td>Fecha de Pago:</td>
-      <% if current_user.profile_id==1 %>  
+      <% if @receipt.state=='recibido rechazo' and @receipt.rejection_type_id==1  and @button!="n"%>  
         <td class="ro"><%= f.date_select :date_r, :order => [:day, :month, :year] %></td>
-      <% elsif current_user.profile_id==2 %>   
+      <% else %>   
         <td class="ro"><div class="sh"><%= @receipt.date_r.strftime("%d/%m/%Y") %></div></td>
-      <% end %>
+      <% end %> 
     </tr>
     <tr>
       <td>Preparado por:</td><td class="ro"><div class="n"><%= @receipt.user_name %></div></td>
@@ -37,86 +51,195 @@
     <!-- inicio DATOS DE CONTACTO -->
     <!-- Solo para Flujo de Pago 2 (RP por Completar) y 3 (RP con Gestion Terreno) -->
     <% if (@receipt.payment_flow_id==2 or @receipt.payment_flow_id==3)%>
+      <hr>
       <div class="subtit">
         Datos de Contacto:
       </div>
       <table class="formulario">
-        <%= render "datos_contacto", :f => @receipt unless @receipt.state=="rechazado"%>
-        <%= render "datos_contacto_edit", :f => f unless @receipt.state!="rechazado"%>
+        <% if @receipt.state=="recibido rechazo" and @receipt.rejection_type_id==1 and @button!="n"%>
+          <%= render "datos_contacto_edit", :f => f%>
+        <% else %>
+          <%= render "datos_contacto", :f => @receipt %>
+        <% end %>
       </table>
     <% end %>
     <!-- fin DATOS DE CONTACTO -->
     
-    <% if current_user.profile_id==1 %>  
-      <!-- Solo para Flujo de Pago 2 (RP por Completar) y 1 (RP Completo) -->
-      <% if (@receipt.payment_flow_id==1 or @receipt.payment_flow_id==2)%>
-        <div class="subtit">
-          Detalle del Pago:
-        </div>
-        <%= render "detalle_edit", :f => f %>
-      <% end %>
-    <% elsif current_user.profile_id==2 %>   
+    <!-- ----------------- Ingreso Detalle de Pago -------------------- -->
+    <% if (current_user.profile_id==1 and (@receipt.payment_flow_id==1 or @receipt.payment_flow_id==2) and @button!="n2") or 
+          (current_user.profile_id==3 and @receipt.state=="abierto" and @button!="n2") or
+          (current_user.profile_id==3 and @receipt.state=="recibido rechazo" and @button!="n3" and  @receipt.rejection_type_id==4)
+    %>  
+      <hr>
+      <div class="subtit">
+        Detalle del Pago:
+      </div>
+      <%= render "detalle_edit", :f => f %>
+    <% elsif @receipt.total_paid > 0 and (current_user.profile_id==2 or current_user.profile_id==4)%>   
       <div class="subtit">
         Detalle del Pago:
       </div>
       <table class="formulario"><%= render "detalle_show", :f => @receipt %></table>
     <% end %>
+    <!-- -----------------fin Ingreso Detalle de Pago -------------------- -->
+
+    <!-- ----------------- Ingreso Ejecutivo Terreno -------------------- -->
+    <% if @receipt.state=='solicita gestion terreno'and (@button==nil or @button=="")%> 
+      <hr>
+        <div class="subtit">
+          Gestión en Terreno:
+        </div>
+        <table class="formulario">
+        <tr>
+          <td width="150">Ejecutivo de Terreno: </td>
+          <td width="100"><%= f.collection_select :et_name, FieldUser.where('state = true').order('name ASC'), :name, :name, options ={:prompt => "- Seleccione -"} %></td>
+          <td></td>
+        </tr>
+        </table>
+    <% elsif @receipt.et_name!=nil%> 
+    <hr>
+    <div class="subtit">
+      Gestión en Terreno:
+    </div>
+    <table class="formulario">
+    <tr>
+      <td width="150">Ejecutivo de Terreno: </td>
+      <td class="ro"><div class="n"><%= @receipt.et_name %></div></td>
+      <td></td>
+    </tr>
+    </table>
+    <% end %>
+    <!-- -----------------fin Ingreso Ejecutivo Terreno -------------------- -->
+
+    <!-- ----------------- Ingreso Ajuste Terreno -------------------- -->
+    <% if current_user.profile_id==2 and @receipt.state=='abierto' and @receipt.area=="Terreno" %>
+      <hr>
+      <div class="subtit">
+        Ajuste en Terreno:
+      </div>
+       <table class="formulario">
+       <tr>
+         <td>Ticket N°: <%= f.collection_select :adjust_ticket, Ticket.where("receipt_id=?", @receipt.id) .order('id ASC'), :id, :id %></td>
+         <td>Ajuste:</td> <td><%= f.text_field :adjust_val, :size => "10"  %></td>
+         <td>Obs. ajuste:</td><td><%= f.text_area :adjust_obs , :size => "33x2"%></td>
+       </tr> 
+       </table>
+    <% end %>
+    <!-- ----------------- fin Ingreso Ajuste Terreno -------------------- -->
 
     <!-- ----------------- Ingreso Rechazado -------------------- -->
-    <% if @receipt.state=='recepcionado' %> 
-        <hr>
-        <table class="formulario">
-        <tr>
-          <td>Si Recibo de Pago es Rechazado, ingrese motivo: <br>
-          <%= f.text_area :rech_mtvo, :size => "75x1" %>
-          </td>
-        </tr>
-        </table>
+    <% if @receipt.state=='recepcionado' or (@receipt.state=='solicita gestion terreno' and @button=="r") or @receipt.state=='enviado a terreno'%> 
+      <hr>
+      <div class="subtit">
+        Rechazar Recibo de Pago:
+      </div>
+      <table class="formulario">
+      <tr>
+        <td>Motivo de Rechazo del Recibo de Pago: <br>
+          <%= f.collection_select :rejection_type_id, RejectionType.where('state = true').where('area =?', "Terreno"), :id, :name, options ={:prompt => "- Seleccione -"} if @receipt.area=='Terreno'%>
+          <%= f.collection_select :rejection_type_id, RejectionType.where('state = true').where('area =?', "All"), :id, :name, options ={:prompt => "- Seleccione -"} if @receipt.area!='Terreno'%>
+        </td>
+      </tr>
+      <tr>
+        <td>Descripción del Rechazo: <br>
+        <%= f.text_area :rech_mtvo, :size => "75x1" %>
+        </td>
+      </tr>
+      </table>
     <% end %>
     <!-- -----------------fin Ingreso Rechazado -------------------- -->
-
     <!-- ----------------- Ver datos Rechazado -------------------- -->
-      <% if @receipt.state=='rechazado' %> 
-        <hr>
-        <table class="formulario">
-        <tr>
-          <td colspan="2">Recibo de Pago Rechazado</td>
-          <th rowspan=2 width=16></th>
-          <td>Rechazado por:</td>
-          <td class="ro"><div class="n"><%= @receipt.rech_by %></div></td>
-        </tr>
-        <tr>
-          <td>Fecha Rechazo:</td>
-          <td class="ro"><div class="sh"><%= @receipt.rech_date.strftime("%d/%m/%Y") %></div></td>
-          <td rowspan=2>Motivo:</td>
-          <td rowspan=2 class="ro"><div class="nh"><%= @receipt.rech_mtvo %></div></td>
-        </tr>
-        <tr>
-          <td>Hora Rechazo:</td>
-          <td class="ro"><div class="sh"><%= @receipt.rech_date.strftime("%H:%M") %> hrs.</div></td>
-        </tr>
-        </table>
-      <% end %>
+    <% if @receipt.state=='rechazado' or @receipt.state=='recibido rechazo' %> 
+       <hr>
+       <div class="subtit">
+         Recibo de Pago Rechazado:
+       </div>
+       <table class="formulario">
+       <tr>
+         <td>Rechazado por:</td>
+         <td class="ro"><div class="n"><%= @receipt.rech_by %></div></td>
+         <td>Fecha Rechazo:</td>
+         <td class="ro"><div class="sh"><%= @receipt.rech_date.strftime("%d/%m/%Y") %></div></td>
+       </tr>
+       <tr>
+         <td>Motivo:</td>
+         <td class="ro"><div class="n"><%= @receipt.rejection_type.name %></div></td>
+         <td>Hora Rechazo:</td>
+         <td class="ro"><div class="sh"><%= @receipt.rech_date.strftime("%H:%M") %> hrs.</div></td>
+       </tr>
+       <tr>
+         <td>Descripción:</td>
+         <td colspan=3 class="ro"><div class="lg"><%= @receipt.rech_mtvo %></div></td>
+       </tr>
+       </table>
+    <% end %>
     <!-- -----------------fin Ver datosRechazado -------------------- -->
-        
-    <div class="actions">
+
+    <!-- ----------------- Ingreso Anulacion -------------------- -->
+    <% if (@button=="n1" or @button=="n2" or @button=="n3")%> 
+      <hr>
+      <div class="subtit">
+        Anular Recibo de Pago:
+      </div>
+      <table class="formulario">
+      <tr>
+        <% if @receipt.state=="abierto" and @receipt.area=="Terreno"%>
+          <td>Motivo de Anulación del Recibo de Pago (caso frustrado): <br>
+        <% else %>
+          <td>Motivo de Anulación del Recibo de Pago: <br>
+        <% end %>
+        <%= f.text_area :canc_mtvo, :size => "75x1" %>
+        </td>
+      </tr>
+      </table>
+    <% end %>
+    <!-- -----------------fin Ingreso Anulacion -------------------- -->
+
+    <div class="botones">
       <% if current_user.profile_id==1 %>  <!-- ----------  Cobranza ---------- -->
-        <%= f.submit "Cerrar Recibo de Pago", :name=>"cerrar_button" unless @receipt.state=="rechazado"%>
-        <%= f.submit "Corregir", :name=>"corregir_button" unless @receipt.state!="rechazado"%> 
-      <% elsif current_user.profile_id==2 %> 
-        <div class="botones"><%= link_to 'Cerrar Recibo de Pago', :controller => "receipts", :action => "ntc", :acc => 'confirmar', :id => @receipt.id  unless @receipt.state!="recepcionado" %>
-        <%= f.submit "Rechazar Recibo de Pago", :name=>"rechazar_sup_ejc_button" unless @receipt.state!="recepcionado"%> </div>
+        <div class="nbsp"></div>
+        <%= f.submit "Cerrar Recibo de Pago", :name=>"cerrar_button" if (@receipt.state=="abierto" and @button!="n2")%>
+        <%= f.submit "Corregir", :name=>"correg_trr_button" if (@receipt.state=="recibido rechazo" and @button!="n1")%> 
+        <%= f.submit "Solicitar Anulacion", :name=>"s_anular2_button" if @button=="n2"%> 
+        <%= f.submit "Solicitar Anulacion", :name=>"s_anular1_button" if @button=="n1"%> 
+        <%= link_to "Cancelar", :controller => "sessions", :action => "ejc" %> 
+               
+      <% elsif current_user.profile_id==2 %> <!-- Supervisor -->
+        <%= f.submit "Rechazar Recibo de Pago", :name=>"rech_sup_ejc_button" if (@receipt.state=="recepcionado" and @receipt.subarea=="Cobranza")%>
+        <%= f.submit "Rechazar Recibo de Pago", :name=>"rech_sup_terr_button" if (@receipt.state=="recepcionado" and @receipt.subarea=="Terreno")%>
+        <% if (current_user.profile_id==2 and @receipt.state=='abierto' and @receipt.area=="Terreno") %> 
+          <div class="botones">         
+          <%= f.submit "Ajustar", :name => "ajustar_button" %>
+          <%= link_to 'Cancelar', :controller => "sessions", :action => "sup" %></div>     
+        <% end %>
+
+      <% elsif current_user.profile_id==3 %> <!--  Terreno -->
+        <div class="nbsp"></div>
+        <%= f.submit "Corregir", :name=>"correg_trr_sup_button" if (@receipt.state=="recibido rechazo" and @button!="n1" and @button!="n3")%> 
+        <%= f.submit "Enviar a Terreno", :name=>"terr_button" if (@receipt.state=="solicita gestion terreno" and (@button==nil or @button==""))%> 
+        <%= f.submit "Cerrar Recibo de Pago", :name=>"cerrar_button" if (@receipt.state=='abierto' and @button!="n2")%>
+        <%= f.submit "Rechazar Recibo de Pago", :name=>"rech_jtr_button" if (@button=="r")%> 
+        <%= f.submit "Solicitar Anulacion", :name=>"s_anular2_button" if @button=="n2"%> 
+        <%= f.submit "Solicitar Anulacion", :name=>"s_anular3_button" if @button=="n3"%> 
+               
+      <% elsif current_user.profile_id==4 %> <!-- Tesoreria -->
+        <%= f.submit "Rechazar Recibo de Pago", :name=>"rech_tsr_button" if @receipt.state=="recepcionado"%> 
       <% end %>
     </div>
   <% end %>
+
 </td></tr></table>
 </div>
 
 <div class="botones">
   <% if current_user.profile_id==1 %>  <!-- ----------  Cobranza ---------- -->
-    <%= link_to "Cancelar", :controller => "sessions", :action => "ejc" %> 
+    <%= link_to "Página Principal", :controller => "sessions", :action => "ejc" %> 
   <% elsif current_user.profile_id==2 %> 
     <%= link_to 'Página Principal', :controller => "sessions", :action => "sup" %>
+  <% elsif current_user.profile_id==3 %> 
+    <%= link_to 'Página Principal', :controller => "sessions", :action => "jtr" %>
+  <% elsif current_user.profile_id==4 %> 
+    <%= link_to 'Página Principal', :controller => "sessions", :action => "tsr" %>
   <% end %>
 </div> 
 

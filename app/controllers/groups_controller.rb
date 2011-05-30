@@ -8,8 +8,7 @@ class GroupsController < ApplicationController
   end
 
   def show
- #   @cartera_list = Cartera.where("state=true")
-   @cartera_list = Cartera.where("state=true")
+    @cartera_list = Cartera.where("state=true")
     @group = Group.find(params[:id])
     @titulo = "Ver Grupo"
   end

@@ -12,6 +12,7 @@ namespace :db do
     tipos_cobranza
     formas_pago
     politicas_pago
+    field_user
  end
 end
 
@@ -105,3 +106,16 @@ def politicas_pago
   PaymentPolicy.create!(:principal_id => 4, :product_id => 4, :collection_type_id => 4, :arrear_interest => 1000, :term_interest => 1000, :fee => 1000, :legal_costs => 1, :installment => 0, :state => 1)
   PaymentPolicy.create!(:principal_id => 4, :product_id => 8, :collection_type_id => 4, :arrear_interest => 1000, :term_interest => 1000, :fee => 1000, :legal_costs => 1, :installment => 0, :state => 1)
 end
+
+def field_user
+  15.times do |n|
+    num = (rand 9) + 1
+    r = num.to_s
+    rut = r+r+r+r+r+r+r+r
+    FieldUser.create!(:state => true,
+                       :name => Faker::Name.name,
+                       :rut => rut,
+                       :digit => r) 
+  end
+end
+

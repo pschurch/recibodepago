@@ -1,0 +1,24 @@
+<div class="seccion">
+<table><tr><td class="marco">
+
+<% form_tag({:controller => :finance, :action => :frmnew}, :method => :get) do %>
+  <table class="formulario">
+    <tr>
+      <td>Mandante:</td>
+      <td><%= select_tag('principal', options_for_select( @principals.collect{|p| [p.name, p.id]}) )%></td>
+    </tr>
+    <tr>
+      <td>Producto:</td>
+      <td><%= select_tag('product', options_for_select(@products.collect{|p| [p.name, p.id]}) )%></td>
+    </tr>
+  
+  </table>
+  <div class="actions"><%= submit_tag "Continuar" %></div>
+<% end %>
+
+</td></tr></table>
+</div>
+
+<div class="botones">
+  <%= link_to 'Página Principal', :controller => "sessions", :action => 'tsr' %>
+</div>

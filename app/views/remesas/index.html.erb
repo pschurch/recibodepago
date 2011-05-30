@@ -1,0 +1,37 @@
+<h1>Listing remesas</h1>
+
+<table>
+  <tr>
+    <th>State</th>
+    <th>Principal</th>
+    <th>Product</th>
+    <th>Principal rs</th>
+    <th>Create by</th>
+    <th>Date rem</th>
+    <th>Rc by</th>
+    <th>Date rc</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @remesas.each do |remesa| %>
+  <tr>
+    <td><%= remesa.state %></td>
+    <td><%= remesa.principal_id %></td>
+    <td><%= remesa.product_id %></td>
+    <td><%= remesa.principal_rs %></td>
+    <td><%= remesa.create_by %></td>
+    <td><%= remesa.date_rem %></td>
+    <td><%= remesa.rc_by %></td>
+    <td><%= remesa.date_rc %></td>
+    <td><%= link_to 'Show', remesa %></td>
+    <td><%= link_to 'Edit', edit_remesa_path(remesa) %></td>
+    <td><%= link_to 'Destroy', remesa, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Remesa', new_remesa_path %>

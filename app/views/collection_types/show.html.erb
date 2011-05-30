@@ -23,12 +23,12 @@
 </div>
 
 <div class="botones">
+<%= link_to 'Editar', edit_collection_type_path(@collection_type) %> 
 <% if current_user.profile_id==7 %>
-  <%= link_to 'Editar', edit_collection_type_path(@collection_type) %> 
   <%= link_to 'Listado de Tipos de Cobranza', collection_types_path %>
   <%= render 'shared/pp_adm_dsg' %>
 <% elsif current_user.profile_id==8 %>
-  <%= link_to "Listado de Todos los Tipos de Cobranza", dcollection_types_path %>
+  <%= link_to "Listado de Tipos de Cobranza", dcollection_types_path %>
   <%= link_to 'Página Principal', :controller => "sessions", :action => "dsg" %>
 <% end %>
 </div>

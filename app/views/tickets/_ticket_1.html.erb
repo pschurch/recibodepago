@@ -15,7 +15,7 @@
   <%= f.hidden_field :product_id, :value => @caso.product_id  %>
   <%= f.hidden_field :collection_type_id, :value => @caso.collection_type_id  %>
   <%= f.hidden_field :adjust_mx, :value => @ajuste_mx %>
-
+  <%= f.hidden_field :profile, :value => current_user.profile_id %>
   <table class="formulario">
   <tr><td></td><td></td>   
   <th rowspan=3 width=15></th>
@@ -42,11 +42,11 @@
     <td>Número:</td><td><%= f.text_field :number, :size => "35", :value => @caso.number %></td>
   </tr>
   <tr>
-    <td>Interés Mora:</td><td><%= f.text_field :arrear_interest, :size => "8", :value => 0 %></td>
+    <td>Interés Mora:</td><td><%= f.text_field :arrear_interest, :size => "8" %></td>
     <td>Emisor:</td><td><%= f.text_field :emitter, :size => "35", :value => @caso.emitter %></td>
   </tr>
   <tr>
-    <td>Interés Plazo:</td><td><%= f.text_field :term_interest, :size => "8", :value => 0 %></td>
+    <td>Interés Plazo:</td><td><%= f.text_field :term_interest, :size => "8" %></td>
     <td>Cuenta Corriente:</td><td><%= f.text_field :ctacte, :size => "35", :value => @caso.ctacte %></td>
   </tr>
   <tr>
@@ -54,15 +54,15 @@
     <td>Vencimiento:</td><td class="ro"><%= f.text_field :expir_date, :size => "35", :value => @caso.expir_date.strftime("%d/%m/%Y"), :readonly => true %></td>
   </tr>
   <tr>
-    <td>Gastos Envío:</td><td><%= f.text_field :shipping_costs, :size => "8", :value => 0 %></td>
+    <td>Gastos Envío:</td><td><%= f.text_field :shipping_costs, :size => "8" %></td>
     <td>Boleta N°: </td><td><%= f.text_field :ballot, :size => "35" %></td>
   </tr>
   <tr>
-    <td>Gastos Judiciales:</td><td><%= f.text_field :legal_costs, :size => "8", :value => 0 %></td>
+    <td>Gastos Judiciales:</td><td><%= f.text_field :legal_costs, :size => "8"%></td>
     <td>Cuota:</td><td><%= f.text_field :quota_num, :size => "2" %> de <%= f.text_field :total_q, :size => "3" %></td>
   </tr>
   <tr>
-    <td>Ajuste:</td><td><%= f.text_field :adjust_ejc_val , :size => "8"%></td>
+    <td>Ajuste:</td><td><%= f.text_field :adjust_val , :size => "8"%></td>
     <td>Obs. ajuste:</td><td><%= f.text_area :adjust_obs , :size => "33x2"%></td>
   </tr>
   </table>

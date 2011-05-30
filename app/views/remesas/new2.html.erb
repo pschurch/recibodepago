@@ -1,0 +1,95 @@
+</div></div></div>
+<div class="ext2"><div class="med2"><div class="int2">
+<div class="seccion">
+<table><tr><td class="marco">
+
+<%= form_for(@remesa) do |f| %>
+
+  <%= f.hidden_field :principal_id, :value=> @principal_id %>
+  <%= f.hidden_field :product_id, :value=> @product_id %>
+  <%= f.hidden_field :product_name, :value=> @product_name %>
+  <%= f.hidden_field :principal_rs, :value=> @principal_reason_social %>
+  <%= f.hidden_field :test, :value=> @fee %>
+
+  <div class="subtit">
+    <%= @principal_reason_social %><br>
+    <%= @product_name %>
+  </div>
+
+  <table class="index">
+    <tr>
+      <th>Rut</th>
+      <th>Nombre</th>
+      <th>N° Producto</th>
+      <th>Emisor</th>
+      <th>Cta Cte</th>
+      <th>N° Ticket</th>
+      <th>N° RP</th>
+      <th>Capital</th>
+      <th>Int Mora</th>
+      <th>Int Plazo</th>
+      <th>Honor.</th>
+      <th>Gtos Envio</th>
+      <th>Gtos Judic.</th>
+      <th>Forma Pago</th>
+      <th>Emisor</th>
+      <th>N° doc/cta</th>
+      <th>Monto</th>
+    </tr>
+    <% @receipts.each do |r| %>
+      <% @tic = Ticket.where("receipt_id=?", r.id) %>
+      <% @tic.each  do |t| %>
+        <%= render 'detalle_pago', :r=>r, :t=>t, :ai=>@arrear_interest, :ti=>@term_interest, :sc=>@shipping_costs,
+:fe=>@fee, :lc=>@legal_costs, :monto=>r.monto1, :forma=>r.formapago1, :doc=>r.docnum1, :emisor=>r.emisor1 %>
+        <%= render 'detalle_pago', :r=>r, :t=>t, :ai=>@arrear_interest, :ti=>@term_interest, :sc=>@shipping_costs,
+:fe=>@fee, :lc=>@legal_costs, :monto=>r.monto2, :forma=>r.formapago2, :doc=>r.docnum2, :emisor=>r.emisor2 %>
+        <%= render 'detalle_pago', :r=>r, :t=>t, :ai=>@arrear_interest, :ti=>@term_interest, :sc=>@shipping_costs,
+:fe=>@fee, :lc=>@legal_costs, :monto=>r.monto3, :forma=>r.formapago3, :doc=>r.docnum3, :emisor=>r.emisor3 %>
+        <%= render 'detalle_pago', :r=>r, :t=>t, :ai=>@arrear_interest, :ti=>@term_interest, :sc=>@shipping_costs,
+:fe=>@fee, :lc=>@legal_costs, :monto=>r.monto4, :forma=>r.formapago4, :doc=>r.docnum4, :emisor=>r.emisor4 %>
+        <%= render 'detalle_pago', :r=>r, :t=>t, :ai=>@arrear_interest, :ti=>@term_interest, :sc=>@shipping_costs,
+:fe=>@fee, :lc=>@legal_costs, :monto=>r.monto5, :forma=>r.formapago5, :doc=>r.docnum5, :emisor=>r.emisor5 %>
+        <%= render 'detalle_pago', :r=>r, :t=>t, :ai=>@arrear_interest, :ti=>@term_interest, :sc=>@shipping_costs,
+:fe=>@fee, :lc=>@legal_costs, :monto=>r.monto6, :forma=>r.formapago6, :doc=>r.docnum6, :emisor=>r.emisor6 %>
+        <%= render 'detalle_pago', :r=>r, :t=>t, :ai=>@arrear_interest, :ti=>@term_interest, :sc=>@shipping_costs,
+:fe=>@fee, :lc=>@legal_costs, :monto=>r.monto7, :forma=>r.formapago7, :doc=>r.docnum7, :emisor=>r.emisor7 %>
+        <%= render 'detalle_pago', :r=>r, :t=>t, :ai=>@arrear_interest, :ti=>@term_interest, :sc=>@shipping_costs,
+:fe=>@fee, :lc=>@legal_costs, :monto=>r.monto8, :forma=>r.formapago8, :doc=>r.docnum8, :emisor=>r.emisor8 %>
+        <%= render 'detalle_pago', :r=>r, :t=>t, :ai=>@arrear_interest, :ti=>@term_interest, :sc=>@shipping_costs,
+:fe=>@fee, :lc=>@legal_costs, :monto=>r.monto9, :forma=>r.formapago9, :doc=>r.docnum9, :emisor=>r.emisor9 %>
+        <%= render 'detalle_pago', :r=>r, :t=>t, :ai=>@arrear_interest, :ti=>@term_interest, :sc=>@shipping_costs,
+:fe=>@fee, :lc=>@legal_costs, :monto=>r.monto10, :forma=>r.formapago10, :doc=>r.docnum10, :emisor=>r.emisor10 %>
+        <%= render 'detalle_pago', :r=>r, :t=>t, :ai=>@arrear_interest, :ti=>@term_interest, :sc=>@shipping_costs,
+:fe=>@fee, :lc=>@legal_costs, :monto=>r.monto11, :forma=>r.formapago11, :doc=>r.docnum11, :emisor=>r.emisor11 %>
+        <%= render 'detalle_pago', :r=>r, :t=>t, :ai=>@arrear_interest, :ti=>@term_interest, :sc=>@shipping_costs,
+:fe=>@fee, :lc=>@legal_costs, :monto=>r.monto12, :forma=>r.formapago12, :doc=>r.docnum12, :emisor=>r.emisor12 %>
+        <%= render 'detalle_pago', :r=>r, :t=>t, :ai=>@arrear_interest, :ti=>@term_interest, :sc=>@shipping_costs,
+:fe=>@fee, :lc=>@legal_costs, :monto=>r.monto13, :forma=>r.formapago13, :doc=>r.docnum13, :emisor=>r.emisor13 %>
+        <%= render 'detalle_pago', :r=>r, :t=>t, :ai=>@arrear_interest, :ti=>@term_interest, :sc=>@shipping_costs,
+:fe=>@fee, :lc=>@legal_costs, :monto=>r.monto14, :forma=>r.formapago14, :doc=>r.docnum14, :emisor=>r.emisor14 %>
+        <%= render 'detalle_pago', :r=>r, :t=>t, :ai=>@arrear_interest, :ti=>@term_interest, :sc=>@shipping_costs,
+:fe=>@fee, :lc=>@legal_costs, :monto=>r.monto15, :forma=>r.formapago15, :doc=>r.docnum15, :emisor=>r.emisor15 %>
+        <%= render 'detalle_pago', :r=>r, :t=>t, :ai=>@arrear_interest, :ti=>@term_interest, :sc=>@shipping_costs,
+:fe=>@fee, :lc=>@legal_costs, :monto=>r.monto16, :forma=>r.formapago16, :doc=>r.docnum16, :emisor=>r.emisor16 %>
+        <%= render 'detalle_pago', :r=>r, :t=>t, :ai=>@arrear_interest, :ti=>@term_interest, :sc=>@shipping_costs,
+:fe=>@fee, :lc=>@legal_costs, :monto=>r.monto17, :forma=>r.formapago17, :doc=>r.docnum17, :emisor=>r.emisor17 %>
+        <%= render 'detalle_pago', :r=>r, :t=>t, :ai=>@arrear_interest, :ti=>@term_interest, :sc=>@shipping_costs,
+:fe=>@fee, :lc=>@legal_costs, :monto=>r.monto18, :forma=>r.formapago18, :doc=>r.docnum18, :emisor=>r.emisor18 %>
+      <% end %>
+    <% end %>
+  </table>
+
+  <div class="actions">
+    <div class="botones">
+      <%= link_to 'Crear Remesa', '#'  %>
+    </div>
+    <!-- <%= f.submit "Crear Remesa"%> -->
+  </div>
+<% end %>
+
+</td></tr></table>
+</div>
+
+<div class="botones">
+  <%= link_to 'Página Principal', :controller => "sessions", :action => 'tsr' %>
+</div>

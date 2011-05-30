@@ -2,13 +2,20 @@
   <ul>
     <li><%= link_to "Tickets por Modificar", :controller => "supervisor", :action => "stmod" %></li>
     <li><%= link_to "Listado de Tickets", :controller => "supervisor", :action => "stlist" %></li>
-    <li><%= link_to "Recepcionar Recibo de Pago de Cobranza", :controller => "receipts", :action => "sup_recp_cobr"%></li>
-    <!-- <li><%= link_to "Enviar Recibo de Pago a Terreno", :controller => "supervisor", :action => "sr_envio_terreno" %></li>-->
-    <li><%= link_to "Recepcionar Recibo de Pago de Terreno", :controller => "receipts", :action => "sup_recp_terr" %></li>
+  </ul>
+  <div class="nbsp"></div>
+  <ul>
+    <li><%= link_to "Recepcionar Recibos de Pago de Cobranza", :controller => "receipts", :action => "sup", :ac => "recpc" %></li>
+    <li><%= link_to "Recepcionar Recibos de Pago de Terreno", :controller => "receipts", :action => "sup", :ac => "recpt" %></li>
     <li><%= link_to "Generar PDF de Recibo de Pago", :controller => "supervisor", :action => "stlist" %></li>
-    <li><%= link_to "Recibos de Pago Rechazados por Terreno", :controller => "supervisor", :action => "sr_rech_terreno" %></li>
-    <li><%= link_to "Rendir Recibos de Pago a Tesoreria", :controller => "receipts", :action => "rend_tsr" %></li>
-    <li><%= link_to "Recibos de Pago Rechazados por Tesoreria", :controller => "supervisor", :action => "sr_rech_tesoreria" %></li>
-    <li><%= link_to "Listado de Todos los Recibos de Pago", :controller => "supervisor", :action => "srlist" %></li>
+    <li><%= link_to "Rendir Recibos de Pago a Tesoreria", :controller => "receipts", :action => "sup", :ac => "rend" %></li>
+  </ul>
+  <div class="nbsp"></div>
+  <ul>
+    <li><%= link_to "Recibos de Pago para Anular", :controller => "supervisor", :action => "sanular" %></li>
+    <li><%= link_to "Recibos de Pago Rechazados por Terreno", :controller => "receipts", :action => "sup", :ac => "rechtr" %></li>
+    <li><%= link_to "Recibos de Pago Rechazados por Tesoreria", :controller => "receipts", :action => "sup", :ac => "rechts" %></li>
+    <li><%= link_to "Listado de Recibos de Pago", :controller => "supervisor", :action => "srlist" %></li>
   </ul>
 </div>
+

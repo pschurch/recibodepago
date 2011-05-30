@@ -2,6 +2,7 @@
   <%= f.hidden_field :collection_type_id, :value=> @ticket.collection_type_id %>
   <%= f.hidden_field :principal_id, :value=> @ticket.principal_id %>
   <%= f.hidden_field :product_id, :value=> @ticket.product_id %>
+  <%= f.hidden_field :profile, :value => current_user.profile_id %>
   <%= f.hidden_field :adjust_mx, :value=> @ajuste_mx %>
   <table class="formulario">
   <tr>
@@ -30,15 +31,15 @@
     <%= f.text_field :product_name, :value=> @product, :readonly => true %></td>
   </tr>
   <tr>
-    <td>Capital:</td><td><%= f.text_field :capital, :size => "8", :value => 0 %></td>
+    <td>Capital:</td><td><%= f.text_field :capital, :size => "8" %></td>
     <td>Número:</td><td><%= f.text_field :number, :size => "35" %></td>
   </tr>
   <tr>
-    <td>Interés Mora:</td><td><%= f.text_field :arrear_interest, :size => "8", :value => 0 %></td>
+    <td>Interés Mora:</td><td><%= f.text_field :arrear_interest, :size => "8" %></td>
     <td>Emisor:</td><td><%= f.collection_select :emitter, Emitter.where('state = true').order('name ASC'), :name, :name, options ={:prompt => "- Seleccione -"} %></td>
   </tr>
   <tr>
-    <td>Interés Plazo:</td><td><%= f.text_field :term_interest, :size => "8", :value => 0 %></td>
+    <td>Interés Plazo:</td><td><%= f.text_field :term_interest, :size => "8" %></td>
     <td>Cuenta Corriente:</td><td><%= f.text_field :ctacte, :size => "35"%></td>
   </tr>
   <tr>
@@ -46,7 +47,7 @@
     <% if current_user.profile_id==1 %>
       <td class="ro"><%= f.text_field :fee, :size => "8", :readonly => true, :value => @fee %></td>
     <% elsif current_user.profile_id==2 %> 
-      <td><%= f.text_field :fee, :size => "8"%></td>
+      <td><%= f.text_field :fee, :size => "8", :value => @fee%></td>
     <% end %> 
     <td>Vencimiento:</td><td><%= f.date_select :expir_date, 
          {:order => [:day, :month, :year], 
@@ -55,23 +56,15 @@
          :prompt => {:month => '- Mes -', :day => '- Día -', :year => '- Año -'} } %></td>
   </tr>
   <tr>
-    <td>Gastos Envío:</td><td><%= f.text_field :shipping_costs, :size => "8", :value => 0 %></td>
+    <td>Gastos Envío:</td><td><%= f.text_field :shipping_costs, :size => "8" %></td>
     <td>Boleta N°: </td><td><%= f.text_field :ballot, :size => "35" %></td>
   </tr>
   <tr>
-    <td>Gastos Judiciales:</td><td><%= f.text_field :legal_costs, :size => "8", :value => 0 %></td>
+    <td>Gastos Judiciales:</td><td><%= f.text_field :legal_costs, :size => "8" %></td>
     <td>Cuota:</td><td><%= f.text_field :quota_num, :size => "2" %> de <%= f.text_field :total_q, :size => "3" %></td>
   </tr>
   <tr>
-    <td>Ajuste:</td><td>
-      <% if current_user.profile_id==1 %> <!-- Eje Cobranza -->
-        <%= f.text_field :adjust_ejc_val , :size => "8"%>
-      <% elsif current_user.profile_id==2 %> <!-- Supervisor -->
-        <%= f.text_field :adjust_sup_val , :size => "8"%>
-      <% elsif current_user.profile_id==6 %> <!-- Gerencia -->
-        <%= f.text_field :adjust_mgt_val , :size => "8"%>
-      <% end %>
-    </td>
+    <td>Ajuste:</td><td><%= f.text_field :adjust_val , :size => "8"%></td>
     <td>Obs. ajuste:</td><td><%= f.text_area :adjust_obs , :size => "33x2"%></td>
   </tr>
   </table>

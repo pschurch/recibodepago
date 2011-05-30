@@ -1,0 +1,35 @@
+<div class="seccion">
+<table class="index">
+  <tr>
+    <th><%= link_to "N° RP", :sort => "id" %></th>  
+    <th><%= link_to "Ejec. Terreno", :sort => "et_name" %></th>
+    <th>Mandante</th>
+    <th>Producto</th>
+    <th><%= link_to "Fecha de Pago", :sort => "date_r" %></th>
+    <th><%= link_to "Total a Pagar", :sort => "total_pay" %></th>
+    <th></th>
+  </tr>
+  <% if @receipts.empty? %> 
+    <tr><td colspan=10>No se han encontrado Recibos de Pago para Cerrar.</td></tr>
+  <% else %>
+
+   <% @receipts.each do |receipt| %>
+    <% @tickets = Ticket.where("receipt_id=?", receipt.id) %>
+    <tr>
+      <td><%= receipt.id %></td>
+      <td><%= receipt.et_name %></td>
+      <td><%= @tickets.first.principal_name %></td>
+      <td><%= @tickets.first.product_name %></td>
+      <td><%= receipt.date_r.strftime("%d/%m/%Y") %></td>
+      <td><%= number_to_currency(receipt.total_pay, :precision => 0, :delimiter => ".") unless receipt.total_pay==0 %></td>
+      <td><%= link_to 'Ver', receipt %></td>
+    </tr>
+   <% end %>
+  <% end %>
+</table>
+</div>
+
+<div class="botones">
+  <%= link_to 'Página Principal', :controller => "sessions", :action => "jtr" %>
+</div>
+

@@ -36,12 +36,17 @@
     <% end %>
   <% end %>
   </table>
-</div>
 
+<div class="nbsp"></div>
 <div class="botones">
   <% if current_user.profile_id==1 %>
     <%= link_to 'Crear Ticket en blanco', new_ticket_path %>
   <% end %>
+</div>
+
+</div>
+
+<div class="botones">
   <%= render 'shared/pp_ejc_dsg' %>
 </div>
 

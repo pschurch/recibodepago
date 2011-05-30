@@ -1,2 +1,101 @@
-<h1>Finance#frlist</h1>
-<p>Find me in app/views/finance/frlist.html.erb</p>
+<div class="seccion">
+<table><tr><td class="marco">
+<% form_tag({:controller => :finance, :action => :frlist}, :method => :get) do %>
+  <table>
+  <tr>
+    <td>
+      Area: <%= select_tag('area', options_for_select([['Todas'], ['Cobranza'], ['Terreno'], ['Supervisor'], ['Tesoreria']], :selected => @area))%>
+    </td>
+    <td>
+      Estado: <%= select_tag('estado', 
+      options_for_select([['Todos'], 
+                          ['abierto'], 
+                          ['solicita gestion terreno'], 
+                          ['cerrado'],    
+                          ['rendido'],   
+                          ['recepcionado'],   
+                          ['rechazado'],   
+                          ['recibido rechazo'],   
+                          ['remesado'],   
+                          ['finalizado'],   
+                          ['solicita anulacion'],   
+                          ['anulado']  ], :selected => @estado))%>
+    </td>
+    <td rowspan=2>
+      <div class="actions"><%= submit_tag "Filtrar", :state => 'nil' %></div>
+    </td>
+  </tr>  
+  </table>
+<% end %>
+</td></tr></table>
+
+<div class="nbsp"></div>
+
+<table class="index">
+  <tr>
+    <th>N° RP</th>
+    <th>Fecha de Pago</th>
+    <th>Estado</th>
+    <th>Area</th>
+    <th>N° Ticket</th>
+    <th>Rut</th>
+    <th>Identificador</th>
+    <th>Mandante</th>
+    <th>Producto</th>
+    <th>Capital</th>
+    <th>Total Pagado</th>
+    <th></th>
+  </tr>
+  <% if @receipts.empty? %>
+  <tr>
+    <td colspan= 12>No se han encontrado Recibos de Pago con el filtro seleccionado.</td>
+  </tr>  
+  <% else %>
+    <% @receipts.each do |receipt| %>
+      <% @tickets = Ticket.where("receipt_id=?", receipt.id) %>
+      <tr>
+        <td><%= receipt.id %></td>
+        <td><%= receipt.date_r.strftime("%d/%m/%Y") %></td>
+        <td><%= receipt.state %></td>
+        <td><%= receipt.area %></td>
+        <td>
+          <% @tickets.each  do |p| %>
+          <%= p.id %><br>
+          <% end %>
+        </td>
+        <td>
+          <% @tickets.each  do |p| %>
+          <%= p.rut %>-<%= p.digit %><br>
+          <% end %>
+        </td>
+        <td>
+          <% @tickets.each  do |p| %>
+          <%= p.cas_id %><br>
+          <% end %>
+        </td>
+        <td><% stop=false %>
+          <% @tickets.each  do |p| %>
+          <%= p.principal_name unless stop%><% stop=true %>
+          <% end %>
+        </td>
+        <td><% stop=false %>
+          <% @tickets.each  do |p| %>
+          <%= p.product_name unless stop%><% stop=true %>
+          <% end %>
+        </td>
+        <td>
+          <% @tickets.each  do |p| %>
+          <%= number_to_currency(p.capital, :precision => 0, :delimiter => ".") %><br>
+          <% end %>
+        </td>
+        <td><%= number_to_currency(receipt.total_paid, :precision => 0, :delimiter => ".") unless receipt.total_paid==0 %>
+        <td><%= link_to 'Ver', receipt %></td>
+      </tr>
+    <% end %>
+  <% end %>
+</table>
+</div>
+
+<div class="botones">
+  <%= link_to 'Página Principal', :controller => "sessions", :action => 'tsr' %>
+</div>

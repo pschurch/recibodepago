@@ -23,12 +23,12 @@
 </div>
 
 <div class="botones">
+<%= link_to 'Editar', edit_product_path(@product) %> 
 <% if current_user.profile_id==7 %>
-  <%= link_to 'Editar', edit_product_path(@product) %> 
   <%= link_to 'Listado de Productos', products_path %>
   <%= render 'shared/pp_adm_dsg' %>
 <% elsif current_user.profile_id==8 %>
-  <%= link_to "Listado de Todos los Productos", dproducts_path %>
+  <%= link_to "Listado de Productos", dproducts_path %>
   <%= link_to 'Página Principal', :controller => "sessions", :action => "dsg" %>
 <% end %>
 </div>

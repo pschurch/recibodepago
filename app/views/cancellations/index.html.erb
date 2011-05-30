@@ -1,0 +1,32 @@
+<div class="seccion">
+  <table class="index">
+  <tr>
+    <th>Id</th>
+    <th>Mensaje</th>
+    <th>Descripción</th>
+    <th>Estado</th>
+    <% if current_user.profile_id==7 %> 
+      <th></th>
+    <% elsif current_user.profile_id==8 %>
+      <th colspan=2></th>
+    <% end %>
+  </tr>
+  <% @cancellations.each do |cancellations| %>
+  <tr>
+    <td><%= cancellations.id %></td>
+    <td><%= cancellations.message %></td>
+    <td><%= cancellations.description %></td>
+    <td><% if cancellations.state %>Activo<% else %>Inactivo<% end %></td>
+    <td><%= link_to 'Ver', cancellations %></td>
+    <% if current_user.profile_id==8 %> 
+      <td><%= link_to 'Editar', edit_cancellations_path(cancellations) %></td>
+    <% end %>
+  </tr>
+  <% end %>
+  </table>
+</div>
+
+<div class="botones">
+  <%= link_to 'Crear Tipo de Anulacion', new_cancellations_path if current_user.profile_id==8%>
+  <%= render 'shared/pp_adm_dsg' %>
+</div>

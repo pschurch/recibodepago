@@ -14,10 +14,12 @@ h4 {font-size:20px;margin-bottom:5px;}
 hr {background:rgb(229,179,90);color:rgb(229,179,90);width:100%;height:2px;margin-top:2px;margin-bottom:10px;padding:0;border:none;}
 
 /* marco externo */
-.ext {width: 800px; background: #CCC2B5; border: 2px solid #D4C9BD; padding: 2px; padding-top: 0;
-      border-top: 0; margin:0 auto;}
-.med {background: #E7E4E0; border: 2px solid #C5BCB0; padding: 1px; padding-top: 0; border-top: 0;}
-.int {background: white; border: 1px solid #F2F0EF; border-top: 0; padding-bottom: 20px;}
+.ext, .ext2 {background: #CCC2B5; border: 2px solid #D4C9BD; padding: 2px; border-top: 0; margin:0 auto;}
+.ext {width: 800px; padding-top: 0;}
+.med, .med2 {background: #E7E4E0; border: 2px solid #C5BCB0; padding: 1px; padding-top: 0; }
+.med {border-top: 0;}
+.int, .int2 {background: white; border: 1px solid #F2F0EF;  padding-bottom: 20px;}
+.int {border-top: 0;}
 
 div.header {padding: 11px;}
 div.header img {float: right; }
@@ -28,15 +30,28 @@ div.titulos a:hover {text-decoration: underline; color: white;}
 
 div.seccion {margin-top: 5px; padding: 20px; background: #FFDC9E; font-size:13px; overflow: auto ; }
 
-div.botones {margin-top: 5px; padding: 15px; background: #FFDC9E; text-align: center; }
+div.botones {margin-top: 10px; padding: 15px; background: #FFDC9E; text-align: center; }
+div.seccion div.botones {margin-top: 7px; padding: 4px;}
 div.botones a {margin: 7px; padding: 4px 8px; text-decoration: none; color: #222; font-size: 13px;
                border: 1px outset #CCC;  background: rgb(255,199,100); }
 div.botones a:hover { background: rgb(229,179,90); text-decoration: none;}
 div.botones a:active { border: 1px inset #000;}
+div.botones input {  padding: 4px 8px; text-decoration: none; font-weight: bold;  color: #222; font-size: 12px; border: 1px outset #CCC;  background: rgb(255,199,100);	}
 
+
+/*div.botones {margin-top: 10px; padding: 15px; background: #FFDC9E; text-align: center; }
+div.botones a {margin: 7px; padding: 4px 8px; text-decoration: none; color: #222; font-size: 13px;
+               border: 1px outset #CCC;  background: rgb(255,199,100); }
+div.botones a:hover { background: rgb(229,179,90); text-decoration: none;}
+div.botones a:active { border: 1px inset #000;}
+div.botones input { margin: 7px; padding: 4px 8px; text-decoration: none; font-weight: bold;  color: #222; font-size: 12px; border: 1px outset #CCC;  background: rgb(255,199,100);	}
+ td div.botones input { margin-top:10px;} 
 div.actions { text-align: center;}
 div.actions input { margin: 7px; margin-top:20px; padding: 4px 8px; text-decoration: none; font-weight: bold;  color: #222; font-size: 12px; border: 1px outset #CCC;  background: rgb(255,199,100);	}
 td div.actions input { margin-top:8px;}
+
+*/
+
 div.nbsp {height: 18px;} 
 div.subtit {margin-top:6px; margin-bottom: 6px; font-size: 14px; font-weight: bold;}
 
@@ -88,6 +103,7 @@ div.lg { width: 484px;}
 div.lgh {width: 484px; height:40px} 
 div.lmh {width: 405px; height:40px}
 div.nh  { width: 240px; height:40px}
+div.obs, div.obs li {font-size:12px; }
 
 /* print */
 table.info { margin:0 auto; border-collapse: collapse; border:0px; width:100%}
@@ -96,6 +112,7 @@ table.info td {padding:3px; border:1px solid white; vertical-align:top}
 table.print { margin:0 auto; border-collapse: collapse; border:0px; width:100%}
 table.print th, table.print td {padding:2px; border:1px solid rgb(200,200,200); background:white;}
 table.print td.r {text-align: right; vertical-align:middle;}
+div.nota {font-size:9px;margin-top:35px;text-align: center;}
 
 
 

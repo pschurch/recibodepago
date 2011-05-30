@@ -10,14 +10,14 @@
     <td>
       Estado: <%= select_tag('estado', 
       options_for_select([['Todos'], 
-                          ['abierto'], 
                           ['solicita gestion terreno'], 
-                          ['enviado a terreno'], 
+                          ['abierto'], 
+                          ['cerrado'],    
                           ['rendido'],   
                           ['recepcionado'],   
                           ['rechazado'],   
-                          ['aceptado rechazo'],   
-                          ['cerrado'],    
+                          ['recibido rechazo'],   
+                          ['solicita anulacion'],   
                           ['anulado']  ], :selected => @estado))%>
     </td>
     <td rowspan=2>

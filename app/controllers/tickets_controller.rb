@@ -82,7 +82,6 @@ class TicketsController < ApplicationController
       #---------------------------------------------------------
     end
     @ticket = Ticket.new
-    # new.html.erb
   end
 
   def create
@@ -90,17 +89,17 @@ class TicketsController < ApplicationController
     @ticket = Ticket.new(params[:ticket])
     @ticket.current_step = session[:ticket_step]
     # ---------  Ajustes -------------------
-    if current_user.profile_id == 1 # perfil Ej Cobranza
-      @parm1 = Parameter.where("id=1") 
-      @parm1.each do |p|
-        @ajuste_mx = p.val_int  
+      if current_user.profile_id == 1 # perfil Ej Cobranza
+        @parm1 = Parameter.where("id=1") 
+        @parm1.each do |p|
+          @ajuste_mx = p.val_int  
+        end
+      elsif current_user.profile_id == 2 # perfil Supervisor
+        @parm1 = Parameter.where("id=2") 
+        @parm1.each do |p|
+          @ajuste_mx = p.val_int  
+        end
       end
-    elsif current_user.profile_id == 2 # perfil Supervisor
-      @parm1 = Parameter.where("id=2") 
-      @parm1.each do |p|
-        @ajuste_mx = p.val_int  
-      end
-    end
     # ----------- Fin de Ajustes -------------------
     if session[:caso].nil?
       @pay_p = PaymentPolicy.where("principal_id =?", @ticket.principal_id).where("product_id =?", @ticket.product_id).where("collection_type_id =?", @ticket.collection_type_id)
@@ -130,31 +129,27 @@ class TicketsController < ApplicationController
           @ticket.save #if @ticket.all_valid? 
           @ticket.update_attribute 'group_id', current_user.group_id
           @ticket.update_attribute 'prepared_by', current_user.name
-          @total_pay =  @ticket.capital + @ticket.fee + @ticket.arrear_interest + @ticket.term_interest + @ticket.shipping_costs + @ticket.legal_costs
+          @total_pay =  @ticket.capital + @ticket.fee + @ticket.arrear_interest + @ticket.term_interest + @ticket.shipping_costs + @ticket.legal_costs 
           @ticket.update_attribute 'total_pay', @total_pay
           if current_user.profile_id == 1 # perfil Ej Cobranza
-            if (@ticket.state=='creado' and @ticket.adjust_sup?)
-              @ticket.update_attribute 'state', "pms"
-              @ticket.update_attribute 'adjust_sup_time', Time.now
-              @ticket.update_attribute 'adjust_obs', ""
+            if (@ticket.state=='creado')
+              if (@ticket.adjust_sup?)
+                @ticket.update_attribute 'state', "pms"
+                @ticket.update_attribute 'adjust_sup_time', Time.now
+                @ticket.update_attribute 'adjust_val', "0"
+                @ticket.update_attribute 'adjust_obs', ""
+              end
             end
           elsif current_user.profile_id == 2 # perfil Supervisor
-            if (@ticket.state=='creado' and @ticket.adjust_mgt?)
+            if (@ticket.adjust_mgt?)
               @ticket.update_attribute 'state', "pmg"
               @ticket.update_attribute 'adjust_mgt_time', Time.now
+              @ticket.update_attribute 'adjust_val', "0"
               @ticket.update_attribute 'adjust_obs', ""
             end
           end
-          if not @ticket.adjust_ejc_val.nil?
-            @ticket.update_attribute 'new_total_pay', @total_pay + @ticket.adjust_ejc_val
-            @ticket.update_attribute 'adjust_time', Time.now
-            @ticket.update_attribute 'adjust_by', current_user.name
-          elsif not @ticket.adjust_sup_val.nil?
-            @ticket.update_attribute 'new_total_pay', @total_pay + @ticket.adjust_sup_val
-            @ticket.update_attribute 'adjust_time', Time.now
-            @ticket.update_attribute 'adjust_by', current_user.name
-          elsif not @ticket.adjust_mgt_val.nil?
-            @ticket.update_attribute 'new_total_pay', @total_pay + @ticket.adjust_mgt_val
+          if @ticket.adjust_val!=0
+            @ticket.update_attribute 'new_total_pay', @total_pay + @ticket.adjust_val
             @ticket.update_attribute 'adjust_time', Time.now
             @ticket.update_attribute 'adjust_by', current_user.name
           end
@@ -182,6 +177,21 @@ class TicketsController < ApplicationController
     deny_access unless (current_user.profile_id == 1 or current_user.profile_id == 2 or current_user.profile_id == 6 or current_user.profile_id == 8)
     @titulo = "Editar Ticket"
     @ticket = Ticket.find(params[:id])
+    # ---------  Ajustes -------------------
+      if current_user.profile_id == 1 # perfil Ej Cobranza
+        @parm1 = Parameter.where("id=1") 
+        @parm1.each do |p|
+          @ajuste_mx = p.val_int  
+        end
+      elsif current_user.profile_id == 2 # perfil Supervisor
+        @parm1 = Parameter.where("id=2") 
+        @parm1.each do |p|
+          @ajuste_mx = p.val_int  
+        end
+      end
+      @ticket.update_attribute 'adjust_mx', @ajuste_mx
+      @ticket.update_attribute 'profile', current_user.profile_id
+    # ----------- Fin de Ajustes -------------------
     @tid = params[:id]
   end
 
@@ -189,32 +199,47 @@ class TicketsController < ApplicationController
     @titulo = "Editar Ticket"
     @ticket = Ticket.find(params[:id])
     if current_user.profile_id == 1 # perfil Ej Cobranza
-      @ajuste_mx = Parameter.where("id=1") 
+      @parm1 = Parameter.where("id=1") 
+      @parm1.each do |p|
+        @ajuste_mx = p.val_int  
+      end
     elsif current_user.profile_id == 2 # perfil Supervisor
-      @ajuste_mx = Parameter.where("id=2") 
+      @parm1 = Parameter.where("id=2") 
+      @parm1.each do |p|
+        @ajuste_mx = p.val_int  
+      end
     end
-
     if @ticket.update_attributes(params[:ticket])
       @total_pay =  @ticket.capital + @ticket.fee + @ticket.arrear_interest + @ticket.term_interest + @ticket.shipping_costs + @ticket.legal_costs
       @ticket.update_attribute 'total_pay', @total_pay
-      # Sumar los ajustes al total:
-      if not @ticket.adjust_ejc_val.nil?
-        @ticket.update_attribute 'new_total_pay', @total_pay + @ticket.adjust_ejc_val
-        @ticket.update_attribute 'adjust_time', Time.now
-        @ticket.update_attribute 'adjust_by', current_user.name
-      elsif not @ticket.adjust_sup_val.nil?
-        @ticket.update_attribute 'new_total_pay', @total_pay + @ticket.adjust_sup_val
-        @ticket.update_attribute 'adjust_time', Time.now
-        @ticket.update_attribute 'adjust_by', current_user.name
-      elsif not @ticket.adjust_mgt_val.nil?
-        @ticket.update_attribute 'new_total_pay', @total_pay + @ticket.adjust_mgt_val
-        @ticket.update_attribute 'adjust_time', Time.now
-        @ticket.update_attribute 'adjust_by', current_user.name
+      #----------- Ajustes ------------------------
+      if current_user.profile_id == 1 # perfil Ej Cobranza
+        if (@ticket.adjust_val!=0 )
+            @ticket.update_attribute 'new_total_pay', @total_pay + @ticket.adjust_val
+            @ticket.update_attribute 'adjust_time', Time.now
+            @ticket.update_attribute 'adjust_by', current_user.name
+        end
+      elsif current_user.profile_id == 2 # perfil Supervisor
+        if (@ticket.adjust_val!=0 )
+            @ticket.update_attribute 'new_total_pay', @total_pay + @ticket.adjust_val
+            @ticket.update_attribute 'adjust_time', Time.now
+            @ticket.update_attribute 'adjust_by', current_user.name
+        end
+      elsif current_user.profile_id == 6 # perfil Gerencia
+        if (@ticket.adjust_val!=0 )
+            @ticket.update_attribute 'new_total_pay', @total_pay + @ticket.adjust_val
+            @ticket.update_attribute 'adjust_time', Time.now
+            @ticket.update_attribute 'adjust_by', current_user.name
+        end
       end
+      #----------- Fin Ajustes ------------------------
+
+      # Acciones posibles a realizar: 
       #----- EjeCobr solicita modificacion de Supervisor ----
       if current_user.profile_id==1 and @ticket.adjust_sup?
         @ticket.update_attribute 'state', "pms"
         @ticket.update_attribute 'adjust_sup_time', Time.now
+        @ticket.update_attribute 'adjust_val', "0"
         @ticket.update_attribute 'adjust_obs', ""
         redirect_to(:action => "ntc", :acc => '3', :id => @ticket.id ) #por modificar Supervisor  
       #----- Supervisor modifica ----
@@ -222,20 +247,14 @@ class TicketsController < ApplicationController
         if @ticket.adjust_mgt? 
           @ticket.update_attribute 'state', "pmg"
           @ticket.update_attribute 'adjust_mgt_time', Time.now
+          @ticket.update_attribute 'adjust_val', "0"
           @ticket.update_attribute 'adjust_obs', ""
           redirect_to(:action => "ntc", :acc => '4', :id => @ticket.id ) #por modificar Gerencia   
         else
           @ticket.update_attribute 'state', "modificado"
           @ticket.update_attribute 'adjust_sup', false
-          #@ticket.update_attribute 'adjust_sup_des', ''
-          #@ticket.update_attribute 'adjust_sup_time', nil
           redirect_to(:action => "ntc", :acc => '5', :id => @ticket.id ) #modifica Supervisor   
         end
-      elsif current_user.profile_id==2 and @ticket.state=='creado' and @ticket.adjust_mgt? 
-          @ticket.update_attribute 'state', "pmg"
-          @ticket.update_attribute 'adjust_mgt_time', Time.now
-          @ticket.update_attribute 'adjust_obs', ""
-          redirect_to(:action => "ntc", :acc => '4', :id => @ticket.id ) #por modificar Gerencia   
       #----- Gerencia modifica ----
       elsif current_user.profile_id==6 and @ticket.state=='pmg'
         @ticket.update_attribute 'state', "modificado"

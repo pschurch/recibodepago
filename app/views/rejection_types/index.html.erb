@@ -1,0 +1,33 @@
+<div class="seccion">
+  <table class="index">
+  <tr>
+    <th>Id</th>
+    <th>Nombre</th>
+    <th>Descripción</th>
+    <th>Estado</th>
+    <% if current_user.profile_id==7 %> 
+      <th></th>
+    <% elsif current_user.profile_id==8 %>
+      <th colspan=2></th>
+    <% end %>
+  </tr>
+  <% @rejection_types.each do |rejection_type| %>
+  <tr>
+    <td><%= rejection_type.id %></td>
+    <td><%= rejection_type.name %></td>
+    <td><%= rejection_type.description %></td>
+    <td><% if rejection_type.state %>Activo<% else %>Inactivo<% end %></td>
+    <td><%= link_to 'Ver', rejection_type %></td>
+    <% if current_user.profile_id==8 %> 
+      <td><%= link_to 'Editar', edit_rejection_type_path(rejection_type) %></td>
+    <% end %>
+  </tr>
+  <% end %>
+  </table>
+</div>
+
+<div class="botones">
+  <%= link_to 'Crear Tipo de Rechazo', new_rejection_type_path if current_user.profile_id==8%>
+  <%= render 'shared/pp_adm_dsg' %>
+</div>
+

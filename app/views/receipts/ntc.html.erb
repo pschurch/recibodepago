@@ -11,9 +11,19 @@
 <div class="botones">
 <% if current_user.profile_id==1 %> <!-- Ejecutivo de Cobranza -->
   <%= link_to 'Página Principal', :controller => "sessions", :action => "ejc" %> 
+
 <% elsif current_user.profile_id==2 %> <!-- Supervisor -->
-  <%= link_to 'Recepcionar Recibos de Pago de Cobranza', :controller => 'receipts', :action=>'sup_recp_cobr' unless (@acc!='confirmar' and @acc!='rechazar')%>
+  <%= link_to 'Recepcionar Recibos de Pago', :controller => "receipts", :action => "sup", :ac => "recpc" if @rp.subarea=="Cobranza"%> 
+  <%= link_to "Recepcionar Recibos de Pago", :controller => "receipts", :action => "sup", :ac => "recpt"  if @rp.subarea=="Terreno"%>
+
   <%= link_to 'Página Principal', :controller => "sessions", :action => "sup" %> 
+<% elsif current_user.profile_id==3 %> <!-- Terreno -->
+  <%= link_to "Cerrar Recibos de Pago", :controller => "terreno", :action => "trcerr" if @rp.state=="solicita anulacion"%>
+  <%= link_to "Recibos de Pago Rechazados", :controller => "receipts", :action => "jtr", :ac => "rech"  if @rp.state=="solicita anulacion"%>
+  <%= link_to 'Página Principal', :controller => "sessions", :action => "jtr" %> 
+
+<% elsif current_user.profile_id==4 %> <!-- Tesoreria -->
+  <%= link_to 'Página Principal', :controller => "sessions", :action => "tsr" %> 
 <% end %> 
 </div>
 

@@ -1,0 +1,172 @@
+<div class="seccion">
+  <% if not @msg.nil? %>
+  <table><tr><td class="marco">
+    <p id="notice"><%= @msg %></p>
+  </td></tr></table>  
+  <div class="nbsp"></div>
+  <% end %>
+
+  <div class="subtit">
+    <% if @accion=="recpc" %>
+      Recibos de Pago de Cobranza para ser Recepcionados:
+    <% elsif @accion=="recpt"%>
+      Recibos de Pago de Terreno para ser Recepcionados:
+    <% elsif @accion=="rend" %>
+      Recibos de Pago para ser rendidos a Tesorería:
+    <% elsif @accion=="rechts" %>
+      Recibos de Pago Rechazados por Tesorería:
+    <% elsif @accion=="rechtr" %>
+      Recibos de Pago Rechazados por Terreno:
+    <% end %>
+  </div>
+  <% form_tag sup_edit_multiple_receipts_path do %>
+    <table class="index">
+      <tr>
+        <th>N° RP</th>
+        <th>N° Ticket</th>
+        <th>Rut</th>
+        <th>Identificador</th>
+        <th>Mandante</th>
+        <th>Producto</th>
+        <th>Fecha de Pago</th>
+        <th>Total Pagado</th>
+        <% if @accion=="rechts" or @accion=="rechtr"%>
+          <th>Fecha Rechazo</th>
+        <% end %>
+        <th>selecc.</th>
+        <th></th>
+      </tr>
+      <% if @receipts1.empty? %> 
+        <% if @accion=="recpc" %>
+          <td colspan="11">No se han encontrado Recibos de Pago de Cobranza para ser Recepcionados.</td>
+        <% elsif @accion=="recpt"%>
+          <td colspan="11">No se han encontrado Recibos de Pago de Terreno para ser Recepcionados.</td>
+        <% elsif @accion=="rend" %>
+          <tr><td colspan=10>No se han encontrado Recibos de Pago para ser Rendidos a Tesorería.</td></tr>
+        <% elsif @accion=="rechts"%>
+          <tr><td colspan=11>No se han encontrado Recibos de Pago Rechazados por Tesorería.</td></tr>
+        <% elsif @accion=="rechtr"%>
+          <tr><td colspan=11>No se han encontrado Recibos de Pago Rechazados por Terreno.</td></tr>
+        <% end %>        
+      <% else %>
+      <% @receipts1.each do |receipt| %>
+        <% @tickets = Ticket.where("receipt_id=?", receipt.id) %>
+        <tr>
+          <td><%= receipt.id %></td>
+          <td>
+            <% @tickets.each  do |p| %>
+              <%= p.id %><br>
+            <% end %>
+          </td>
+          <td>
+            <% @tickets.each  do |p| %>
+              <%= p.rut %>-<%= p.digit %><br>
+            <% end %>
+          </td>
+          <td>
+            <% @tickets.each  do |p| %>
+              <%= p.cas_id %><br>
+            <% end %>
+          </td>
+          <td><%= @tickets.first.principal_name %></td>
+          <td><%= @tickets.first.product_name %></td>
+          <td><%= receipt.date_r.strftime("%d/%m/%Y")  %></td>
+          <td><%= number_to_currency(receipt.total_paid, :precision => 0, :delimiter => ".") unless receipt.total_paid.nil?%></td>
+          <% if @accion=="rechts" or @accion=="rechtr"%>
+            <td><%= receipt.rech_date.strftime("%d/%m/%Y") %></td>
+          <% end %>     
+          <td><%= check_box_tag "receipt_ids[]", receipt.id %></td>
+          <td><%= link_to 'Ver', receipt %></td>
+        </tr>
+      <% end %>
+    <% end %>
+    </table>
+    <% if not @receipts1.empty? %> 
+      <div class="botones">
+        <%= submit_tag "Recepcionar Recibos de Pago", :name => "recep_button" unless @accion!="recpc"%>
+        <%= submit_tag "Recepcionar Recibos de Pago", :name => "recept_button" unless @accion!="recpt"%>
+        <%= submit_tag "Rendir Recibos de Pago", :name => "rendir_button" unless @accion!="rend"%>
+        <%= submit_tag "Aceptar Recibos de Pago", :name => "aceptatr_button" unless @accion!="rechtr"%>
+        <%= submit_tag "Aceptar Recibos de Pago", :name => "aceptats_button" unless @accion!="rechts"%>
+      </div>
+    <% end %>
+  <% end %>
+
+  <% if @accion!="rechtr" %>
+   <div class="nbsp"></div>
+   <hr>
+   <div class="subtit">
+     <% if @accion=="recpc" %>
+       Recibos de Pago de Cobranza Recepcionados, por Cerrar/Rechazar:
+     <% elsif @accion=="recpt"%>
+       Recibos de Pago de Terreno Recepcionados, por Cerrar/Rechazar:
+     <% elsif @accion=="rend" %>
+       Recibos de Pago rendidos a Tesorería, en espera de su recepci&oacute;n:
+     <% elsif @accion=="rechts" %>
+       Recibos de Pago para Aceptar/Corregir:
+     <% end %>        
+   </div>
+   <table class="index">
+     <tr>
+       <th>N° RP</th>
+       <th>N° Ticket</th>
+       <th>Rut</th>
+       <th>Identificador</th>
+       <th>Mandante</th>
+       <th>Producto</th>
+       <th>Fecha Pago</th>
+       <th>Total Pagado</th>
+       <% if @accion!="rend"%><th></th><% end %>
+     </tr>
+     <% if @receipts2.empty?%> 
+       <tr>
+        <% if @accion=="recpc" or @accion=="recpt" %>
+         <td colspan="10">No se han encontrado Recibos de Pago rendidos en espera de recepcion.</td>
+        <% elsif @accion=="rend" %>
+         <td colspan="11">No se han encontrado Recibos de Pago por Cerrar/Rechazar.</td>
+        <% elsif @accion=="rechts" %>
+          <td colspan="10">No se han encontrado Recibos de Pago para Aceptar/Corregir.</td>
+        <% end %>        
+       </tr>
+     <% else %>
+       <% @receipts2.each do |receipt| %>
+         <% @tickets = Ticket.where("receipt_id=?", receipt.id) %>
+         <tr>
+           <td><%= receipt.id %></td>
+           <td>
+             <% @tickets.each  do |p| %>
+               <%= p.id %><br>
+             <% end %>
+           </td>
+           <td>
+             <% @tickets.each  do |p| %>
+               <%= p.rut %>-<%= p.digit %><br>
+             <% end %>
+           </td>
+           <td>
+             <% @tickets.each  do |p| %>
+               <%= p.cas_id %><br>
+             <% end %>
+           </td>
+           <td><%= @tickets.first.principal_name %></td>
+           <td><%= @tickets.first.product_name %></td>
+           <td><%= receipt.date_r.strftime("%d/%m/%Y") %></td>
+           <td><%= number_to_currency(receipt.total_pay, :precision => 0, :delimiter => ".") %></td>
+           <% if @accion!="rend"%><td><%= link_to 'Ver', receipt%></td><% end %>
+         </tr>
+       <% end %>
+       <% if (not @receipts2.empty?) and @accion=="rend"%> 
+         <tr>
+           <th colspan="6"></th>
+           <th>Total:</th>
+           <td><%= number_to_currency(@total, :precision => 0, :delimiter => ".") %></td>  
+         </tr>
+       <% end %>
+     <% end %>
+   </table>
+  <% end %>
+</div>
+
+<div class="botones">
+  <%= link_to 'Página Principal', :controller => "sessions", :action => 'sup' %>
+</div>

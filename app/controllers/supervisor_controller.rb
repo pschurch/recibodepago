@@ -11,7 +11,7 @@ class SupervisorController < ApplicationController
 
   def srlist
     @titulo = "Listado de Todos los Recibos de Pago"
-    @receipts = Receipt.where("group_id=?", current_user.group_id)
+    #@receipts = Receipt.where("group_id=?", current_user.group_id)
     params[:area].nil? ? @area = 'Todas' : @area = params[:area]
     params[:estado].nil? ? @estado = 'Todos' : @estado = params[:estado]
     if (@area=='Todas' and @estado=='Todos')
@@ -31,14 +31,19 @@ class SupervisorController < ApplicationController
     (params[:mandante].nil? or params[:mandante]=='0') ? @mandante = 'Todos' : @mandante = params[:mandante]
     (params[:estado].nil? or params[:estado]=='t') ? @estado = 'Todos' : @estado = params[:estado]
     if (@mandante=='Todos' and @estado=='Todos')
-      @tickets = Ticket.where("state='creado' OR state='anulado' OR state='pms' OR state='pmg' OR state='modificado' OR state='rc'").where("group_id=?", current_user.group_id)
+      @tickets = Ticket.where("state!='para remesar' AND state!='remesado' AND state!='cerrado'").where("group_id=?", current_user.group_id)
     elsif (@mandante=='Todos' and @estado!='Todos')       
       @tickets = Ticket.where("state=?", @estado).where("group_id=?", current_user.group_id)
     elsif (@mandante!='Todos') and (@estado=='Todos')
-      @tickets = Ticket.where("principal_id=?", @mandante.to_i).where("state='creado' OR state='anulado' OR state='pms' OR state='pmg' OR state='modificado' OR state='rc'").where("group_id=?", current_user.group_id)
+      @tickets = Ticket.where("principal_id=?", @mandante.to_i).where("state!='para remesar' AND state!='remesado' AND state!='cerrado'").where("group_id=?", current_user.group_id)
     elsif (@mandante!='Todos') and (@estado!='Todos')
       @tickets = Ticket.where("principal_id=?", @mandante.to_i).where("state=?", @estado).where("group_id=?", current_user.group_id)
     end
+  end
+
+  def sanular
+    @titulo = "Recibos de Pago para Anular"
+    @receipts = Receipt.where("group_id=?", current_user.group_id).where("state='solicita anulacion'")
   end
 
   def sr_envio_terreno

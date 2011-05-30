@@ -4,10 +4,17 @@
   <%= render "shared/error_messages", :target => @ticket, :text => "el Ticket" %>  
   <%= render "#{@ticket.current_step}", :f=> f %>
   <% if @caso.nil? %> 
-    <div class="actions"><%= f.submit "Continuar", :name => "next_button" unless @ticket.last_step?%></div>  
-    <div class="actions"><%= f.submit "Grabar", :name => "rec_button" unless @ticket.first_step?%></div>
+    <div class="botones"><%= f.submit "Continuar", :name => "next_button" unless @ticket.last_step?%></div>  
+    <div class="botones"><%= f.submit "Grabar", :name => "rec_button" unless @ticket.first_step?%></div>
   <% else %>
-    <div class="actions"><%= f.submit "Grabar", :name => "rec_button"%></div>  
+    <div class="botones">
+      <%= f.submit "Grabar", :name => "rec_button"%>
+      <% if current_user.profile_id==1 %> <!-- Ejecutivo de Cobranza -->
+        <%= link_to 'Cancelar', :controller => "sessions", :action => "ejc" %> 
+      <% elsif current_user.profile_id==2 %> <!-- Supervisor -->
+        <%= link_to 'Cancelar', :controller => "sessions", :action => "sup" %> 
+      <% end %>
+    </div>
   <% end %>
 <% end %>
 </td></tr></table>
@@ -15,9 +22,9 @@
 
 <div class="botones">
 <% if current_user.profile_id==1 %> <!-- Ejecutivo de Cobranza -->
-  <%= link_to 'Cancelar', :controller => "sessions", :action => "ejc" %> 
+  <%= link_to 'Página Principal', :controller => "sessions", :action => "ejc" %> 
 <% elsif current_user.profile_id==2 %> <!-- Supervisor -->
-  <%= link_to 'Cancelar', :controller => "sessions", :action => "sup" %> 
+  <%= link_to 'Página Principal', :controller => "sessions", :action => "sup" %> 
 <% end %>
 </div>
 

@@ -1,25 +1,25 @@
 <div class="seccion">
-
-<table><tr><td class="marco">
-<% form_tag({:controller => :supervisor, :action => :stlist}, :method => :get) do %>
-  <table>
-  <tr>
-    <td>Mandante: <%= select_tag('mandante', 
-      options_for_select([['Todos', 0]] + @principals.collect{|p| [p.name, p.id]}, :selected => @mandante))%></td>
-    <td>Estado: <%= select_tag('estado', 
-      options_for_select([['Todos', 't'], 
-                          ['creado','creado'], 
-                          ['por modificar supervisor', 'pms'], 
-                          ['por modificar gerencia','pmg'], 
-                          ['modificado','modificado'], 
-                          ['recibo creado','recibo creado'],  
-                          ['anulado', 'anulado']], :selected => @estado))%>
-    </td>
-    <td><div class="actions"><%= submit_tag "Filtrar", :state => 'nil' %></div></td>
-  </tr>
-  </table>
-<% end %>
-</td></tr></table>
+   
+  <table><tr><td class="marco">
+  <% form_tag({:controller => :supervisor, :action => :stlist}, :method => :get) do %>
+    <table>
+    <tr>
+      <td>Mandante: <%= select_tag('mandante', 
+        options_for_select([['Todos', 0]] + @principals.collect{|p| [p.name, p.id]}, :selected => @mandante))%></td>
+      <td>Estado: <%= select_tag('estado', 
+        options_for_select([['Todos', 't'], 
+                            ['creado','creado'], 
+                            ['por modificar supervisor', 'pms'], 
+                            ['por modificar gerencia','pmg'], 
+                            ['modificado','modificado'], 
+                            ['recibo creado','recibo creado'],  
+                            ['anulado', 'anulado']], :selected => @estado))%>
+      </td>
+      <td><div class="botones"><%= submit_tag "Filtrar", :state => 'nil' %></div></td>
+    </tr>
+    </table>
+  <% end %>
+  </td></tr></table>
 
   <div class="nbsp"></div>
   <table class="index">
@@ -70,9 +70,14 @@
    <% end %>
   <% end %>
   </table>
+
+  <div class="nbsp"></div>
+  <div class="botones">
+    <%= link_to 'Crear Ticket en blanco', new_ticket_path %>
+  </div>
 </div>
+
 <div class="botones">
-  <%= link_to 'Crear Ticket en blanco', new_ticket_path %>
   <%= link_to 'Página Principal', :controller => "sessions", :action => 'sup' %>
-</botones>
+</div>
 

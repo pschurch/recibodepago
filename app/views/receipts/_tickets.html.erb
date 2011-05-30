@@ -44,17 +44,20 @@
     <td>Cuota:</td><td class="ro"><div class="sh"><%= a.quota_num %><% if not a.total_q.empty? %> de <%= a.total_q %><% end %>&nbsp;</div></td>
   </tr>
 
-  <% if not a.adjust_ejc_val.nil? or not a.adjust_sup_val.nil? or not a.adjust_mgt_val.nil? %>
-    <tr>
+  <% if a.adjust_val<0 %><tr>
       <td>Ajuste:</td><td class="ro"><div class="sh">
-        <%= number_to_currency( a.adjust_ejc_val, :precision => 0, :delimiter => ".") unless a.adjust_ejc_val.nil? %>
-        <%= number_to_currency( a.adjust_sup_val, :precision => 0, :delimiter => ".") unless a.adjust_sup_val.nil?%>
-        <%= number_to_currency( a.adjust_mgt_val, :precision => 0, :delimiter => ".") unless a.adjust_mgt_val.nil?%>
+        <%= number_to_currency( a.adjust_val, :precision => 0, :delimiter => ".") %>
       </div></td>
-      <td rowspan="3"></td>
+      <td></td>
       <td>Obs. ajuste:</td><td class="ro"><div class="n"><%= a.adjust_obs %>&nbsp;</div></td>
-    </tr>
-    <tr>
+  </tr><% end %>
+  <% if a.adjust_trr_val<0 %><tr>
+      <td>Ajuste terreno:</td>
+      <td class="ro"><div class="sh"><%= number_to_currency( a.adjust_trr_val, :precision => 0, :delimiter => ".") %>&nbsp;</div></td>
+      <td></td>
+      <td>Obs. ajuste:</td><td class="ro"><div class="n"><%= a.adjust_trr_obs %>&nbsp;</div></td>
+  </tr><% end %>
+  <% if a.adjust_val<0 or a.adjust_trr_val<0%><tr>
       <td>Nuevo Total a Pagar:</td><td class="ro"><div class="sh"><%= number_to_currency(a.new_total_pay, :precision => 0, :delimiter => ".") %></div></td>
     </tr>
   <% end %>

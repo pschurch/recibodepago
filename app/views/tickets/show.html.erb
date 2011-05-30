@@ -65,24 +65,29 @@
   <tr>
     <td>Total a Pagar:</td><td><div class="sh"><%= number_to_currency(@ticket.total_pay, :precision => 0, :delimiter => ".") %></div></td>
   </tr>
-  <% if not @ticket.adjust_ejc_val.nil? or not @ticket.adjust_sup_val.nil? or not @ticket.adjust_mgt_val.nil? %>
-    <tr>
-      <td>Ajuste:</td><td><div class="sh">
-        <%= number_to_currency( @ticket.adjust_ejc_val, :precision => 0, :delimiter => ".") unless @ticket.adjust_ejc_val.nil? %>
-        <%= number_to_currency( @ticket.adjust_sup_val, :precision => 0, :delimiter => ".") unless @ticket.adjust_sup_val.nil?%>
-        <%= number_to_currency( @ticket.adjust_mgt_val, :precision => 0, :delimiter => ".") unless @ticket.adjust_mgt_val.nil?%>
+  <% if @ticket.adjust_val!=0 %><tr>
+      <td>Ajuste:</td><td class="ro"><div class="sh">
+        <%= number_to_currency( @ticket.adjust_val, :precision => 0, :delimiter => ".") %>
       </div></td>
-      <td rowspan="3"></td>
-      <td>Obs. ajuste:</td><td><div class="n"><%= @ticket.adjust_obs %>&nbsp;</div></td>
-    </tr>
-    <tr>
+      <td></td>
+      <td>Obs. ajuste:</td><td class="ro"><div class="n"><%= @ticket.adjust_obs %>&nbsp;</div></td>
+  </tr><% end %>
+  <% if @ticket.adjust_trr_val!=0 %><tr>
+      <td>Ajuste terreno:</td>
+      <td class="ro"><div class="sh"><%= number_to_currency( @ticket.adjust_trr_val, :precision => 0, :delimiter => ".") %>&nbsp;</div></td>
+      <td></td>
+      <td>Obs. ajuste:</td><td class="ro"><div class="n"><%= @ticket.adjust_trr_obs %>&nbsp;</div></td>
+  </tr><% end %>
+  <% if @ticket.adjust_val!=0 or @ticket.adjust_trr_val!=0 %><tr>
       <td>Nuevo Total a Pagar:</td><td><div class="sh"><%= number_to_currency(@ticket.new_total_pay, :precision => 0, :delimiter => ".") %></div></td>
     </tr>
     <tr>
-      <td>Fecha ajuste:</td><td><div class="sh"><% if not @ticket.adjust_time.nil? %><%= @ticket.adjust_time.strftime("%d/%m/%Y") %><% end %>&nbsp;</div></td>
-      <td>Ajustado por:</td><td><div class="n"><%= @ticket.adjust_by %>&nbsp;</div></td>
-    </tr>
-  <% end %>
+      <td>Fecha ajuste:</td>
+      <td><div class="sh"><% if not @ticket.adjust_time.nil? %><%= @ticket.adjust_time.strftime("%d/%m/%Y") %><% end %>&nbsp;</div></td>
+      <td></td>
+      <td>Ajustado por:</td>
+      <td><div class="n"><%= @ticket.adjust_by %>&nbsp;</div></td>
+  </tr><% end %>
   </table>
 
   <table class="display">
@@ -148,34 +153,52 @@
       <tr>
     <% end %>
   <% end %>
+  </table>
 
-  <% if current_user.profile_id==2 or current_user.profile_id==4 or current_user.profile_id==6 %> <!-- Supervisor o Tesoreria o Gerencia -->
-    <% if @ticket.state=='anulado' %>
-      <tr>
-        <td>Fecha anulación:</td><td><div class="sh"><%= @ticket.canceled_time.strftime("%d/%m/%Y") %> </div></td>
-        <td></td>
-        <td>Anulado por:</td><td><div><%= @ticket.canceled_by %></div></td>
-      <tr>
-    <% end %>
+<!-- ----------------- Anulacion -------------------- -->
+<% if (@ticket.state=="anulado")%> 
+  <hr>
+  <div class="subtit">
+    Ticket anulado:
+  </div>
+  <table class="display">
+  <tr>
+    <td>Fecha anulación:</td>
+    <td class="ro"><div class="sh"><%= @ticket.canceled_time.strftime("%d/%m/%Y") %></div></td>
+    <td>Anulado por: </td>
+    <td class="ro"><div class="n"><%= @ticket.canceled_by %></div></td>
+  </tr>
+  </table>
+<% end %>
+<!-- -----------------fin Anulacion -------------------- -->
+
+  <% if current_user.profile_id==1 %>  <!-- Ejec Cobrana -->
+    <div class="botones">
+      <%= link_to 'Editar', edit_ticket_path(@ticket) if not @ticket.adjust_sup?%>
+    </div>
+  <% elsif current_user.profile_id==2 %>  <!-- Supervisor -->  
+    <div class="botones">
+      <%= link_to 'Editar', edit_ticket_path(@ticket) if @ticket.state=='creado' or @ticket.state=='pms'%> 
+      <%= link_to 'Anular el Ticket', :controller => "tickets", :action => "ntc", :acc => '1', :id => @ticket.id unless @ticket.state=="anulado"%> 
+    </div>
+  <% elsif current_user.profile_id==6 %>  <!-- Gerencia -->  
+    <div class="botones">
+      <%= link_to 'Anular el Ticket', :controller => "tickets", :action => "ntc", :acc => '1', :id => @ticket.id unless @ticket.state=="anulado"%> 
+    </div>
   <% end %>
 
-  </table>
 </td></tr></table>
 </div>
 
 <div class="botones">
   <% if current_user.profile_id==1 %>  <!-- Ejec Cobrana -->
-    <% if not @ticket.adjust_sup? %>
-      <%= link_to 'Editar', edit_ticket_path(@ticket) %> 
-    <% end %>
     <%= link_to 'Listado de Tickets', tickets_path %>
     <%= link_to 'Página Principal', :controller => "sessions", :action => "ejc" %>
+
   <% elsif current_user.profile_id==2 %>  <!-- Supervisor -->  
-  <% if @ticket.state=='creado' or @ticket.state=='pms' %>
-    <%= link_to 'Editar', edit_ticket_path(@ticket) %> 
-  <% end %>
     <%= link_to 'Listado de Tickets', :controller => "supervisor", :action => "stlist" %>
     <%= link_to 'Página Principal', :controller => "sessions", :action => "sup" %>  
+
   <% elsif current_user.profile_id==4 %>  <!-- Tesoreria -->  
     <%= link_to 'Listado de Tickets', :controller => "finance", :action => "ftlist" %>
     <%= link_to 'Página Principal', :controller => "sessions", :action => "tsr" %>  

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110504203839) do
+ActiveRecord::Schema.define(:version => 20110525141954) do
 
   create_table "assignments", :force => true do |t|
     t.string   "state"
@@ -31,6 +31,14 @@ ActiveRecord::Schema.define(:version => 20110504203839) do
     t.string   "ctacte"
     t.date     "expir_date"
     t.integer  "validity"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "cancellations", :force => true do |t|
+    t.text     "message"
+    t.text     "description"
+    t.boolean  "state",       :default => true
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -72,6 +80,16 @@ ActiveRecord::Schema.define(:version => 20110504203839) do
   end
 
   create_table "emitters", :force => true do |t|
+    t.string   "name"
+    t.text     "description"
+    t.boolean  "state",       :default => true
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "field_users", :force => true do |t|
+    t.string   "rut"
+    t.string   "digit"
     t.string   "name"
     t.text     "description"
     t.boolean  "state",       :default => true
@@ -194,7 +212,7 @@ ActiveRecord::Schema.define(:version => 20110504203839) do
   end
 
   create_table "receipts", :force => true do |t|
-    t.string   "state",                  :default => "abierto"
+    t.string   "state",                  :default => ""
     t.string   "area"
     t.string   "subarea"
     t.integer  "payment_flow_id"
@@ -306,6 +324,39 @@ ActiveRecord::Schema.define(:version => 20110504203839) do
     t.integer  "monto16"
     t.integer  "monto17"
     t.integer  "monto18"
+    t.string   "button"
+    t.integer  "cancellation_id"
+    t.string   "canc_solc_by"
+    t.integer  "rejection_type_id"
+    t.integer  "principal_id"
+    t.integer  "product_id"
+    t.integer  "adjust_val"
+    t.string   "adjust_ticket"
+    t.text     "adjust_obs"
+    t.integer  "profile"
+  end
+
+  create_table "rejection_types", :force => true do |t|
+    t.string   "name"
+    t.text     "description"
+    t.boolean  "state",       :default => true
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "area"
+  end
+
+  create_table "remesas", :force => true do |t|
+    t.string   "state"
+    t.integer  "principal_id"
+    t.integer  "product_id"
+    t.string   "principal_rs"
+    t.string   "create_by"
+    t.string   "rc_by"
+    t.datetime "date_rc"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "product_name"
+    t.text     "test"
   end
 
   create_table "tickets", :force => true do |t|
@@ -325,13 +376,13 @@ ActiveRecord::Schema.define(:version => 20110504203839) do
     t.string   "principal_name"
     t.string   "collection_type_name"
     t.text     "payment_description"
-    t.integer  "capital"
+    t.integer  "capital",              :default => 0
     t.string   "pay_period"
-    t.integer  "arrear_interest"
-    t.integer  "term_interest"
-    t.integer  "fee"
-    t.integer  "shipping_costs"
-    t.integer  "legal_costs"
+    t.integer  "arrear_interest",      :default => 0
+    t.integer  "term_interest",        :default => 0
+    t.integer  "fee",                  :default => 0
+    t.integer  "shipping_costs",       :default => 0
+    t.integer  "legal_costs",          :default => 0
     t.integer  "total_pay"
     t.string   "product_name"
     t.string   "number"
@@ -347,9 +398,6 @@ ActiveRecord::Schema.define(:version => 20110504203839) do
     t.datetime "canceled_time"
     t.integer  "assignment_id"
     t.integer  "adjust_mx"
-    t.integer  "adjust_ejc_val"
-    t.integer  "adjust_sup_val"
-    t.integer  "adjust_mgt_val"
     t.boolean  "adjust_sup"
     t.text     "adjust_sup_des"
     t.boolean  "adjust_mgt"
@@ -362,6 +410,10 @@ ActiveRecord::Schema.define(:version => 20110504203839) do
     t.integer  "new_total_pay"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "adjust_val",           :default => 0
+    t.integer  "adjust_trr_val",       :default => 0
+    t.text     "adjust_trr_obs"
+    t.integer  "profile"
   end
 
   create_table "users", :force => true do |t|

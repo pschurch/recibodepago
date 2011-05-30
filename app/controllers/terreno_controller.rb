@@ -19,6 +19,29 @@ class TerrenoController < ApplicationController
     end
   end
 
+  def trrecp
+    @titulo = "Recibos de Pago para gestionar en Terreno"
+    @groups   = Group.all
+    params[:grupo].nil? ? @grupo = 0 : @grupo = params[:grupo]
+    if (@grupo==0 or @grupo=='0')
+      @receipts = Receipt.where("state=?", 'solicita gestion terreno')
+    else 
+      @receipts = Receipt.where("group_id=?", @grupo).where("state=?", 'solicita gestion terreno')
+    end
+  end
+
+  def trcerr
+    @titulo = "Cerrar Recibos de Pago"
+    @receipts = Receipt.where("state='abierto'").where("area='Terreno'").order(params[:sort])
+  end
+
+  def sort_column  
+    params[:sort] || "id"  
+  end  
+  def sort_direction  
+    params[:direction] || "asc"  
+  end  
+
   private
     def perfil_name
       @perfil_name = "Jefe Terreno"

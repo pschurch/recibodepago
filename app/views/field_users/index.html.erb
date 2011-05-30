@@ -1,0 +1,24 @@
+<div class="seccion">
+  <table class="index">
+  <tr>
+    <th>Rut</th>
+    <th>Nombre</th>
+    <th>Estado</th>
+    <th></th>
+  </tr>
+  <% @field_users.each do |user| %>
+  <tr>
+    <td><%= user.rut %>-<%= user.digit %></td>
+    <td><%= user.name %></td>
+    <td><% if user.state %>Activo<% else %>Inactivo<% end %></td>
+    <td><%= link_to 'Ver', user %></td>
+  </tr>
+  <% end %>
+  </table>
+</div>
+
+<div class="botones">
+  <%= link_to 'Crear Ejecutivo de Terreno', new_field_user_path %>
+  <%= render 'shared/pp_adm_dsg' %>
+</div>
+

@@ -1,0 +1,63 @@
+<div class="seccion">
+
+<table><tr><td class="marco">
+<% form_tag({:controller => :terreno, :action => :trrecp}, :method => :get) do %>
+  <table>
+  <tr>
+    <td>
+      Grupo: <%= select_tag('grupo', 
+      options_for_select([['Todos', 0]] + @groups.collect{|p| [p.name, p.id]}, :selected => @grupo))%>
+    </td>
+    <td rowspan=2>
+      <div class="botones"><%= submit_tag "Filtrar", :state => 'nil' %></div>
+    </td>
+  </tr>  
+  </table>
+<% end %>
+</td></tr></table>
+
+<div class="nbsp"></div>
+
+<table class="index">
+  <tr>
+    <th>N° RP</th>
+    <th>Mandante</th>
+    <th>Producto</th>
+    <th>Fecha de Pago</th>
+    <th>Total a Pagar</th>
+    <th>Comuna</th>
+    <th></th>
+  </tr>
+  <% if @receipts.empty? %>
+  <tr>
+    <td colspan= 12>No se han encontrado Recibos de Pago con el filtro seleccionado.</td>
+  </tr>  
+  <% else %>
+    <% @receipts.each do |receipt| %>
+      <% @tickets = Ticket.where("receipt_id=?", receipt.id) %>
+      <tr>
+        <td><%= receipt.id %></td>
+        <td><% stop=false %>
+          <% @tickets.each  do |p| %>
+          <%= p.principal_name unless stop%><% stop=true %>
+          <% end %>
+        </td>
+        <td><% stop=false %>
+          <% @tickets.each  do |p| %>
+          <%= p.product_name unless stop%><% stop=true %>
+          <% end %>
+        </td>
+        <td><%= receipt.date_r.strftime("%d/%m/%Y") %></td>
+        <td><%= number_to_currency(receipt.total_pay, :precision => 0, :delimiter => ".") unless receipt.total_pay==0 %></td>
+        <td><%= receipt.cont_comuna %></td>
+        <td><%= link_to 'Ver', receipt %></td>
+      </tr>
+    <% end %>
+  <% end %>
+</table>
+</div>
+
+<div class="botones">
+  <%= link_to 'Página Principal', :controller => "sessions", :action => "jtr" %>
+</div>
+
