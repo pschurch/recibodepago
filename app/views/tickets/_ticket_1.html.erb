@@ -16,82 +16,135 @@
   <%= f.hidden_field :collection_type_id, :value => @caso.collection_type_id  %>
   <%= f.hidden_field :adjust_mx, :value => @ajuste_mx %>
   <%= f.hidden_field :profile, :value => current_user.profile_id %>
+
   <table class="formulario">
-  <tr><td></td><td></td>   
-  <th rowspan=3 width=15></th>
-    <td>Rut:</td><td class="ro"><%= f.text_field :rut, :size => "10", :value => @caso.rut, :readonly => true %> - <%= f.text_field :digit, :size => "1", :value => @caso.digit, :readonly => true %></td>
+  <tr>
+    <td>Rut:</td>
+    <td class="ro"><%= f.text_field :rut, :size => "10", :value => @caso.rut, :readonly => true %> - <%= f.text_field :digit, :size => "1", :value => @caso.digit, :readonly => true %></td>
+    <th rowspan=3 width=30></th>
+    <td width="100">Nombre:</td><td><%= f.text_field :name, :size => "30", :value => @caso.name %></td>
   </tr>
   <tr>
-    <td width="140">Identificador:</td><td class="ro" width="70"><%= f.text_field :cas_id, :size => "16", :value => @caso.cas_id, :readonly => true %></td>
-    <td width="130">Nombre:</td><td><%= f.text_field :name, :size => "35", :value => @caso.name %></td>
+    <td width="140">Identificador:</td>
+    <td class="ro"><%= f.text_field :cas_id, :size => "16", :value => @caso.cas_id, :readonly => true %></td>
+    <td>Mandante:</td>
+    <td class="ro"><%= f.text_field :principal_name, :size => "30", :value => @caso.principal.name, :readonly => true %></td>
   </tr>
   <tr>
-    <td>Tipo de Cobranza:</td><td class="ro"><%= f.text_field :collection_type_name, :size => "16", :value => @caso.collection_type.name, :readonly => true %></td>
-    <td>Mandante:</td><td class="ro"><%= f.text_field :principal_name, :size => "35", :value => @caso.principal.name, :readonly => true %></td>
+    <td>Tipo de Cobranza:</td>
+    <td class="ro"><%= f.text_field :collection_type_name, :size => "16", :value => @caso.collection_type.name, :readonly => true %></td>
+    <td>Producto:</td>
+    <td class="ro"><%= f.text_field :product_name, :value=> @caso.product.name, :readonly => true %></td>
   </tr>
   <tr>
-    <td>Descripción del Pago:</td><td colspan="4"><%= f.text_area :payment_description, :size => "61x2" %></td>
+    <td>Descripción del Pago:</td><td colspan="4"><%= f.text_area :payment_description, :size => "65x1" %></td>
   </tr>
+  </table>
+  <table class="formulario">
   <tr>
-    <td>Período de Pago:</td><td><%= f.collection_select :pay_period, PaymentPeriod.where('state = true').order('name ASC'), :name, :name, options ={:prompt => "- Seleccione -"} %></td>
-    <th rowspan=8 width=16></th>
-    <td>Producto:</td><td class="ro"><%= f.text_field :product_name, :size => "35", :value => @caso.product.name, :readonly => true %></td>
-  </tr>
-  <tr>
-    <td>Capital:</td><td><%= f.text_field :capital, :size => "8", :value => @caso.capital %></td>
-    <td>Número:</td><td><%= f.text_field :number, :size => "35", :value => @caso.number %></td>
-  </tr>
-  <tr>
-    <td>Interés Mora:</td><td><%= f.text_field :arrear_interest, :size => "8" %></td>
-    <td>Emisor:</td><td><%= f.text_field :emitter, :size => "35", :value => @caso.emitter %></td>
-  </tr>
-  <tr>
-    <td>Interés Plazo:</td><td><%= f.text_field :term_interest, :size => "8" %></td>
-    <td>Cuenta Corriente:</td><td><%= f.text_field :ctacte, :size => "35", :value => @caso.ctacte %></td>
-  </tr>
-  <tr>
-    <td>Honorarios:</td><td class="ro"><%= f.text_field :fee, :size => "8", :value => @fee, :readonly => true %></td>
-    <td>Vencimiento:</td><td class="ro"><%= f.text_field :expir_date, :size => "35", :value => @caso.expir_date.strftime("%d/%m/%Y"), :readonly => true %></td>
-  </tr>
-  <tr>
-    <td>Gastos Envío:</td><td><%= f.text_field :shipping_costs, :size => "8" %></td>
-    <td>Boleta N°: </td><td><%= f.text_field :ballot, :size => "35" %></td>
-  </tr>
-  <tr>
-    <td>Gastos Judiciales:</td><td><%= f.text_field :legal_costs, :size => "8"%></td>
-    <td>Cuota:</td><td><%= f.text_field :quota_num, :size => "2" %> de <%= f.text_field :total_q, :size => "3" %></td>
-  </tr>
-  <tr>
-    <td>Ajuste:</td><td><%= f.text_field :adjust_val , :size => "8"%></td>
-    <td>Obs. ajuste:</td><td><%= f.text_area :adjust_obs , :size => "33x2"%></td>
+    <td>Período de Pago: </td>
+    <td>AT: </td>
+    <td><%= f.text_field :pay_period_at, :size => "8" %></td>
+    <th width=10></th>
+    <td>NO: </td>
+    <td><%= f.text_field :pay_period_no, :size => "8" %></td>
+    <th width=10></th>
+    <td>AD: </td>
+    <td><%= f.text_field :pay_period_ad, :size => "8" %></td>
   </tr>
   </table>
 
   <table class="formulario">
-  <tr><th height="10"></th></tr>
+  <tr>
+    <td colspan="2"></td>
+    <td><center>Ajustes</center></td>
+    <td width=30></td>
+    <td colspan="2"><center>Producto</center></td>
+  </tr>
+  <tr>
+    <td>Capital:</td>
+    <td><%= f.text_field :capital, :size => "8", :value => @caso.capital %></td>
+    <td><%= f.text_field :ad_capital, :size => "8" %></td>
+    <td></td>
+    <td>Número:</td><td><%= f.text_field :number, :size => "30", :value => @caso.number %></td>
+  </tr>
+  <tr>
+    <td>Interés Mora:</td>
+    <td><%= f.text_field :arrear_interest, :size => "8" %></td>
+    <td><%= f.text_field :ad_arrear_interest, :size => "8" %></td>
+    <td></td>
+    <td>Emisor:</td><td><%= f.text_field :emitter, :size => "30", :value => @caso.emitter %></td>
+  </tr>
+  <tr>
+    <td>Interés Plazo:</td>
+    <td><%= f.text_field :term_interest, :size => "8" %></td>
+    <td><%= f.text_field :ad_term_interest, :size => "8" %></td>
+    <td></td>
+    <td>Cuenta Corriente:</td><td><%= f.text_field :ctacte, :size => "30", :value => @caso.ctacte%></td>
+  </tr>
+  <tr>
+    <td>Honorarios:</td>
+    <td class="ro"><%= f.text_field :fee, :size => "8", :value => @fee, :readonly => true %></td>
+    <td><%= f.text_field :ad_fee, :size => "8" %></td>
+    <td></td>
+    <td>Vencimiento:</td>
+    <td class="ro"><%= f.text_field :expir_date, :size => "30", :value => @caso.expir_date.strftime("%d/%m/%Y"), :readonly => true %></td>
+  </tr>
+  <tr>
+    <td>Gastos Envío:</td>
+    <td><%= f.text_field :shipping_costs, :size => "8" %></td>
+    <td><%= f.text_field :ad_shipping_costs, :size => "8" %></td>
+    <td></td>
+    <td>Boleta N°: </td><td><%= f.text_field :ballot, :size => "30" %></td>
+  </tr>
+  <tr>
+    <td>Gastos Judiciales:</td>
+    <td><%= f.text_field :legal_costs, :size => "8" %></td>
+    <td><%= f.text_field :ad_legal_costs, :size => "8" %></td>
+    <td></td>
+    <td>Cuota:</td><td><%= f.text_field :quota_num, :size => "2" %> de <%= f.text_field :total_q, :size => "3" %></td>
+  </tr>
+  </table>
+  <table class="formulario">
+  <tr>
+    <td>Observación ajustes:</td><td><%= f.text_area :adjust_obs , :size => "65x1"%></td>
+  </tr>
+  </table>
+
+  <div class="nbsp"></div>
+  <table class="formulario">
   <tr>
     <td>Fecha pago deuda:</td>
-    <td colspan="3"><%= f.date_select :date_pay, 
+    <td><%= f.date_select :date_pay, 
          {:order => [:day, :month, :year], 
          :start_year => Time.now.year, 
          :end_year => (Time.now + 1.years).year }%></td>
-  </tr>
-  <tr>
     <td>Preparado por:</td>
-    <td colspan="3"><%= f.select(:user_id, User.find(:all, :conditions => {:state => true, :profile_id => current_user.profile_id}, :order => 'name').collect {|u| [u.name, u.id]}, {:selected => @user_id}) %></td>
+    <td><%= f.select(:user_id, User.find(:all, :conditions => {:state => true, :profile_id => current_user.profile_id}, :order => 'name').collect {|u| [u.name, u.id]}, {:selected => @user_id}) %></td>
   </tr>
+  </table>
+
+  <table class="formulario">
   <tr>
-    <td>Entrega documento a deudor:</td>
-    <td colspan="3"><%= f.check_box :doc_delivery %> Sí</td>
+    <td width="210">Entrega documento a deudor:</td>
+    <td width="50"><%= f.check_box :doc_delivery %> Sí</td>
+    <td></td>
   </tr>
-  <tr><th height="10"></th></tr>
-  <tr>
-    <td>Solicita modificación a Supervisor:</td>
-    <td colspan="3"><%= f.check_box :adjust_sup %> Sí</td>
-  </tr>
-  <tr>
-    <td>Descripción de la modificación solicitada:</td>
-    <td colspan="3"><%= f.text_area :adjust_sup_des, :size => "54x2" %></td>
-  </tr>
+  </table>
+
+  <hr>
+  <div class="subtit">
+    Solicitud de Modificaciones:
+  </div>
+  <table class="formulario">
+   <tr>
+     <td width="210">Solicita modificación a Supervisor:</td>
+     <td width="50"><%= f.check_box :adjust_sup %> Sí</td>
+     <td></td>
+   </tr>
+   <tr>
+     <td>Descripción de la modificación solicitada a Supervisor:</td>
+     <td><%= f.text_area :adjust_sup_des, :size => "50x1" %>
+   </tr>
   </table>
 <% end %>

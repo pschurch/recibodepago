@@ -26,7 +26,7 @@
     </table>
     <hr>
      
-    <% @tickets.each do |a| %><table class="formulario"><%= render "tickets", :a => a %><% end %>
+    <% @tickets.each do |a| %><%= render "tickets", :a => a, :clase=>"formulario" %><% end %>
     
     <table class="formulario">
     <tr>
@@ -119,9 +119,7 @@
       </div>
        <table class="formulario">
        <tr>
-         <td>Ticket N°: <%= f.collection_select :adjust_ticket, Ticket.where("receipt_id=?", @receipt.id) .order('id ASC'), :id, :id %></td>
-         <td>Ajuste:</td> <td><%= f.text_field :adjust_val, :size => "10"  %></td>
-         <td>Obs. ajuste:</td><td><%= f.text_area :adjust_obs , :size => "33x2"%></td>
+         <td>Seleccione el Ticket a ajustar, N°: <%= f.collection_select :adjust_ticket, Ticket.where("receipt_id=?", @receipt.id) .order('id ASC'), :id, :id %></td>
        </tr> 
        </table>
     <% end %>
@@ -207,10 +205,9 @@
       <% elsif current_user.profile_id==2 %> <!-- Supervisor -->
         <%= f.submit "Rechazar Recibo de Pago", :name=>"rech_sup_ejc_button" if (@receipt.state=="recepcionado" and @receipt.subarea=="Cobranza")%>
         <%= f.submit "Rechazar Recibo de Pago", :name=>"rech_sup_terr_button" if (@receipt.state=="recepcionado" and @receipt.subarea=="Terreno")%>
-        <% if (current_user.profile_id==2 and @receipt.state=='abierto' and @receipt.area=="Terreno") %> 
-          <div class="botones">         
+        <% if (current_user.profile_id==2 and @receipt.state=='abierto' and @receipt.area=="Terreno")%>       
           <%= f.submit "Ajustar", :name => "ajustar_button" %>
-          <%= link_to 'Cancelar', :controller => "sessions", :action => "sup" %></div>     
+          <%= link_to 'Cancelar', :controller => "sessions", :action => "sup" %>   
         <% end %>
 
       <% elsif current_user.profile_id==3 %> <!--  Terreno -->

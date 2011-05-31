@@ -29,6 +29,7 @@ class Receipt < ActiveRecord::Base
   validates_numericality_of :monto17, :only_integer => true, :message => ": el valor debe ser un numero entero.", :allow_blank => true
   validates_numericality_of :monto18, :only_integer => true, :message => ": el valor debe ser un numero entero.", :allow_blank => true
   validates_numericality_of :adjust_val, :only_integer => true, :message => "(Ajuste): el valor debe ser un numero entero.", :allow_blank => true
+  validate :valida_rut
   validate :por_estado
   validate :anular
   validate :rechazar
@@ -215,9 +216,6 @@ end
         if (cont_rut=="")
           errors.add(:cont_rut, "(Rut de Contacto): debe ingresar un valor para en campo.")
         end 
-        if (cont_digit=="")
-          errors.add(:cont_digit, "(Digito Verificador de Contacto): debe ingresar un valor en este campo.")
-        end 
         if (cont_calle=="")
           errors.add(:cont_calle, "(Calle de Contacto): debe ingresar un valor para en campo.")
         end 
@@ -240,4 +238,38 @@ end
       #end
     end
   end
+
+  def valida_rut
+    if !cont_rut.blank? 
+      largo = cont_rut.length
+      if (largo<7 or largo>9)
+        errors.add(:cont_rut, "(Rut) : el valor ingresado no es valido.")
+      elsif cont_digit.blank?
+        errors.add(:cont_digit, "(Digito Verificador de Contacto): debe ingresar un valor en este campo.")
+      else
+        sum = 0
+        for i in 1..largo	
+          if i<7
+            val = cont_rut[largo-i].to_i * (i+1)
+          else
+            val = cont_rut[largo-i].to_i * (i-5)
+          end
+          sum = sum + val
+        end
+        res = 11 - (sum%11)
+        if res==11
+          digito = "0"
+        elsif res==10
+          digito = "K"
+        else
+          digito = res.to_s
+        end
+        if cont_digit.upcase!=digito
+          errors.add(:cont_rut, "(Rut)  : el valor ingresado no es valido.")
+        end
+      end
+    end
+  end
+
+
 end

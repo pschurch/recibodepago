@@ -15,20 +15,28 @@ class Ticket < ActiveRecord::Base
   validates_numericality_of :fee, :only_integer => true, :message => "(Honorarios) : el valor debe ser numerico. Ingrese 0 si no tiene valor."
   validates_numericality_of :shipping_costs, :only_integer => true, :message => "(Gastos Envio) : el valor debe ser numerico. Ingrese 0 si no tiene valor."
   validates_numericality_of :legal_costs, :only_integer => true, :message => "(Gastos Judiciales) : el valor debe ser numerico. Ingrese 0 si no tiene valor."
-  validates_numericality_of :adjust_val, :only_integer => true, :message => "(Ajuste) : el valor debe ser numerico. Ingrese 0 si no tiene valor."
+  validates_numericality_of :ad_capital, :only_integer => true, :message => "(Ajuste de Capital) : el valor debe ser numerico. Ingrese 0 si no tiene valor."
+  validates_numericality_of :ad_arrear_interest, :only_integer => true, :message => "(Ajuste de Interes Mora) : el valor debe ser numerico. Ingrese 0 si no tiene valor."
+  validates_numericality_of :ad_term_interest, :only_integer => true, :message => "(Ajuste de Interes Plazo) : el valor debe ser numerico. Ingrese 0 si no tiene valor."
+  validates_numericality_of :ad_fee, :only_integer => true, :message => "(Ajuste de Honorarios) : el valor debe ser numerico. Ingrese 0 si no tiene valor."
+  validates_numericality_of :ad_shipping_costs, :only_integer => true, :message => "(Ajuste de Gastos Envio) : el valor debe ser numerico. Ingrese 0 si no tiene valor."
+  validates_numericality_of :ad_legal_costs, :only_integer => true, :message => "(Ajuste de Gastos Judiciales) : el valor debe ser numerico. Ingrese 0 si no tiene valor."
   validate :valida_mod_sup
   validate :valida_mod_mgt
   validate :valida_ajustes
+
+ #------------------------------------------
  # validate :test
   def test
     if (adjust_val!=0 )
-      errors.add(:adjust_sup_des, "0")
+      errors.add(:adjust_sup_des, "ajuste no 0")
     end
     if (not adjust_val!=nil?)
-      errors.add(:adjust_sup_des, "nulo")
+      errors.add(:adjust_sup_des, "ajuste no nulo")
    end
-      errors.add(:adjust_sup_des, "test")
+      errors.add(:adjust_sup_des, "otro")
   end
+ #------------------------------------------
 
   def current_step  
     @current_step || "ticket_1"  
@@ -63,12 +71,13 @@ class Ticket < ActiveRecord::Base
   end
 
   def valida_ajustes
-    if (adjust_val!=0 and not adjust_val.nil? and state!="modificado")
-      if (profile==1) and (adjust_val< adjust_mx)
-        errors.add(:adjust_val, "(Ajuste) : El descuento no puede ser mayor que $"+adjust_mx.to_s+". Si requiere un valor distinto, ingrese valor 0 y solicite modificacion a Supervisor.")
-      elsif (profile==2) and (adjust_val< adjust_mx)
-        errors.add(:adjust_val, "(Ajuste) : El descuento no puede ser mayor que $"+adjust_mx.to_s+". Si requiere un valor distinto, ingrese valor 0 y solicite modificacion a Gerencia.")
-      elsif (adjust_val!=0) and (adjust_obs.nil? or adjust_obs.empty?)
+    austes=ad_capital + ad_fee + ad_arrear_interest + ad_term_interest + ad_shipping_costs + ad_legal_costs
+    if (austes!=0 and not austes.nil? and state!="modificado")
+      if (profile==1) and (austes< adjust_mx)
+        errors.add(:adjust_val, "(Ajustes) : El descuento, suma de todos los ajustes, no puede ser mayor que $"+adjust_mx.to_s+". Si requiere un valor distinto, ingrese valor 0 en los ajustes y solicite modificacion a Supervisor." )
+      elsif (profile==2) and (austes< adjust_mx)
+        errors.add(:adjust_val, "(Ajustes) : El descuento, suma de todos los ajustes, no puede ser mayor que $"+adjust_mx.to_s+". Si requiere un valor distinto, ingrese valor 0 en los ajustes y solicite modificacion a Gerencia.")
+      elsif (austes!=0) and (adjust_obs.nil? or adjust_obs.empty?)
         errors.add(:adjust_obs, "(Observacion ajuste) : debe ingresar un valor en este campo.")
       end
     end

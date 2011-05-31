@@ -129,14 +129,16 @@ class TicketsController < ApplicationController
           @ticket.save #if @ticket.all_valid? 
           @ticket.update_attribute 'group_id', current_user.group_id
           @ticket.update_attribute 'prepared_by', current_user.name
-          @total_pay =  @ticket.capital + @ticket.fee + @ticket.arrear_interest + @ticket.term_interest + @ticket.shipping_costs + @ticket.legal_costs 
+          @total_pay =  @ticket.capital + @ticket.fee + @ticket.arrear_interest + @ticket.term_interest + @ticket.shipping_costs + @ticket.legal_costs
+          @adjust_val = @ticket.ad_capital + @ticket.ad_fee + @ticket.ad_arrear_interest + @ticket.ad_term_interest + @ticket.ad_shipping_costs + @ticket.ad_legal_costs
           @ticket.update_attribute 'total_pay', @total_pay
+          @ticket.update_attribute 'adjust_val', @adjust_val
           if current_user.profile_id == 1 # perfil Ej Cobranza
             if (@ticket.state=='creado')
               if (@ticket.adjust_sup?)
                 @ticket.update_attribute 'state', "pms"
                 @ticket.update_attribute 'adjust_sup_time', Time.now
-                @ticket.update_attribute 'adjust_val', "0"
+                #@ticket.update_attribute 'adjust_val', "0"
                 @ticket.update_attribute 'adjust_obs', ""
               end
             end
@@ -144,12 +146,12 @@ class TicketsController < ApplicationController
             if (@ticket.adjust_mgt?)
               @ticket.update_attribute 'state', "pmg"
               @ticket.update_attribute 'adjust_mgt_time', Time.now
-              @ticket.update_attribute 'adjust_val', "0"
+              #@ticket.update_attribute 'adjust_val', "0"
               @ticket.update_attribute 'adjust_obs', ""
             end
           end
-          if @ticket.adjust_val!=0
-            @ticket.update_attribute 'new_total_pay', @total_pay + @ticket.adjust_val
+          if @adjust_val!=0
+            @ticket.update_attribute 'new_total_pay', @total_pay + @adjust_val
             @ticket.update_attribute 'adjust_time', Time.now
             @ticket.update_attribute 'adjust_by', current_user.name
           end
@@ -212,6 +214,8 @@ class TicketsController < ApplicationController
     if @ticket.update_attributes(params[:ticket])
       @total_pay =  @ticket.capital + @ticket.fee + @ticket.arrear_interest + @ticket.term_interest + @ticket.shipping_costs + @ticket.legal_costs
       @ticket.update_attribute 'total_pay', @total_pay
+      @adjust_val = @ticket.ad_capital + @ticket.ad_fee + @ticket.ad_arrear_interest + @ticket.ad_term_interest + @ticket.ad_shipping_costs + @ticket.ad_legal_costs
+      @ticket.update_attribute 'adjust_val', @adjust_val
       #----------- Ajustes ------------------------
       if current_user.profile_id == 1 # perfil Ej Cobranza
         if (@ticket.adjust_val!=0 )

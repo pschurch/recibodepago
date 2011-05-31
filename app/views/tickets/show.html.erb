@@ -4,10 +4,11 @@
   <% if notice == '1' %>
     <p id="notice">El Ticket N° <%= @ticket.id %> se ha creado exitosamente.</p>
   <% elsif not notice.nil? %><p id="notice"><%= notice %></p><% end %>
+
   <table class="display">
   <tr>
-    <td>Ticket N°:</td><td><div class="sh"><%= @ticket.id %></div></td>
-    <th rowspan=4 width=16></th>
+    <td>Ticket N°:</td><td><div class="num"><%= @ticket.id %></div></td>
+    <td>Recibo Pago N°:</td><td><div class="num"><%= @ticket.receipt_id %>&nbsp;</div></td>
     <td>Estado:</td><td><div class="n"><%= case @ticket.state 
           when "pms"
             "por modificar supervisor"
@@ -17,121 +18,188 @@
             @ticket.state
         end %></div></td>
   </tr>
+  </table>
+  <table class="display">
   <tr>
-    <td>Recibo Pago N°:</td><td><div class="sh"><%= @ticket.receipt_id %>&nbsp;</div></td>
-    <td>Rut:</td><td><div class="sh"><%= @ticket.rut %> - <%= @ticket.digit %></div></td>
-  </tr>
-  <tr>
-    <td width="140">Identificador:</td><td width="70"><div class="sh"><%= @ticket.cas_id %></div></td>
+    <td>Rut:</td>
+    <td><div class="sh"><%= @ticket.rut %> - <%= @ticket.digit %></div></td>
+    <th rowspan=3 width=30></th>
     <td width="130">Nombre:</td><td><div class="n"><%= @ticket.name %></div></td>
   </tr>
   <tr>
-    <td>Tipo de Cobranza:</td><td><div class="sh"><%= @ticket.collection_type_name %>&nbsp;</div></td>
-    <td>Mandante:</td><td><div class="n"><%= @ticket.principal_name %>&nbsp;</div></td>
+    <td width="140">Identificador:</td>
+    <td width="70"><div class="sh"><%= @ticket.cas_id %></div></td>
+    <td>Mandante:</td>
+    <td><div class="n"><%= @ticket.principal_name %>&nbsp;</div></td>
+  </tr>
+  <tr>
+    <td>Tipo de Cobranza:</td>
+    <td><div class="sh"><%= @ticket.collection_type_name %>&nbsp;</div></td>
+    <td>Producto:</td>
+    <td><div class="n"><%= @ticket.product_name %>&nbsp;</div></td>
   </tr>
   <tr>
     <td>Descripción del Pago:</td><td colspan="4"><div class="lg"><%= @ticket.payment_description %>&nbsp;</div></td>
   </tr>
+  </table>
+  <table class="display">
   <tr>
-    <td>Período de Pago:</td><td><div class="sh"><%= @ticket.pay_period %>&nbsp;</div></td>
-    <th rowspan=8 width=16></th>
-    <td>Producto:</td><td><div class="n"><%= @ticket.product_name %>&nbsp;</div></td>
+    <td>Período de Pago: </td>
+    <td>AT: </td>
+    <td><div class="sh"><%= @ticket.pay_period_at %>&nbsp;</div></td>
+    <th width=10></th>
+    <td>NO: </td>
+    <td><div class="sh"><%= @ticket.pay_period_no %>&nbsp;</div></td>
+    <th width=10></th>
+    <td>AD: </td>
+    <td><div class="sh"><%= @ticket.pay_period_ad %>&nbsp;</div></td>
+  </tr>
+  </table>
+
+  <table class="display">
+  <tr>
+    <td colspan="2"></td>
+    <td><center>Ajustes</center></td>
+    <td width=30></td>
+    <td colspan="2"><center>Producto</center></td>
   </tr>
   <tr>
-    <td>Capital:</td><td><div class="sh"><%= number_to_currency(@ticket.capital, :precision => 0, :delimiter => ".") %>&nbsp;</div></td>
+    <td>Capital:</td>
+    <td><div class="sh"><%= number_to_currency(@ticket.capital, :precision => 0, :delimiter => ".") %>&nbsp;</div></td>
+    <td><div class="sh"><%= number_to_currency(@ticket.ad_capital, :precision => 0, :delimiter => ".") %>&nbsp;</div></td>
+    <td></td>
     <td>Número:</td><td><div class="n"><%= @ticket.number %>&nbsp;</div></td>
   </tr>
   <tr>
-    <td>Interés Mora:</td><td><div class="sh"><%= number_to_currency(@ticket.arrear_interest, :precision => 0, :delimiter => ".") %>&nbsp;</div></td>
+    <td>Interés Mora:</td>
+    <td><div class="sh"><%= number_to_currency(@ticket.arrear_interest, :precision => 0, :delimiter => ".") %>&nbsp;</div></td>
+    <td><div class="sh"><%= number_to_currency(@ticket.ad_arrear_interest, :precision => 0, :delimiter => ".") %>&nbsp;</div></td>
+    <td></td>
     <td>Emisor:</td><td><div class="n"><%= @ticket.emitter %>&nbsp;</div></td>
   </tr>
   <tr>
-    <td>Interés Plazo:</td><td><div class="sh"><%= number_to_currency(@ticket.term_interest, :precision => 0, :delimiter => ".") %>&nbsp;</div></td>
+    <td>Interés Plazo:</td>
+    <td><div class="sh"><%= number_to_currency(@ticket.term_interest, :precision => 0, :delimiter => ".") %>&nbsp;</div></td>
+    <td><div class="sh"><%= number_to_currency(@ticket.ad_term_interest, :precision => 0, :delimiter => ".") %>&nbsp;</div></td>
+    <td></td>
     <td>Cuenta Corriente:</td><td><div class="n"><%= @ticket.ctacte %>&nbsp;</div></td>
   </tr>
   <tr>
-    <td>Honorarios:</td><td><div class="sh"><%= number_to_currency(@ticket.fee, :precision => 0, :delimiter => ".") %>&nbsp;</div></td>
-    <td>Vencimiento:</td><td><div class="sh"><%= @ticket.expir_date.strftime("%d/%m/%Y") unless @ticket.expir_date.nil? %>&nbsp;</div></td>
+    <td>Honorarios:</td>
+    <td><div class="sh"><%= number_to_currency(@ticket.fee, :precision => 0, :delimiter => ".") %>&nbsp;</div></td>
+    <td><div class="sh"><%= number_to_currency(@ticket.ad_fee, :precision => 0, :delimiter => ".") %>&nbsp;</div></td>
+    <td></td>
+    <td>Vencimiento:</td>
+    <td><div class="sh"><%= @ticket.expir_date.strftime("%d/%m/%Y") unless @ticket.expir_date.nil? %>&nbsp;</div></td>
   </tr>
   <tr>
-    <td>Gastos Envío:</td><td><div class="sh"><%= number_to_currency(@ticket.shipping_costs, :precision => 0, :delimiter => ".") %>&nbsp;</div></td>
+    <td>Gastos Envío:</td>
+    <td><div class="sh"><%= number_to_currency(@ticket.shipping_costs, :precision => 0, :delimiter => ".") %>&nbsp;</div></td>
+    <td><div class="sh"><%= number_to_currency(@ticket.ad_shipping_costs, :precision => 0, :delimiter => ".") %>&nbsp;</div></td>
+    <td></td>
     <td>Boleta N°: </td><td><div class="n"><%= @ticket.ballot %>&nbsp;</div></td>
   </tr>
   <tr>
-    <td>Gastos Judiciales:</td><td><div class="sh"><%= number_to_currency(@ticket.legal_costs, :precision => 0, :delimiter => ".") %>&nbsp;</div></td>
+    <td>Gastos Judiciales:</td>
+    <td><div class="sh"><%= number_to_currency(@ticket.legal_costs, :precision => 0, :delimiter => ".") %>&nbsp;</div></td>
+    <td><div class="sh"><%= number_to_currency(@ticket.ad_legal_costs, :precision => 0, :delimiter => ".") %>&nbsp;</div></td>
+    <td></td>
     <td>Cuota:</td><td><div class="sh"><%= @ticket.quota_num %>
     <% if not @ticket.total_q.empty? %> de <%= @ticket.total_q %><% end %>&nbsp;</div></td>
   </tr>
   <tr>
-    <td>Total a Pagar:</td><td><div class="sh"><%= number_to_currency(@ticket.total_pay, :precision => 0, :delimiter => ".") %></div></td>
+    <td>Total a Pagar:</td>
+    <td><div class="sh"><%= number_to_currency(@ticket.total_pay, :precision => 0, :delimiter => ".") %></div></td>
+    <td></td>
+  <% if @ticket.adjust_val!=0%>
+     <td colspan="2">Ajustado por:</td>
+     <td><div class="n"><%= @ticket.adjust_by %>&nbsp;</div></td>
+  <% end %>
   </tr>
-  <% if @ticket.adjust_val!=0 %><tr>
-      <td>Ajuste:</td><td class="ro"><div class="sh">
-        <%= number_to_currency( @ticket.adjust_val, :precision => 0, :delimiter => ".") %>
-      </div></td>
-      <td></td>
-      <td>Obs. ajuste:</td><td class="ro"><div class="n"><%= @ticket.adjust_obs %>&nbsp;</div></td>
-  </tr><% end %>
-  <% if @ticket.adjust_trr_val!=0 %><tr>
-      <td>Ajuste terreno:</td>
-      <td class="ro"><div class="sh"><%= number_to_currency( @ticket.adjust_trr_val, :precision => 0, :delimiter => ".") %>&nbsp;</div></td>
-      <td></td>
-      <td>Obs. ajuste:</td><td class="ro"><div class="n"><%= @ticket.adjust_trr_obs %>&nbsp;</div></td>
-  </tr><% end %>
-  <% if @ticket.adjust_val!=0 or @ticket.adjust_trr_val!=0 %><tr>
-      <td>Nuevo Total a Pagar:</td><td><div class="sh"><%= number_to_currency(@ticket.new_total_pay, :precision => 0, :delimiter => ".") %></div></td>
-    </tr>
-    <tr>
-      <td>Fecha ajuste:</td>
-      <td><div class="sh"><% if not @ticket.adjust_time.nil? %><%= @ticket.adjust_time.strftime("%d/%m/%Y") %><% end %>&nbsp;</div></td>
-      <td></td>
-      <td>Ajustado por:</td>
-      <td><div class="n"><%= @ticket.adjust_by %>&nbsp;</div></td>
-  </tr><% end %>
+  <% if @ticket.adjust_val!=0%>
+   <tr>
+    <td>Total Ajustes:</td>
+    <td><div class="sh"><%= number_to_currency(@ticket.adjust_val, :precision => 0, :delimiter => ".") %>&nbsp;</div></td>
+    <td></td>
+    <td colspan="2">Fecha ajustes:</td>
+    <td><div class="sh"><% if not @ticket.adjust_time.nil? %><%= @ticket.adjust_time.strftime("%d/%m/%Y") %><% end %>&nbsp;</div></td>
+   </tr>
+   <tr>
+    <td>Nuevo Total a Pagar:</td>
+    <td><div class="sh"><%= number_to_currency(@ticket.new_total_pay, :precision => 0, :delimiter => ".") %></div></td>
+    <td></td>
+    <td colspan="2">Observación ajustes:</td>
+    <td class="ro"><div class="nh"><%= @ticket.adjust_obs %>&nbsp;</div></td>
+   </tr>
+  <% end %>
+  </table>
+
+  <div class="nbsp"></div>
+  <table class="display">
+  <tr>
+    <td>Fecha pago deuda:</td>
+    <td><div class="sh"><%= @ticket.date_pay.strftime("%d/%m/%Y") %>&nbsp;</div></td>
+    <td>Preparado por:</td>
+    <td><div class="n"><%= @ticket.prepared_by%>&nbsp;</div></td>
+  </tr>
   </table>
 
   <table class="display">
-  <tr><th height="10"></th></tr>
   <tr>
-    <td>Fecha pago deuda:</td><td colspan="3"><div class="sh"><%= @ticket.date_pay.strftime("%d/%m/%Y") %>&nbsp;</div></td>
+    <td width="210">Entrega documento a deudor:</td>
+    <td width="50"><div class="sn"><% if @ticket.doc_delivery %>Sí<% else %>No<% end %></div></td>
+    <td></td>
   </tr>
-  <tr>
-    <td>Preparado por:</td><td colspan="3"><div class="n"><%= @ticket.prepared_by%>&nbsp;</div></td>
-  </tr>
-  <tr>
-    <td>Entrega documento a deudor:</td>
-    <td colspan="3"><div class="sn"><% if @ticket.doc_delivery %>Sí<% else %>No<% end %></div></td>
-  </tr>
-  <tr><th height="10"></th></tr>
-  <tr>
-    <td>Solicita modificación a Supervisor:</td>
-    <td colspan="3"><div class="sn"><% if @ticket.adjust_sup %>Sí<% else %>No<% end %></div></td>
-  </tr>
-  <% if @ticket.adjust_sup %>
-    <tr>
-      <td>Descripción de la modificación solicitada:</td>
-      <td colspan="3"><div class="lmh"><%= @ticket.adjust_sup_des %></div></td>
-    </tr>
+  </table>
+
+  <hr>
+  <div class="subtit">
+    Solicitud de Modificaciones:
+  </div>
+  <table class="display">
+  <% if not @ticket.adjust_sup %>
+   <tr>
+     <td width="210">Solicita modificación a Supervisor:</td>
+     <td width="50"><div class="sn">No</div></td>
+     <td></td>
+   </tr>
+   </table>
+  <% else %>
+   <tr>
+     <td width="210">Solicita modificación a Supervisor:</td>
+     <td width="50"><div class="sn">Sí</div></td>
+     <td width="20"></td>
+   </tr>
+   <tr>
+     <td>Descripción de la modificación solicitada a Supervisor:</td>
+     <td><div class="lmh"><%= @ticket.adjust_sup_des %></div></td>
+   </tr>
+   </table>
+
+   <table class="display">
     <tr>
       <td>Fecha solicitud modificación:</td><td><div class="sh"><%= @ticket.adjust_sup_time.strftime("%d/%m/%Y") %></div></td>
       <td>Hora solicitud modificación:</td><td><div class="sh"><%= @ticket.adjust_sup_time.strftime("%H:%M") %> hrs.</div></td>
     <tr>
+  </table>
   <% end %>
 
+
+  <table class="display">
   <% if current_user.profile_id==2 or current_user.profile_id==4 %> <!-- Supervisor o Tesoreria -->
     <% if @ticket.adjust_mgt %>
       <tr>
-        <td>Solicita modificación a Gerencia:</td>
+        <td width="210">Solicita modificación a Gerencia:</td>
         <td colspan=3><div class="sn"><% if @ticket.adjust_mgt %>Sí<% else %>No<% end %></div></td>
       </tr>
       <tr>
-        <td>Descripción de la modificación solicitada:</td>
+        <td>Descripción de la modificación solicitada a Gerencia:</td>
         <td colspan="4"><div class="lmh"><%= @ticket.adjust_mgt_des %></div></td>
       </tr>
       <tr>
-        <td>Fecha solicitud:</td>
+        <td>Fecha solicitud modificación:</td>
         <td><div class="sh"><%= @ticket.adjust_mgt_time.strftime("%d/%m/%Y") unless @ticket.adjust_mgt_time.nil? %>&nbsp;</div></td><td></td>
-        <td>Hora solicitud:</td>
+        <td>Hora solicitud modificación:</td>
         <td><div class="sh"><%= @ticket.adjust_mgt_time.strftime("%H:%M") unless @ticket.adjust_mgt_time.nil? %> hrs.&nbsp;</div></td>
       <tr>
     <% end %>
@@ -147,9 +215,9 @@
         <td colspan="4"><div class="lmh"><%= @ticket.adjust_mgt_des %></div></td>
       </tr>
       <tr>
-        <td>Fecha solicitud:</td><td><div class="sh"><%= @ticket.adjust_mgt_time.strftime("%d/%m/%Y") %></div></td>
+        <td>Fecha solicitud modificación:</td><td><div class="sh"><%= @ticket.adjust_mgt_time.strftime("%d/%m/%Y") %></div></td>
         <td></td>
-        <td>Hora solicitud:</td><td><div class="sh"><%= @ticket.adjust_mgt_time.strftime("%H:%M") %> hrs.</div></td>
+        <td>Hora solicitud modificación:</td><td><div class="sh"><%= @ticket.adjust_mgt_time.strftime("%H:%M") %> hrs.</div></td>
       <tr>
     <% end %>
   <% end %>
@@ -179,11 +247,11 @@
   <% elsif current_user.profile_id==2 %>  <!-- Supervisor -->  
     <div class="botones">
       <%= link_to 'Editar', edit_ticket_path(@ticket) if @ticket.state=='creado' or @ticket.state=='pms'%> 
-      <%= link_to 'Anular el Ticket', :controller => "tickets", :action => "ntc", :acc => '1', :id => @ticket.id unless @ticket.state=="anulado"%> 
+      <%= link_to 'Anular el Ticket', :controller => "tickets", :action => "ntc", :acc => '1', :id => @ticket.id if @ticket.state!="anulado" and @ticket.receipt_id.nil?%> 
     </div>
   <% elsif current_user.profile_id==6 %>  <!-- Gerencia -->  
     <div class="botones">
-      <%= link_to 'Anular el Ticket', :controller => "tickets", :action => "ntc", :acc => '1', :id => @ticket.id unless @ticket.state=="anulado"%> 
+      <%= link_to 'Anular el Ticket', :controller => "tickets", :action => "ntc", :acc => '1', :id => @ticket.id if @ticket.state!="anulado" and @ticket.receipt_id.nil?%> 
     </div>
   <% end %>
 

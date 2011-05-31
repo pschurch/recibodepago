@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110525141954) do
+ActiveRecord::Schema.define(:version => 20110530222649) do
 
   create_table "assignments", :force => true do |t|
     t.string   "state"
@@ -377,7 +377,6 @@ ActiveRecord::Schema.define(:version => 20110525141954) do
     t.string   "collection_type_name"
     t.text     "payment_description"
     t.integer  "capital",              :default => 0
-    t.string   "pay_period"
     t.integer  "arrear_interest",      :default => 0
     t.integer  "term_interest",        :default => 0
     t.integer  "fee",                  :default => 0
@@ -410,10 +409,17 @@ ActiveRecord::Schema.define(:version => 20110525141954) do
     t.integer  "new_total_pay"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "adjust_val",           :default => 0
-    t.integer  "adjust_trr_val",       :default => 0
-    t.text     "adjust_trr_obs"
     t.integer  "profile"
+    t.integer  "pay_period_at"
+    t.integer  "pay_period_no"
+    t.integer  "pay_period_ad"
+    t.integer  "ad_capital",           :default => 0
+    t.integer  "ad_arrear_interest",   :default => 0
+    t.integer  "ad_term_interest",     :default => 0
+    t.integer  "ad_fee",               :default => 0
+    t.integer  "ad_shipping_costs",    :default => 0
+    t.integer  "ad_legal_costs",       :default => 0
+    t.integer  "adjust_val",           :default => 0
   end
 
   create_table "users", :force => true do |t|

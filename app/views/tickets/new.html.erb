@@ -3,19 +3,18 @@
 <%= form_for(@ticket) do |f| %>
   <%= render "shared/error_messages", :target => @ticket, :text => "el Ticket" %>  
   <%= render "#{@ticket.current_step}", :f=> f %>
+  <div class="botones">
   <% if @caso.nil? %> 
-    <div class="botones"><%= f.submit "Continuar", :name => "next_button" unless @ticket.last_step?%></div>  
-    <div class="botones"><%= f.submit "Grabar", :name => "rec_button" unless @ticket.first_step?%></div>
+    <%= f.submit "Continuar", :name => "next_button" unless @ticket.last_step?%>  
+    <%= f.submit "Grabar", :name => "rec_button" unless @ticket.first_step?%>
+    <%= link_to 'Cancelar', :controller => "sessions", :action => "ejc" if (current_user.profile_id==1 and @ticket.last_step?)%> 
+    <%= link_to 'Cancelar', :controller => "sessions", :action => "sup" if (current_user.profile_id==2 and @ticket.last_step?)%> 
   <% else %>
-    <div class="botones">
-      <%= f.submit "Grabar", :name => "rec_button"%>
-      <% if current_user.profile_id==1 %> <!-- Ejecutivo de Cobranza -->
-        <%= link_to 'Cancelar', :controller => "sessions", :action => "ejc" %> 
-      <% elsif current_user.profile_id==2 %> <!-- Supervisor -->
-        <%= link_to 'Cancelar', :controller => "sessions", :action => "sup" %> 
-      <% end %>
-    </div>
+    <%= f.submit "Grabar", :name => "rec_button"%>
+    <%= link_to 'Cancelar', :controller => "sessions", :action => "ejc" if current_user.profile_id==1%> 
+    <%= link_to 'Cancelar', :controller => "sessions", :action => "sup" if current_user.profile_id==2%> 
   <% end %>
+  </div>
 <% end %>
 </td></tr></table>
 </div>

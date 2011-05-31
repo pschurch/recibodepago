@@ -6,12 +6,12 @@
   <tr>
     <td width="130">Recibo de Pago N°:</td><td class="ro"><div class="sh"><%= @receipt.id %></div></td>
     <th rowspan=20 width=16></th>
-    <td width="110">Estado:</td><td class="ro"><div class="n"><%= @receipt.state %></div></td>
+    <td width="100">Estado:</td><td class="ro"><div class="n"><%= @receipt.state %></div></td>
   </tr>
   </table>
   <hr>
 
-  <% @tickets.each do |a| %><table class="display"><%= render "tickets", :a => a %><% end %>
+  <% @tickets.each do |a| %><%= render "tickets", :a => a, :clase=>"display" %><% end %>
 
   <table class="display">
   <tr>

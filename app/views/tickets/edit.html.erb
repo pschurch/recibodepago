@@ -11,7 +11,8 @@
       <%= link_to 'Anular el Ticket', :controller => "tickets", :action => "ntc", :acc => '1', :id => @tid %> 
       <%= link_to 'Cancelar', :controller => "sessions", :action => "ejc" %>     
     <% elsif current_user.profile_id==2 %> <!-- Supervisor -->
-      <%= f.submit "Modificar Ticket", :name => "rec_button" unless @ticket.state!='pms'%>
+      <%= f.submit "Modificar Ticket", :name => "rec_button" if @ticket.state=='pms'%>
+      <%= f.submit "Grabar", :name => "rec_button" if @ticket.state=='creado'%>
       <%= link_to 'Anular el Ticket', :controller => "tickets", :action => "ntc", :acc => '1', :id => @tid %> 
       <%= link_to 'Cancelar', :controller => "sessions", :action => "sup" %> 
     <% elsif current_user.profile_id==6 %> <!-- Gerencia -->
