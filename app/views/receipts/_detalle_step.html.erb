@@ -11,7 +11,7 @@
     <td>Total a Pagar:</td><td class="ro"><div class="sh"><%= number_to_currency(@total_rp, :precision => 0, :delimiter => ".") %></div></td>
   </tr>
   <tr>
-    <td width="130">Fecha de Pago:</td><td><div class="n"><%= f.date_select :date_r, :order => [:day, :month, :year] %></div></td>
+    <td width="130">Fecha de Pago:</td><td class="ro"><div class="n"><%= @fecha_pago.strftime("%d/%m/%Y") %></div></td>
     <td width="110"></td><td></td>
   </tr>
   <tr>

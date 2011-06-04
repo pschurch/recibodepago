@@ -38,6 +38,10 @@ div.botones a:hover { background: rgb(229,179,90); text-decoration: none;}
 div.botones a:active { border: 1px inset #000;}
 div.botones input {  padding: 4px 8px; text-decoration: none; font-weight: bold;  color: #222; font-size: 12px; border: 1px outset #CCC;  background: rgb(255,199,100);	}
 
+div.nbsp {height: 18px;} 
+div.subtit {margin-top:6px; margin-bottom: 6px; font-size: 14px; font-weight: bold;}
+div.obs, div.obs li {font-size:12px; }
+div.impt {font-size:14px; color: rgb(172,0,0); margin:12px;}
 
 /*div.botones {margin-top: 10px; padding: 15px; background: #FFDC9E; text-align: center; }
 div.botones a {margin: 7px; padding: 4px 8px; text-decoration: none; color: #222; font-size: 13px;
@@ -49,11 +53,7 @@ div.botones input { margin: 7px; padding: 4px 8px; text-decoration: none; font-w
 div.actions { text-align: center;}
 div.actions input { margin: 7px; margin-top:20px; padding: 4px 8px; text-decoration: none; font-weight: bold;  color: #222; font-size: 12px; border: 1px outset #CCC;  background: rgb(255,199,100);	}
 td div.actions input { margin-top:8px;}
-
 */
-
-div.nbsp {height: 18px;} 
-div.subtit {margin-top:6px; margin-bottom: 6px; font-size: 14px; font-weight: bold;}
 
 ul { list-style-type: square; margin-left: 60px; font-size: 15px;  }
 a { color: #AC0000; font-weight: bold; text-decoration: none;}
@@ -105,13 +105,15 @@ div.l104 { width: 104px;}
 div.l210 { width: 210px;}
 div.l240  { width: 240px; }
 div.l260 { width: 260px;}
+div.l300 { width: 300px;}
+div.l484 { width: 484px;}
+
 div.n  { width: 240px; }
 div.nh  { width: 240px;  height:40px}
 div.lg { width: 484px;}
 div.lgh {width: 484px; height:40px} 
 div.lmh {width: 405px; height:40px}
 div.nh  { width: 240px; height:40px}
-div.obs, div.obs li {font-size:12px; }
 
 /* print */
 table.info { margin:0 auto; border-collapse: collapse; border:0px; width:100%}

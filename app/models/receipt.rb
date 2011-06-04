@@ -29,7 +29,7 @@ class Receipt < ActiveRecord::Base
   validates_numericality_of :monto17, :only_integer => true, :message => ": el valor debe ser un numero entero.", :allow_blank => true
   validates_numericality_of :monto18, :only_integer => true, :message => ": el valor debe ser un numero entero.", :allow_blank => true
   validates_numericality_of :adjust_val, :only_integer => true, :message => "(Ajuste): el valor debe ser un numero entero.", :allow_blank => true
-  validate :valida_rut
+#  validate :valida_rut
   validate :por_estado
   validate :anular
   validate :rechazar
@@ -86,12 +86,16 @@ end
   def por_estado
     # Cuadre del detalle de pago -----------------------------------
     # estado "", Flujo 1 Completo / 
-    # estado abierto, Flujo 2 por Completar, button != n2
-    # Profile=3  area=Terreno  estado abierto, button != n2 
-    # Profile=3  area=Terreno  estado recibido rechazo,  
-    if(state=="" and payment_flow_id==1) or 
-      (state=="abierto" and payment_flow_id==2 and button!="n2") or 
-      (profile==3 and area=="Terreno" and (state=="recibido rechazo" or (state=="abierto" and button!="n2"))) 
+    # estado abierto, Profile 1
+    # estado abierto, Profile 3, button!= n2
+    # estado recibido rechazo,  Profile 1, r_type 1, button!=n1 
+    # estado recibido rechazo,  Profile 2, r_type 4, button!=n3 
+    # estado recibido rechazo,  Profile 3, r_type 4, button!=n3 
+    if ((state=="" and payment_flow_id==1) or 
+       (state=="abierto" and profile==1) or
+       (state=="abierto" and profile==3 and button!="n2") or
+       (state=="recibido rechazo" and profile==1 and button!="n1" and rejection_type_id==1) or
+       (state=="recibido rechazo" and (profile==3 or profile==2) and button!="n3" and rejection_type_id==4) )
 
         total = 0
         if (not monto1.nil?) 

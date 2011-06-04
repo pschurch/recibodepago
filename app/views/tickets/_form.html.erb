@@ -2,7 +2,7 @@
   <tr>
     <td>Ticket N°:</td><td class="ro"><div class="num"><%= @ticket.id %></div></td>
     <td>Recibo Pago N°:</td><td class="ro"><div class="num"><%= @ticket.receipt_id %>&nbsp;</div></td>
-    <td>Estado:</td><td class="ro"><div class="n"><%= case @ticket.state 
+    <td>Estado:</td><td class="ro"><div class="l240"><%= case @ticket.state 
           when "pms"
             "por modificar supervisor"
           when "pmg"
@@ -12,27 +12,30 @@
         end %></div></td>
   </tr>
   </table>
+
+<% if @ticket.receipt_id.nil? %>
   <table class="formulario">
   <tr>
     <td>Rut:</td>
       <% if @ticket.assignment_id.nil? %>
       <td><%= f.text_field :rut, :size => "10"%> - <%= f.text_field :digit, :size => "1"%>
-      <% else %><td class="ro"><div class="sh"><%= @ticket.rut %>-<%= @ticket.digit %></div><% end %></td>
+      <% else %><td class="ro"><div class="l104"><%= @ticket.rut %>-<%= @ticket.digit %></div><% end %></td>
     <th rowspan=3 width=30></th>
-    <td width="100">Nombre:</td><td><%= f.text_field :name, :size => "30"%></td>
+    <td width="100">Nombre:</td>
+    <td><%= f.text_field :name, :size => "30"%></td>
   </tr>
   <tr>
     <td width="140">Identificador:</td>
       <% if @ticket.assignment_id.nil? %><td><%= f.text_field :cas_id, :size => "14"%>
-      <% else %><td class="ro"><div class="sh"><%= @ticket.cas_id %></div><% end %></td>
+      <% else %><td class="ro"><div class="l104"><%= @ticket.cas_id %></div><% end %></td>
     <td>Mandante:</td>
-    <td class="ro"><div class="n"><%= @ticket.principal_name %></div></td>
+    <td class="ro"><div class="l240"><%= @ticket.principal_name %></div></td>
   </tr>
   <tr>
     <td>Tipo de Cobranza:</td>
-    <td class="ro"><div class="sh"><%= @ticket.collection_type_name %>&nbsp;</div></td>
+    <td class="ro"><div class="l104"><%= @ticket.collection_type_name %>&nbsp;</div></td>
     <td>Producto:</td>
-    <td class="ro"><div class="n"><%= @ticket.product_name %>&nbsp;</div></td>
+    <td class="ro"><div class="l240"><%= @ticket.product_name %>&nbsp;</div></td>
   </tr>
   <tr>
     <td>Descripción del Pago:</td><td colspan="4"><%= f.text_area :payment_description, :size => "65x1" %></td>
@@ -51,7 +54,6 @@
     <td><%= f.text_field :pay_period_ad, :size => "8" %></td>
   </tr>
   </table>
-
   <table class="formulario">
   <tr>
     <td colspan="2"></td>
@@ -75,7 +77,7 @@
     <% if @ticket.assignment_id.nil? %>
       <%= f.collection_select :emitter, Emitter.where('state = true').order('name ASC'), :name, :name, options ={:prompt => "- Seleccione -"} %>
     <% else %>
-      <%= f.text_field :emitter, :size => "35" %>
+      <%= f.text_field :emitter, :size => "30" %>
     <% end %></td>
   </tr>
   <tr>
@@ -87,7 +89,7 @@
   </tr>
   <tr>
     <td>Honorarios:</td>
-    <% if current_user.profile_id==1 %>
+    <% if current_user.profile_id==11 %> <!-- CAMBIAR: valor 1 --> 
       <td class="ro"><%= f.text_field :fee, :size => "8", :readonly => true, :value => @ticket.fee %></td>
     <% else %> 
       <td><%= f.text_field :fee, :size => "8"%></td>
@@ -120,7 +122,6 @@
     <td>Observación ajustes:</td><td><%= f.text_area :adjust_obs , :size => "65x1"%></td>
   </tr>
   </table>
-
   <div class="nbsp"></div>
   <table class="formulario">
   <tr>
@@ -130,7 +131,7 @@
          :start_year => Time.now.year, 
          :end_year => (Time.now + 1.years).year }%></td>
     <td>Preparado por:</td>
-    <td class="ro"><div class="n"><%= @ticket.prepared_by %></div></td>
+    <td class="ro"><div class="l240"><%= @ticket.prepared_by %></div></td>
   </tr>
   </table>
 
@@ -142,6 +143,123 @@
   </tr>
   </table>
 
+<%else%>
+  <table class="formulario">
+  <tr>
+    <td>Rut:</td>
+    <td class="ro"><div class="l104"><%= @ticket.rut %>-<%= @ticket.digit %></div></td>
+    <th rowspan=3 width=30></th>
+    <td width="100">Nombre:</td>
+    <td class="ro"><div class="l240"><%= @ticket.name %></td>
+  </tr>
+  <tr>
+    <td width="140">Identificador:</td>
+    <td class="ro"><div class="l104"><%= @ticket.cas_id %></div></td>
+    <td>Mandante:</td>
+    <td class="ro"><div class="l240"><%= @ticket.principal_name %></div></td>
+  </tr>
+  <tr>
+    <td>Tipo de Cobranza:</td>
+    <td class="ro"><div class="l104"><%= @ticket.collection_type_name %>&nbsp;</div></td>
+    <td>Producto:</td>
+    <td class="ro"><div class="l240"><%= @ticket.product_name %>&nbsp;</div></td>
+  </tr>
+  <tr>
+    <td>Descripción del Pago:</td>
+    <td colspan="4" class="ro"><div class="l484"><%= @ticket.payment_description %>&nbsp;</div></td>
+  </tr>
+  </table>
+  <table class="formulario">
+  <tr>
+    <td>Período de Pago: </td>
+    <td>AT: </td>
+    <td class="ro"><div class="l104"><%= @ticket.pay_period_at %>&nbsp;</div></td>
+    <th width=10></th>
+    <td>NO: </td>
+    <td class="ro"><div class="l104"><%= @ticket.pay_period_no %>&nbsp;</div></td>
+    <th width=10></th>
+    <td>AD: </td>
+    <td class="ro"><div class="l104"><%= @ticket.pay_period_ad %>&nbsp;</div></td>
+  </tr>
+  </table>
+  <table class="formulario">
+  <tr>
+    <td colspan="2"></td>
+    <td><center>Ajustes</center></td>
+    <td width=30></td>
+    <td colspan="2"><center>Producto</center></td>
+  </tr>
+  <tr>
+    <td>Capital:</td>
+    <td class="ro"><div class="l90"><%= @ticket.capital %>&nbsp;</div></td>
+    <td><%= f.text_field :ad_capital, :size => "8" %></td>
+    <td></td>
+    <td>Número:</td>
+    <td class="ro"><div class="l210"><%= @ticket.number %>&nbsp;</div></td>
+  </tr>
+  <tr>
+    <td>Interés Mora:</td>
+    <td class="ro"><div class="l90"><%= @ticket.arrear_interest %>&nbsp;</div></td>
+    <td><%= f.text_field :ad_arrear_interest, :size => "8" %></td>
+    <td></td>
+    <td>Emisor:</td><td class="ro"><div class="l210"><%= @ticket.emitter %>&nbsp;</div></td>
+  </tr>
+  <tr>
+    <td>Interés Plazo:</td>
+    <td class="ro"><div class="l90"><%= @ticket.term_interest %>&nbsp;</div></td>
+    <td><%= f.text_field :ad_term_interest, :size => "8" %></td>
+    <td></td>
+    <td>Cuenta Corriente:</td>
+    <td class="ro"><div class="l210"><%= @ticket.ctacte %>&nbsp;</div></td>
+  </tr>
+  <tr>
+    <td>Honorarios:</td>
+    <td class="ro"><div class="l90"><%= @ticket.fee %>&nbsp;</div></td>
+    <td><%= f.text_field :ad_fee, :size => "8" %></td>
+    <td></td>
+    <td>Vencimiento:</td>
+    <td class="ro"><div class="l90"><%= @ticket.expir_date.strftime("%d/%m/%Y") unless @ticket.expir_date.nil? %>&nbsp;</div></td>
+  </tr>
+  <tr>
+    <td>Gastos Envío:</td>
+    <td class="ro"><div class="l90"><%= @ticket.shipping_costs %>&nbsp;</div></td>
+    <td><%= f.text_field :ad_shipping_costs, :size => "8" %></td>
+    <td></td>
+    <td>Boleta N°: </td><td class="ro"><div class="l210"><%= @ticket.ballot %>&nbsp;</div></td>
+  </tr>
+  <tr>
+    <td>Gastos Judiciales:</td>
+    <td class="ro"><div class="l90"><%= @ticket.legal_costs %>&nbsp;</div></td>
+    <td><%= f.text_field :ad_legal_costs, :size => "8" %></td>
+    <td></td>
+    <td>Cuota:</td><td class="ro"><div class="l210"><%= @ticket.quota_num %><% if not @ticket.total_q.empty? %> de <%= @ticket.total_q %><% end %>&nbsp;</div></td>
+  </tr>
+  </table>
+  <table class="formulario">
+  <tr>
+    <td>Observación ajustes:</td><td><%= f.text_area :adjust_obs , :size => "65x1"%></td>
+  </tr>
+  </table>
+  <div class="nbsp"></div>
+  <table class="formulario">
+  <tr>
+    <td>Fecha pago deuda:</td>
+    <td class="ro"><div class="l104"><%= @ticket.date_pay.strftime("%d/%m/%Y") %>&nbsp;</div></td>
+    <td>Preparado por:</td>
+    <td class="ro"><div class="l240"><%= @ticket.prepared_by %></div></td>
+  </tr>
+  </table>
+  <table class="formulario">
+  <tr>
+    <td width="210">Entrega documento a deudor:</td>
+    <td  class="ro" width="50"><div class="l30"><% if @ticket.doc_delivery %>Sí<% else %>No<% end %></div></td>
+    <td></td>
+  </tr>
+  </table>
+
+<%end%>
+
+<% if @ticket.receipt_id.nil? %>
   <hr>
   <div class="subtit">
     Solicitud de Modificaciones:
@@ -170,9 +288,9 @@
   <table class="formulario">
     <tr>
       <td>Fecha solicitud modificación:</td>
-      <td class="ro"><div class="sh"><%= @ticket.adjust_sup_time.strftime("%d/%m/%Y") %></div></td>
+      <td class="ro"><div class="l104"><%= @ticket.adjust_sup_time.strftime("%d/%m/%Y") %></div></td>
       <td>Hora solicitud modificación:</td>
-      <td class="ro"><div class="sh"><%= @ticket.adjust_sup_time.strftime("%H:%M") %> hrs.</div></td>
+      <td class="ro"><div class="l104"><%= @ticket.adjust_sup_time.strftime("%H:%M") %> hrs.</div></td>
     </tr>
   </table>
   <% end %>
@@ -203,13 +321,13 @@
   <table class="formulario">
     <tr>
       <td>Fecha solicitud modificación:</td>
-      <td class="ro"><div class="sh"><%= @ticket.adjust_mgt_time.strftime("%d/%m/%Y") unless @ticket.adjust_mgt_time.nil?%></div></td>
+      <td class="ro"><div class="l104"><%= @ticket.adjust_mgt_time.strftime("%d/%m/%Y") unless @ticket.adjust_mgt_time.nil?%></div></td>
       <td>Hora solicitud modificación:</td>
-      <td class="ro"><div class="sh"><%= @ticket.adjust_mgt_time.strftime("%H:%M") unless @ticket.adjust_mgt_time.nil?%> hrs.</div></td>
+      <td class="ro"><div class="l104"><%= @ticket.adjust_mgt_time.strftime("%H:%M") unless @ticket.adjust_mgt_time.nil?%> hrs.</div></td>
     </tr>
   </table>
   <% end %>
   <!-------  Fin Modificacion de Gerencia ------->
-
+<%end%>
 
 

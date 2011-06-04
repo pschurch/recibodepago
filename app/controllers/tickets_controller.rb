@@ -228,6 +228,23 @@ class TicketsController < ApplicationController
             @ticket.update_attribute 'new_total_pay', @total_pay + @ticket.adjust_val
             @ticket.update_attribute 'adjust_time', Time.now
             @ticket.update_attribute 'adjust_by', current_user.name
+            # -------- Ajuste en terreno:
+            if (@ticket.state=='recibo creado')
+              @rp_id = @ticket.receipt_id
+              @receipt = Receipt.where("id=?", @rp_id)
+              @tickets_all = Ticket.where("receipt_id=?", @rp_id)
+              @total_rp = 0
+              @tickets_all.each do |a|
+                if a.new_total_pay.nil?
+                  @total_rp = @total_rp + a.total_pay
+                else
+                  @total_rp = @total_rp + a.new_total_pay
+                end
+              end
+              @receipt.each do |r|
+                r.update_attribute 'total_pay', @total_rp
+              end
+            end 
         end
       elsif current_user.profile_id == 6 # perfil Gerencia
         if (@ticket.adjust_val!=0 )

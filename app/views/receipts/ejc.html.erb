@@ -89,11 +89,15 @@
     <% end %>
   <% end %>
 
-  <% if @accion=="rend" %>
+  <% if @accion!="recht" %>
    <div class="nbsp"></div>
    <hr>
    <div class="subtit">
-     Recibos de Pago rendidos a Supervisor, en espera de su recepci&oacute;n:
+    <% if @accion=="rend" %>
+      Recibos de Pago rendidos a Supervisor, en espera de su recepci&oacute;n:
+    <% elsif @accion=="rech" %>
+      Recibos de Pago para Aceptar/Corregir:
+    <% end %>    
    </div>
    <table class="index">
      <tr>
@@ -105,6 +109,7 @@
        <th>Producto</th>
        <th>Fecha Pago</th>
        <th>Total Pagado</th>
+       <% if @accion=="rech"%><th>Fecha Rechazo</th><th></th><% end %>
      </tr>
      <% if @receipts2.empty?%> 
        <tr><td colspan=10>No se han encontrado Recibos de Pago rendidos en espera de recepcion.</td></tr>
@@ -132,6 +137,10 @@
            <td><%= @tickets.first.product_name %></td>
            <td><%= receipt.date_r.strftime("%d/%m/%Y") %></td>
            <td><%= number_to_currency(receipt.total_pay, :precision => 0, :delimiter => ".") %></td>
+           <% if @accion=="rech"%>
+             <td><%= receipt.rech_date.strftime("%d/%m/%Y") %></td>
+             <td><%= link_to 'Ver', receipt%></td>
+           <% end %>     
          </tr>
        <% end %>
        <% if (not @receipts2.empty?) and @accion=="rend"%> 

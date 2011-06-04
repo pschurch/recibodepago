@@ -17,6 +17,7 @@
     <th><%= sortable "product_id", "Producto" %></th>
     <th><%= sortable "cas_id", "Identificador" %></th>
     <th><%= sortable "capital" %></th>
+    <th><%= sortable "date_pay", "Fecha pago" %></th>
     <th><%= sortable "prepared_by", "Preparado por" %></th>
     <th>Selecc</th>
     <th colspan=2></th>
@@ -33,6 +34,7 @@
     <td><%= ticket.product.name %></td>
     <td><%= ticket.cas_id %></td>
     <td><%= number_to_currency(ticket.capital, :precision => 0, :delimiter => ".") %></td>
+    <td><%= ticket.date_pay.strftime("%d/%m/%Y") %></td>
     <td><%= ticket.prepared_by %></td>
     <td><%= check_box_tag "ticket_ids[]", ticket.id %></td>
     <td><%= link_to 'Ver', ticket %></td>

@@ -10,11 +10,16 @@
 
 <div class="botones">
 <% if current_user.profile_id==1 %> <!-- Ejecutivo de Cobranza -->
+
+  <%= link_to "Recibos de Pago Rechazados por Supervisor", :controller => "receipts", :action => "ejc", :ac => "rech" if @rp.state=="solicita anulacion" and @rp.subarea=="Supervisor"%>
+
+
   <%= link_to 'Página Principal', :controller => "sessions", :action => "ejc" %> 
 
 <% elsif current_user.profile_id==2 %> <!-- Supervisor -->
   <%= link_to 'Recepcionar Recibos de Pago', :controller => "receipts", :action => "sup", :ac => "recpc" if @rp.subarea=="Cobranza"%> 
   <%= link_to "Recepcionar Recibos de Pago", :controller => "receipts", :action => "sup", :ac => "recpt"  if @rp.subarea=="Terreno"%>
+  <%= link_to "Recibos de Pago para Anular", :controller => "supervisor", :action => "sanular" if @rp.state=="anulado"%>
 
   <%= link_to 'Página Principal', :controller => "sessions", :action => "sup" %> 
 <% elsif current_user.profile_id==3 %> <!-- Terreno -->

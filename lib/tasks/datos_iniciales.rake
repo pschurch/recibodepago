@@ -4,7 +4,10 @@ namespace :db do
   task :datosiniciales => :environment do
     perfilesinit
     payagreementinit
-    singrupoinit
+    gruposinit
+    productosinit
+    tipos_cobranzainit
+    formas_pagoinit
     usuarioadmininit
     comunasinit
     emisoresinit
@@ -44,13 +47,49 @@ def payagreementinit
   PaymentAgreement.create!(:name => "Deposito en CtaCte Mandante", :description => "El Deudor realiza el deposito en la cuenta corriente del Mandante", :state => 1, :payment_flow_id=> 1)
 end
 
-def singrupoinit
-  Group.create!(:name => "SinGrupo",
+def gruposinit
+  Group.create!(:name => "Sin Grupo",
                 :description => "No tiene asociado ningun Grupo en particular")
+  Group.create!(:name => "Grupo 1",
+                :description => "Presunta / Arreglo Flujo / DNP")
+  Group.create!(:name => "Grupo 4",
+                :description => "Cobranza Prejudicial documentos Valorados")
+end
+
+def productosinit
+  Product.create!(:name => "Presunta", :state => 1)
+  Product.create!(:name => "Arreglo de Flujo", :state => 1)
+  Product.create!(:name => "DNP", :state => 1)
+  Product.create!(:name => "Cheque", :state => 1)
+  Product.create!(:name => "Pagare", :state => 1)
+  Product.create!(:name => "Aviso", :state => 1)
+  Product.create!(:name => "Boleta", :state => 1)
+  Product.create!(:name => "Factura Administrativa", :state => 1)
+  Product.create!(:name => "Letra", :state => 1)
+  Product.create!(:name => "Cuota", :state => 1)
+end
+
+def tipos_cobranzainit
+  CollectionType.create!(:name => "Administrativa", :state => 1)
+  CollectionType.create!(:name => "Prejudicial", :state => 1)
+  CollectionType.create!(:name => "Judicial", :state => 0)
+  CollectionType.create!(:name => "Castigo", :state => 0)
+end
+
+def formas_pagoinit
+  PaymentForm.create!(:name => "Efectivo", :emitter=>0, :num_doc=>0, :description=>"", :state => 1)
+  PaymentForm.create!(:name => "Cheque al dia", :emitter=>1, :num_doc=>1, :description=>"", :state => 1)
+  PaymentForm.create!(:name => "Cheque a fecha", :emitter=>1, :num_doc=>1, :description=>"", :state => 1)
+  PaymentForm.create!(:name => "Deposito", :emitter=>1, :num_doc=>1, :description=>"", :state => 1)
+  PaymentForm.create!(:name => "Bono", :emitter=>1, :num_doc=>0, :description=>"", :state => 1)
+  PaymentForm.create!(:name => "Pagare", :emitter=>1, :num_doc=>1, :description=>"", :state => 1)
+  PaymentForm.create!(:name => "Transf. TM / Cliente", :emitter=>1, :num_doc=>1, :description=>"Transferencias TM / Transferencias al cliente", :state => 1)
+  PaymentForm.create!(:name => "Vale Vista ", :emitter=>1, :num_doc=>1, :description=>"", :state => 1)
 end
 
 def usuarioadmininit
   User.create!(:user => "admin", :profile_id => 7, :group_id => 1, :name => "admin", :password => "admin", :password_confirmation => "admin", :telephone => "NA")
+  User.create!(:user => "designer", :profile_id => 7, :group_id => 1, :name => "designer", :password =>"designer", :password_confirmation => "designer", :telephone => "NA")
 end
 
 def comunasinit
@@ -144,10 +183,10 @@ def parameterinit
 end
 
 def rejectioninit
-  RejectionType.create!(:name => "Datos de Contacto incorrectos", :area => "Terreno", :state => 1)
-  RejectionType.create!(:name => "Falta de documentacion adjunta", :area => "Terreno", :state => 1)
-  RejectionType.create!(:name => "Monto Total Pagado de conjunto de Recibos de Pago no corresponde", :area => "", :state => 1)
-  RejectionType.create!(:name => "Falta/Incorrecto Detalle de Pago", :area => "All", :state => 1)
+  RejectionType.create!(:name => "Datos de Contacto incorrectos", :area => "Terreno", :description =>"Faltan datos para realizar un contacto", :state => 1)
+  RejectionType.create!(:name => "Falta de documentacion adjunta", :area => "Terreno", :description =>"Falta de documentos que deben acompanar al recibo", :state => 1)
+  RejectionType.create!(:name => "Monto Total Pagado de conjunto de Recibos de Pago no corresponde", :description =>"",  :area => "", :state => 1)
+  RejectionType.create!(:name => "Falta/Incorrecto Detalle de Pago", :area => "All", :description =>"", :state => 1)
 end
    
 def cancellationinit

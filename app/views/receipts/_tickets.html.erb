@@ -97,7 +97,7 @@
     <td class="ro"><div class="l90"><%= number_to_currency(a.total_pay, :precision => 0, :delimiter => ".") %></div></td>
     <td width="20"></td>
   <% if a.adjust_val!=0%>
-     <td colspan="2">Ajustado por:</td>
+     <td>Ajustado por:</td>
      <td class="ro" colspan="2"><div class="l240"><%= a.adjust_by %>&nbsp;</div></td>
   <% end %>
   </tr>
@@ -106,15 +106,15 @@
      <td>Total Ajustes:</td>
      <td class="ro"><div class="l90"><%= number_to_currency( a.adjust_val, :precision => 0, :delimiter => ".") %></div></td>
      <td></td>
-     <td colspan="2">Fecha ajustes:</td>
+     <td>Fecha ajustes:</td>
      <td class="ro" colspan="2"><div class="l90"><% if not a.adjust_time.nil? %><%= a.adjust_time.strftime("%d/%m/%Y") %><% end %>&nbsp;</div></td>
     </tr>
     <tr>
      <td>Nuevo Total a Pagar:</td>
      <td class="ro"><div class="l90"><%= number_to_currency(a.new_total_pay, :precision => 0, :delimiter => ".") %></div></td>
      <td></td>
-     <td colspan="2">Observación ajustes:</td>
-     <td class="ro" colspan="2"><div class="l240"><%= a.adjust_obs %>&nbsp;</div></td>
+     <td>Observación ajustes:</td>
+     <td class="ro" colspan="2"><div class="l300"><%= a.adjust_obs %>&nbsp;</div></td>
     </tr>
   <% end %>
   </table>

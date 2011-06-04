@@ -46,6 +46,11 @@ class SupervisorController < ApplicationController
     @receipts = Receipt.where("group_id=?", current_user.group_id).where("state='solicita anulacion'")
   end
 
+  def sajustar
+    @titulo = "Ajustar Recibos de Pago en Terreno"
+    @receipts = Receipt.where("group_id=?", current_user.group_id).where("state='abierto'").where("area='Terreno'")
+  end
+
   def sr_envio_terreno
     @titulo = "Enviar Recibos de Pago a Terreno"
     @receipts = Receipt.where("group_id=?", current_user.group_id).where("state='solicita gestion terreno'")

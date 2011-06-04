@@ -23,48 +23,50 @@
     <td>Nombre: <%= a.name %></td>
     <td>Rut: <%= a.rut %> - <%= a.digit %></td>
     <td>Ticket N°: <%= a.id %></td>
+    <td>Boleta: <%= a.ballot %></td>
   </tr>
   <tr>
-    <td colspan="3">Recaudado por cuenta de: <%= a.principal_name %></td>
+    <td colspan="4">Recaudado por cuenta de: <%= a.principal_name %></td>
   </tr>
   <tr>
-    <td colspan="3">Descripción del Pago: <%= a.payment_description %></td>
+    <td colspan="4">Descripción del Pago: <%= a.payment_description %></td>
   </tr>
   <tr>
-    <td width="34%">Producto: <%= a.product_name %></td>
-    <td width="33%">N°: <%= a.number %></td>
-    <td width="33%">Cuota: <%= a.quota_num %><% if not a.total_q.empty? %> de <%= a.total_q %><% end %></td>
+    <td>Producto: <%= a.product_name %></td>
+    <td colspan=2>N°: <%= a.number %></td>
+    <td>Cuota: <%= a.quota_num %><% if not a.total_q.empty? %> de <%= a.total_q %><% end %></td>
   </tr>
   <tr>
     <td>Emisor: <%= a.emitter %></td>
-    <td>Cta Cte: <%= a.ctacte %></td>
+    <td colspan=2>Cta Cte: <%= a.ctacte %></td>
     <td>Vencimiento: <%= a.expir_date.strftime("%d/%m/%Y") unless a.expir_date.nil? %></td>
   </tr>
+  </table>  
+  <div class="nbsp"></div>
+  <table class="print">
   <tr>
     <td>Capital: <%= number_to_currency(a.capital, :precision => 0, :delimiter => ".") %></td>
-    <td>Interés Mora: <%= number_to_currency(a.arrear_interest, :precision => 0, :delimiter => ".") %></td>
-    <td>Interés Plazo: <%= number_to_currency(a.term_interest, :precision => 0, :delimiter => ".") %></td>
-  </tr>
-  <tr>
+    <td>Ajuste Capital: <%= number_to_currency(a.ad_capital, :precision => 0, :delimiter => ".") %></td>
     <td>Honorarios: <%= number_to_currency(a.fee, :precision => 0, :delimiter => ".") %></td>
-    <td>Gtos. Envío: <%= number_to_currency(a.shipping_costs, :precision => 0, :delimiter => ".") %></td>
-    <td>Gtos. Judiciales: <%= number_to_currency(a.legal_costs, :precision => 0, :delimiter => ".") %></td>
+    <td>Ajuste Honorarios: <%= number_to_currency(a.ad_fee, :precision => 0, :delimiter => ".") %></td>
   </tr>
   <tr>
-    <td>Boleta: <%= a.ballot %></td>
-    <% if not a.adjust_val.nil? %>
-      <td>Ajuste: <%= number_to_currency(a.adjust_val, :precision => 0, :delimiter => ".") %></td>
-    <% else %>
-      <td>&nbsp;</td>
-    <% end %>
-    <td>Monto a Pagar: <%= number_to_currency(a.total_pay, :precision => 0, :delimiter => ".") %></td>
+    <td>Interés Mora: <%= number_to_currency(a.arrear_interest, :precision => 0, :delimiter => ".") %></td>
+    <td>Ajuste Interés Mora: <%= number_to_currency(a.ad_arrear_interest, :precision => 0, :delimiter => ".") %></td>
+    <td>Gtos. Envío: <%= number_to_currency(a.shipping_costs, :precision => 0, :delimiter => ".") %></td>
+    <td>Ajuste Gtos. Envío: <%= number_to_currency(a.ad_shipping_costs, :precision => 0, :delimiter => ".") %></td>
   </tr>
+  <tr>
+    <td>Interés Plazo: <%= number_to_currency(a.term_interest, :precision => 0, :delimiter => ".") %></td>
+    <td>Ajuste Interés Plazo: <%= number_to_currency(a.ad_term_interest, :precision => 0, :delimiter => ".") %></td>
+    <td>Gtos. Judiciales: <%= number_to_currency(a.legal_costs, :precision => 0, :delimiter => ".") %></td>
+    <td>Ajuste Gtos. Judiciales: <%= number_to_currency(a.ad_legal_costs, :precision => 0, :delimiter => ".") %></td>
+  </tr>
+  <tr>
+    <td colspan="2">Monto a Pagar: <%= number_to_currency(a.total_pay, :precision => 0, :delimiter => ".") %></td>
   <% if not a.adjust_val.nil? %>
-    <tr>
-      <td colspan="2"></td>
-      <td>Nuevo Total a Pagar: <%= number_to_currency(a.total_pay, :precision => 0, :delimiter => ".") %></td>
-    </tr>
-  <% end %>
+    <td colspan="2">Nuevo Total a Pagar: <%= number_to_currency(a.total_pay, :precision => 0, :delimiter => ".") %></td>  <% end %>
+  </tr>
   </table>
   <div class="nbsp"></div>
 <% end %>

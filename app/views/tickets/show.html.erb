@@ -60,76 +60,80 @@
   <tr>
     <td colspan="2"></td>
     <td><center>Ajustes</center></td>
-    <td width=30></td>
+    <td width=20></td>
     <td colspan="2"><center>Producto</center></td>
   </tr>
   <tr>
-    <td>Capital:</td>
-    <td><div class="sh"><%= number_to_currency(@ticket.capital, :precision => 0, :delimiter => ".") %>&nbsp;</div></td>
-    <td><div class="sh"><%= number_to_currency(@ticket.ad_capital, :precision => 0, :delimiter => ".") %>&nbsp;</div></td>
+    <td width="124">Capital:</td>
+    <td><div class="l90"><%= number_to_currency(@ticket.capital, :precision => 0, :delimiter => ".") %>&nbsp;</div></td>
+    <td><div class="l90"><%= number_to_currency(@ticket.ad_capital, :precision => 0, :delimiter => ".") %>&nbsp;</div></td>
     <td></td>
     <td>Número:</td><td><div class="n"><%= @ticket.number %>&nbsp;</div></td>
   </tr>
   <tr>
     <td>Interés Mora:</td>
-    <td><div class="sh"><%= number_to_currency(@ticket.arrear_interest, :precision => 0, :delimiter => ".") %>&nbsp;</div></td>
-    <td><div class="sh"><%= number_to_currency(@ticket.ad_arrear_interest, :precision => 0, :delimiter => ".") %>&nbsp;</div></td>
+    <td><div class="l90"><%= number_to_currency(@ticket.arrear_interest, :precision => 0, :delimiter => ".") %>&nbsp;</div></td>
+    <td><div class="l90"><%= number_to_currency(@ticket.ad_arrear_interest, :precision => 0, :delimiter => ".") %>&nbsp;</div></td>
     <td></td>
     <td>Emisor:</td><td><div class="n"><%= @ticket.emitter %>&nbsp;</div></td>
   </tr>
   <tr>
     <td>Interés Plazo:</td>
-    <td><div class="sh"><%= number_to_currency(@ticket.term_interest, :precision => 0, :delimiter => ".") %>&nbsp;</div></td>
-    <td><div class="sh"><%= number_to_currency(@ticket.ad_term_interest, :precision => 0, :delimiter => ".") %>&nbsp;</div></td>
+    <td><div class="l90"><%= number_to_currency(@ticket.term_interest, :precision => 0, :delimiter => ".") %>&nbsp;</div></td>
+    <td><div class="l90"><%= number_to_currency(@ticket.ad_term_interest, :precision => 0, :delimiter => ".") %>&nbsp;</div></td>
     <td></td>
     <td>Cuenta Corriente:</td><td><div class="n"><%= @ticket.ctacte %>&nbsp;</div></td>
   </tr>
   <tr>
     <td>Honorarios:</td>
-    <td><div class="sh"><%= number_to_currency(@ticket.fee, :precision => 0, :delimiter => ".") %>&nbsp;</div></td>
-    <td><div class="sh"><%= number_to_currency(@ticket.ad_fee, :precision => 0, :delimiter => ".") %>&nbsp;</div></td>
+    <td><div class="l90"><%= number_to_currency(@ticket.fee, :precision => 0, :delimiter => ".") %>&nbsp;</div></td>
+    <td><div class="l90"><%= number_to_currency(@ticket.ad_fee, :precision => 0, :delimiter => ".") %>&nbsp;</div></td>
     <td></td>
     <td>Vencimiento:</td>
-    <td><div class="sh"><%= @ticket.expir_date.strftime("%d/%m/%Y") unless @ticket.expir_date.nil? %>&nbsp;</div></td>
+    <td><div class="l90"><%= @ticket.expir_date.strftime("%d/%m/%Y") unless @ticket.expir_date.nil? %>&nbsp;</div></td>
   </tr>
   <tr>
     <td>Gastos Envío:</td>
-    <td><div class="sh"><%= number_to_currency(@ticket.shipping_costs, :precision => 0, :delimiter => ".") %>&nbsp;</div></td>
-    <td><div class="sh"><%= number_to_currency(@ticket.ad_shipping_costs, :precision => 0, :delimiter => ".") %>&nbsp;</div></td>
+    <td><div class="l90"><%= number_to_currency(@ticket.shipping_costs, :precision => 0, :delimiter => ".") %>&nbsp;</div></td>
+    <td><div class="l90"><%= number_to_currency(@ticket.ad_shipping_costs, :precision => 0, :delimiter => ".") %>&nbsp;</div></td>
     <td></td>
     <td>Boleta N°: </td><td><div class="n"><%= @ticket.ballot %>&nbsp;</div></td>
   </tr>
   <tr>
     <td>Gastos Judiciales:</td>
-    <td><div class="sh"><%= number_to_currency(@ticket.legal_costs, :precision => 0, :delimiter => ".") %>&nbsp;</div></td>
-    <td><div class="sh"><%= number_to_currency(@ticket.ad_legal_costs, :precision => 0, :delimiter => ".") %>&nbsp;</div></td>
+    <td><div class="l90"><%= number_to_currency(@ticket.legal_costs, :precision => 0, :delimiter => ".") %>&nbsp;</div></td>
+    <td><div class="l90"><%= number_to_currency(@ticket.ad_legal_costs, :precision => 0, :delimiter => ".") %>&nbsp;</div></td>
     <td></td>
-    <td>Cuota:</td><td><div class="sh"><%= @ticket.quota_num %>
+    <td>Cuota:</td><td><div class="l90"><%= @ticket.quota_num %>
     <% if not @ticket.total_q.empty? %> de <%= @ticket.total_q %><% end %>&nbsp;</div></td>
   </tr>
+  </table>
+
+  <table class="display">
   <tr>
-    <td>Total a Pagar:</td>
-    <td><div class="sh"><%= number_to_currency(@ticket.total_pay, :precision => 0, :delimiter => ".") %></div></td>
-    <td></td>
+  <tr>
+    <td width="124">Total a Pagar:</td>
+    <td><div class="l90"><%= number_to_currency(@ticket.total_pay, :precision => 0, :delimiter => ".") %></div></td>
+    <td width="20"></td>
   <% if @ticket.adjust_val!=0%>
-     <td colspan="2">Ajustado por:</td>
+     <td>Ajustado por:</td>
      <td><div class="n"><%= @ticket.adjust_by %>&nbsp;</div></td>
   <% end %>
   </tr>
   <% if @ticket.adjust_val!=0%>
    <tr>
     <td>Total Ajustes:</td>
-    <td><div class="sh"><%= number_to_currency(@ticket.adjust_val, :precision => 0, :delimiter => ".") %>&nbsp;</div></td>
+    <td><div class="l90"><%= number_to_currency(@ticket.adjust_val, :precision => 0, :delimiter => ".") %>&nbsp;</div></td>
     <td></td>
-    <td colspan="2">Fecha ajustes:</td>
-    <td><div class="sh"><% if not @ticket.adjust_time.nil? %><%= @ticket.adjust_time.strftime("%d/%m/%Y") %><% end %>&nbsp;</div></td>
+    <td>Fecha ajustes:</td>
+    <td><div class="l90"><% if not @ticket.adjust_time.nil? %><%= @ticket.adjust_time.strftime("%d/%m/%Y") %><% end %>&nbsp;</div></td>
    </tr>
    <tr>
     <td>Nuevo Total a Pagar:</td>
-    <td><div class="sh"><%= number_to_currency(@ticket.new_total_pay, :precision => 0, :delimiter => ".") %></div></td>
+    <td><div class="l90"><%= number_to_currency(@ticket.new_total_pay, :precision => 0, :delimiter => ".") %></div></td>
     <td></td>
-    <td colspan="2">Observación ajustes:</td>
-    <td class="ro"><div class="nh"><%= @ticket.adjust_obs %>&nbsp;</div></td>
+    <td>Observación ajustes:</td>
+    <td class="ro"><div class="l300"><%= @ticket.adjust_obs %>&nbsp;</div></td>
    </tr>
   <% end %>
   </table>
@@ -138,7 +142,7 @@
   <table class="display">
   <tr>
     <td>Fecha pago deuda:</td>
-    <td><div class="sh"><%= @ticket.date_pay.strftime("%d/%m/%Y") %>&nbsp;</div></td>
+    <td><div class="l90"><%= @ticket.date_pay.strftime("%d/%m/%Y") %>&nbsp;</div></td>
     <td>Preparado por:</td>
     <td><div class="n"><%= @ticket.prepared_by%>&nbsp;</div></td>
   </tr>

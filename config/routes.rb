@@ -20,6 +20,7 @@ Recibodepago::Application.routes.draw do
   get "supervisor/stlist"
   get "supervisor/srlist"
   get "supervisor/sanular"
+  get "supervisor/sajustar"
 
   get "finance/ftlist"
   get "finance/frlist"

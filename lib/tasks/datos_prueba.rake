@@ -3,119 +3,89 @@ require 'faker'
 namespace :db do
   desc "Carga datos de Prueba."
   task :datosprueba => :environment do
-    productos
     mandantes 
     carteras
-    grupos
     cargrups
     usuarios
-    tipos_cobranza
-    formas_pago
     politicas_pago
-    field_user
+    field_user  # ejecutivos de Terreno
  end
 end
 
-def productos
-  Product.create!(:name => "Presunta", :state => 1)
-  Product.create!(:name => "Arreglo de Flujo", :state => 1)
-  Product.create!(:name => "Cheque", :state => 1)
-  Product.create!(:name => "Pagare", :state => 1)
-  Product.create!(:name => "Aviso", :state => 1)
-  Product.create!(:name => "Boleta", :state => 1)
-  Product.create!(:name => "Factura", :state => 1)
-  Product.create!(:name => "Letra", :state => 1)
-  Product.create!(:name => "Cuota", :state => 1)
-  Product.create!(:name => "Producto No Activo", :state => 0)
-end
-
 def mandantes
-  Principal.create!(:name => "Banmedica", :social_reason => "Banmedica S.A.", :rut => "99999999", :digit => "9", :contact => "Rodrigo Rodriguez", :telephone => "7654321", :email => "rr@test.com", :state => "1" )
-  Principal.create!(:name => "Vida Tres", :social_reason => "Vida Tres S.A.", :rut => "88888888", :digit => "8", :contact => "Gonzalo Gutierrez", :telephone => "9867545", :email => "gg@test.com", :state => "1" )
-  Principal.create!(:name => "Colmena", :social_reason => "Colmena S.A.", :rut => "77777777", :digit => "7", :contact => "Ramon Rosas", :telephone => "4563222", :email => "ramonr@test.com", :state => "1" )
-  Principal.create!(:name => "Paris", :social_reason => "Cencosud S.A.", :rut => "55555555", :digit => "5", :contact => "Rico McPato", :telephone => "4545333", :email => "ricomc@test.com", :state => "1" )
-  Principal.create!(:name => "Mandante No Activo", :social_reason => "Mandante no activo", :rut => "11111111", :digit => "1", :contact => "", :telephone => "", :email => "", :state => "0" )
+  Principal.create!(:name => "Banmedica", :social_reason => "Isapre Banmedica S.A.", :rut => "96572800", :digit => "7", :contact => "Jose Miguel Sarazibar", :telephone => "", :email => "", :state => "1" )
+  Principal.create!(:name => "VidaTres", :social_reason => "Isapre Vida Tres S.A.", :rut => "96502530", :digit => "8", :contact => "Jose Miguel Sarazibar", :telephone => "", :email => "", :state => "1" )
+  Principal.create!(:name => "CD", :social_reason => "Clinica Davila y Servicios Medicos S.A.", :rut => "96530470", :digit => "3", :contact => "Felipe Lopez", :telephone => "", :email => "", :state => "1" )
+  Principal.create!(:name => "CLC", :social_reason => "Clinica Las Condes S.A.", :rut => "93930000", :digit => "7", :contact => "Jaime Jana", :telephone => "", :email => "", :state => "1" )
 end
 
 def carteras
   Cartera.create!(:principal_id => 1, :product_id => 1, :state => 1)
   Cartera.create!(:principal_id => 1, :product_id => 2, :state => 1)
+  Cartera.create!(:principal_id => 1, :product_id => 3, :state => 1)
+  Cartera.create!(:principal_id => 1, :product_id => 4, :state => 1)
+  Cartera.create!(:principal_id => 2, :product_id => 1, :state => 1)
   Cartera.create!(:principal_id => 2, :product_id => 2, :state => 1)
+  Cartera.create!(:principal_id => 2, :product_id => 3, :state => 1)
   Cartera.create!(:principal_id => 2, :product_id => 4, :state => 1)
-  Cartera.create!(:principal_id => 3, :product_id => 3, :state => 1)
-  Cartera.create!(:principal_id => 3, :product_id => 6, :state => 1)
+  Cartera.create!(:principal_id => 3, :product_id => 4, :state => 1)
+  Cartera.create!(:principal_id => 3, :product_id => 5, :state => 1)
+  Cartera.create!(:principal_id => 3, :product_id => 8, :state => 1)
   Cartera.create!(:principal_id => 4, :product_id => 4, :state => 1)
-  Cartera.create!(:principal_id => 4, :product_id => 8, :state => 1)
-end
-
-def grupos
-  Group.create!(:name => "Grupo 1",
-                :description => "Banmedica y Vida Tres")
-  Group.create!(:name => "Grupo 2",
-                :description => "Colmena y Paris")
+  Cartera.create!(:principal_id => 4, :product_id => 5, :state => 1)
 end
 
 def cargrups
   Cargrup.create!(:group_id => 2, :cartera_id => 1)
   Cargrup.create!(:group_id => 2, :cartera_id => 2)
   Cargrup.create!(:group_id => 2, :cartera_id => 3)
-  Cargrup.create!(:group_id => 2, :cartera_id => 4)
-  Cargrup.create!(:group_id => 3, :cartera_id => 5)
-  Cargrup.create!(:group_id => 3, :cartera_id => 6)
+  Cargrup.create!(:group_id => 2, :cartera_id => 5)
+  Cargrup.create!(:group_id => 2, :cartera_id => 6)
+  Cargrup.create!(:group_id => 2, :cartera_id => 7)
+  Cargrup.create!(:group_id => 3, :cartera_id => 4)
   Cargrup.create!(:group_id => 3, :cartera_id => 8)
-end
-
-def usuarios
-  User.create!(:user => "ejecobranza1", :profile_id => 1, :group_id => 2, :name => "Ejecutivo de Cobranza Grupo 1", :password => "pass", :password_confirmation => "pass", :telephone => "3351122", :email => "ejecobranza1@techmill.cl")
-  User.create!(:user => "ejecobranza2", :profile_id => 1, :group_id => 3, :name => "Ejecutivo de Cobranza Grupo 2", :password => "pass", :password_confirmation => "pass", :telephone => "3352233", :email => "ejecobranza2@techmill.cl")
-  User.create!(:user => "supervisor1", :profile_id => 2, :group_id => 2, :name => "Supervisor Grupo 1", :password => "pass", :password_confirmation => "pass", :telephone => "3353344", :email => "supervisor1@techmill.cl")
-  User.create!(:user => "supervisor2", :profile_id => 2, :group_id => 3, :name => "Supervisor Grupo 2", :password => "pass", :password_confirmation => "pass", :telephone => "3354455", :email => "supervisor2@techmill.cl")
-  User.create!(:user => "jefeterreno", :profile_id => 3, :group_id => 1, :name => "Sr. Jefe de Terreno", :password => "pass", :password_confirmation => "pass", :telephone => "3355566", :email=> "jefeterreno@techmill.cl")
-  User.create!(:user => "tesoreria", :profile_id => 4, :group_id => 1, :name => "Sr. Tesoreria", :password => "pass", :password_confirmation => "pass", :telephone => "3356677", :email=> "tesoreria@techmill.cl")
-  User.create!(:user => "operador", :profile_id => 5, :group_id => 1, :name => "Sr. Operador", :password => "pass", :password_confirmation => "pass", :telephone => "3357788", :email=> "operador@techmill.cl")
-  User.create!(:user => "gerencia", :profile_id => 6, :group_id => 1, :name => "Sr. Gerencia", :password => "pass", :password_confirmation => "pass", :telephone => "3358899", :email=> "gerencia@techmill.cl")
-  User.create!(:user => "designer", :profile_id => 8, :group_id => 1, :name => "Sr. Designer", :password => "pass", :password_confirmation => "pass", :telephone => "NA")
-  User.create!(:user => "ejecobranza-na1", :profile_id => 1, :group_id => 2, :name => "Ejecutivo de Cobranza Grupo 1 No Activo", :password => "pass", :password_confirmation => "pass", :state => 0, :telephone => "NA")
-  User.create!(:user => "ejecobranza-na2", :profile_id => 1, :group_id => 3, :name => "Ejecutivo de Cobranza Grupo 2 No Activo", :password => "pass", :password_confirmation => "pass", :state => 0, :telephone => "NA")
-end
-
-def tipos_cobranza
-  CollectionType.create!(:name => "Administrativa")
-  CollectionType.create!(:name => "Prejudicial")
-  CollectionType.create!(:name => "Judicial")
-  CollectionType.create!(:name => "Castigo")
-end
-
-def formas_pago
-  PaymentForm.create!(:name => "Efectivo", :state => 1)
-  PaymentForm.create!(:name => "Cheque al dia", :state => 1)
-  PaymentForm.create!(:name => "Cheque a fecha", :state => 1)
-  PaymentForm.create!(:name => "Bono", :state => 1)
-  PaymentForm.create!(:name => "Pagare", :state => 1)
-  PaymentForm.create!(:name => "Deposito", :state => 1)
-  PaymentForm.create!(:name => "Forma no activa", :state => 0)
+  Cargrup.create!(:group_id => 3, :cartera_id => 9)
+  Cargrup.create!(:group_id => 3, :cartera_id => 10)
+  Cargrup.create!(:group_id => 3, :cartera_id => 12)
+  Cargrup.create!(:group_id => 3, :cartera_id => 13)
 end
 
 def politicas_pago
-  PaymentPolicy.create!(:principal_id => 1, :product_id => 1, :collection_type_id => 1, :arrear_interest => 1000, :term_interest => 1000, :fee => 1000, :legal_costs => 0, :installment => 1, :state => 1)
-  PaymentPolicy.create!(:principal_id => 1, :product_id => 2, :collection_type_id => 1, :arrear_interest => 500, :term_interest => 500, :fee => 1000, :legal_costs => 0, :installment => 1, :state => 1)
-  PaymentPolicy.create!(:principal_id => 2, :product_id => 2, :collection_type_id => 2, :arrear_interest => 1000, :term_interest => 1000, :fee => 1000, :legal_costs => 0, :installment => 0, :state => 1)
-  PaymentPolicy.create!(:principal_id => 2, :product_id => 4, :collection_type_id => 2, :arrear_interest => 1000, :term_interest => 1000, :fee => 1000, :legal_costs => 0, :installment => 0, :state => 1)
-  PaymentPolicy.create!(:principal_id => 3, :product_id => 3, :collection_type_id => 3, :arrear_interest => 1000, :term_interest => 1000, :fee => 1000, :legal_costs => 0, :installment => 1, :state => 1)
-  PaymentPolicy.create!(:principal_id => 3, :product_id => 6, :collection_type_id => 3, :arrear_interest => 1000, :term_interest => 1000, :fee => 1000, :legal_costs => 0, :installment => 1, :state => 1)
-  PaymentPolicy.create!(:principal_id => 4, :product_id => 4, :collection_type_id => 4, :arrear_interest => 1000, :term_interest => 1000, :fee => 1000, :legal_costs => 1, :installment => 0, :state => 1)
-  PaymentPolicy.create!(:principal_id => 4, :product_id => 8, :collection_type_id => 4, :arrear_interest => 1000, :term_interest => 1000, :fee => 1000, :legal_costs => 1, :installment => 0, :state => 1)
+  PaymentPolicy.create!(:principal_id => 1, :product_id => 1, :collection_type_id => 1, :arrear_interest => 0, :term_interest => 0, :fee => 0, :legal_costs => 0, :installment => 0, :state => 1)
+  PaymentPolicy.create!(:principal_id => 1, :product_id => 2, :collection_type_id => 1, :arrear_interest => 0, :term_interest => 0, :fee => 0, :legal_costs => 0, :installment => 0, :state => 1)
+  PaymentPolicy.create!(:principal_id => 1, :product_id => 3, :collection_type_id => 1, :arrear_interest => 0, :term_interest => 0, :fee => 0, :legal_costs => 1, :installment => 1, :state => 1)
+  PaymentPolicy.create!(:principal_id => 1, :product_id => 4, :collection_type_id => 2, :arrear_interest => 0, :term_interest => 0, :fee => 0, :legal_costs => 1, :installment => 1, :state => 1)
+  PaymentPolicy.create!(:principal_id => 2, :product_id => 1, :collection_type_id => 1, :arrear_interest => 0, :term_interest => 0, :fee => 0, :legal_costs => 0, :installment => 0, :state => 1)
+  PaymentPolicy.create!(:principal_id => 2, :product_id => 2, :collection_type_id => 1, :arrear_interest => 0, :term_interest => 0, :fee => 0, :legal_costs => 0, :installment => 0, :state => 1)
+  PaymentPolicy.create!(:principal_id => 2, :product_id => 3, :collection_type_id => 1, :arrear_interest => 0, :term_interest => 0, :fee => 0, :legal_costs => 1, :installment => 1, :state => 1)
+  PaymentPolicy.create!(:principal_id => 2, :product_id => 4, :collection_type_id => 2, :arrear_interest => 0, :term_interest => 0, :fee => 0, :legal_costs => 1, :installment => 1, :state => 1)
+  PaymentPolicy.create!(:principal_id => 3, :product_id => 5, :collection_type_id => 2, :arrear_interest => 0, :term_interest => 0, :fee => 0, :legal_costs => 0, :installment => 0, :state => 1)
+  PaymentPolicy.create!(:principal_id => 3, :product_id => 4, :collection_type_id => 2, :arrear_interest => 0, :term_interest => 0, :fee => 0, :legal_costs => 0, :installment => 0, :state => 1)
+  PaymentPolicy.create!(:principal_id => 4, :product_id => 5, :collection_type_id => 2, :arrear_interest => 0, :term_interest => 0, :fee => 0, :legal_costs => 0, :installment => 0, :state => 1)
+  PaymentPolicy.create!(:principal_id => 4, :product_id => 4, :collection_type_id => 2, :arrear_interest => 0, :term_interest => 0, :fee => 0, :legal_costs => 0, :installment => 0, :state => 1)
+end
+
+def usuarios
+  User.create!(:user => "mtorrealba", :profile_id => 1, :group_id => 2, :name => "Mary Torrealba", :password => "mtorrealba", :password_confirmation => "mtorrealba", :telephone => "8408508", :email => "")
+  User.create!(:user => "jzepeda", :profile_id => 1, :group_id => 2, :name => "Jeannete Zepeda", :password => "jzepeda", :password_confirmation => "jzepeda", :telephone => "8408521", :email => "")
+  User.create!(:user => "ptobar", :profile_id => 1, :group_id => 3, :name => "Paulina Tobar", :password => "ptobar", :password_confirmation => "ptobar", :telephone => "8408504", :email => "")
+  User.create!(:user => "pgarcia", :profile_id => 1, :group_id => 3, :name => "Paola Garcia", :password => "pgarcia", :password_confirmation => "pgarcia", :telephone => "8408505", :email => "")
+  User.create!(:user => "respinoza", :profile_id => 2, :group_id => 2, :name => "Raquel Espinoza", :password => "respinoza", :password_confirmation => "respinoza", :telephone => "8408507", :email => "")
+  User.create!(:user => "rburdiles", :profile_id => 2, :group_id => 3, :name => "Rodrigo Burdiles", :password => "rburdiles", :password_confirmation => "rburdiles", :telephone => "8408503", :email => "")
+  User.create!(:user => "fvaldivia", :profile_id => 3, :group_id => 1, :name => "Freddy Valdivia", :password => "fvaldivia", :password_confirmation => "fvaldivia", :telephone => "8408516", :email => "")
+  User.create!(:user => "scaramori", :profile_id => 4, :group_id => 1, :name => "Silvia Caramori", :password => "scaramori", :password_confirmation => "scaramori", :telephone => "8408515", :email => "")
+  User.create!(:user => "kcontreras", :profile_id => 4, :group_id => 1, :name => "Karinna Contreras", :password => "kcontreras", :password_confirmation => "kcontreras", :telephone => "8408515", :email => "")
+  User.create!(:user => "elafuente", :profile_id => 6, :group_id => 1, :name => "Ernesto Lafuente", :password => "elafuente", :password_confirmation => "elafuente", :telephone => "8408514", :email => "")
+  User.create!(:user => "vdaroch", :profile_id => 6, :group_id => 1, :name => "Victor Daroch", :password => "vdaroch", :password_confirmation => "vdaroch", :telephone => "8408501", :email => "")
+  User.create!(:user => "fsalas", :profile_id => 5, :group_id => 1, :name => "Felipe Salas", :password => "fsalas", :password_confirmation => "fsalas", :telephone => "8408518", :email => "")
 end
 
 def field_user
-  15.times do |n|
-    num = (rand 9) + 1
-    r = num.to_s
-    rut = r+r+r+r+r+r+r+r
-    FieldUser.create!(:state => true,
-                       :name => Faker::Name.name,
-                       :rut => rut,
-                       :digit => r) 
-  end
+  FieldUser.create!(:state => true, :name => "Guillermo Vargas Carrasco", :rut => "9970895", :digit => "6") 
+  FieldUser.create!(:state => true, :name => "Mario Burdiles Manquehuil", :rut => "15335724", :digit => "2") 
+  FieldUser.create!(:state => true, :name => "Maria Pilar Martinez", :rut => "11055061", :digit => "8") 
+  FieldUser.create!(:state => true, :name => "Rene Hurtado Mendez", :rut => "9913753", :digit => "3") 
+  FieldUser.create!(:state => true, :name => "Farid Sarquis H", :rut => "16911378", :digit => "5") 
+  FieldUser.create!(:state => true, :name => "Patricia Ester Lopez Valladares", :rut => "11861912", :digit => "9") 
 end
 
