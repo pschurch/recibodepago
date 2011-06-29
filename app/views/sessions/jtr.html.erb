@@ -1,4 +1,12 @@
 <div class="seccion">
+
+<% if (not @rech.nil? and not @rech.empty?) %> 
+  <div id="alerta">
+    <h2>IMPORTANTE:</h2><ul>
+      <li>Existen Recibos de Pago Rechazados por Supervisores.</li></ul>
+  </div>
+<% end %>
+
   <ul>
     <li><%= link_to "Recibos de Pago para gestionar en Terreno", :controller => "terreno", :action => "trrecp" %></li>
     <li><%= link_to "Cerrar Recibos de Pago", :controller => "terreno", :action => "trcerr" %></li>

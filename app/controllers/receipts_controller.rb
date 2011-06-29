@@ -637,6 +637,7 @@ class ReceiptsController < ApplicationController
     @tickets = Ticket.find(session[:ticket_ids])
     @mandante = @tickets.first.principal_id
     @producto = @tickets.first.product_id
+    @tipo_cobranza = @tickets.first.collection_type_id
     @fecha_pago = @tickets.first.date_pay
     @receipt = Receipt.new(params[:receipt])  
     @receipt.current_step = session[:receipt_step]  
@@ -644,6 +645,23 @@ class ReceiptsController < ApplicationController
       @payment_agreement = a.name
       @payment_flow = a.payment_flow_id
     end 
+#----------
+      @formas  = Array.new
+      @pay_p = PaymentPolicy.where("principal_id =?", @mandante).where("product_id =?", @producto).where("collection_type_id =?", @tipo_cobranza)
+      if @pay_p.empty?
+        @payment_form_list = PaymentForm.where("state=true")
+        @payment_form_list.each do |pf|
+          @formas << pf.id
+        end
+
+      else
+        @ppid = @pay_p.first.id
+        @payment_form_list = PaymentFormsPaymentPolicies.where("payment_policy_id=?", @ppid)
+        @payment_form_list.each do |pf|
+          @formas << pf.payment_form_id
+        end
+      end
+#------------
     @total_rp = 0
     @tickets.each do |a|
       if a.new_total_pay.nil?
@@ -661,8 +679,8 @@ class ReceiptsController < ApplicationController
     if @receipt.new_record?  
       render :action => "new2"  
     else 
-      if (not session[:tickets].nil?) 
-        @total_paid = 0
+      @total_paid = 0
+      if @payment_flow==1 # if (not session[:tickets_ids].nil?) 
         @total_paid = (not @receipt.monto1.nil?) ? @total_paid + @receipt.monto1 : @total_paid
         @total_paid = (not @receipt.monto2.nil?) ? @total_paid + @receipt.monto2 : @total_paid
         @total_paid = (not @receipt.monto3.nil?) ? @total_paid + @receipt.monto3 : @total_paid
@@ -681,8 +699,8 @@ class ReceiptsController < ApplicationController
         @total_paid = (not @receipt.monto16.nil?) ? @total_paid + @receipt.monto16 : @total_paid
         @total_paid = (not @receipt.monto17.nil?) ? @total_paid + @receipt.monto17 : @total_paid
         @total_paid = (not @receipt.monto18.nil?) ? @total_paid + @receipt.monto18 : @total_paid
-        @receipt.update_attribute 'total_paid', @total_paid  
       end
+      @receipt.update_attribute 'total_paid', @total_paid  
       @receipt.update_attribute 'group_id', current_user.group_id
       @receipt.update_attribute 'principal_id', @mandante
       @receipt.update_attribute 'product_id', @producto
@@ -723,17 +741,32 @@ class ReceiptsController < ApplicationController
   def edit 
     @receipt = Receipt.find(params[:id])
     deny_access unless (@receipt.state!='cerrado') # No puede editarse un RP estado cerrado
-    @titulo = "Editar Recibo de Pago"
+    @titulo = "Editar Recibo de Pago1"
     @button = params[:button]
     @msg = params[:msg]
-  #  @valor = params[:valor]
     @tickets = Ticket.where("receipt_id=?", @receipt.id)
     @receipt.update_attribute 'profile', current_user.profile_id
+    @mandante = @tickets.first.principal_id
+    @producto = @tickets.first.product_id
+    @tipo_cobranza = @tickets.first.collection_type_id
+#----------
+      @formas  = Array.new
+      @pay_p = PaymentPolicy.where("principal_id =?", @mandante).where("product_id =?", @producto).where("collection_type_id =?", @tipo_cobranza)
+      if @pay_p.empty?
+        @payment_form_list = PaymentFormsPaymentPolicies.all
+      else
+        @ppid = @pay_p.first.id
+        @payment_form_list = PaymentFormsPaymentPolicies.where("payment_policy_id=?", @ppid)
+      end
+      @payment_form_list.each do |pf|
+        @formas << pf.payment_form_id
+      end
+#------------
   end
 
   # PUT /receipts/1
   def update
-    @titulo = "Editar Recibo de Pago"
+    @titulo = "Editar Recibo de Pago2"
     @receipt = Receipt.find(params[:id])
     @tickets = Ticket.where("receipt_id=?", @receipt.id)
     @button = params[:button]

@@ -89,7 +89,7 @@ end
 
 def usuarioadmininit
   User.create!(:user => "admin", :profile_id => 7, :group_id => 1, :name => "admin", :password => "admin", :password_confirmation => "admin", :telephone => "NA")
-  User.create!(:user => "designer", :profile_id => 7, :group_id => 1, :name => "designer", :password =>"designer", :password_confirmation => "designer", :telephone => "NA")
+  User.create!(:user => "designer", :profile_id => 8, :group_id => 1, :name => "designer", :password =>"designer", :password_confirmation => "designer", :telephone => "NA")
 end
 
 def comunasinit

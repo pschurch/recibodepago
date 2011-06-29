@@ -17,22 +17,22 @@ class SessionsController < ApplicationController
       sign_in user
       if user.profile_id == 1
         @perfil_name = "Ejecutivo de Cobranza"
-        render 'ejc'
+        redirect_to(:action => "ejc")
       elsif user.profile_id == 2
         @perfil_name = "Supervisor"
-        render 'sup'
+        redirect_to(:action => "sup")
       elsif user.profile_id == 3
         @perfil_name = "Jefe de Terreno"
-        render 'jtr'
+        redirect_to(:action => "jtr")
       elsif user.profile_id == 4
         @perfil_name = "Tesoreria"
-        render 'tsr'
+        redirect_to(:action => "tsr")
       elsif user.profile_id == 5
         @perfil_name = "Operaciones"
-        render 'opr'
+        redirect_to(:action => "opr")
       elsif user.profile_id == 6
         @perfil_name = "Gerencia"
-        render 'ger'
+        redirect_to(:action => "ger")
       elsif user.profile_id == 7
         @perfil_name = "Administrador"
         render 'adm'
@@ -48,12 +48,16 @@ class SessionsController < ApplicationController
 
   def ejc
     @perfil_name = "Ejecutivo de Cobranza"
+    @rechs = Receipt.where("state='rechazado'").where("area='Supervisor'").where("user_name=?", current_user.name)
+    @recht = Receipt.where("state='recibido rechazo'").where("area='Cobranza'").where("subarea='Terreno'").where("user_name=?", current_user.name)
   end
   def sup
     @perfil_name = "Supervisor"
+    @rech = Receipt.where("state='rechazado'").where("area='Tesoreria'").where("group_id=?", current_user.group_id)
   end
   def jtr
     @perfil_name = "Jefe de Terreno"
+    @rech = Receipt.where("state='rechazado'").where("area='Supervisor'")
   end
   def tsr
     @perfil_name = "Tesoreria"

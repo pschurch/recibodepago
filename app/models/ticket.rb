@@ -71,15 +71,66 @@ class Ticket < ActiveRecord::Base
   end
 
   def valida_ajustes
-    austes=ad_capital + ad_fee + ad_arrear_interest + ad_term_interest + ad_shipping_costs + ad_legal_costs
-    if (austes!=0 and not austes.nil? and state!="modificado")
-      if (profile==1) and (austes< adjust_mx)
-        errors.add(:adjust_val, "(Ajustes) : El descuento, suma de todos los ajustes, no puede ser mayor que $"+adjust_mx.to_s+". Si requiere un valor distinto, ingrese valor 0 en los ajustes y solicite modificacion a Supervisor." )
-      elsif (profile==2) and (austes< adjust_mx)
-        errors.add(:adjust_val, "(Ajustes) : El descuento, suma de todos los ajustes, no puede ser mayor que $"+adjust_mx.to_s+". Si requiere un valor distinto, ingrese valor 0 en los ajustes y solicite modificacion a Gerencia.")
-      elsif (austes!=0) and (adjust_obs.nil? or adjust_obs.empty?)
-        errors.add(:adjust_obs, "(Observacion ajuste) : debe ingresar un valor en este campo.")
+    err_aj = 0
+    if (ad_capital!=0)
+      if (capital==0)
+        errors.add(:ad_capital, "(Ajuste de Capital) : no puede ingresar un ajuste si el Capital es 0.")
+      elsif (-ad_capital > capital)
+        errors.add(:ad_capital, "(Ajuste de Capital) : no puede ingresar un ajuste superior al Capital.")
       end
+      err_aj=1
+    end
+    if (ad_arrear_interest!=0)
+      if (arrear_interest==0)
+        errors.add(:ad_arrear_interest, "(Ajuste de Int. Mora) : no puede ingresar un ajuste si el Interes Mora es 0.")
+      elsif (-ad_arrear_interest > arrear_interest)
+        errors.add(:ad_arrear_interest, "(Ajuste de Int. Mora) : no puede ingresar un ajuste superior al Interes Mora.")
+      end
+      err_aj=1
+    end    
+    if (ad_term_interest!=0)
+      if (term_interest==0)
+        errors.add(:ad_term_interest, "(Ajuste de Int. Plazo) : no puede ingresar un ajuste si el Interes Plazo es 0.")
+      elsif (-ad_term_interest > term_interest)
+        errors.add(:ad_term_interest, "(Ajuste de Int. Plazo) : no puede ingresar un ajuste superior al Interes Plazo.")
+      end
+      err_aj=1
+    end
+    if (ad_fee!=0)
+      if (fee==0)
+        errors.add(:ad_fee, "(Ajuste de Honorarios) : no puede ingresar un ajuste si los Honorarios son 0.")
+      elsif (-ad_fee > fee)
+        errors.add(:ad_fee, "(Ajuste de Honorarios) : no puede ingresar un ajuste superior a los Honorarios.")
+      end
+      err_aj=1
+    end
+    if (ad_shipping_costs!=0)
+      if (shipping_costs==0)
+        errors.add(:ad_shipping_costs, "(Ajuste de Gtos. Envio) : no puede ingresar un ajuste si los Gastos de Envio son 0.")
+      elsif (-ad_shipping_costs > shipping_costs)
+        errors.add(:ad_shipping_costs, "(Ajuste de Gtos. Envio) : no puede ingresar un ajuste superior a los Gastos de Envio.")
+      end   
+      err_aj=1
+    end
+    if (ad_legal_costs!=0) 
+      if (legal_costs==0)
+        errors.add(:ad_legal_costs, "(Ajuste de Gtos. Judiciales) : no puede ingresar un ajuste si los Gastos Judiciales son 0.")
+      elsif (-ad_legal_costs > legal_costs)
+        errors.add(:ad_legal_costs, "(Ajuste de Gtos. Judiciales) : no puede ingresar un ajuste superior a los Gastos Judiciales.")
+      end
+      err_aj=1
+    end
+    if err_aj==0
+     ajustes=ad_capital + ad_fee + ad_arrear_interest + ad_term_interest + ad_shipping_costs + ad_legal_costs
+     if (ajustes!=0 and not ajustes.nil? and state!="modificado")
+       if (profile==1) and (ajustes< adjust_mx)
+         errors.add(:adjust_val, "(Ajustes) : El descuento, suma de todos los ajustes, no puede ser mayor que $"+adjust_mx.to_s+". Si requiere un valor distinto, ingrese valor 0 en los ajustes y solicite modificacion a Supervisor." )
+       elsif (profile==2) and (ajustes< adjust_mx)
+         errors.add(:adjust_val, "(Ajustes) : El descuento, suma de todos los ajustes, no puede ser mayor que $"+adjust_mx.to_s+". Si requiere un valor distinto, ingrese valor 0 en los ajustes y solicite modificacion a Gerencia.")
+       elsif (ajustes!=0) and (adjust_obs.nil? or adjust_obs.empty?)
+         errors.add(:adjust_obs, "(Observacion ajuste) : debe ingresar un valor en este campo.")
+       end
+     end
     end
   end
 

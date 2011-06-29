@@ -1,4 +1,12 @@
 <div class="seccion">
+
+<% if (not @rech.nil? and not @rech.empty?) %> 
+  <div id="alerta">
+    <h2>IMPORTANTE:</h2><ul>
+      <li>Existen Recibos de Pago Rechazados por Tesorer&iacute;a.</li></ul>
+  </div>
+<% end %>
+
   <ul>
     <li><%= link_to "Tickets por Modificar", :controller => "supervisor", :action => "stmod" %></li>
     <li><%= link_to "Listado de Tickets", :controller => "supervisor", :action => "stlist" %></li>

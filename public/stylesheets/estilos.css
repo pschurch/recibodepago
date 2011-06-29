@@ -64,11 +64,11 @@ p {  margin: 0;  padding: 0;}
 #notice {margin-top:10px; margin-bottom:20px; text-align: center; font-size:16px; color: rgb(172,0,0);}
 
 /* Errores */
-#error {margin:0 auto 0 auto; margin-bottom: 12px; background-color: white;
+#error, #alerta {margin:0 auto 0 auto; margin-bottom: 12px; background-color: white;
   border: 2px solid rgb(172,0,0);}
-#error h2 { text-align: left; font-weight: bold; padding: 5px 5px 5px 15px; font-size: 14px;
-  background-color: #c00; color: #fff; margin-top: 0px; margin-bottom: 0px;}
-#error ul li { font-size: 13px;	margin: 5px;  margin-left: 0px;}
+#error h2, #alerta h2 { text-align: left; font-weight: bold; padding: 5px 5px 5px 15px; 
+  font-size: 14px; background-color: #c00; color: #fff; margin-top: 0px; margin-bottom: 0px;}
+#error ul li, #alerta ul li { font-size: 13px;	margin: 5px;  margin-left: 0px;}
 .field_with_errors { padding: 1px; display: table;  background-color: rgb(172,0,0);} 
 
 input[type=text], input[type=password], input.text, input.title, textarea, select, input.checkbox, input.radio {margin:2px 0; font-size: 13px; }

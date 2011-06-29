@@ -2,10 +2,13 @@
 <table><tr><td class="marco">
 <%= form_for(@receipt) do |f| %>
   <%= render "shared/error_messages", :target => @receipt, :text => "el Recibo de Pago" %>
+formas: @pay_p: <%= @pay_p %> <br>@ppid:<%= @ppid %> - <%= @formas %> - 
+<%= @payment_form_list %><p>
+
 
   <% @tickets.each do |a| %><%= render "tickets", :a => a, :clase=>"formulario" %><% end %>
 
-  <%= render "#{@receipt.current_step}_step", :f => f %>
+  <%= render "#{@receipt.current_step}_step", :f => f, :formas=>@formas %>
 
   <div class="botones"><%= f.submit "Continuar", :name => "next_button" unless @receipt.last_step?%></div>
 

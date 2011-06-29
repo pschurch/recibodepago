@@ -29,7 +29,7 @@ class Receipt < ActiveRecord::Base
   validates_numericality_of :monto17, :only_integer => true, :message => ": el valor debe ser un numero entero.", :allow_blank => true
   validates_numericality_of :monto18, :only_integer => true, :message => ": el valor debe ser un numero entero.", :allow_blank => true
   validates_numericality_of :adjust_val, :only_integer => true, :message => "(Ajuste): el valor debe ser un numero entero.", :allow_blank => true
-#  validate :valida_rut
+  validate :valida_rut
   validate :por_estado
   validate :anular
   validate :rechazar
@@ -85,16 +85,10 @@ end
 
   def por_estado
     # Cuadre del detalle de pago -----------------------------------
-    # estado "", Flujo 1 Completo / 
-    # estado abierto, Profile 1
-    # estado abierto, Profile 3, button!= n2
-    # estado recibido rechazo,  Profile 1, r_type 1, button!=n1 
-    # estado recibido rechazo,  Profile 2, r_type 4, button!=n3 
-    # estado recibido rechazo,  Profile 3, r_type 4, button!=n3 
     if ((state=="" and payment_flow_id==1) or 
        (state=="abierto" and profile==1) or
        (state=="abierto" and profile==3 and button!="n2") or
-       (state=="recibido rechazo" and profile==1 and button!="n1" and rejection_type_id==1) or
+       (state=="recibido rechazo" and profile==1 and rejection_type_id==4) or
        (state=="recibido rechazo" and (profile==3 or profile==2) and button!="n3" and rejection_type_id==4) )
 
         total = 0
@@ -103,7 +97,9 @@ end
           if (formapago1=="")
             errors.add(:formapago1, ": debe seleccionar un valor para este campo.")
           end 
+          
         end 
+
         if (not monto2.nil?) 
           total=total+monto2
           if (formapago2=="")
@@ -207,7 +203,7 @@ end
           end 
         end 
         if total!=total_pay
-          errors.add(:total_paid, "(Total Pagado) : el valor pagado, $"+total.to_s+", no corresponde al valor por pagar, $"+total_pay.to_s+".")
+          errors.add(:total_paid, "(Total Pagado) : el valor pagado, $"+total.to_s+", no corresponde al valor por pagar, $"+total_pay.to_s+"."+button+".")
         end
 
     # Datos de Contacto ---------------------------------------

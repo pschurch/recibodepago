@@ -76,7 +76,7 @@
       <div class="subtit">
         Detalle del Pago:
       </div>
-      <%= render "detalle_edit", :f => f %>
+      <%= render "detalle_edit", :f => f, :formas=>@formas %>
     <% elsif @receipt.total_paid > 0 %>   
       <div class="subtit">
         Detalle del Pago:

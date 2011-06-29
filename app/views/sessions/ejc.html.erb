@@ -1,4 +1,17 @@
 <div class="seccion">
+
+<% if (not @rechs.nil? and not @rechs.empty?) or (not @recht.nil? and not @recht.empty?) %> 
+  <div id="alerta">
+    <h2>IMPORTANTE:</h2><ul>
+    <% if not @rechs.nil? and not @rechs.empty? %> 
+      <li>Existen Recibos de Pago Rechazados por Supervisor.</li>
+    <% end %>
+    <% if not @recht.nil? and not @recht.empty? %> 
+      <li>Existen Recibos de Pago Rechazados por Terreno.</li>
+    <% end %></ul>
+  </div>
+<% end %>
+
   <ul>
     <li><%= link_to "Crear Ticket", search_path %></li>
     <li><%= link_to "Listado de Tickets", tickets_path %></li>
@@ -13,4 +26,9 @@
     <li><%= link_to "Listado de Recibos de Pago", receipts_path %></li>
   </ul>
 </div>
+
+
+
+
+
 
