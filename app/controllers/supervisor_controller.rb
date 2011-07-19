@@ -31,13 +31,13 @@ class SupervisorController < ApplicationController
     (params[:mandante].nil? or params[:mandante]=='0') ? @mandante = 'Todos' : @mandante = params[:mandante]
     (params[:estado].nil? or params[:estado]=='t') ? @estado = 'Todos' : @estado = params[:estado]
     if (@mandante=='Todos' and @estado=='Todos')
-      @tickets = Ticket.where("state!='para remesar' AND state!='remesado' AND state!='cerrado'").where("group_id=?", current_user.group_id)
+      @tickets = Ticket.where("state!='para remesar' AND state!='remesado' AND state!='cerrado'").where("profile_create!='6'")#.where("group_id=?", current_user.group_id)
     elsif (@mandante=='Todos' and @estado!='Todos')       
-      @tickets = Ticket.where("state=?", @estado).where("group_id=?", current_user.group_id)
+      @tickets = Ticket.where("state=?", @estado).where("profile_create!='6'")#.where("group_id=?", current_user.group_id)
     elsif (@mandante!='Todos') and (@estado=='Todos')
-      @tickets = Ticket.where("principal_id=?", @mandante.to_i).where("state!='para remesar' AND state!='remesado' AND state!='cerrado'").where("group_id=?", current_user.group_id)
+      @tickets = Ticket.where("principal_id=?", @mandante.to_i).where("state!='para remesar' AND state!='remesado' AND state!='cerrado'").where("profile_create!='6'")#.where("group_id=?", current_user.group_id)
     elsif (@mandante!='Todos') and (@estado!='Todos')
-      @tickets = Ticket.where("principal_id=?", @mandante.to_i).where("state=?", @estado).where("group_id=?", current_user.group_id)
+      @tickets = Ticket.where("principal_id=?", @mandante.to_i).where("state=?", @estado).where("profile_create!='6'")#.where("group_id=?", current_user.group_id)
     end
   end
 

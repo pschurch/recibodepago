@@ -9,10 +9,14 @@
     <%= f.submit "Grabar", :name => "rec_button" unless @ticket.first_step?%>
     <%= link_to 'Cancelar', :controller => "sessions", :action => "ejc" if (current_user.profile_id==1 and @ticket.last_step?)%> 
     <%= link_to 'Cancelar', :controller => "sessions", :action => "sup" if (current_user.profile_id==2 and @ticket.last_step?)%> 
+    <%= link_to 'Cancelar', :controller => "sessions", :action => "jtr" if (current_user.profile_id==3 and @ticket.last_step?)%> 
+    <%= link_to 'Cancelar', :controller => "sessions", :action => "ger" if (current_user.profile_id==6 and @ticket.last_step?)%> 
   <% else %>
     <%= f.submit "Grabar", :name => "rec_button"%>
     <%= link_to 'Cancelar', :controller => "sessions", :action => "ejc" if current_user.profile_id==1%> 
     <%= link_to 'Cancelar', :controller => "sessions", :action => "sup" if current_user.profile_id==2%> 
+    <%= link_to 'Cancelar', :controller => "sessions", :action => "jtr" if current_user.profile_id==3%> 
+    <%= link_to 'Cancelar', :controller => "sessions", :action => "ger" if current_user.profile_id==6%> 
   <% end %>
   </div>
 <% end %>
@@ -20,10 +24,6 @@
 </div>
 
 <div class="botones">
-<% if current_user.profile_id==1 %> <!-- Ejecutivo de Cobranza -->
-  <%= link_to 'Página Principal', :controller => "sessions", :action => "ejc" %> 
-<% elsif current_user.profile_id==2 %> <!-- Supervisor -->
-  <%= link_to 'Página Principal', :controller => "sessions", :action => "sup" %> 
-<% end %>
+  <%= render "shared/pp_ejc_sup_jtr_ger" %>
 </div>
 

@@ -10,15 +10,19 @@
 
 <div class="botones">
 <% if current_user.profile_id==1 %> <!-- Ejecutivo de Cobranza -->
-  <% if @acc =='1' %><%= link_to 'Listado de Tickets', tickets_path %><% end %> 
+  <%= link_to 'Listado de Tickets', tickets_path if @acc =='1' %> 
   <%= link_to 'Página Principal', :controller => "sessions", :action => "ejc" %> 
+
 <% elsif current_user.profile_id==2 %> <!-- Supervisor -->
-  <% if @acc =='1' %><%= link_to 'Listado de Tickets', :controller => 'supervisor', :action=>'stlist' %><% end %> 
-  <% if @acc=='4' or @acc=='5' %>
-    <%= link_to 'Tickets por Modificar', :controller => "supervisor", :action => "stmod" %>
-  <% end %>
+  <%= link_to 'Listado de Tickets', :controller => 'supervisor', :action=>'stlist' if @acc =='1'%> 
+  <%= link_to 'Tickets por Modificar', :controller => "supervisor", :action => "stmod" if (@acc=='4' or @acc=='5') %>
   <%= link_to 'Página Principal', :controller => "sessions", :action => "sup" %> 
+
+<% elsif current_user.profile_id==3 %> <!-- Terreno -->
+  <%= link_to 'Página Principal', :controller => "sessions", :action => "jtr" %> 
+
 <% elsif current_user.profile_id==6 %> <!-- Gerencia -->
+  <%= link_to "Listado de Tickets", :controller => "manager", :action => "mtlist" %>
   <%= link_to 'Tickets por Modificar', :controller => "manager", :action => "mtmod" %> 
   <%= link_to 'Página Principal', :controller => "sessions", :action => "ger" %> 
 <% end %> 

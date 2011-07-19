@@ -3,7 +3,8 @@
   <tr>
     <th>Id</th>
     <th>Nombre</th>
-    <th>Valor</th>
+    <th>Valor entero</th>
+    <th>Valor decimal</th>
     <th>Descripci&oacute;n</th>
     <th>Estado</th>
     <th></th>
@@ -12,7 +13,8 @@
   <tr>
     <td><%= p.id %></td>
     <td><%= p.name %></td>
-    <td><%= p.val_int %><%= p.val_dec %></td>
+    <td><%= p.val_int %></td>
+    <td><%= p.val_dec %></td>
     <td><%= p.description %></td>
     <td><% if p.state %>Activo<% else %>Inactivo<% end %></td>
     <td><%= link_to 'Ver', p%></td>

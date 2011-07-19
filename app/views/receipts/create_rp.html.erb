@@ -24,7 +24,7 @@
     <th colspan=2></th>
   </tr>
   <% if @tickets.empty? %> 
-    <tr><td colspan=12>No se han encontrado Tickets para crear Recibos de Pago.</td></tr>
+    <tr><td colspan=13>No se han encontrado Tickets para crear Recibos de Pago.</td></tr>
   <% else %>
    <% @tickets.each do |ticket| %>
    <tr>
@@ -52,5 +52,12 @@
 </div>
 
 <div class="botones">
-  <%= render 'shared/pp_ejc_dsg' %>
+  <% if current_user.profile_id==1 %>
+    <% pag = "ejc" %>
+  <% elsif current_user.profile_id==2 %>
+    <% pag = "sup" %>  
+  <% elsif current_user.profile_id==8 %>
+    <% pag = "dsg" %>  
+  <% end %>  
+  <%= link_to 'Página Principal', :controller => "sessions", :action => pag %>
 </div>

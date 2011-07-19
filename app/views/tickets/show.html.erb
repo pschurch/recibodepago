@@ -39,7 +39,8 @@
     <td><div class="n"><%= @ticket.product_name %>&nbsp;</div></td>
   </tr>
   <tr>
-    <td>Descripción del Pago:</td><td colspan="4"><div class="lg"><%= @ticket.payment_description %>&nbsp;</div></td>
+    <td>Descripción del Pago:</td><td colspan="4"><div class="lg">
+      <%= @ticket.payment_description %>&nbsp;</div></td>
   </tr>
   </table>
   <table class="display">
@@ -194,7 +195,8 @@
     <% if @ticket.adjust_mgt %>
       <tr>
         <td width="210">Solicita modificación a Gerencia:</td>
-        <td colspan=3><div class="sn"><% if @ticket.adjust_mgt %>Sí<% else %>No<% end %></div></td>
+        <td width="50"><div class="sn"><% if @ticket.adjust_mgt %>Sí<% else %>No<% end %></div></td>
+        <td></td>
       </tr>
       <tr>
         <td>Descripción de la modificación solicitada a Gerencia:</td>
@@ -210,8 +212,9 @@
   <% end %>
   <% if current_user.profile_id==6  or current_user.profile_id==4%>  <!-- Gerencia o Tesoreria -->  
     <tr>
-      <td>Solicita modificación a Gerencia:</td>
-      <td colspan=3><div class="sn"><% if @ticket.adjust_mgt %>Sí<% else %>No<% end %></div></td>
+      <td width="210">Solicita modificación a Gerencia:</td>
+      <td width="50"><div class="sn"><% if @ticket.adjust_mgt %>Sí<% else %>No<% end %></div></td>
+      <td></td>
     </tr>
     <% if @ticket.adjust_mgt %>
       <tr>
@@ -247,14 +250,22 @@
   <% if current_user.profile_id==1 %>  <!-- Ejec Cobrana -->
     <div class="botones">
       <%= link_to 'Editar', edit_ticket_path(@ticket) if not @ticket.adjust_sup?%>
+      <%= link_to 'Anular el Ticket', :controller => "tickets", :action => "ntc", :acc => '1', :id => @tid if (@ticket.state=="creado" or @ticket.state=="modificado") and @ticket.receipt_id.nil?%> 
     </div>
   <% elsif current_user.profile_id==2 %>  <!-- Supervisor -->  
     <div class="botones">
-      <%= link_to 'Editar', edit_ticket_path(@ticket) if @ticket.state=='creado' or @ticket.state=='pms'%> 
-      <%= link_to 'Anular el Ticket', :controller => "tickets", :action => "ntc", :acc => '1', :id => @ticket.id if @ticket.state!="anulado" and @ticket.receipt_id.nil?%> 
+      <%= link_to 'Editar', edit_ticket_path(@ticket) if @ticket.state=='creado' or @ticket.state=='pms' or  @ticket.state=="modificado"%> 
+      <%= link_to 'Anular el Ticket', :controller => "tickets", :action => "ntc", :acc => '1', :id => @ticket.id if (@ticket.state=="creado" or @ticket.state=="pms" or @ticket.state=="modificado") and @ticket.receipt_id.nil?%> 
     </div>
+  <% elsif current_user.profile_id==3 %>  <!-- Terreno -->  
+    <div class="botones">
+      <%= link_to 'Editar', edit_ticket_path(@ticket) if not @ticket.adjust_sup?%> 
+      <%= link_to 'Anular el Ticket', :controller => "tickets", :action => "ntc", :acc => '1', :id => @tid if (@ticket.state=="creado" or @ticket.state=="modificado") and @ticket.receipt_id.nil?%> 
+    </div>
+
   <% elsif current_user.profile_id==6 %>  <!-- Gerencia -->  
     <div class="botones">
+      <%= link_to 'Editar', edit_ticket_path(@ticket) if @ticket.state=='creado' or @ticket.state=='pms'%> 
       <%= link_to 'Anular el Ticket', :controller => "tickets", :action => "ntc", :acc => '1', :id => @ticket.id if @ticket.state!="anulado" and @ticket.receipt_id.nil?%> 
     </div>
   <% end %>
@@ -265,17 +276,24 @@
 <div class="botones">
   <% if current_user.profile_id==1 %>  <!-- Ejec Cobrana -->
     <%= link_to 'Listado de Tickets', tickets_path %>
+    <%= link_to "Crear Recibo de Pago", listk_path %>
     <%= link_to 'Página Principal', :controller => "sessions", :action => "ejc" %>
 
   <% elsif current_user.profile_id==2 %>  <!-- Supervisor -->  
     <%= link_to 'Listado de Tickets', :controller => "supervisor", :action => "stlist" %>
+    <%= link_to "Crear Recibo de Pago", listk_path %>
     <%= link_to 'Página Principal', :controller => "sessions", :action => "sup" %>  
+
+  <% elsif current_user.profile_id==3 %>  <!-- Terreno -->  
+    <%= link_to "Crear Recibo de Pago", listk_path %>
+    <%= link_to 'Página Principal', :controller => "sessions", :action => "jtr" %>  
 
   <% elsif current_user.profile_id==4 %>  <!-- Tesoreria -->  
     <%= link_to 'Listado de Tickets', :controller => "finance", :action => "ftlist" %>
     <%= link_to 'Página Principal', :controller => "sessions", :action => "tsr" %>  
   <% elsif current_user.profile_id==6 %>  <!-- Gerencia -->  
     <%= link_to 'Listado de Tickets', :controller => "manager", :action => "mtlist" %>
+    <%= link_to "Crear Recibo de Pago", listk_path %>
     <%= link_to 'Página Principal', :controller => "sessions", :action => "ger" %>  
   <% elsif current_user.profile_id==8 %>  <!-- Designer -->  
     <%= render "show_dsg" %>  

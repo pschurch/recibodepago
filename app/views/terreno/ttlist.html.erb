@@ -1,6 +1,7 @@
 <div class="seccion">
+   
   <table><tr><td class="marco">
-  <% form_tag({:controller => :supervisor, :action => :stlist}, :method => :get) do %>
+  <% form_tag({:controller => :terreno, :action => :ttlist}, :method => :get) do %>
     <table>
     <tr>
       <td>Mandante: <%= select_tag('mandante', 
@@ -61,7 +62,7 @@
         end %>
     </td>
     <td><%= link_to 'Ver', a %></td>   
-    <td><%= if (a.state == "creado" or a.state == "pms")
+    <td><%= if (a.state == "creado" or a.state == "modificado")
           link_to 'Editar', edit_ticket_path(a) 
          end %>
     </td>
@@ -73,6 +74,6 @@
 </div>
 
 <div class="botones">
-  <%= link_to 'Página Principal', :controller => "sessions", :action => 'sup' %>
+  <%= link_to 'Página Principal', :controller => "sessions", :action => 'jtr' %>
 </div>
 

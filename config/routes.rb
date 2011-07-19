@@ -15,6 +15,7 @@ Recibodepago::Application.routes.draw do
   get "terreno/trlist"
   get "terreno/trrecp"
   get "terreno/trcerr"
+  get "terreno/ttlist"
 
   get "supervisor/stmod"
   get "supervisor/stlist"

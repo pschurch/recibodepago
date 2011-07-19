@@ -4,7 +4,8 @@
   <%= f.hidden_field :product_id, :value=> @ticket.product_id %>
   <%= f.hidden_field :profile, :value => current_user.profile_id %>
   <%= f.hidden_field :adjust_mx, :value=> @ajuste_mx %>
-
+  <%= f.hidden_field :int_mora, :value => @int_mora %>
+  <%= f.hidden_field :int_plazo, :value => @int_plazo %>
   <table class="formulario">
   <tr>
     <td>Rut:</td>
@@ -70,9 +71,9 @@
   </tr>
   <tr>
     <td>Honorarios:</td>
-    <% if current_user.profile_id==1 %>
+    <% if (current_user.profile_id==1 or current_user.profile_id==3) %>
       <td class="ro"><%= f.text_field :fee, :size => "8", :readonly => true, :value => @fee %></td>
-    <% elsif current_user.profile_id==2 %> 
+    <% elsif (current_user.profile_id==2 or current_user.profile_id==6) %> 
       <td><%= f.text_field :fee, :size => "8", :value => @fee%></td>
     <% end %> 
     <td><%= f.text_field :ad_fee, :size => "8" %></td>
@@ -114,7 +115,8 @@
          :end_year => (Time.now + 1.years).year }%></td>
     <td>Preparado por:</td>
     <% if @ticket.id.nil? %> 
-      <td><%= f.select(:user_id, User.find(:all, :conditions => {:state => true, :profile_id => current_user.profile_id}, :order => 'name').collect {|u| [u.name, u.id]}, {:selected => @user_id}) %></td>
+      <td class="ro"><!-- <%= f.select(:user_id, User.find(:all, :conditions => {:state => true, :profile_id => current_user.profile_id}, :order => 'name').collect {|u| [u.name, u.id]}, {:selected => current_user.id}) %> -->
+<%= f.text_field :prepared_by, :value=> current_user.name, :readonly => true %></td>
     <% else %>
       <td class="ro"><%= @ticket.prepared_by %></td>
     <% end %>
@@ -130,12 +132,15 @@
   </table>
 
   <hr>
-  <div class="subtit">
-    Solicitud de Modificaciones:
-  </div>
+  <% if current_user.profile_id!=6 %>
+    <div class="subtit">
+      Solicitud de Modificaciones:
+    </div>
+  <% end %>
+
   <table class="formulario">
   <!-------  Modificacion de supervisor ------->
-  <% if current_user.profile_id==1 %> <!-- Eje Cobranza -->
+  <% if (current_user.profile_id==1 or current_user.profile_id==3) %> <!-- Eje Cobranza/Terreno -->
    <tr>
      <td width="210">Solicita modificación a Supervisor:</td>
      <td width="50"><%= f.check_box :adjust_sup %> Sí</td>
@@ -152,12 +157,12 @@
     <tr>
       <td width="210">Solicita modificación a Gerencia:</td>
       <td width="50"><%= f.check_box :adjust_mgt %> Sí</td>
-     <td></td>
-   </tr>
-   <tr>
-     <td>Descripción de la modificación solicitada a Supervisor:</td>
-     <td><%= f.text_area :adjust_mgt_des, :size => "50x1" %>
-   </tr>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Descripción de la modificación solicitada a Supervisor:</td>
+      <td><%= f.text_area :adjust_mgt_des, :size => "50x1" %>
+    </tr>
     <% if @ticket.adjust_mgt_time %>
       </table>
       <table class="formulario">

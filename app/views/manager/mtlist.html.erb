@@ -13,7 +13,6 @@
                             ['recibo creado','recibo creado'], 
                             ['para remesar','para remesar'], 
                             ['remesado','remesado'], 
-                            ['cerrado','cerrado'], 
                             ['anulado', 'anulado']], :selected => @estado))%>
     </td>
     <td><div class="botones"><%= submit_tag "Filtrar", :state => 'nil' %></div></td>
@@ -35,7 +34,7 @@
     <th>Identificador</th>
     <th>Capital</th>
     <th>Estado</th>
-    <th></th>
+    <th colspan="2"></th>
   </tr>
   <% if @tickets.empty? %>
   <tr>
@@ -71,6 +70,10 @@
         end %>
       </td>
       <td><%= link_to 'Ver', a %></td>
+      <td><%= if (a.state == "creado" or a.state == "pms" or a.state == "pmg" or a.state == "modificado")
+            link_to 'Editar', edit_ticket_path(a) 
+           end %>
+      </td>
     </tr>
     <% end %>
   <% end %>

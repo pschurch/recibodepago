@@ -546,8 +546,8 @@ class ReceiptsController < ApplicationController
   end 
 
   #=======================================================
-  def create_rp
-    deny_access unless (current_user.profile_id == 1)
+  def create_rp   # listk
+    #deny_access unless (current_user.profile_id == 1 or current_user.profile_id == 2 )
     session[:ticket_ids] = nil
     @titulo = "Crear Recibo de Pago"
     grupo = current_user.group_id
@@ -741,7 +741,7 @@ class ReceiptsController < ApplicationController
   def edit 
     @receipt = Receipt.find(params[:id])
     deny_access unless (@receipt.state!='cerrado') # No puede editarse un RP estado cerrado
-    @titulo = "Editar Recibo de Pago1"
+    @titulo = "Editar Recibo de Pago"
     @button = params[:button]
     @msg = params[:msg]
     @tickets = Ticket.where("receipt_id=?", @receipt.id)
@@ -766,7 +766,7 @@ class ReceiptsController < ApplicationController
 
   # PUT /receipts/1
   def update
-    @titulo = "Editar Recibo de Pago2"
+    @titulo = "Editar Recibo de Pago"
     @receipt = Receipt.find(params[:id])
     @tickets = Ticket.where("receipt_id=?", @receipt.id)
     @button = params[:button]
@@ -778,7 +778,7 @@ class ReceiptsController < ApplicationController
         redirect_to(@receipt, :notice => 'El Recibo de Pago se encuentra listo para ser impreso y ser enviado a terreno.')
         #  redirect_to(:action => "ntc", :acc => 'terr_button', :id => @receipt.id )
       elsif params[:cerrar_button]       
-       if (@receipt.state=="abierto") and @receipt.valid?
+       if (@receipt.state=="abierto") and @receipt.valid? and @button!="m"
          @total_paid = 0
          @total_paid = (not @receipt.monto1.nil?) ? @total_paid + @receipt.monto1 : @total_paid
          @total_paid = (not @receipt.monto2.nil?) ? @total_paid + @receipt.monto2 : @total_paid
@@ -808,6 +808,7 @@ class ReceiptsController < ApplicationController
         @receipt.update_attribute 'state', "recibido rechazo"
         @receipt.update_attribute 'area', "Cobranza"
         @receipt.update_attribute 'subarea', "Terreno"
+        @receipt.update_attribute 'et_name', nil        
         @receipt.update_attribute 'rech_by', current_user.name 
         @receipt.update_attribute 'rech_date', Time.now 
         # redirect_to(@receipt, :notice => 'El Recibo de Pago ha sido rechazado.')
@@ -945,10 +946,10 @@ class ReceiptsController < ApplicationController
     end
   end
 
-  def rp_abtos
-    deny_access unless (current_user.profile_id == 1)
+  def rp_abtos # lisra
+    # deny_access unless (current_user.profile_id == 1)
     @titulo = "Cerrar Recibos de Pago"
-    @receipts = Receipt.where("state='abierto'").where("area='Cobranza'").where("user_name=?",current_user.name)
+    @receipts = Receipt.where("state='abierto'").where("payment_flow_id=2").where("user_name=?",current_user.name)
   end
 
   def print

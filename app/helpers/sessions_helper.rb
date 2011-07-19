@@ -51,7 +51,7 @@ module SessionsHelper
     deny_access unless (signed_in? && current_user.profile_id == 8)
   end
   def authenticate_tck
-    deny_access unless (signed_in? && (current_user.profile_id == 1 or current_user.profile_id == 2  or current_user.profile_id == 4  or current_user.profile_id == 6 or current_user.profile_id == 8) )
+    deny_access unless (signed_in? && (current_user.profile_id==1 or current_user.profile_id == 2 or current_user.profile_id==3 or current_user.profile_id==4 or current_user.profile_id==6 or current_user.profile_id== 8) )
   end
 
 # Revisar si son usadas:

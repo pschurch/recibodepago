@@ -23,6 +23,8 @@ class TicketsController < ApplicationController
         @msje = "se ha modificado exitosamente"
       when '6'  # no existe politica de pago
         @msje = "no puede ser creado pues no exite la politica de pago para los parametros seleccionados. Contactar al Administrador"
+      when '7'  # no pertenece a su grupo
+        @msje = "no puede ser creado pues el Mandante-Producto que usted ha seleccionado no pertenece a su Grupo"
       when '1'  # anular el Ticket
         @msje = "ha sido anulado"       
         @ticket.update_attribute 'state', "anulado"
@@ -48,7 +50,7 @@ class TicketsController < ApplicationController
   end
 
   def new
-    deny_access unless (current_user.profile_id == 1 or current_user.profile_id == 2)
+    #deny_access unless (current_user.profile_id == 1 or current_user.profile_id == 2)
     @titulo = "Crear Ticket" 
     session[:ticket_step] = nil
     if params[:t].nil?
@@ -58,7 +60,7 @@ class TicketsController < ApplicationController
       if session[:caso].nil?
         session[:caso] = params[:t]
       end
-      # ---------  Ajustes -------------------
+      # ---------  Parametros -------------------
       if current_user.profile_id == 1 # perfil Ej Cobranza
         @parm1 = Parameter.where("id=1") 
         @parm1.each do |p|
@@ -70,7 +72,15 @@ class TicketsController < ApplicationController
           @ajuste_mx = p.val_int  
         end
       end
-      # ----------- Fin de Ajustes -------------------
+      @parm1 = Parameter.where("id=3").select("val_dec") 
+      @parm1.each do |p|
+        @int_mora = p.val_dec  
+      end
+      @parm1 = Parameter.where("id=4").select("val_dec") 
+      @parm1.each do |p|
+        @int_plazo = p.val_dec  
+      end
+      # ----------- Fin de Parametros -------------------
       @caso = Assignment.find(session[:caso])
       @pay_p = PaymentPolicy.where("principal_id =?", @caso.principal_id).where("product_id =?", @caso.product_id).where("collection_type_id =?", @caso.collection_type_id)
       @pay_p.each do |a|
@@ -88,7 +98,7 @@ class TicketsController < ApplicationController
     @titulo = "Crear Ticket" 
     @ticket = Ticket.new(params[:ticket])
     @ticket.current_step = session[:ticket_step]
-    # ---------  Ajustes -------------------
+    # ---------  Parametros -------------------
       if current_user.profile_id == 1 # perfil Ej Cobranza
         @parm1 = Parameter.where("id=1") 
         @parm1.each do |p|
@@ -99,9 +109,30 @@ class TicketsController < ApplicationController
         @parm1.each do |p|
           @ajuste_mx = p.val_int  
         end
+      elsif current_user.profile_id == 3 # perfil Terreno
+        @parm1 = Parameter.where("id=5") 
+        @parm1.each do |p|
+          @ajuste_mx = p.val_int  
+        end
       end
-    # ----------- Fin de Ajustes -------------------
+      @parm1 = Parameter.where("id=3").select("val_dec") 
+      @parm1.each do |p|
+        @int_mora = p.val_dec  
+      end
+      @parm1 = Parameter.where("id=4").select("val_dec") 
+      @parm1.each do |p|
+        @int_plazo = p.val_dec  
+      end
+    # ----------- Fin de Parametros -------------------
     if session[:caso].nil?
+      if (current_user.profile_id==1)
+        for a in Cartera.where("principal_id=?", @ticket.principal_id).where("product_id =?", @ticket.product_id)
+          @cartera_id = a.id
+        end
+        if not(@cartera_id.nil?)
+          @cargrup = Cargrup.where("group_id=?", current_user.group_id).where("cartera_id=?",@cartera_id) 
+        end
+      end
       @pay_p = PaymentPolicy.where("principal_id =?", @ticket.principal_id).where("product_id =?", @ticket.product_id).where("collection_type_id =?", @ticket.collection_type_id)
       for a in Principal.where("id =?", @ticket.principal_id) 
         @principal = a.name
@@ -116,7 +147,12 @@ class TicketsController < ApplicationController
       @caso = Assignment.find(session[:caso])
       @pay_p = PaymentPolicy.where("principal_id =?", @caso.principal_id).where("product_id =?", @caso.product_id).where("collection_type_id =?", @caso.collection_type_id)
     end
-    if @pay_p.empty?
+    #-----------------------------------------------------------------
+    if (session[:caso].nil? and @cartera_id.nil? and (current_user.profile_id==1))
+        redirect_to(:action => "ntc", :acc => '7' ) # no pertenece al grupo
+    elsif (session[:caso].nil? and (@cargrup.nil? or @cargrup.empty?) and (current_user.profile_id==1))
+        redirect_to(:action => "ntc", :acc => '7' ) # no pertenece al grupo
+    elsif (@pay_p.nil? or @pay_p.empty?)
       redirect_to(:action => "ntc", :acc => '6' ) # no existe politica de pago  
     else
       @pay_p.each do |a|
@@ -128,12 +164,13 @@ class TicketsController < ApplicationController
         if params[:rec_button]  
           @ticket.save #if @ticket.all_valid? 
           @ticket.update_attribute 'group_id', current_user.group_id
-          @ticket.update_attribute 'prepared_by', current_user.name
+          @ticket.update_attribute 'user_id', current_user.id
+          @ticket.update_attribute 'profile_create', current_user.profile_id
           @total_pay =  @ticket.capital + @ticket.fee + @ticket.arrear_interest + @ticket.term_interest + @ticket.shipping_costs + @ticket.legal_costs
           @adjust_val = @ticket.ad_capital + @ticket.ad_fee + @ticket.ad_arrear_interest + @ticket.ad_term_interest + @ticket.ad_shipping_costs + @ticket.ad_legal_costs
           @ticket.update_attribute 'total_pay', @total_pay
           @ticket.update_attribute 'adjust_val', @adjust_val
-          if current_user.profile_id == 1 # perfil Ej Cobranza
+          if (current_user.profile_id==1 or current_user.profile_id==3) # perfil Ej Cobranza/Terreno
             if (@ticket.state=='creado')
               if (@ticket.adjust_sup?)
                 @ticket.update_attribute 'state', "pms"
@@ -176,7 +213,7 @@ class TicketsController < ApplicationController
   end
 
   def edit
-    deny_access unless (current_user.profile_id == 1 or current_user.profile_id == 2 or current_user.profile_id == 6 or current_user.profile_id == 8)
+    #deny_access unless (current_user.profile_id == 1 or current_user.profile_id == 2 or current_user.profile_id == 6 or current_user.profile_id == 8)
     @titulo = "Editar Ticket"
     @ticket = Ticket.find(params[:id])
     # ---------  Ajustes -------------------
@@ -256,15 +293,15 @@ class TicketsController < ApplicationController
       #----------- Fin Ajustes ------------------------
 
       # Acciones posibles a realizar: 
-      #----- EjeCobr solicita modificacion de Supervisor ----
-      if current_user.profile_id==1 and @ticket.adjust_sup?
+      #----- EjeCobr/Terr solicita modificacion de Supervisor ----
+      if (current_user.profile_id==1 or current_user.profile_id==3) and @ticket.adjust_sup?
         @ticket.update_attribute 'state', "pms"
         @ticket.update_attribute 'adjust_sup_time', Time.now
         @ticket.update_attribute 'adjust_val', "0"
         @ticket.update_attribute 'adjust_obs', ""
         redirect_to(:action => "ntc", :acc => '3', :id => @ticket.id ) #por modificar Supervisor  
       #----- Supervisor modifica ----
-      elsif current_user.profile_id==2 and @ticket.state=='pms'
+      elsif current_user.profile_id==2 and (@ticket.state=='pms' or @ticket.state=='creado')
         if @ticket.adjust_mgt? 
           @ticket.update_attribute 'state', "pmg"
           @ticket.update_attribute 'adjust_mgt_time', Time.now
@@ -329,6 +366,8 @@ class TicketsController < ApplicationController
         @perfil_name = "Ejecutivo de Cobranza"
       elsif current_user.profile_id==2
         @perfil_name = "Supervisor"
+      elsif current_user.profile_id==3
+        @perfil_name = "Jefe Terreno"
       elsif current_user.profile_id==4
         @perfil_name = "Tesoreria"
       elsif current_user.profile_id==6

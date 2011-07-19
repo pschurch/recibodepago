@@ -12,7 +12,7 @@ class ManagerController < ApplicationController
     @titulo = "Listado de Todos los Tickets"
     (params[:estado].nil? or params[:estado]=='t') ? @estado = 'Todos' : @estado = params[:estado]
     if (@estado=='Todos')
-      @tickets = Ticket.all
+      @tickets = Ticket.where("state!='cerrado'")
     else
       @tickets = Ticket.where("state=?", @estado)
     end

@@ -22,10 +22,20 @@
    <%= f.text_area :description, :size => "40x2" %>
   </div>
   <div class="field">
+    Ayuda:
+  </div>
+  <div class="field">
+   <% if current_user.profile_id==7 %>  <!--  Administrador --> 
+     <%= f.text_area :help , :size => "40x2", :readonly=>true %>
+   <% elsif current_user.profile_id==8 %> <!-- Designer -->
+     <%= f.text_area :help , :size => "40x2" %> 
+   <% end %>
+  </div>
+  <div class="field">
    Estado: <br>
    <%= f.check_box :state %> Activo
   </div>
-  <div class="actions">
+  <div class="botones">
     <%= f.submit "Grabar"%>
   </div>
 <% end %>

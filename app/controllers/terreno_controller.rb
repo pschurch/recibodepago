@@ -19,6 +19,23 @@ class TerrenoController < ApplicationController
     end
   end
 
+  def ttlist
+    @titulo = "Listado de Tickets"
+    @principals = Principal.where("state=true")
+    (params[:mandante].nil? or params[:mandante]=='0') ? @mandante = 'Todos' : @mandante = params[:mandante]
+    (params[:estado].nil? or params[:estado]=='t') ? @estado = 'Todos' : @estado = params[:estado]
+    if (@mandante=='Todos' and @estado=='Todos')
+      @tickets = Ticket.where("state!='para remesar' AND state!='remesado' AND state!='cerrado'").where("profile_create!='6'")
+    elsif (@mandante=='Todos' and @estado!='Todos')       
+      @tickets = Ticket.where("state=?", @estado).where("profile_create!='6'")
+    elsif (@mandante!='Todos') and (@estado=='Todos')
+      @tickets = Ticket.where("principal_id=?", @mandante.to_i).where("state!='para remesar' AND state!='remesado' AND state!='cerrado'").where("profile_create!='6'")
+    elsif (@mandante!='Todos') and (@estado!='Todos')
+      @tickets = Ticket.where("principal_id=?", @mandante.to_i).where("state=?", @estado).where("profile_create!='6'")
+    end
+  end
+
+
   def trrecp
     @titulo = "Recibos de Pago para gestionar en Terreno"
     @groups   = Group.all
@@ -31,7 +48,7 @@ class TerrenoController < ApplicationController
   end
 
   def trcerr
-    @titulo = "Cerrar Recibos de Pago"
+    @titulo = "Recibos de Pago en Terreno"
     @receipts = Receipt.where("state='abierto'").where("area='Terreno'").order(params[:sort])
   end
 

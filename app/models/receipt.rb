@@ -86,8 +86,8 @@ end
   def por_estado
     # Cuadre del detalle de pago -----------------------------------
     if ((state=="" and payment_flow_id==1) or 
-       (state=="abierto" and profile==1) or
-       (state=="abierto" and profile==3 and button!="n2") or
+       (state=="abierto" and profile==1 and button!="n1" and button!="n2" and button!="n3") or
+       (state=="abierto" and profile==3 and button!="n2" and button!="m" and button!="r") or
        (state=="recibido rechazo" and profile==1 and rejection_type_id==4) or
        (state=="recibido rechazo" and (profile==3 or profile==2) and button!="n3" and rejection_type_id==4) )
 
@@ -203,7 +203,7 @@ end
           end 
         end 
         if total!=total_pay
-          errors.add(:total_paid, "(Total Pagado) : el valor pagado, $"+total.to_s+", no corresponde al valor por pagar, $"+total_pay.to_s+"."+button+".")
+          errors.add(:total_paid, "(Total Pagado) : el valor pagado, $"+total.to_s+", no corresponde al valor por pagar, $"+total_pay.to_s+".")
         end
 
     # Datos de Contacto ---------------------------------------

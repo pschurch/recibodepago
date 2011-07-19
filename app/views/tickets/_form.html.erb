@@ -268,21 +268,26 @@
   <table class="formulario">
    <tr>
      <td width="210">Solicita modificación a Supervisor:</td>
-     <% if current_user.profile_id==1 %> <!-- Eje Cobranza -->
+     <% if (current_user.profile_id==1 or current_user.profile_id==3) %> <!-- Eje Cobranza/Terreno -->
        <td width="50"><%= f.check_box :adjust_sup %> Sí</td>
      <% else %>
        <td class="ro" width="50"><div class="sn"><% if @ticket.adjust_sup %>Sí<% else %>No<% end %></div></td>
      <% end %>
      <td></td>
    </tr>
-   <tr>
-     <td>Descripción de la modificación solicitada a Supervisor:</td>
-     <% if current_user.profile_id==1 %> <!-- Eje Cobranza -->
-       <td><%= f.text_area :adjust_sup_des, :size => "50x1" %>
-     <% else %>
-       <td class="ro"><div class="lmh"><%= @ticket.adjust_sup_des %></div>
-     <% end %>
-   </tr>
+   <% if current_user.profile_id==1 or
+         (current_user.profile_id==2 and not @ticket.adjust_sup_des.nil? and not @ticket.adjust_sup_des.empty?) or
+         (current_user.profile_id==3) or
+         (current_user.profile_id==6 and not @ticket.adjust_sup_des.nil? and not @ticket.adjust_sup_des.empty?) %>
+     <tr>
+       <td>Descripción de la modificación solicitada a Supervisor:</td>
+       <% if (current_user.profile_id==1 or current_user.profile_id==3) %> <!-- Eje Cobranza/Terreno -->
+         <td><%= f.text_area :adjust_sup_des, :size => "50x1" %>
+       <% else %>
+         <td class="ro"><div class="lmh"><%= @ticket.adjust_sup_des %></div>
+       <% end %>
+     </tr>
+   <% end %>
   </table>
   <% if @ticket.adjust_sup %>
   <table class="formulario">
@@ -296,7 +301,7 @@
   <% end %>
   <!-------  Fin Modificacion de supervisor ------->
   <!-------  Modificacion de Gerencia ------->
-  <% if current_user.profile_id!=1 %>
+  <% if (current_user.profile_id!=1 and current_user.profile_id!=3) %>
   <table class="formulario">
    <tr>
      <td width="210">Solicita modificación a Gerencia:</td>
@@ -307,25 +312,27 @@
      <% end %>
      <td></td>
    </tr>
-   <tr> 
-     <td>Descripción de la modificación solicitada a Gerencia:</td>
-     <% if current_user.profile_id==2 %> <!-- Supervisor -->
-       <td><%= f.text_area :adjust_mgt_des, :size => "50x1" %>
-     <% else %>
-       <td class="ro"><div class="lmh"><%= @ticket.adjust_mgt_des %></div>
-     <% end %>
-   </tr>
+   <% if current_user.profile_id!=6 or (not @ticket.adjust_mgt_des.nil? and not @ticket.adjust_mgt_des.empty?)%>
+     <tr> 
+       <td>Descripción de la modificación solicitada a Gerencia:</td>
+       <% if current_user.profile_id==2 %> <!-- Supervisor -->
+         <td><%= f.text_area :adjust_mgt_des, :size => "50x1" %>
+       <% else %>
+         <td class="ro"><div class="lmh"><%= @ticket.adjust_mgt_des %></div>
+       <% end %>
+     </tr>
+   <% end %>
   </table>
   <% end %>
   <% if current_user.profile_id!=1 and current_user.profile_id!=2 and @ticket.adjust_mgt %>
-  <table class="formulario">
-    <tr>
-      <td>Fecha solicitud modificación:</td>
-      <td class="ro"><div class="l104"><%= @ticket.adjust_mgt_time.strftime("%d/%m/%Y") unless @ticket.adjust_mgt_time.nil?%></div></td>
-      <td>Hora solicitud modificación:</td>
-      <td class="ro"><div class="l104"><%= @ticket.adjust_mgt_time.strftime("%H:%M") unless @ticket.adjust_mgt_time.nil?%> hrs.</div></td>
-    </tr>
-  </table>
+    <table class="formulario">
+      <tr>
+        <td>Fecha solicitud modificación:</td>
+        <td class="ro"><div class="l104"><%= @ticket.adjust_mgt_time.strftime("%d/%m/%Y") unless @ticket.adjust_mgt_time.nil?%></div></td>
+        <td>Hora solicitud modificación:</td>
+        <td class="ro"><div class="l104"><%= @ticket.adjust_mgt_time.strftime("%H:%M") unless @ticket.adjust_mgt_time.nil?%> hrs.</div></td>
+      </tr>
+    </table>
   <% end %>
   <!-------  Fin Modificacion de Gerencia ------->
 <%end%>

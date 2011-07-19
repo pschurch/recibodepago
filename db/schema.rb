@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110530222649) do
+ActiveRecord::Schema.define(:version => 20110715191028) do
 
   create_table "assignments", :force => true do |t|
     t.string   "state"
@@ -108,11 +108,12 @@ ActiveRecord::Schema.define(:version => 20110530222649) do
   create_table "parameters", :force => true do |t|
     t.string   "name"
     t.integer  "val_int"
-    t.decimal  "val_dec",     :precision => 10, :scale => 0
+    t.decimal  "val_dec",     :precision => 5, :scale => 2
     t.text     "description"
-    t.boolean  "state",                                      :default => true
+    t.boolean  "state",                                     :default => true
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.text     "help"
   end
 
   create_table "payment_agreements", :force => true do |t|
@@ -366,8 +367,8 @@ ActiveRecord::Schema.define(:version => 20110530222649) do
     t.integer  "user_id"
     t.date     "date_pay"
     t.integer  "receipt_id"
-    t.string   "state",                :default => "creado"
-    t.string   "state_fees",           :default => "sin_facturar"
+    t.string   "state",                                              :default => "creado"
+    t.string   "state_fees",                                         :default => "sin_facturar"
     t.integer  "group_id"
     t.string   "rut"
     t.string   "digit"
@@ -376,12 +377,12 @@ ActiveRecord::Schema.define(:version => 20110530222649) do
     t.string   "principal_name"
     t.string   "collection_type_name"
     t.text     "payment_description"
-    t.integer  "capital",              :default => 0
-    t.integer  "arrear_interest",      :default => 0
-    t.integer  "term_interest",        :default => 0
-    t.integer  "fee",                  :default => 0
-    t.integer  "shipping_costs",       :default => 0
-    t.integer  "legal_costs",          :default => 0
+    t.integer  "capital",                                            :default => 0
+    t.integer  "arrear_interest",                                    :default => 0
+    t.integer  "term_interest",                                      :default => 0
+    t.integer  "fee",                                                :default => 0
+    t.integer  "shipping_costs",                                     :default => 0
+    t.integer  "legal_costs",                                        :default => 0
     t.integer  "total_pay"
     t.string   "product_name"
     t.string   "number"
@@ -413,13 +414,16 @@ ActiveRecord::Schema.define(:version => 20110530222649) do
     t.integer  "pay_period_at"
     t.integer  "pay_period_no"
     t.integer  "pay_period_ad"
-    t.integer  "ad_capital",           :default => 0
-    t.integer  "ad_arrear_interest",   :default => 0
-    t.integer  "ad_term_interest",     :default => 0
-    t.integer  "ad_fee",               :default => 0
-    t.integer  "ad_shipping_costs",    :default => 0
-    t.integer  "ad_legal_costs",       :default => 0
-    t.integer  "adjust_val",           :default => 0
+    t.integer  "ad_capital",                                         :default => 0
+    t.integer  "ad_arrear_interest",                                 :default => 0
+    t.integer  "ad_term_interest",                                   :default => 0
+    t.integer  "ad_fee",                                             :default => 0
+    t.integer  "ad_shipping_costs",                                  :default => 0
+    t.integer  "ad_legal_costs",                                     :default => 0
+    t.integer  "adjust_val",                                         :default => 0
+    t.decimal  "int_mora",             :precision => 5, :scale => 2
+    t.decimal  "int_plazo",            :precision => 5, :scale => 2
+    t.integer  "profile_create"
   end
 
   create_table "users", :force => true do |t|
