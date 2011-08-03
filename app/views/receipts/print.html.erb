@@ -277,9 +277,16 @@
 </table>
 
 <div class="botones">
-<% if current_user.profile_id==1 %>  <!-- ----------  Cobranza ---------- -->
-    <%= link_to 'Página Principal', :controller => "sessions", :action => "ejc" %>
-<% elsif current_user.profile_id==3 %> 
-  <%= link_to 'Página Principal', :controller => "sessions", :action => "jtr" %>
-<% end %>
+  <% if current_user.profile_id==1 %>
+    <% pag = "ejc" %>
+  <% elsif current_user.profile_id==2 %>
+    <% pag = "sup" %>  
+  <% elsif current_user.profile_id==3 %>
+    <% pag = "jtr" %>
+  <% elsif current_user.profile_id==6 %>
+    <% pag = "ger" %>
+  <% elsif current_user.profile_id==8 %>
+    <% pag = "dsg" %>  
+  <% end %>  
+  <%= link_to 'Página Principal', :controller => "sessions", :action => pag %>
 </div>

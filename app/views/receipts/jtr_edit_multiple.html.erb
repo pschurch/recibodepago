@@ -192,9 +192,13 @@
     <div class="nbsp"></div>
     <div class="botones">
       <%= form.submit "Rendir", :name => "rendir_button" if @accion=="rend"%>
+      <%= form.submit "Rendir", :name => "rendir_tsr_button" if @accion=="rend_tsr"%>
       <%= form.submit "Aceptar", :name => "aceptar_button" if @accion=="rech"%>
+      <%= form.submit "Aceptar", :name => "aceptar_tsr_button" if @accion=="recht"%>
       <%= link_to "Cancelar", :controller => "receipts", :action => "jtr", :ac => "rend" if @accion=="rend"%> 
+      <%= link_to "Cancelar", :controller => "receipts", :action => "jtr", :ac => "rend_tsr" if @accion=="rend_tsr"%> 
       <%= link_to "Cancelar", :controller => "receipts", :action => "jtr", :ac => "rech" if @accion=="rech"%> 
+      <%= link_to "Cancelar", :controller => "receipts", :action => "jtr", :ac => "recht" if @accion=="recht"%> 
     </div>
   <% end %> 
   </td></tr></table>

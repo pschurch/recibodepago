@@ -20,6 +20,7 @@
 
 <table class="index">
   <tr>
+    <th>Grupo</th>
     <th>N° RP</th>
     <th>Mandante</th>
     <th>Producto</th>
@@ -30,12 +31,13 @@
   </tr>
   <% if @receipts.empty? %>
   <tr>
-    <td colspan= 12>No se han encontrado Recibos de Pago con el filtro seleccionado.</td>
+    <td colspan= 13>No se han encontrado Recibos de Pago con el filtro seleccionado.</td>
   </tr>  
   <% else %>
     <% @receipts.each do |receipt| %>
       <% @tickets = Ticket.where("receipt_id=?", receipt.id) %>
       <tr>
+        <td><%= receipt.group.name %></td>
         <td><%= receipt.id %></td>
         <td><% stop=false %>
           <% @tickets.each  do |p| %>

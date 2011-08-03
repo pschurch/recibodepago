@@ -49,7 +49,7 @@ class TerrenoController < ApplicationController
 
   def trcerr
     @titulo = "Recibos de Pago en Terreno"
-    @receipts = Receipt.where("state='abierto'").where("area='Terreno'").order(params[:sort])
+    @receipts = Receipt.where("state='abierto'").where("area='Terreno'").where("payment_flow_id=3").order(params[:sort])
   end
 
   def sort_column  

@@ -9,8 +9,12 @@
   <div class="subtit">
     <% if @accion=="rend" %>
       Recibos de Pago para ser rendidos a Supervisores:
+    <% elsif @accion=="rend_tsr" %>
+      Recibos de Pago para ser rendidos a Tesorer&iacute;a:
     <% elsif @accion=="rech" %>
       Recibos de Pago Rechazados por Supervisores:
+    <% elsif @accion=="recht" %>
+      Recibos de Pago Rechazados por Tesorer&iacute;a:
     <% end %>
   </div>
   <% if @accion=="rend" and (not @receipts1.empty?) %>
@@ -35,7 +39,9 @@
   <% form_tag jtr_edit_multiple_receipts_path do %>
     <table class="index">
       <tr>
-        <th>Grupo</th>
+        <% if (@accion!="rend_tsr" and @accion!="recht")%>
+          <th>Grupo</th>
+        <% end %>
         <th>N° RP</th>
         <th>N° Ticket</th>
         <th>Rut</th>
@@ -53,14 +59,20 @@
       <% if @receipts1.empty? %> 
         <% if @accion=="rend" %>
           <tr><td colspan=10>No se han encontrado Recibos de Pago para ser Rendidos a Supervisores.</td></tr>
+        <% elsif @accion=="rend_tsr" %>
+          <tr><td colspan=9>No se han encontrado Recibos de Pago para ser Rendidos a Tesorer&iacute;a.</td></tr>
         <% elsif @accion=="rech"%>
           <tr><td colspan=11>No se han encontrado Recibos de Pago Rechazados por Supervisores.</td></tr>
+        <% elsif @accion=="recht"%>
+          <tr><td colspan=10>No se han encontrado Recibos de Pago Rechazados por Tesorer&iacute;a.</td></tr>
         <% end %>        
       <% else %>
       <% @receipts1.each do |receipt| %>
         <% @tickets = Ticket.where("receipt_id=?", receipt.id) %>
         <tr>
-          <td><%= receipt.group.name %></td>
+          <% if (@accion!="rend_tsr" and @accion!="recht")%>
+            <td><%= receipt.group.name %></td>
+          <% end %>
           <td><%= receipt.id %></td>
           <td>
             <% @tickets.each  do |p| %>
@@ -93,7 +105,9 @@
     <% if not @receipts1.empty? %> 
       <div class="botones">
         <%= submit_tag "Rendir Recibos de Pago", :name => "rendir_button" if @accion=="rend"%>
+        <%= submit_tag "Rendir Recibos de Pago", :name => "rendir_tsr_button" if @accion=="rend_tsr"%>
         <%= submit_tag "Aceptar Recibos de Pago", :name => "aceptar_button" if @accion=="rech"%>
+        <%= submit_tag "Aceptar Recibos de Pago", :name => "aceptar_tsr_button" if @accion=="recht"%>
       </div>
     <% end %>
   <% end %>
@@ -103,13 +117,17 @@
    <div class="subtit">
      <% if @accion=="rend" %>
        Recibos de Pago rendidos a Supervisor, en espera de su recepci&oacute;n:
-     <% elsif @accion=="rech" %>
+     <% elsif @accion=="rend_tsr" %>
+       Recibos de Pago rendidos a Tesorer&iacute;a, en espera de su recepci&oacute;n:
+     <% elsif (@accion=="rech" or @accion=="recht") %>
        Recibos de Pago para Aceptar/Corregir:
      <% end %>        
    </div>
    <table class="index">
      <tr>
-       <th>Grupo</th>
+       <% if (@accion!="rend_tsr" and @accion!="recht")%>
+         <th>Grupo</th>
+       <% end %>
        <th>N° RP</th>
        <th>N° Ticket</th>
        <th>Rut</th>
@@ -118,13 +136,13 @@
        <th>Producto</th>
        <th>Fecha Pago</th>
        <th>Total Pagado</th>
-       <% if @accion=="rech"%><th>Fecha Rechazo</th><th></th><% end %>
+       <% if (@accion=="rech" or @accion=="recht")%><th>Fecha Rechazo</th><th></th><% end %>
      </tr>
      <% if @receipts2.empty?%> 
        <tr>
-        <% if @accion=="rend" %>
+        <% if (@accion=="rend" or @accion=="rend_tsr") %>
           <td colspan="10">No se han encontrado Recibos de Pago rendidos en espera de recepci&oacute;n.</td>
-        <% elsif @accion=="rech" %>
+        <% elsif (@accion=="rech" or @accion=="recht") %>
           <td colspan="10">No se han encontrado Recibos de Pago para Aceptar/Corregir.</td>
         <% end %>        
        </tr>
@@ -132,7 +150,9 @@
        <% @receipts2.each do |receipt| %>
          <% @tickets = Ticket.where("receipt_id=?", receipt.id) %>
          <tr>
-           <td><%= receipt.group.name %></td>
+           <% if (@accion!="rend_tsr" and @accion!="recht")%>
+             <td><%= receipt.group.name %></td>
+           <% end %>
            <td><%= receipt.id %></td>
            <td>
              <% @tickets.each  do |p| %>
@@ -153,15 +173,16 @@
            <td><%= @tickets.first.product_name %></td>
            <td><%= receipt.date_r.strftime("%d/%m/%Y") %></td>
            <td><%= number_to_currency(receipt.total_pay, :precision => 0, :delimiter => ".") %></td>
-           <% if @accion=="rech"%>
+           <% if (@accion=="rech" or @accion=="recht")%>
              <td><%= receipt.rech_date.strftime("%d/%m/%Y") %></td>
              <td><%= link_to 'Ver', receipt%></td>
            <% end %>     
          </tr>
        <% end %>
-       <% if (not @receipts2.empty?) and @accion=="rend"%> 
+       <% if (not @receipts2.empty?) and (@accion=="rend" or @accion=="rend_tsr")%> 
          <tr>
-           <th colspan="6"></th>
+           <% if @accion=="rend" %><th colspan="6"></th><% end %>
+           <% if @accion=="rend_tsr" %><th colspan="5"></th><% end %>
            <th>Total:</th>
            <td><%= number_to_currency(@total, :precision => 0, :delimiter => ".") %></td>  
          </tr>

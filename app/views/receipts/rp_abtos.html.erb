@@ -43,6 +43,17 @@
 </div>
 
 <div class="botones">
-  <%= render 'shared/pp_ejc_dsg' %>
+  <% if current_user.profile_id==1 %>
+    <% pag = "ejc" %>
+  <% elsif current_user.profile_id==2 %>
+    <% pag = "sup" %>  
+  <% elsif current_user.profile_id==3 %>
+    <% pag = "jtr" %>
+  <% elsif current_user.profile_id==6 %>
+    <% pag = "ger" %>
+  <% elsif current_user.profile_id==8 %>
+    <% pag = "dsg" %>  
+  <% end %>  
+  <%= link_to 'Página Principal', :controller => "sessions", :action => pag %>
 </div>
 

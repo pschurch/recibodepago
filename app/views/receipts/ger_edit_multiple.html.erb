@@ -1,6 +1,6 @@
 <div class="seccion">
 <table><tr><td class="marco">
- <% form_for :receipt, :url => sup_update_multiple_receipts_path, :html => { :method => :put } do |form| %>
+ <% form_for :receipt, :url => ger_update_multiple_receipts_path, :html => { :method => :put } do |form| %>
  <div class="subtit">
    Se han seleccionado los siguientes Recibos de Pago:
  </div>
@@ -191,21 +191,17 @@
   </table>
   <div class="nbsp"></div>
   <div class="botones">
-    <%= form.submit "Recepcionar", :name => "recepcionc_button" if @accion=="recpc"%> 
-    <%= form.submit "Recepcionar", :name => "recepciont_button" if @accion=="recpt"%> 
-    <%= form.submit "Aceptar", :name => "acepta_trr_button" if @accion=="rechtr"%> 
-    <%= form.submit "Aceptar", :name => "acepta_tsr_button" if @accion=="rechts"%> 
     <%= form.submit "Rendir", :name => "rendir_button" if @accion=="rend"%> 
-    <%= form.submit "Rechazar", :name => "rech_ejc_button"  if @accion=="recpc"%>
-    <%= form.submit "Rechazar", :name => "rech_terr_button"  if @accion=="recpt"%>
+    <%= form.submit "Aceptar", :name => "aceptar_tsr_button" if @accion=="rechts"%>
+
     <% acc = @accion %>
-    <%= link_to "Cancelar", :controller => "receipts", :action => "sup", :ac=>acc unless @accion!=acc%> 
+    <%= link_to "Cancelar", :controller => "receipts", :action => "ger", :ac => acc unless @accion!=acc%> 
   </div>
 <% end %>
 </td></tr></table>
 </div>
 
 <div class="botones">
-  <%= link_to 'Página Principal', :controller => "sessions", :action => 'sup' %>
+  <%= link_to 'Página Principal', :controller => "sessions", :action => 'ger' %>
 </div>
 

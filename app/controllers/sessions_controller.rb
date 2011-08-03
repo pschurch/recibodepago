@@ -48,16 +48,17 @@ class SessionsController < ApplicationController
 
   def ejc
     @perfil_name = "Ejecutivo de Cobranza"
-    @rechs = Receipt.where("state='rechazado'").where("area='Supervisor'").where("user_name=?", current_user.name)
+    @rechs = Receipt.where("state='rechazado'").where("area='Supervisor'").where("user_name=?", current_user.name).where("subarea='Cobranza'")
     @recht = Receipt.where("state='recibido rechazo'").where("area='Cobranza'").where("subarea='Terreno'").where("user_name=?", current_user.name)
   end
   def sup
     @perfil_name = "Supervisor"
-    @rech = Receipt.where("state='rechazado'").where("area='Tesoreria'").where("group_id=?", current_user.group_id)
+    @rech = Receipt.where("state='rechazado'").where("area='Tesoreria'").where("subarea='Supervisor'").where("group_id=?", current_user.group_id)
   end
   def jtr
     @perfil_name = "Jefe de Terreno"
-    @rech = Receipt.where("state='rechazado'").where("area='Supervisor'")
+    @rechs = Receipt.where("state='rechazado'").where("area='Supervisor'").where("subarea='Terreno'")
+    @recht = Receipt.where("state='rechazado'").where("area='Tesoreria'").where("subarea='Terreno'")
   end
   def tsr
     @perfil_name = "Tesoreria"
@@ -67,6 +68,7 @@ class SessionsController < ApplicationController
   end
   def ger
     @perfil_name = "Gerencia"
+    @recht = Receipt.where("state='rechazado'").where("area='Tesoreria'").where("subarea='Gerencia'")
   end
   def adm
     @perfil_name = "Administrador"

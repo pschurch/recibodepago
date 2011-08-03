@@ -86,10 +86,12 @@ end
   def por_estado
     # Cuadre del detalle de pago -----------------------------------
     if ((state=="" and payment_flow_id==1) or 
-       (state=="abierto" and profile==1 and button!="n1" and button!="n2" and button!="n3") or
-       (state=="abierto" and profile==3 and button!="n2" and button!="m" and button!="r") or
-       (state=="recibido rechazo" and profile==1 and rejection_type_id==4) or
-       (state=="recibido rechazo" and (profile==3 or profile==2) and button!="n3" and rejection_type_id==4) )
+
+        (state=="abierto" and payment_flow_id==2 and button!="n2" and ((profile==1 and button!="n1" and button!="n3") or (profile==2) or (profile==3 and button!="m" and button!="r") or (profile==6))) or
+
+        (state=="abierto" and payment_flow_id==3 and profile==3 and button!="n2") or
+
+        (state=="recibido rechazo" and rejection_type_id==4 and button!="n3" and (profile==1 or profile==2 or profile==3)))
 
         total = 0
         if (not monto1.nil?) 
@@ -209,7 +211,7 @@ end
     # Datos de Contacto ---------------------------------------
     # estado "", F:2 ó 3 / 
     # estado "recibido rechazo", subarea="Terreno"
-    elsif(state=="" and (payment_flow_id==2 or payment_flow_id==3))or(state=="recibido rechazo" and subarea=="Terreno")
+    elsif(state=="" and (payment_flow_id==2 or payment_flow_id==3))or(state=="recibido rechazo" and subarea=="Terreno")or(state=="solicita gestion terreno" and profile_create==3)
         if (cont_name=="")
           errors.add(:cont_name, "(Nombre de Contacto): debe ingresar un valor en este campo.")
         end 

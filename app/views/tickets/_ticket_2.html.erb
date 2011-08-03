@@ -71,9 +71,9 @@
   </tr>
   <tr>
     <td>Honorarios:</td>
-    <% if (current_user.profile_id==1 or current_user.profile_id==3) %>
+    <% if (current_user.profile_id==11) %>
       <td class="ro"><%= f.text_field :fee, :size => "8", :readonly => true, :value => @fee %></td>
-    <% elsif (current_user.profile_id==2 or current_user.profile_id==6) %> 
+    <% else %> 
       <td><%= f.text_field :fee, :size => "8", :value => @fee%></td>
     <% end %> 
     <td><%= f.text_field :ad_fee, :size => "8" %></td>

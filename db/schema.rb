@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110715191028) do
+ActiveRecord::Schema.define(:version => 20110729194633) do
 
   create_table "assignments", :force => true do |t|
     t.string   "state"
@@ -335,6 +335,7 @@ ActiveRecord::Schema.define(:version => 20110715191028) do
     t.string   "adjust_ticket"
     t.text     "adjust_obs"
     t.integer  "profile"
+    t.integer  "profile_create"
   end
 
   create_table "rejection_types", :force => true do |t|

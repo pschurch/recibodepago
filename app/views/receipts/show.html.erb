@@ -2,14 +2,14 @@
 <table><tr><td class="marco">
   <% if not notice.nil? %><p id="notice"><%= notice %></p><% end %>
 
-<!-- ----------------- Anulacion -------------------- -->
+<!-- ----------------- Mensaje para Anulacion -------------------- -->
 <% if (@receipt.state=="solicita anulacion") %> 
   <div class="impt">
     IMPORTANTE: <%= @receipt.cancellation.message %>
   </div>
   <hr>
 <% end %>
-
+<!-- --------------- fin Mensaje para Anulacion -------------------- -->
 
   <table class="display">
   <tr>
@@ -149,69 +149,152 @@
 
 <div class="nbsp"></div>
 <div class="botones">
-<% if current_user.profile_id==1 or current_user.profile_id==2%>
-    <!-- # Flujo de Pago 1 (RP Completo) -->
-    <% if @receipt.payment_flow_id==1 %> 
-      <%= link_to 'Para Imprimir', :action => "print", :id => @receipt.id if (@receipt.state=='cerrado')%>
-    <% end %>
 
-    <!-- # Flujo de Pago 2 (RP por Completar) -->
-    <% if @receipt.payment_flow_id==2 %> 
-      <%= link_to 'Para Imprimir', :action => "print", :id => @receipt.id if (@receipt.state=='abierto') %>
-      <%= link_to 'Cerrar Recibo de Pago', edit_receipt_path(@receipt) if @receipt.state=='abierto'%>
-      <%= link_to 'Solicitar Anulación', :action => "edit", :id => @receipt.id, :button =>"n2" if (@receipt.state=='abierto' and current_user.profile_id==1)%>
+<!-- ========================  Cobranza ======================== -->
+  <% if current_user.profile_id==1 %>  
 
-  <%= link_to 'Anular Recibo de Pago', :action => "edit", :id => @receipt.id, :button =>"n2" if (@receipt.state=='abierto' and current_user.profile_id==2)%>
+    <% if @receipt.state=='abierto' %> 
+      <!-- # Flujo de Pago 2 (RP por Completar) -->
+      <% if @receipt.payment_flow_id==2 and @receipt.user_name==current_user.name %> 
+        <%= link_to 'Para Imprimir', :action => "print", :id => @receipt.id %>
+        <%= link_to 'Cerrar Recibo de Pago', edit_receipt_path(@receipt)%>
+        <%= link_to 'Solicitar Anulación', :action=>"edit", :id => @receipt.id, :button =>"n2"%>
+      <% end %>
 
+    <% elsif @receipt.state=='cerrado' %> 
+      <%= link_to 'Para Imprimir', :action => "print", :id => @receipt.id if (@receipt.area=='Cobranza' and @receipt.payment_flow_id==1)%>
 
-    <% end %>
-
-<% end %>
-
-<% if current_user.profile_id==1 %>  <!-- ----------  Cobranza ---------- -->
-    <!-- # para estados recibido rechazo -->
-    <% if @receipt.state=='recibido rechazo' %> 
+    <% elsif @receipt.state=='recibido rechazo' %> <!-- # RP Rechazados por Supervisor/Terreno -->
       <%= link_to 'Aceptar', :controller => "receipts", :action => "ntc", :acc => 'acep_ejc_sup', :id => @receipt.id if (@receipt.rejection_type_id==3) %>
       <%= link_to 'Aceptar', :controller => "receipts", :action => "ntc", :acc => 'acep_ejc_jtr', :id => @receipt.id if (@receipt.rejection_type_id==2) %>
-
       <%= link_to 'Editar', edit_receipt_path(@receipt) if (@receipt.rejection_type_id==1 or  @receipt.rejection_type_id==4)%>
       <%= link_to 'Solicitar Anulación', :action => "edit", :id => @receipt.id, :button =>"n1" if (@receipt.rejection_type_id==1 or @receipt.rejection_type_id==2)%>
       <%= link_to 'Solicitar Anulación', :action => "edit", :id => @receipt.id, :button =>"n3" if (@receipt.rejection_type_id==3 or @receipt.rejection_type_id==4)%>
     <% end %> 
-<% elsif current_user.profile_id==2 %> <!-- Supervisor --> 
-  <%= link_to 'Cerrar Recibo de Pago', :controller => "receipts", :action => "ntc", :acc => 'cerr_sup', :id => @receipt.id  if @receipt.state=='recepcionado'%>
-  <%= link_to 'Rechazar Recibo de Pago', :action => "edit", :id => @receipt.id, :button => "r"  if @receipt.state=='recepcionado'%>
+
+<!-- ========================  Supervisor ======================== -->
+  <% elsif current_user.profile_id==2 %> 
   <% @ticket = @tickets.first %>
-  <%= link_to 'Ajustar Recibo de Pago', :controller => "tickets", :action => "edit", :id => @ticket.id if (@receipt.state=='abierto' and @receipt.area=="Terreno")%>
-  <%= link_to 'Editar', edit_receipt_path(@receipt) if (@receipt.state=="recibido rechazo" and @receipt.rejection_type_id==4)%>
-  <%= link_to 'Devolver a Cobranza', :controller => "receipts", :action => "ntc", :acc => 'dev_cobr', :id => @receipt.id if @receipt.state=="recibido rechazo" and @receipt.rejection_type_id==4 and @receipt.payment_flow_id!=3 %>
-  <%= link_to 'Devolver a Terreno', :controller => "receipts", :action => "ntc", :acc => 'dev_terr', :id => @receipt.id if @receipt.state=="recibido rechazo" and @receipt.rejection_type_id==4 and @receipt.payment_flow_id==3%>
 
-   <%= link_to 'Aceptar', :controller => "receipts", :action => "ntc", :acc => 'acep_sup_tsr', :id => @receipt.id if (@receipt.state=='recibido rechazo' and @receipt.rejection_type_id==3) %>
+    <% if @receipt.state=='abierto' %> 
+      <!-- # Flujo de Pago 2 (RP por Completar) -->
+      <% if @receipt.payment_flow_id==2 %> 
+        <%= link_to 'Para Imprimir', :action => "print", :id => @receipt.id %>
+        <%= link_to 'Cerrar Recibo de Pago', edit_receipt_path(@receipt) %>
+        <%= link_to 'Anular Recibo de Pago', :action=>"edit", :id=> @receipt.id, :button=>"n2"%>
+      <% end %>
+      <%= link_to 'Ajustar Recibo de Pago', :controller => "tickets", :action => "edit", :id => @ticket.id if (@receipt.area=="Terreno")%>
 
-  <%= link_to 'Anular Recibo de Pago 1', :controller => "receipts", :action => "ntc", :acc => 'anula_sup', :id => @receipt.id  if (@receipt.state=='solicita anulacion')%>
-  <%= link_to 'Anular Recibo de Pago2', :action => "edit", :id => @receipt.id, :button =>"n3" if (@receipt.state=='recibido rechazo')%>
+    <% elsif @receipt.state=='cerrado' %> 
+      <!-- # Flujo de Pago 1 (RP Completo) -->
+      <%= link_to 'Para Imprimir', :action=>"print", :id => @receipt.id if (@receipt.area=='Supervisor' and @receipt.payment_flow_id==1)%>
 
-<% elsif current_user.profile_id==3 %> <!--  ----------Terreno---------- -->
-  <%= link_to 'Aceptar', :controller => "receipts", :action => "ntc", :acc => 'acep_jtr_sup', :id => @receipt.id if (@receipt.state=='recibido rechazo' and @receipt.rejection_type_id==3) %>
-  <%= link_to 'Editar', edit_receipt_path(@receipt) if (@receipt.state=='recibido rechazo' and  @receipt.rejection_type_id==4)%>
+    <% elsif @receipt.state=='recepcionado' %> <!-- RP recepcionados -->
+      <%= link_to 'Cerrar Recibo de Pago', :controller=>"receipts", :action=>"ntc", :acc=> 'cerr_sup', :id=> @receipt.id%>
+      <%= link_to 'Rechazar Recibo de Pago', :action=>"edit", :id=> @receipt.id, :button => "r"%>
 
-  <%= link_to 'Enviar a Terreno', edit_receipt_path(@receipt) if @receipt.state=='solicita gestion terreno'%>
+    <% elsif @receipt.state=='recibido rechazo' %> <!-- # RP Rechazados por Terreno/Tesoreria -->
+      <%= link_to 'Editar', edit_receipt_path(@receipt) if (@receipt.rejection_type_id==4)%>
+      <%= link_to 'Devolver a Cobranza', :controller => "receipts", :action => "ntc", :acc => 'dev_cobr', :id => @receipt.id if (@receipt.rejection_type_id==4 and @receipt.profile_create==1 )%>
+      <%= link_to 'Devolver a Terreno', :controller => "receipts", :action => "ntc", :acc => 'dev_terr', :id => @receipt.id if @receipt.rejection_type_id==4 and @receipt.payment_flow_id==3%>
+      <%= link_to 'Aceptar', :controller => "receipts", :action => "ntc", :acc => 'acep_sup_tsr', :id => @receipt.id if ( @receipt.rejection_type_id==3) %>
+      <%= link_to 'Anular Recibo de Pago', :action=>"edit", :id => @receipt.id, :button =>"n3" %>
 
-  <%= link_to 'Modificar Eje. Terreno', :action => "edit", :id => @receipt.id, :button =>"m", :id => @receipt.id if @receipt.state=='abierto' %>
-  <%= link_to 'Para Imprimir', :action => "print", :id => @receipt.id if @receipt.state=='abierto' %>
-  <%= link_to 'Cerrar Recibo de Pago', edit_receipt_path(@receipt) if @receipt.state=='abierto'%>
-  <% if @receipt.state=='abierto'%> <br><br><% end %>
-  <%= link_to 'Rechazar Recibo de Pago', :action => "edit", :id => @receipt.id, :button =>"r"  if (@receipt.state=='solicita gestion terreno' or @receipt.state=='abierto')%>
+    <% elsif @receipt.state=='solicita anulacion' %>    
+      <%= link_to 'Anular Recibo de Pago', :controller => "receipts", :action => "ntc", :acc => 'anula_sup', :id => @receipt.id %>
+      <%= link_to 'Cancelar', :controller => "sessions", :action => "sup" %>
+    <% end %> 
 
-  <%= link_to 'Solicitar Anulación', :action => "edit", :id => @receipt.id, :button =>"n3" if @receipt.state=='recibido rechazo'%> <!-- Revisar -->
-  <%= link_to 'Solicitar Anulación', :action => "edit", :id => @receipt.id, :button =>"n2" if @receipt.state=='abierto'%>
+<!-- ========================  Terreno ======================== -->
+  <% elsif current_user.profile_id==3 %> 
 
-<% elsif current_user.profile_id==4 %>  <!-- Tesoreria --> 
-  <%= link_to 'Cerrar Recibo de Pago', :controller => "receipts", :action => "ntc", :acc => 'cerr_tsr', :id => @receipt.id  if @receipt.state=='recepcionado'%>
-  <%= link_to 'Rechazar Recibo de Pago', :action => "edit", :id => @receipt.id, :button => "r"  if @receipt.state=='recepcionado'%>
+    <% if @receipt.state=='abierto' %> 
+      <!-- # Flujo de Pago 2 (RP por Completar) --> 
+      <% if @receipt.payment_flow_id==2 and @receipt.profile_create==3%> 
+        <%= link_to 'Para Imprimir', :action => "print", :id => @receipt.id %>
+        <%= link_to 'Cerrar Recibo de Pago', edit_receipt_path(@receipt)%>
+        <%= link_to 'Anular Recibo de Pago', :action=>"edit", :id=> @receipt.id, :button =>"n2"%>
+      <!--  # Flujo de Pago 3 (Gestion Terreno) --> 
+      <% elsif @receipt.payment_flow_id==3 %> 
+        <%= link_to 'Modificar Recibo de Pago', :action => "edit", :id=> @receipt.id, :button =>"m", :id => @receipt.id %>
+        <%= link_to 'Para Imprimir', :action => "print", :id => @receipt.id %>
+        <%= link_to 'Cerrar Recibo de Pago', edit_receipt_path(@receipt)%>
+        <br><br>
+        <% if @receipt.profile_create!=3%> 
+          <%= link_to 'Rechazar Recibo de Pago', :action=>"edit", :id=> @receipt.id, :button =>"r"%>
+          <%= link_to 'Solicitar Anulación', :action=>"edit", :id=> @receipt.id, :button =>"n2"%>
+        <% else %>
+          <%= link_to 'Anular Recibo de Pago', :action=>"edit", :id=> @receipt.id, :button=>"n2"%>
+        <% end %>
+      <% end %> 
 
-<% end %>
+    <% elsif @receipt.state=='cerrado' %> 
+      <!-- # Flujo de Pago 1 (RP Completo) --> 
+      <%= link_to 'Para Imprimir', :action =>"print", :id=> @receipt.id  if (@receipt.area=='Terreno' and @receipt.payment_flow_id==1) %>
+
+    <% elsif @receipt.state=='solicita gestion terreno'%>
+      <!--  # Flujo de Pago 3 (Gestion Terreno) --> 
+      <% if @receipt.payment_flow_id==3 and @receipt.profile_create!=3%> 
+        <%= link_to 'Enviar a Terreno', edit_receipt_path(@receipt) %>
+        <%= link_to 'Rechazar Recibo de Pago', :action =>"edit", :id=> @receipt.id, :button=>"r"%>
+      <% elsif @receipt.payment_flow_id==3 and @receipt.profile_create==3%> 
+        <%= link_to 'Enviar a Terreno', edit_receipt_path(@receipt) %>
+        <%= link_to 'Modificar Recibo de Pago', :action =>"edit", :id=> @receipt.id, :button=>"md"%>
+        <%= link_to 'Anular Recibo de Pago', :action=>"edit", :id=> @receipt.id, :button =>"n1"%>
+      <% end %> 
+
+    <% elsif @receipt.state=='recibido rechazo'%>
+      <!--  # Flujo de Pago 3 (Gestion Terreno) --> 
+      <% if @receipt.payment_flow_id==3 and @receipt.profile_create!=3%> 
+        <%= link_to 'Aceptar', :controller => "receipts", :action => "ntc", :acc => 'acep_jtr_sup', :id => @receipt.id if @receipt.rejection_type_id==3 %>
+        <%= link_to 'Editar', edit_receipt_path(@receipt) if @receipt.rejection_type_id==4 %>
+        <%= link_to 'Solicitar Anulación', :action=>"edit", :id=> @receipt.id, :button =>"n3"%>
+      <% elsif @receipt.payment_flow_id==3 and @receipt.profile_create==3%>
+        <%= link_to 'Aceptar', :controller => "receipts", :action => "ntc", :acc => 'acep_jtr_sup', :id => @receipt.id if @receipt.rejection_type_id==3 %>
+        <%= link_to 'Editar', edit_receipt_path(@receipt) if @receipt.rejection_type_id==4 %>
+        <%= link_to 'Solicitar Anulación', :action=>"edit", :id=> @receipt.id, :button =>"n3"%>
+      <% else %><!--  # Flujo de Pago 1 y 2 --> 
+      <%= link_to 'Aceptar', :controller => "receipts", :action => "ntc", :acc => 'acep_jtr_tsr', :id => @receipt.id if (@receipt.rejection_type_id==3) %>
+      <%= link_to 'Editar', edit_receipt_path(@receipt) if (@receipt.rejection_type_id==1 or  @receipt.rejection_type_id==4)%>
+      <%= link_to 'Anular Recibo de Pago', :action => "edit", :id => @receipt.id, :button =>"n1" if (@receipt.rejection_type_id==1 or @receipt.rejection_type_id==2)%>
+      <%= link_to 'Anular Recibo de Pago', :action => "edit", :id => @receipt.id, :button =>"n3" if (@receipt.rejection_type_id==3 or @receipt.rejection_type_id==4)%>
+      <% end %>
+
+    <% end %> 
+            
+<!-- ========================  Tesoreria ======================== -->
+  <% elsif current_user.profile_id==4 %> 
+    <!-- # Recepcion de RP -->
+    <% if @receipt.state=='recepcionado'%>
+      <%= link_to 'Cerrar Recibo de Pago', :controller=> "receipts", :action=>"ntc", :acc => 'cerr_tsr', :id => @receipt.id%>
+      <%= link_to 'Rechazar Recibo de Pago', :action=>"edit", :id => @receipt.id, :button =>"r"%>
+    <% end %>
+
+
+<!-- ========================  Gerencia ======================== -->
+  <% elsif current_user.profile_id==6 %>   
+
+    <% if @receipt.state=='abierto' %> 
+      <!-- # Flujo de Pago 2 (RP por Completar) -->
+      <% if @receipt.payment_flow_id==2 %> 
+        <%= link_to 'Para Imprimir', :action => "print", :id => @receipt.id if (@receipt.state=='abierto') %>
+        <%= link_to 'Cerrar Recibo de Pago', edit_receipt_path(@receipt) if @receipt.state=='abierto'%>
+        <%= link_to 'Anular Recibo de Pago', :action => "edit", :id => @receipt.id, :button =>"n2" if (@receipt.state=='abierto')%>
+      <% end %>
+
+    <% elsif @receipt.state=='cerrado' %> 
+      <!-- # Flujo de Pago 1 (RP Completo) --> 
+      <%= link_to 'Para Imprimir', :action =>"print", :id=> @receipt.id  if (@receipt.area=='Gerencia' and @receipt.payment_flow_id==1) %>
+
+    <% elsif @receipt.state=="recibido rechazo" %>
+      <%= link_to 'Aceptar', :controller => "receipts", :action => "ntc", :acc => 'acep_ger_tsr', :id => @receipt.id if (@receipt.rejection_type_id==3) %>
+      <%= link_to 'Editar', edit_receipt_path(@receipt) if (@receipt.rejection_type_id==1 or  @receipt.rejection_type_id==4)%>
+      <%= link_to 'Anular Recibo de Pago', :action => "edit", :id => @receipt.id, :button =>"n1" if (@receipt.rejection_type_id==1 or @receipt.rejection_type_id==2)%>
+      <%= link_to 'Anular Recibo de Pago', :action => "edit", :id => @receipt.id, :button =>"n3" if (@receipt.rejection_type_id==3 or @receipt.rejection_type_id==4)%>
+
+    <% end %>
+
+  <% end %>
 </div>
 
 </td></tr></table>
@@ -224,20 +307,26 @@
     <%= link_to 'Página Principal', :controller => "sessions", :action => "ejc" %>
 
 <% elsif current_user.profile_id==2 %> <!-- Supervisor --> 
+  <%= link_to 'Rendir Recibos de Pago', :controller => "receipts", :action => "sup", :ac => "rend" if @receipt.state=='cerrado'%>
   <%= link_to "Listado de Recibos de Pago", :controller => "supervisor", :action => "srlist" %>
   <%= link_to 'Página Principal', :controller => "sessions", :action => "sup" %>
 
 <% elsif current_user.profile_id==3 %> <!--  ----------Terreno---------- -->
-  <%= link_to 'Recibos de Pago Rechazados', :controller => "receipts", :action => "jtr", :ac => "rech" if @receipt.state=='rechazado'%>
+  <%= link_to 'Rendir Recibos de Pago', :controller => "receipts", :action => "jtr", :ac => "rend" if (@receipt.state=='cerrado' and @receipt.payment_flow_id==3)%>
+  <%= link_to 'Rendir Recibos de Pago', :controller => "receipts", :action => "jtr", :ac => "rend_tsr" if (@receipt.state=='cerrado' and @receipt.payment_flow_id!=3)%>
+  <%= link_to "Listado de Recibos de Pago", :controller => "terreno", :action => "trlist" %>
   <%= link_to 'Página Principal', :controller => "sessions", :action => "jtr" %>
 
 <% elsif current_user.profile_id==4 %>  <!-- Tesoreria --> 
+  <%= link_to "Listado de Recibos de Pago", :controller => "finance", :action => "frlist" %>
   <%= link_to 'Página Principal', :controller => "sessions", :action => "tsr" %>
 
 <% elsif current_user.profile_id==6 %>  <!-- Gerencia --> 
+  <%= link_to 'Rendir Recibos de Pago', :controller => "receipts", :action => "ger", :ac => "rend" if @receipt.state=='cerrado'%>
+  <%= link_to "Listado de Recibos de Pago", :controller => "manager", :action => "mrlist" %>
   <%= link_to 'Página Principal', :controller => "sessions", :action => "ger" %>
 
-<% elsif current_user.profile_id==8 %> 
+<% elsif current_user.profile_id==8 %> <!-- Designer -->
   <%= link_to "Listado de Recibos de Pago", dreceipts_path %>
   <%= link_to 'Página Principal', :controller => "sessions", :action => "dsg" %>
 <% end %>

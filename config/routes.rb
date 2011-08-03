@@ -57,6 +57,7 @@ Recibodepago::Application.routes.draw do
   get "receipts/ejc"
   get "receipts/sup"
   get "receipts/jtr"
+  get "receipts/ger"
   get "receipts/tsr"
   get "receipts/ntc"
   get "receipts/print"
@@ -75,6 +76,10 @@ Recibodepago::Application.routes.draw do
     collection do
       post 'jtr_edit_multiple'
       put 'jtr_update_multiple'                                  
+    end
+    collection do
+      post 'ger_edit_multiple'
+      put 'ger_update_multiple'                                  
     end
     collection do
       post 'tsr_edit_multiple'
